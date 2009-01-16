@@ -4,11 +4,11 @@
 
 
 	<!-- This style sheet is based on a copy of item_view.xsl for the purposes of developing a production
-	prototye for late 08 DoS work 
-	
+	prototye for late 08 DoS work
+
 	Refer to Steven for furhter details
 	-->
-	
+
 	<xsl:param name="id"/>
 	<xsl:param name="related_reftype_filter"/>
 	<xsl:param name="flavour"/>
@@ -42,74 +42,74 @@
 				<!-- structural styling -->
 				<style type="text/css">
 					/***** HEADINGS AND GENERIC FONT STYLING *****/
-					
+
 					H1 { font-family: Arial, Verdana, Helvetica; color:#0096E3; font-size: 12pt; vertical-align: middle}
 					H2 { font-family: Arial, Verdana, Helvetica; color:#333; font-size: 11pt}
 					H3 { font-family: Arial, Verdana, Helvetica; color:#DC8501; font-size: 10pt}
 					H4 { font-family: Arial, Verdana, Helvetica; color:#000; font-size: 10pt }
 					H5 { font-family: Arial, Verdana, Helvetica; color:#999; font-size: 9pt }
-					
+
 					P { font-family: Arial, Verdana, Helvetica; font-size: 10pt; color:#333 }
 					TD { font-family: Arial, Verdana, Helvetica; font-size: 10pt; color:#333 }
 					UL { font-family: Arial, Verdana, Helvetica; font-size: 10pt; color:#333 }
-					
+
 					P.sb_ttl { font-family: Arial, Verdana, Helvetica; font-size: 9pt; font-weight: bold; color:#666 }
-					
+
 					P.footer { font-family: Verdana, Arial, Helvetica; color:#999999; font-size: 8pt}
 					P.intro { font-family: Arial, Verdana, Helvetica; font-size: 12pt; color:#666 }
-					
-					
-					
+
+
+
 					/***** LINK STYLING *****/
-					
-					
+
+
 					A:link { font-family: Arial, Verdana, Helvetica; color:#0065CF; font-size: 10pt }
 					A:visited { font-family: Arial, Verdana, Helvetica; color:#0065CF; font-size: 10pt }
 					A:active { font-family: Arial, Verdana, Helvetica; color:#0096E3; font-size: 10pt }
 					A:hover { font-family: Arial, Verdana, Helvetica; color:#0096E3; font-size: 10pt }
-					
+
 					A.bnnavsoff:link { font-family: Arial, Verdana, Helvetica; color:#FFFFFF; text-decoration:none; font-weight: normal; font-size: 10pt }
 					A.bnnavsoff:visited { font-family: Arial, Verdana, Helvetica; color:#FFFFFF; text-decoration:none; font-weight: normal; font-size: 10pt }
 					A.bnnavsoff:active { font-family: Arial, Verdana, Helvetica; color:#FFCC00; text-decoration:none; font-weight: normal; font-size: 10pt }
 					A.bnnavsoff:hover { font-family: Arial, Verdana, Helvetica; color:#FFCC00; text-decoration:none; font-weight: normal; font-size: 10pt }
-					
+
 					A.sb_title:link { font-family: Arial, Verdana, Helvetica; color:#333333; text-decoration:none; font-weight: normal; font-size: 13pt }
 					A.sb_title:visited { font-family: Arial, Verdana, Helvetica; color:#333333; text-decoration:none; font-weight: normal; font-size: 13pt }
 					A.sb_title:active { font-family: Arial, Verdana, Helvetica; color:#004F98; text-decoration:none; font-weight: normal; font-size: 13pt }
 					A.sb_title:hover { font-family: Arial, Verdana, Helvetica; color:#004F98; text-decoration:none; font-weight: normal; font-size: 13pt }
-					
+
 					A.sb_one:link { font-family: Arial, Verdana, Helvetica; color:#0065CF; text-decoration:none; font-weight: bold; font-size: 10pt }
 					A.sb_one:visited { font-family: Arial, Verdana, Helvetica; color:#0065CF; text-decoration:none; font-weight: bold; font-size: 10pt }
 					A.sb_one:active { font-family: Arial, Verdana, Helvetica; color:#0096E3; text-decoration:none; font-weight: bold; font-size: 10pt }
 					A.sb_one:hover { font-family: Arial, Verdana, Helvetica; color:#0096E3; text-decoration:none; font-weight: bold; font-size: 10pt }
-					
+
 					A.sb_two:link { font-family: Arial, Verdana, Helvetica; color:#0065CF; text-decoration:none; font-weight: normal; font-size: 10pt }
 					A.sb_two:visited { font-family: Arial, Verdana, Helvetica; color:#0065CF; text-decoration:none; font-weight: normal; font-size: 10pt }
 					A.sb_two:active { font-family: Arial, Verdana, Helvetica; color:#0096E3; text-decoration:none; font-weight: normal; font-size: 10pt }
 					A.sb_two:hover { font-family: Arial, Verdana, Helvetica; color:#0096E3; text-decoration:none; font-weight: normal; font-size: 10pt }
-					
+
 					A.bodynav:link { font-family: Arial, Verdana, Helvetica; color:#666666; text-decoration:none; font-weight: bold; font-size: 9pt }
 					A.bodynav:visited { font-family: Arial, Verdana, Helvetica; color:#666666; text-decoration:none; font-weight: bold; font-size: 9pt }
 					A.bodynav:active { font-family: Arial, Verdana, Helvetica; color:#0096E3; text-decoration:none; font-weight: bold; font-size: 9pt }
 					A.bodynav:hover { font-family: Arial, Verdana, Helvetica; color:#0096E3; text-decoration:none; font-weight: bold; font-size: 9pt }
-					
+
 					A.footer:link { font-family: Verdana, Arial, Helvetica; color:#666666; text-decoration:none; font-size: 8pt }
 					A.footer:visited { font-family: Verdana, Arial, Helvetica; color:#666666; text-decoration:none; font-size: 8pt }
 					A.footer:active { font-family: Verdana, Arial, Helvetica; color:#0065CF; text-decoration:none; font-size: 8pt }
 					A.footer:hover { font-family: Verdana, Arial, Helvetica; color:#0065CF; text-decoration:none; font-size: 8pt }
-					
-					
-					
+
+
+
 					/***** STYLING FOR FORM FIELD ELEMENTS *****/
-					
-					
+
+
 					.inputone {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt; color: #333333; background-color: #FCFCFC; width: 95%px; clip:  rect(   )}
 					.formfield {  background-color: #FFFFFF; font-family: Arial, Courier, monospace; font-size:10pt; color: #000000; width: 95%; clip:   rect(   )}
 					.formbutton { font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #FFFFFF; font-weight: bold;  border: 1px; border-color: #FFFFFF; background-color: #000099; padding: 3pt;}
-					
-					
+
+
 					/***** THESE ROW AND CELL STYLES BELOW ARE TO BE USED TO CONTROL BRANDING COLOURS *****/
-					
+
 					.colourcellone  { font-family: Arial, Helvetica, Verdana; color:#FFF; font-size: 10pt; font-weight: bold; background-color: #0096E3 }
 					.colourcelltwo { font-family: Arial, Helvetica, Verdana; color:#FFF; font-size: 10pt; background-color: #888888 }
 					.colourcellthree { font-family: Arial, Helvetica, Verdana; color:#333; font-size: 10pt; background-color: #EFEFEF }
@@ -118,12 +118,12 @@
 					.colourcellsix { font-family: Arial, Helvetica, Verdana; color:#333; font-size: 10pt; background-color: #F8E061 }
 					.colourcellseven { font-family: Arial, Helvetica, Verdana; color:#333; font-size: 10pt; background-color: #DCE9FB }
 					.sb_divider {margin-bottom: 6px };
-					
+
 					/**** annotation styles *****/
-					
+
 					A.annotation1{ font-family: Arial, Verdana, Helvetica; background-color: #ffff70; color:#0065CF; text-decoration:none; font-weight: bold; font-size: 16pt };
 					//= (currentRefs.length > 1 ? "#ffff70" : "#ffffc0");
-					
+
 					-->
 				</style>
 				<style>
@@ -132,17 +132,17 @@
 					}
 					input[type=text] {
 					border: 1px solid lightgrey;
-					
+
 					}
 					#common-recordos-pretend-dropdown {
 					font-size: 85%;
 					}
-					
+
 					input[type=button] {
 					font-weight:bold;
 					font-size: 85%;
 					}
-					
+
 					body {
 					padding: 0;
 					margin: 0;
@@ -150,7 +150,7 @@
 					height: 100%;
 					overflow: hidden;
 					}
-					
+
 					#breadcrumbs {
 					padding: 0;
 					margin: 0;
@@ -161,7 +161,7 @@
 					height: 100px;
 					overflow: hidden;
 					}
-					
+
 					#page {
 					padding: 0;
 					margin: 0;
@@ -176,7 +176,7 @@
 					width: expression(document.documentElement.clientWidth-250);
 					}
 					#page-inner { padding: 25px; }
-					
+
 					#entity {
 					padding: 0;
 					margin: 0;
@@ -192,7 +192,7 @@
 					height: expression(document.documentElement.clientHeight-100);
 					width: expression(document.documentElement.clientWidth-250);
 					}
-					
+
 					#factoid {
 					padding: 0;
 					margin: 0;
@@ -209,7 +209,7 @@
 					height: expression(document.documentElement.clientHeight-100);
 					width: expression(document.documentElement.clientWidth-250);
 					}
-					
+
 					#logo {
 					padding: 0;
 					margin: 0;
@@ -222,7 +222,7 @@
 					/* IE only */
 					height: expression(document.documentElement.clientHeight-100);
 					}
-					
+
 					#map {
 					padding: 0;
 					margin: 20px;
@@ -230,7 +230,7 @@
 					width: 90%;
 					height: 400px;
 					}
-					
+
 					#sidebar {
 					padding: 0;
 					margin: 0;
@@ -244,7 +244,7 @@
 					height: expression(document.documentElement.clientHeight-100);
 					}
 					#sidebar-inner { padding: 5px; }
-					
+
 					#pagetopcolour {
 					padding: 0;
 					margin: 0;
@@ -257,8 +257,8 @@
 					/* IE only */
 					width: expression(document.documentElement.clientWidth-151);
 					}
-					
-					
+
+
 					#sidebartopcolour {
 					padding: 0;
 					margin: 0;
@@ -266,12 +266,12 @@
 					top: 100px;
 					right: 0px;
 					bottom: 0px;
-					
+
 					overflow: auto;
 					width: 250px;
 					}
-					
-					
+
+
 					#footnotesleft {
 					padding: 0;
 					margin: 0;
@@ -284,7 +284,7 @@
 					/* IE only */
 					width: expression(document.documentElement.clientWidth-250);
 					}
-					
+
 					#footnotesright {
 					padding: 0;
 					margin: 0;
@@ -297,7 +297,7 @@
 					/* IE only */
 					width: expression(document.documentElement.clientWidth-250);
 					}
-					
+
 					#footnotes {
 					padding: 0;
 					margin: 0;
@@ -313,12 +313,12 @@
 					width: expression(document.documentElement.clientWidth-250);
 					}
 					#footnotes-inner { padding: 25px; }
-					
+
 					.reftype-heading a { text-decoration: none; }
 					.reftype-heading a img { margin: 0; }
 					.reftype-heading a.open img.right { display: none; }
 					.reftype-heading a.closed img.down { display: none; }
-					
+
 					#titleunderlinea {
 					padding: 0;
 					margin: 0;
@@ -331,7 +331,7 @@
 					/* IE only */
 					height: expression(document.documentElement.clientHeight-60);
 					}
-					
+
 					# titleunderlineb {
 					padding: 0;
 					margin: 0;
@@ -355,7 +355,7 @@
 						border-bottom: 2px solid #888888;
 						margin-bottom: 20px;
 					}
-					
+
 
 					#results-div {
 						padding: 25px;
@@ -373,18 +373,18 @@
 						vertical-align: middle;
 					}
 					#login {
-						
+
 						padding-left: 5px;
 						padding-top: 3px;
 						vertical-align: middle;
 						font-size: 70%;
-					
+
 					}
-					
+
 					#login a {
 						font-size: 99%;
 						color: white;
-						
+
 					}
 					#common-recordos-drop-span {
 						width: 120px;
@@ -395,7 +395,7 @@
 					#common-recordos-drop-div {
 						border: 1px outset grey;
  						width: 140px;
- 						position: absolute; top: -90px; left: 3px; /*was 650 px*/						
+ 						position: absolute; top: -90px; left: 3px; /*was 650 px*/
  						background-color:white;
 						color:black;
 						font-weight:normal;
@@ -403,25 +403,25 @@
 					}
 					#common-recordos-drop-img{
 						padding:0;
-	
+
 					}
 					#saved-searches{
 						padding-left: 15px;
 						font-size: 90%;
-				 	
+
 					}
-					
+
 					#saved-searches a{
 						font-size: 90%;
 					}
-					
-					
+
+
 					#saved-searches-header{
 						padding-top: 15px;
 						padding-bottom: 5px;
 						font-weight: bold;
 					}
-					
+
 					#relations-table{
 						padding-left: 15px;
 						padding-bottom: 5px;
@@ -430,7 +430,7 @@
 					#heurist-link  a{
 						text-align: right;
 						font-size: 80%;
-					
+
 					}
 
 					/* TEI styles */
@@ -458,7 +458,7 @@
 				</style>
 
 				<!-- text and table styling -->
-				
+
 				<script>
 					var pathDos = "http://heuristscholar.org/cocoon/dos/sandbox/prototype/";
 					var imgpath = "http://heuristscholar.org/dos-sandbox/img/reftype/";
@@ -491,18 +491,18 @@
 				        var elts = document.getElementById("footnotes-inner");
 
 						elts.innerHTML = record.getTitle();
-						
+
 						var val = record.getDetail(HDetailManager.getDetailTypeById(199));
 						if (val){
 							HeuristScholarDB.loadRecords(new HSearch("id:"+val.getID()),
                                   new HLoader(function(s,r){MM_loaded(r[0],record)})
 							);
 						}
-							
+
 				   }
 				   function MM_loaded(val,record) {
 				        var elts = document.getElementById("footnotes-inner");
-						
+
 						if (val.getRecordType().getID() == 74) {
 							var img=val.getDetail(HDetailManager.getDetailTypeById(221)). getThumbnailURL();
 							elts.innerHTML += "&lt;br&gt;&lt;a href=\""+pathDos+val.getID()+"\"&gt;&lt;img src=\"" + img+ "\"/&gt;&lt;/a&gt;";
@@ -511,48 +511,48 @@
 						   elts.innerHTML += "&lt;br&gt;&lt;br&gt;&lt;span style=\"padding-right:5px; vertical-align:top\"&gt;&lt;a href=\""+pathDos+val.getID()+"\"&gt;"+val.getTitle()+"&lt;/a&gt;&lt;/span&gt;"+"&lt;img src=\"" + imgpath+val.getRecordType().getID() +".gif\"/&gt;";
 						}
 				   }
-				   
+
 				</script>
 
 				<script src="http://hapi.heuristscholar.org/load?instance=dos-sandbox&amp;key=32cbfd399bdf50a8f78df916af30c961468964ee"></script>
 				<script>
-					if (!HCurrentUser.isLoggedIn()) {				
+					if (!HCurrentUser.isLoggedIn()) {
 						window.location = 'http://dos-sandbox.heuristscholar.org/heurist/php/login-vanilla.php?logo=http://heuristscholar.org/dos-sandbox/images/logo.png&amp;home=http://heuristscholar.org/dos-sandbox';
 					}
 				</script>
 				<script src="{$urlbase}/js/search.js"/>
 				<script>
 					top.HEURIST = {};
-					top.HEURIST.fireEvent = function(e, e){}; 
+					top.HEURIST.fireEvent = function(e, e){};
 				</script>
 				<script src="http://dos-sandbox.heuristscholar.org/heurist/php/js/heurist-obj-user.php"></script>
-				
+
 			</head>
 			<body pub_id="{/export/@pub_id}"  >
 
 
 
 				<div id="header">
-					
+
 
 					<div id="logo">
 						<a href="{$urlbase}/index.html" style="font-size: 30px;">PROTOTYPE</a>
 					</div>
 
-					
+
 					<div id="pagetopcolour" class="colourcelltwo" style="overflow:visible;">
-						<div style="padding-left:20px "> 
+						<div style="padding-left:20px ">
 							<!-- 2674 is ID of the "home page" file -->
-							
+
 						    <table>
 							<tr>
-								
+
 								<td>
 								</td>
-									
+
 							</tr>
 						    </table>
-							
+
 							<!-- Add relationship only needs to be available for Entities, Terms and Media -->
 							<xsl:if test="export/references/reference/reftype/@id = 74 or export/references/reference/reftype/@id  = 151 or export/references/reference/reftype/@id  = 152 ">
 								<table>
@@ -568,31 +568,31 @@
 					<tr>
 					<td id="login">
 						<script type="text/javascript">
-							
-							var a = document.createElement("a");							
+
+							var a = document.createElement("a");
 							a.href ='http://dos-sandbox.heuristscholar.org/heurist/php/login-vanilla.php?logo=http://heuristscholar.org/dos-sandbox/img/logo.png&amp;home=http://heuristscholar.org/dos-sandbox';
-							
-							
-							if (HCurrentUser.isLoggedIn()) {							
+
+
+							if (HCurrentUser.isLoggedIn()) {
 								document.getElementById("login").appendChild(document.createTextNode(HCurrentUser.getRealName() + " : "));
 								a.appendChild( document.createTextNode("Log out"));
 							} else {
-								
+
 								a.appendChild(document.createTextNode("Log in"));
 							}
-							
+
 							document.getElementById("login").appendChild(a);
-							
+
 						</script>
 						</td><td id="heurist-link"><a href="http://dos-sandbox.heuristscholar.org/heurist/">Heurist</a></td></tr>
 						</table>
 					</div>
-					
-              
+
+
 				</div>
 
 				<div id="sidebar" class="colourcellthree">
-				     
+
 					<div id="sidebar-inner">
 
 						<div id="search">
@@ -601,13 +601,13 @@
 							<input type="button" value="search"
 							onclick="search(document.getElementById('query-input').value);"/>
 							</form>
-							
+
 							<div style="padding-left: 150px;">
 								<a title="Coming soon" onclick="alert('Coming soon!');" href="#"> (Advanced)</a>
 							</div>
 						</div>
-						
-						
+
+
 
 						<xsl:call-template name="related_items_section">
 							<xsl:with-param name="items"
@@ -625,9 +625,9 @@
 							<!-- <xsl:value-of select="export/references/reference[1]/title"/> -->
 							 <span style="padding-right:5px; vertical-align:top">
 							 	<a  href="#" onclick="window.open('{$urlbase}/edit.html?id={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false; " title="Edit main record">
-								 <img src="{$hbase}/img/edit-pencil.gif"  style="vertical-align: top;"/></a> 
+								 <img src="{$hbase}/img/edit-pencil.gif"  style="vertical-align: top;"/></a>
 							 </span>
-							 
+
 							<xsl:value-of select="export/references/reference[1]/title"/>
 						</h1>
 						<!-- full version of record -->
@@ -640,7 +640,7 @@
 						<xsl:apply-templates
 							select="export/references/reference/reverse-pointer[reftype/@id=99]"
 							mode="footnote"/>
-						
+
 					</div>
 				</div>
 			</body>
@@ -658,11 +658,11 @@
 
 	<xsl:template name="related_items_section">
 		<xsl:param name="items"/>
-		
+
 		<!-- top of sidebar before you start listing the type of relationships -->
 		<table id = "relations-table"  cellpadding="2" border="0" width="100%">
 			<!-- this step of the code aggregates related items into groupings based on the type of related item -->
-			
+
 			<xsl:for-each select="$items[not(@type = preceding-sibling::*/@type)] ">
 				<xsl:choose>
 					<xsl:when test="@type != 'Source entity reference' and @type != 'Entity reference' and @type != 'Target entity reference'">
@@ -674,20 +674,20 @@
 					</xsl:when>
 				</xsl:choose>
 			</xsl:for-each>
-			
+
 		</table>
 		<div id= "saved-searches">
 			<div id = "saved-searches-header"></div>
 			<script>
 			if (HCurrentUser.isLoggedIn()) {
-				var savedSearches = top.HEURIST.user.workgroupSavedSearches["2"]; 
+				var savedSearches = top.HEURIST.user.workgroupSavedSearches["2"];
 				document.getElementById("saved-searches-header").innerHTML = "Saved Searches";
 				for (i in savedSearches) {
 					var div = document.createElement("div");
 					div.id = "saved-search-" + i;
 					var a = document.createElement("a");
 					a.href = "#";
-				
+
 					var regexS = "[\\?&amp;]q=([^&amp;#]*)";
 					var regex = new RegExp( regexS );
 					var results = regex.exec( savedSearches[i][1]);
@@ -695,7 +695,7 @@
 					a.appendChild(document.createTextNode(savedSearches[i][0]));
 					div.appendChild(a);
 					document.getElementById("saved-searches").appendChild(div);
-				
+
 				}
 			}
 				function savedSearchesOnclick (e, res) {
@@ -704,7 +704,7 @@
 						search (res);
 					}
 				}
-			
+
 			</script>
 		</div>
 	</xsl:template>
@@ -747,7 +747,7 @@
 					</td>
 				</tr>
 			</xsl:if>
-			
+
 		</xsl:if>
 
 	</xsl:template>
@@ -804,7 +804,7 @@
 			<xsl:when test="$matches">
 				<xsl:apply-templates select="$matches">
 					<xsl:sort select="detail[@id=160]"/>
-					
+
 				</xsl:apply-templates>
 			</xsl:when>
 			<xsl:otherwise>
@@ -827,7 +827,7 @@
 							onclick="window.open(this.href,'','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;"
 							title="edit">
 						<img src="{$hbase}/img/edit-pencil.gif"/>
-						</a> - 
+						</a> -
 						<a href="{$cocoonbase}{$browserbase}/{id}" class="sb_two">
 							<xsl:choose>
 								<!-- related / notes -->

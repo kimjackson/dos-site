@@ -29,7 +29,7 @@ function loadAllRecords(query, options, loader) {
 				}
 				else { // more records to retrieve
 					document.getElementById('loading-msg').innerHTML = '<b>Loaded ' + records.length + ' records so far ...</b>';
-	
+
 					//  do a search with an offset specified for retrieving the next page of records
 					var search = new HSearch(query + " offset:"+records.length, options);
 					HeuristScholarDB.loadRecords(search, bulkLoader);

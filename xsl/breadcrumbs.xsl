@@ -25,7 +25,7 @@
 							A.sb_two:visited { font-family: Arial, Verdana, Helvetica; color:#0065CF; text-decoration:none; font-weight: normal; font-size: 10pt }
 							A.sb_two:active { font-family: Arial, Verdana, Helvetica; color:#0096E3; text-decoration:none; font-weight: normal; font-size: 10pt }
 							A.sb_two:hover { font-family: Arial, Verdana, Helvetica; color:#0096E3; text-decoration:none; font-weight: normal; font-size: 10pt }
-							
+
 						</style>
 					</xsl:otherwise>
 				</xsl:choose>

@@ -8,8 +8,8 @@
   -> Eliminate the footer on the document
   -> Be VERY careful and precise with nested lists formatting - empty paragraphs etc. immediately before or after the list items can make lists render in an unpredictable fashion.
   -> Rather then using "heading" styles  in document format, use "Strong" and "Emphasis" - this will render appropriate elements
-  
-  
+
+
   -->
   <xsl:output indent="yes"/>
 
@@ -46,8 +46,8 @@
     </xsl:copy>
   </xsl:template>
 
- 
-    
+
+
   <xsl:template match="w:wordDocument">
     <TEI>
       <xsl:apply-templates select="o:DocumentProperties"/>
@@ -121,8 +121,8 @@
     </teiHeader>
   </xsl:template>
 
-  
-  
+
+
   <xsl:template match="w:body|wx:sect">
     <text>
       <front/>
@@ -139,7 +139,7 @@
       <xsl:apply-templates/>
     </div>
   </xsl:template>
-  
+
   <xsl:template match="w:sectPr">
     <!-- don't do anything -->
   </xsl:template>
@@ -158,7 +158,7 @@
   </xsl:template>
 
 <xsl:template match="aml:annotation"></xsl:template>
-  
+
   <!-- Convert <w:tbl> paragraphs to <table> and render table  rows and cells -->
 
   <xsl:template match="w:tbl">
@@ -243,12 +243,12 @@
       <xsl:copy-of select="w:t/text()"/>
     </emphasis>
   </xsl:template>
-  
+
   <!-- itallics -->
   <xsl:template match="w:r[w:rPr/w:i]" mode="para-content">
     <hi rend="italics"><xsl:copy-of select="w:t/text()"/></hi>
   </xsl:template>
-  
+
   <!-- bold -->
   <xsl:template match="w:r[w:rPr/w:b]" mode="para-content">
     <hi rend="bold"><xsl:copy-of select="w:t/text()"/></hi>
@@ -285,10 +285,10 @@
           <!-- attributes "id" and "next" commented out although originally present they seem not to be valid in end TEI output. MS -->
           <xsl:if test="count($listStarts)&gt;1">
             <!-- This list is split -->
-         
+
             <xsl:choose>
               <xsl:when test="count($listStarts[1]|.)=1">
-              
+
               </xsl:when>
               <xsl:when test="count($listStarts[position()=last()]|.)=1">
                 <!-- This is the last part of the list; output prev only -->
@@ -303,7 +303,7 @@
                     <xsl:value-of select="generate-id(.)"/>
                   </xsl:for-each>
                 </xsl:attribute>
-               
+
               </xsl:otherwise>
             </xsl:choose>
           </xsl:if>
@@ -318,10 +318,10 @@
     <xsl:apply-templates select="w:pPr"></xsl:apply-templates>
     <xsl:apply-templates select="w:r" ></xsl:apply-templates>
   </xsl:template>
-  
+
 <xsl:template match="w:pPr" ></xsl:template>
  <xsl:template match="w:r" ></xsl:template>
-  
+
   <xsl:template name="writeListItem">
     <xsl:variable name="rendValues">
       <xsl:value-of select="."/>
@@ -405,7 +405,7 @@
   <xsl:template name="findListLevelContinuation">
     <!-- This template is called *after* a subsidiary list, and searches through following siblings to
       find a potential continuation of the original list. As it is called from the last known item
-      of the original list, it must iterate doing nothing through items of the same list fo but of 
+      of the original list, it must iterate doing nothing through items of the same list fo but of
       a higher level. -->
     <xsl:param name="ilfo"/>
     <xsl:param name="ilvl"/>
@@ -499,9 +499,9 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
   <xsl:template match="w:i">
-    [italic] 
+    [italic]
   </xsl:template>
 
 </xsl:stylesheet>

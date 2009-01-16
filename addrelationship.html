@@ -1,13 +1,13 @@
 <html>
  <head>
   <script src=http://hapi.heuristscholar.org/load?instance=dos-sandbox&key=904dccc9750634a42b0467bbb3436238efddd3c4></script>
-  
+
   <script>
   //relationships need to be hardcoded, because the requirement is to provide only relationship types, not their inverses,
   //and there is no method in HAPI that distinguishes one from another unless the record already exists.
   var validRelationships = new Array("isAbout", "isOf", "isRelatedTo", "hasSubject", "hasPrimarySubject", "hasNarrowerTerm", "hasRelatedTerm", "hasExternalLink", "hasContributor", "hasReference");
-    
-	
+
+
 	function getParams (name){
 	  var regexS = "[\\?&]"+name+"=([^&#]*)";
 	  var regex = new RegExp( regexS );
@@ -17,16 +17,16 @@
 	  else
 		return results[1];
 	 }
-	
+
 	var record_type;
 	var detail_types;
 	var primary_record;
 	var linked_record = null;
 	var primaryId = getParams("source"); //get primary id for a relationship
-    
-	
+
+
 	function init() {
-       
+
 		record_type = HRecordTypeManager.getRecordTypeById(52);
 		detail_types = HDetailManager.getDetailTypesForRecordType(record_type);
 
@@ -42,7 +42,7 @@
 			//}
 		//}
        load_primaryrecord(primaryId);
-	  
+
 	}
 
 	function load_primaryrecord(id) {
@@ -51,7 +51,7 @@
 			    primary_record = r[0];
 				document.getElementById("primaryrecord").value= r[0].getTitle();
 				document.getElementById("primaryrecord").disabled = true;
-				
+
 			},
 			function(s,e) {
 				alert("load failed: " + e);
@@ -67,29 +67,29 @@
 			saveRelationships(primary_record,relationType,linked_record);
 	    else
 		    alert("The second record is needed");
-	   
+
 	}
-	
+
 		//This function is used to save a HRelationship record
 	function saveRelationships(primaryRecord,relationType,secondRecord){
 		var hrelationship=new HRelationship(primaryRecord,relationType,secondRecord);
 		hrelationship.addDetail( HDetailManager.getDetailTypeById(160), document.getElementById("160").value );
 		hrelationship.addDetail( HDetailManager.getDetailTypeById(303), document.getElementById("303").value );
 		hrelationship.addDetail( HDetailManager.getDetailTypeById(191), document.getElementById("191").value );
-		
+
 		var saver = new HSaver(
 				function(r) {
 				   alert("relationships saved");
 				   window.opener.location.reload(true);
 				   window.close();
-				
+
 				},
 				function(r,e) {
 					 alert("relationships save failed:"+e);
-					
+
 				});
 		HeuristScholarDB.saveRecord(hrelationship,saver); ///PAY ATTENTION @@@@@@@@@@@@@@@@@@@@@@@@@@@
-	
+
 	}
 
 	function search() {
@@ -125,7 +125,7 @@
 		}
 	}
 	function addRecordDiv(div){
-		
+
 		var recordTypeDrop=document.createElement("select");          //create dropdown list
 		recordTypeDrop.id = "recordTypeDrop";
 		var recordTypes = HRecordTypeManager.getRecordTypes();
@@ -139,11 +139,11 @@
 		//div.innerHTML += "Title(<font color=\"red\">required</font>) <input type=\"text\" id=\"titleBox\"/>";
 		div.innerHTML += "<input type=\"button\" value=\"Add record\" onclick=\"addRecord();\"/>";
 	    return div;
-	
+
 	}
 	function addRecord(){
-		var recTypeDrop=document.getElementById("recordTypeDrop"); 
-		var recTypeId=recTypeDrop.options[recTypeDrop.selectedIndex].value;  
+		var recTypeDrop=document.getElementById("recordTypeDrop");
+		var recTypeId=recTypeDrop.options[recTypeDrop.selectedIndex].value;
 		window.open("edit.html?typeId="+recTypeId,"","status=0,scrollbars=1,resizable=1,width=800,height=600");
 	}
 	function setLinkedRecord(id, title) {
@@ -166,9 +166,9 @@
 		change();
 	}
    function saveRecord(){
-   
+
    }
-   
+
   </script>
   <style>
 	#linked-record {

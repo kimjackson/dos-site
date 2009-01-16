@@ -2,7 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:str="http://exslt.org/strings" version="1.0">
 
-	<!-- Heuristos entity rendering template 
+	<!-- Heuristos entity rendering template
 		entities have the reftype of 151 -->
 
 	<xsl:param name="flavour"/>
@@ -25,7 +25,7 @@
 
 				<tr>
 					<xsl:element name="td">
-					  
+
 						<xsl:attribute name="class">relateditem</xsl:attribute>
 						<xsl:attribute name="title">{Relationship type: <xsl:value-of select="@type"
 							/>} <xsl:if test="@notes"> &#160; <xsl:value-of select="@notes"/>
@@ -71,7 +71,7 @@
 				<xsl:otherwise>entity</xsl:otherwise>
 			</xsl:choose>
 		</xsl:attribute>
-			
+
 		<table border="0" cellpadding="2">
 
 			<xsl:if test="detail[@id=160]">
@@ -80,7 +80,7 @@
 					     <h1>
 							 <span style="padding-right:5px; vertical-align:top">
 								 <a  href="#" onclick="window.open('{$urlbase}/edit.html?id={id}','','status=0,scrollbars=1,resizable=1,width=800,height=600'); " title="Edit main record">
-								 <img src="{$hbase}/img/edit-pencil.gif"  style="vertical-align: top;"/></a> 
+								 <img src="{$hbase}/img/edit-pencil.gif"  style="vertical-align: top;"/></a>
 							 </span>
 							<xsl:value-of select="detail[@id=160]"/>
 						</h1>
@@ -130,8 +130,8 @@
 			</xsl:if>
 		</table>
 		<br/>
-		
-		
+
+
 		<div id="factiod">
 		<table border="0" cellpadding="2" width="100%" align="center">
 			<tr  class="colourcellsix">
@@ -153,9 +153,9 @@
 				<xsl:sort select="detail[@id=178]/month"/>
 				<xsl:sort select="detail[@id=178]/day"/>
 			</xsl:apply-templates>
-			
+
 			<tr>
-				 
+
 				 <xsl:element name="td">
 					<input type="button"
 					class="add-annotation-button"
@@ -163,7 +163,7 @@
 					value="add factoid"/>
 				 </xsl:element>
 			</tr>
-			
+
 		</table>
 			</div>
 
@@ -193,11 +193,11 @@
 			<td><!-- Source -->
 				<!-- small>[<xsl:value-of select="name(.)"/>]</small -->
 
-				<!-- the following choose section looks at the source and target entities in the factiod and says 
+				<!-- the following choose section looks at the source and target entities in the factiod and says
 				if they exist and are no the same as the main entity display the title and create a link -->
-				
+
 				<xsl:choose>
-					
+
 					<xsl:when test="pointer[@id=528]/id and ../id != pointer[@id=528]/id">
 						<a href="{$cocoonbase}/item/{pointer[@id=528]/id}" class="sb_two">
 							<xsl:value-of select="pointer[@id=528]/title"/>
@@ -207,9 +207,9 @@
 						<em>self</em>
 					</xsl:when>
 					<!-- xsl:when test="pointer[@id=528]">
-						
+
 						<a href="{$cocoonbase}/item/{pointer[@id=528]/id}" class="sb_two"><xsl:value-of select="detail[@id=160]"/></a>
-					</xsl:when -->	
+					</xsl:when -->
 
 					<!--test for case of alternate name, which by convention will be stored in the name field and identified in the type -->
 
@@ -231,7 +231,7 @@
 					</xsl:otherwise>
 				</xsl:choose>
 			</td>
-			
+
 			<td><!-- Start -->
 				<xsl:if test="detail[@id=177]/year">
 					<xsl:value-of select="detail[@id=177]/year"/>
@@ -251,10 +251,10 @@
 				<xsl:choose>
 					<xsl:when test="pointer[@id=528] and detail/@id=230">
 						<!-- nb detail 230 = type location so show map -->
-						
+
 						see map
-						
-						
+
+
 						<script>
 							var HEURIST = {};
 						</script>
@@ -270,17 +270,17 @@
 						<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
 						<script src="{$hbase}/mapper/epoly.js"></script>
 						<script src="{$hbase}/mapper/mapper.js"></script>
-						
+
 						<!-- script>
 							loadMap( { compact: true, highlight: [<xsl:value-of select="id"/>], onclick: function(record) { window.location = "<xsl:value-of select="$cocoonbase"/>/item/<xsl:value-of select="id"/>"; } } );
 							</script -->
-						
+
 						<script>
 							window.onload = function() {
 								loadMap( { compact: true, highlight: [], onclick: function(record) { window.location = "/cocoon/dos/browser/item/"+record.bibID+"/"; } } );
 							};
 						</script>
-						
+
 					</xsl:when>
 					<xsl:when test="pointer[@id=527]/id and ../id != pointer[@id=527]/id">
 						<a href="{$cocoonbase}/item/{pointer[@id=527]/id}" class="sb_two">
@@ -294,10 +294,10 @@
 
 			</td>
 		</tr>
-		
+
 	</xsl:template>
 
 
-	
+
 
 </xsl:stylesheet>

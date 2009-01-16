@@ -58,10 +58,10 @@
 							</xsl:for-each>
 						</div>
 					</xsl:if>
-					
-						
-					
-					
+
+
+
+
 					<xsl:if test="detail[@id=255]">
 						<xsl:for-each select="detail[@id=255]">
 							<!-- role -->
@@ -76,8 +76,8 @@
 							</xsl:with-param>
 						</xsl:call-template>
 					</xsl:if>
-					
-					
+
+
 					<br/>
 					<xsl:if test="detail[@id=191]">
 						<xsl:call-template name="paragraphise">
@@ -86,12 +86,12 @@
 							</xsl:with-param>
 						</xsl:call-template>
 					</xsl:if>
-					
+
 					<br/>
 				</td>
 			</tr>
 		</table>
 	</xsl:template>
-	
-	
+
+
 </xsl:stylesheet>

@@ -50,7 +50,7 @@
 							</xsl:otherwise>
 						</xsl:choose>
 
-						
+
 						<!-- iotherwise get the id if the target and -->
 
 
@@ -68,12 +68,12 @@
 
 	<xsl:template match="reverse-pointer[reftype/@id=99]" mode="footnote">
 		<div name="footnote" recordID="{id}">
-			
+
 			<div name="footnotesleft">
 							<p>
 								<b><xsl:value-of select="detail[@id=160]/text()"/></b>
 							<br></br>
-						
+
 						<xsl:call-template name="paragraphise">
 							<xsl:with-param name="text">
 								<xsl:value-of select="detail[@id=191]/text()"/>
@@ -94,7 +94,7 @@
 									<table cellpadding="5">
 										<tr>
 											<td>
-												
+
 												<a href="{$cocoonbase}/item/{pointer[@id=152]/id}/"
 												class="sb_two">
 												<xsl:value-of
@@ -120,10 +120,10 @@
 
 						</p>
 			</div>
-			
+
 			<div name="xpath">
 				<small> (xpath: /TEI/text/body/div[]/p[] <xsl:value-of select="detail[@id=539]"/>)</small>
-				
+
 				</div>
 		</div>
 	</xsl:template>

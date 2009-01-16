@@ -45,7 +45,7 @@ function traverse (elem, refs, address) {
 			if (match) startMatches.unshift(i);
 		}
 	}
- 
+
 	// check for refs ending at this elem
 	if (startMatches.length > 0  ||  state.length > 0) {
 		for (var i = 0; i < refs.length; ++i) {
@@ -276,7 +276,7 @@ function transformElement (elem, refs, currentRefs, startingRefs, endingRefs) {
 				}
 				if (addRef) {
 					a.innerHTML += "<sup>[" + (section.refId + 1) + "]</sup>";
-					
+
 				}
 */
 				for (var r = 0; r < section.refNums.length; ++r) {

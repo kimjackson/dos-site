@@ -41,7 +41,7 @@ function traverse (elem, refs, address) {
 			if (match) startingRefs.unshift(i);
 		}
 	}
- 
+
 	// find refs ending at this elem
 	for (var i = 0; i < refs.length; ++i) {
 		var match = checkAddress(address, refs[i].endElems);
@@ -241,7 +241,7 @@ console.log("sections: " + sections.toSource());
 		for (var i = 0; i < sections.length; ++i) {
 			var section = sections[i];
 
-			var wordString = 
+			var wordString =
 				(section.starting ? "" : " ") +
 				words.slice(section.startWord - 1, section.endWord).join(" ") +
 				(section.ending ? "" : " ");

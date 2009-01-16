@@ -5,22 +5,22 @@
 <title>Lachlan Macquarie</title>
 <style type="text/css">
 					/***** HEADINGS AND GENERIC FONT STYLING *****/
-					
+
 					H1 { font-family: Arial, Verdana, Helvetica; color:#0096E3; font-size: 12pt; vertical-align: middle}
-					
-					
-					
-					
-					
-					
+
+
+
+
+
+
 					/***** STYLING FOR FORM FIELD ELEMENTS *****/
-					
-					
-					
-					
-					
+
+
+
+
+
 					/***** THESE ROW AND CELL STYLES BELOW ARE TO BE USED TO CONTROL BRANDING COLOURS *****/
-					
+
 					.colourcellone  { font-family: Arial, Helvetica, Verdana; color:#FFF; font-size: 10pt; font-weight: bold; background-color: #0096E3 }
 					.colourcelltwo { font-family: Arial, Helvetica, Verdana; color:#FFF; font-size: 10pt; background-color: #888888 }
 					.colourcellthree { font-family: Arial, Helvetica, Verdana; color:#333; font-size: 10pt; background-color: #EFEFEF }
@@ -29,16 +29,16 @@
 					.colourcellsix { font-family: Arial, Helvetica, Verdana; color:#333; font-size: 10pt; background-color: #F8E061 }
 					.colourcellseven { font-family: Arial, Helvetica, Verdana; color:#333; font-size: 10pt; background-color: #DCE9FB }
 					.sb_divider {margin-bottom: 6px };
-					
-					
-					
+
+
+
 					-->
 				</style>
                 <style>
 					html {
 					overflow: auto;
 					}
-					
+
 					body {
 					padding: 0;
 					margin: 0;
@@ -46,12 +46,12 @@
 					height: 100%;
 					overflow: auto;
 					}
-					
+
 					td{
 					padding-left:5px;
-					
+
 					}
-					
+
 					#logo {
 					padding: 0;
 					margin: 0;
@@ -64,8 +64,8 @@
 					/* IE only */
 					height: expression(document.documentElement.clientHeight-100);
 					}
-					
-					
+
+
                    .help{
 				      width:100px;
 				      height:50px;
@@ -83,7 +83,7 @@
 				   height:120px;
 				   background-color:#CCCCCC;
 				   padding-left:10px;
-				   
+
 				  }
 				  .main{
 				   width:500px;
@@ -91,7 +91,7 @@
 			       padding-left:120px;
 				   vertical-align:top;
 				   padding-top:22px;
-				   
+
 				  }
 				  .searcharea{
 				   width:250px;
@@ -108,8 +108,8 @@
 				   padding-top:5px;
 				   overflow:auto;
 				   }
-				
-              
+
+
 </style>
 <script src=/dos-sandbox/hapi/common-data></script>
 <script src=/dos-sandbox/hapi/user-data></script>
@@ -123,14 +123,14 @@ function doSearch(popularquery){
 		strSearch = popularquery;
 	else
 		strSearch= document.getElementById("queryinput").value;
-	
+
 	if(strSearch==""){
 		alert("Please enter a searching query");
 		return;
 	}
 	var mysearch = new HSearch(strSearch);
 
-		var loader = new HLoader(	
+		var loader = new HLoader(
 			function(s,r) {
 				displayResults(r);
 			},
@@ -138,7 +138,7 @@ function doSearch(popularquery){
 				alert("load failed: " + e);
 			});
 		HeuristScholarDB.loadRecords(mysearch, loader);
-	
+
 	function displayResults(r){ //empty result brings? Output a message!
 	    var div = document.getElementById("searchresult");
 		div.innerHTML = "";
@@ -153,7 +153,7 @@ function doSearch(popularquery){
 	        div.appendChild(newdiv);//append new div right after embedding code div
 	    }
 	}
-	
+
 }
 </script>
 </head>
@@ -196,7 +196,7 @@ function doSearch(popularquery){
      <td>
 		<div class="main">
 			  <h1>Add new </h1>
-			  <div class="maindiv"> 
+			  <div class="maindiv">
 				   <img src="http://heuristscholar.org/dos-sandbox/img/reftype/152.gif" align=absmiddle>&nbsp;
 				   <a class="mainlink" href="edit.html?typeId=152" onclick="window.open(this.href,'','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Term">Term</a> <br>
 				   <img src="http://heuristscholar.org/dos-sandbox/img/reftype/74.gif" align=absmiddle>&nbsp;
@@ -210,7 +210,7 @@ function doSearch(popularquery){
        <div align="center"><a href="#" >Help?</a></div>
      </div>
      </td>
-  </tr>     
+  </tr>
 </table>
 </body>
 </html>

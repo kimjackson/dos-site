@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsp:page language="java" xmlns:xsp="http://apache.org/xsp"
-    xmlns:xsp-request="http://apache.org/xsp/request/2.0" 
-    xmlns:xsp-session="http://apache.org/xsp/session/2.0" 
+    xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+    xmlns:xsp-session="http://apache.org/xsp/session/2.0"
     create-session="true">
 
 	<xsp:structure>

@@ -8,7 +8,7 @@
 			<xsl:apply-templates select="@*|node()"/>
 		</xsl:copy>
 	</xsl:template>
-	
+
 
 
 	<!-- only use text/body/div from TEI, discard the rest -->
@@ -36,23 +36,23 @@
 			<xsl:value-of select="."/>
 		</h2>
 	</xsl:template>
-	
-	
+
+
 
 	<!-- not necessary - P elements will be copied by the identity transform above -->
-	<xsl:template match="TEI//p">		
-		<p>				
+	<xsl:template match="TEI//p">
+		<p>
 			<xsl:apply-templates/>
-		</p>				
+		</p>
 	</xsl:template>
-	
+
 
 	<xsl:template match="TEI//hi[@rend='italics']">
 		<i>
 			<xsl:value-of select="."/>
 		</i>
 	</xsl:template>
-	
+
 	<xsl:template match="TEI//hi[@rend='bold']">
 		<b>
 			<xsl:value-of select="."/>

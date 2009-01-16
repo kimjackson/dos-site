@@ -11,8 +11,8 @@
 	var record_type;
 	var detail_types;
 	var linked_record, image_record;
-	
-	
+
+
 
 	function init() {
 		record_type = HRecordTypeManager.getRecordTypeById(99);
@@ -24,13 +24,13 @@
 			fill_form();
 		}
 	}
-	
+
 function loadOptions(record){
 	//load options for dos.status dropdown 531
 	var enums =[];
 	var recSelect = document.getElementById("531");
 	enums = HDetailManager.getDetailTypeById(531).getEnumerationValues();
-	  
+
 	if (record) {
 	  var detail = record.getDetail(HDetailManager.getDetailTypeById(191));
 	}
@@ -105,8 +105,8 @@ function loadOptions(record){
 				annotation_type = "glossary";
 				break;
 		}
-		
-  		
+
+
 		document.getElementById("pagetitle").innerHTML = "Add/edit " + title;
 		loadOptions(record);
 		for (var i in detail_types) {
@@ -142,13 +142,13 @@ function loadOptions(record){
 		} else {
 			annotation_type = "entity";
 		}
-		
+
 		if (annotation_type == "glossary") {
-		
+
 			document.getElementById("linked-record-tr").style.display = "none";
 			//document.getElementById("type-tr").style.display = "none";
 		}
-		
+
 		// capitalize the title
 		// var tmpChar = annotation_type.substring(0,1).toUpperCase();
         // var postString = annotation_type.substring(1,annotation_type.length);
@@ -171,7 +171,7 @@ function loadOptions(record){
 				title  = "Gloss Annotation";
 				break;
 		}
-		
+
 
 		document.getElementById("pagetitle").innerHTML = "Add/edit "+title;
 
@@ -215,7 +215,7 @@ function loadOptions(record){
 		}
 
 		var refdoc_title;
-		
+
 		try {
 			refdoc_title = window.opener.getSelection().toString();
 		} catch (e) { }
@@ -260,7 +260,7 @@ function loadOptions(record){
 		default:
 			return null;
 		}
-	   
+
 	}
 
 
@@ -283,7 +283,7 @@ function loadOptions(record){
 		var end_w = document.getElementById("end_w").value;
 
 		for (var i in detail_types) {
-		   
+
 			var val = null;
 			switch (detail_types[i].getID()) {
 				case 160: val = document.getElementById("title").value; break;
@@ -324,13 +324,13 @@ function loadOptions(record){
 			alert ("Enter a search string");
 			return;
 		}
-		
+
 		if (active == "image") {
 			q = q + " type:74";
 		} else {
 			q += getSearchRestriction();
 		}
-		
+
 		var loader = new HLoader(
 			function(s,r) {
 				displayResults(r, active);
@@ -357,18 +357,18 @@ function loadOptions(record){
 		} else {
 			div.innerHTML = "No matching records";
 		}
-		
+
 		if (active == "image") {
 			addRecordDiv(div, "multimedia", "image");
-			
+
 		} else {
 			addRecordDiv(div, annotation_type, "");
-			
+
 		}
-		
+
 	}
 	function addRecordDiv(div, annotation_type, active_search){
-		
+
 		switch (annotation_type) {
 		case "entity":
 			div.innerHTML += "<br><br><input type=\"button\" value=\"Add Entity\" onclick=\"addRecord(151, '" + active_search + "');\"/>";
@@ -384,14 +384,14 @@ function loadOptions(record){
 			break;
 		}
 		return div;
-	
+
 	}
 	function addRecord(recTypeId, active_search){
 		document.getElementById("active-search").value = active_search;
 		window.open("edit.html?typeId="+recTypeId,"","status=0,scrollbars=1,resizable=1,width=800,height=600");
-		
+
 	}
-	
+
 	function setRecord(id, title, active) {
 		document.getElementById(active +"-record-span").innerHTML = "\"" + title + "\"";
 		document.getElementById(active +"-search-span").style.display = "none";
@@ -408,9 +408,9 @@ function loadOptions(record){
 				image_record = HeuristScholarDB.getRecord(id);
 			}
 		}();
-		
+
 	}
-	
+
 	function change(active) {
 		document.getElementById(active +"-search-span").style.display = "inline";
 		document.getElementById(active +"-display-span").style.display = "none";
@@ -435,7 +435,7 @@ function loadOptions(record){
    	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
    }
-	#linked-record-span, 
+	#linked-record-span,
 	#image-record-span {
 		font-size: 90%;
 	}
@@ -444,7 +444,7 @@ function loadOptions(record){
 		margin-top: 3px;
 		font-size: 90%;
 	}
-	#linked-results, 
+	#linked-results,
 	#image-results {
 		border: 1px solid black;
 		padding: 5px;
@@ -478,7 +478,7 @@ function loadOptions(record){
     <tr id="linked-record-tr">
     <td>target</td>
     <td colspan=3>
-	
+
      <span id=linked-search-span>
       <input type=text id=linked-search style="width: 30ex;"/>
       <input type=submit value="search" id = "linked-search-button"/>
@@ -492,7 +492,7 @@ function loadOptions(record){
       Search results (click to select):
       <div id=linked-results />
      </div>
-	
+
     </td>
    </tr>
    </form>
@@ -500,7 +500,7 @@ function loadOptions(record){
    <tr>
     <td>Image reference</td>
     <td colspan=3>
-	
+
      <span id=image-search-span>
       <input type=text id=image-search style="width: 30ex;" />
       <input type=submit value="search" id = "image-search-button"/>

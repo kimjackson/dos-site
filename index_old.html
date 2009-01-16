@@ -5,22 +5,22 @@
 <title>Lachlan Macquarie</title>
 <style type="text/css">
 					/***** HEADINGS AND GENERIC FONT STYLING *****/
-					
+
 					H1 { font-family:Arial, Helvetica, sans-serif; color:#0066FF; font-size: 12pt; vertical-align: middle}
-					
-					
-					
-					
-					
-					
+
+
+
+
+
+
 					/***** STYLING FOR FORM FIELD ELEMENTS *****/
-					
-					
-					
-					
-					
+
+
+
+
+
 					/***** THESE ROW AND CELL STYLES BELOW ARE TO BE USED TO CONTROL BRANDING COLOURS *****/
-					
+
 					.colourcellone  { font-family: Arial, Helvetica, Verdana; color:#FFF; font-size: 10pt; font-weight: bold; background-color: #0096E3 }
 					.colourcelltwo { font-family: Arial, Helvetica, Verdana; color:#FFF; font-size: 10pt; background-color: #888888 }
 					.colourcellthree { font-family: Arial, Helvetica, Verdana; color:#333; font-size: 10pt; background-color: #EFEFEF }
@@ -29,16 +29,16 @@
 					.colourcellsix { font-family: Arial, Helvetica, Verdana; color:#333; font-size: 10pt; background-color: #F8E061 }
 					.colourcellseven { font-family: Arial, Helvetica, Verdana; color:#333; font-size: 10pt; background-color: #DCE9FB }
 					.sb_divider {margin-bottom: 6px };
-					
-					
-					
+
+
+
 					-->
 				</style>
                 <style>
 					html {
 					overflow: auto;
 					}
-					
+
 					body {
 					padding: 0;
 					margin: 0;
@@ -46,12 +46,12 @@
 					height: 100%;
 					overflow: auto;
 					}
-					
+
 					td{
 					padding-left:5px;
-					
+
 					}
-					
+
 					#logo {
 					padding: 0;
 					margin: 0;
@@ -64,8 +64,8 @@
 					/* IE only */
 					height: expression(document.documentElement.clientHeight-100);
 					}
-					
-					
+
+
                    .help{
 				      width:100px;
 				      height:50px;
@@ -87,7 +87,7 @@
 				   height:120px;
 				   background-color:#CCCCCC;
 				   padding-left:10px;
-				   
+
 				  }
 				  .main{
 				   width:650px;
@@ -95,7 +95,7 @@
 			       padding-left:80px;
 				   vertical-align:top;
 				   padding-top:22px;
-				   
+
 				  }
 				  .searcharea{
 				   width:250px;
@@ -112,9 +112,9 @@
 				   padding-top:20px;
 				   overflow:auto;
 				   }
-				
-				
-              
+
+
+
 .shadow {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 22px;
@@ -132,14 +132,14 @@ function doSearch(popularquery){
 		strSearch = popularquery;
 	else
 		strSearch= document.getElementById("queryinput").value;
-	
+
 	if(strSearch==""){
 		alert("Please enter a searching query");
 		return;
 	}
 	var mysearch = new HSearch(strSearch);
 
-		var loader = new HLoader(	
+		var loader = new HLoader(
 			function(s,r) {
 				displayResults(r);
 			},
@@ -147,7 +147,7 @@ function doSearch(popularquery){
 				alert("load failed: " + e);
 			});
 		HeuristScholarDB.loadRecords(mysearch, loader);
-	
+
 	function displayResults(r){ //empty result brings? Output a message!
 	    document.getElementById("mainarea").style.display = "none";
 	    var div = document.getElementById("searchresult");
@@ -165,17 +165,17 @@ function doSearch(popularquery){
 	        div.appendChild(newdiv);//append new div right after embedding code div
 	    }
 	}
-	
+
 }
 function init(){
 if (! HCurrentUser.isLoggedIn()) {
-		
+
 		// need to use the host as found in the first line of code at the top of this script to make sure
 		// users are redirected to the correct login
 		alert("You are not logged in to Heurist.\nRedirecting you now ...");
 		location.replace("http://dos."+window.location.host+"/heurist/php/login.php?last_uri=" + encodeURIComponent(location.href));
 	}
-	
+
 }
 </script>
 </head>
@@ -189,10 +189,10 @@ if (! HCurrentUser.isLoggedIn()) {
 	</td>
   </tr>
   <tr>
-    <td height="30px" colspan="2" class="colourcelltwo"> 
-	<div style="padding-left:80px "> 
+    <td height="30px" colspan="2" class="colourcelltwo">
+	<div style="padding-left:80px ">
 				   &nbsp;
-				   <a  href="#" onclick="window.open('edit.html?typeId=152','','width=800,height=600'); " title="add Term"><img src="images/152.png" width="60" height="20" align=absmiddle></a> 
+				   <a  href="#" onclick="window.open('edit.html?typeId=152','','width=800,height=600'); " title="add Term"><img src="images/152.png" width="60" height="20" align=absmiddle></a>
 				    &nbsp;&nbsp;
 				   <a  href="#" onclick="window.open('edit.html?typeId=74','','width=800,height=600,scrollbars=yes' ); " title="add Multimedia item"><img src="images/74.png" width="60" height="20" align=absmiddle></a>
 				    &nbsp;&nbsp;
@@ -202,7 +202,7 @@ if (! HCurrentUser.isLoggedIn()) {
 			        &nbsp;&nbsp;
 				   <a  href="#" onclick="window.open('edit.html?typeId=150','','width=800,height=600'); " title="add Factoid"><img src="images/150.png" width="60" height="20" align=absmiddle></a>
 			  </div>
-	 
+
 	</td>
   </tr>
 </table>
@@ -211,7 +211,7 @@ if (! HCurrentUser.isLoggedIn()) {
      <td width="70%" rowspan="2" valign="top"><div class="main">
 	      <div id="mainarea">
 		  <p>Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome <img src="images/main.jpg" width="389" height="261" hspace="10" vspace="10" align="left">welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welco           me welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome welcome welcome Welcome welcome welcome  </p>
-	    
+
 	      </div>
          <div id="searchresult" class="searchresult" style="display:none"></div>
     </td>
@@ -230,17 +230,17 @@ if (! HCurrentUser.isLoggedIn()) {
                   <a href="#" class="mainlink" onClick="doSearch('id:5542')">Search2</a>  <br>
                   <a href="#" class="mainlink" onClick="doSearch('type:term')">Search3</a>  <br>
        </div>
-	   
-		 
+
+
 	 </td>
   </tr>
   <tr>
-  
+
      <td style="padding-left:50px " valign="top"><div class="help">
        <div align="center"><a href="#" class="help" >Help?</a></div>
      </div>
      </td>
-  </tr>     
+  </tr>
 </table>
 </body>
 </html>

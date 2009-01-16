@@ -5,7 +5,7 @@
 
 	<xsl:template match="related[reftype/@id=74] | pointer[reftype/@id=74] | reverse-pointer[reftype/@id=74]">
 		<xsl:param name="matches"/>
-		
+
 		<!-- trickiness!
 			First off, this template will catch a single related (/ pointer / reverse-pointer) record,
 			with the full list as a parameter ("matches").  This gives the template a chance to sort the records
@@ -18,7 +18,7 @@
 				</xsl:apply-templates>
 			</xsl:when>
 			<xsl:otherwise>
-				
+
 				<tr>
 					<xsl:element name="td">
 						<xsl:attribute name="class">relateditem</xsl:attribute>
@@ -41,8 +41,8 @@
 						<a href="{$cocoonbase}/item/{id}" class="sb_two">
 							<xsl:value-of select="detail[@id=291]"/>
 							<xsl:text> </xsl:text>
-							<xsl:value-of select="detail[@id=160]"/> 
-						</a> 
+							<xsl:value-of select="detail[@id=160]"/>
+						</a>
 					</xsl:element>
 					<td align="right">
 						<!-- change this to pick up the actuall system name of the reftye or to use the mapping method as in JHSB that calls human-readable-names.xml -->

@@ -44,7 +44,7 @@ background-color:#ffffff;
 border:1px solid black;
 font-size:11px;
 text-align:left;
-vertical-align:top; 
+vertical-align:top;
 }
 
 .optional .resource {
@@ -91,12 +91,12 @@ border:1px solid #999999;
 border:1px solid #999999;
 }
 .header {
-						
+
 						padding-top: 3px;
-						
-						
+
+
 					}
-					
+
 					#results-div {
 					padding: 25px;
 					}
@@ -165,7 +165,7 @@ padding-left: 10px;
 height: 30px;
 
 }
-.results input { 
+.results input {
 margin-left: 5px;
 }
 .panel-header {
@@ -208,7 +208,7 @@ padding-top: 5px;
 .bg-light{
 
 }
-#limit{ 
+#limit{
 border: 1px solid #FBEFC0;
 font-weight:normal;
 width: 30px;
@@ -217,7 +217,7 @@ width: 30px;
 width: 250px;
 border:1px solid #000000;
 }
-.saved-searches{ 
+.saved-searches{
 font-weight: bold;
 vertical-align: top;
 background-color:#CC733B;
@@ -229,7 +229,7 @@ color:#FBEFC0;
 text-decoration:none;
 }
 
-.saved-searches div{ 
+.saved-searches div{
 padding-bottom: 4px;
 }
 

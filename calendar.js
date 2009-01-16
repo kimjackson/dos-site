@@ -182,10 +182,10 @@ document.onclick = function(e) {
 		if (selectedDay) selectedDay.className = selectedDay.className.replace(/ cal_day_selected/, '');
 		selectedDay = target;
 		target.className += ' cal_day_selected';
-       
+
 	   if(window.opener.document.getElementById(dateId))
 		  window.opener.document.getElementById(dateId).value=selectedDay.id;
-		
+
 		window.close(selectedDay.id);
 	}
 }

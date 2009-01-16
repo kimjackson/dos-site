@@ -13,7 +13,7 @@
 			<xsl:apply-templates select="@*|node()"/>
 		</xsl:copy>
 	</xsl:template>
-	
+
 
 
 	<!-- only use text/body/div from TEI, discard the rest -->
@@ -34,10 +34,10 @@
 			<xsl:apply-templates/>
 		</h2>
 	</xsl:template>
-	
-	
 
-	<xsl:template match="TEI//p">		
+
+
+	<xsl:template match="TEI//p">
 		<p>
 			<xsl:if test="@type">
 				<xsl:attribute name="class">
@@ -47,14 +47,14 @@
 			<xsl:apply-templates/>
 		</p>
 	</xsl:template>
-	
+
 
 	<xsl:template match="TEI//hi">
 		<span class="{@rend}">
 			<xsl:apply-templates/>
 		</span>
 	</xsl:template>
-	
+
 	<xsl:template match="TEI//quote">
 		<span class="quote">
 			<xsl:apply-templates/>

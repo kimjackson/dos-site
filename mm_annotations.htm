@@ -57,9 +57,9 @@ function loadAllRecords(query, options, loader) {
 }
 
 function displayResults(r) {
-	
+
 	var tbl = document.getElementById("results");
-	
+
 	var recId = getParams("id");
 	var count = 0;
 	for (var i = 0; i < r.length; i++) {
@@ -69,9 +69,9 @@ function displayResults(r) {
 		var annotates = r[i].getDetail(HDetailManager.getDetailTypeById(322)).getID();
 		var target = r[i].getDetail(HDetailManager.getDetailTypeById(199));
 		var image_reference = r[i].getDetail(HDetailManager.getDetailTypeById(508));
-		
+
 		if ((recId && annotates == recId) && annotationType == "Annotation Multimedia") {
-			var class = (count % 2 == 1) ? "alternate" : ""; 
+			var class = (count % 2 == 1) ? "alternate" : "";
 			var html = "";
 			html += "<tr class = \"" + class + "\">";
 			html += "<td width=\"5%\"><b>"+ r[i].getID() +"</b></td>";
@@ -85,13 +85,13 @@ function displayResults(r) {
 			count ++ ;
 			gatherImages(r[i].getID(), target, image_reference);
 		}
-		
-		
+
+
 	}
 	if (count == 0) {
 			tbl.innerHTML = "<tr><td colspan=5><i>No Multimedia Annotations found for document with id: " + recId + "</i></td></tr>";
 	}
-	
+
 }
 
 function gatherImages(rid, target, image_reference){
@@ -109,7 +109,7 @@ function gatherImages(rid, target, image_reference){
 		);
 		HeuristScholarDB.loadRecords(new HSearch("id:" + (image_reference ? image_reference.getID() : target.getID())), loader);
 	} else {
-		cell.innerHTML = ""; 
+		cell.innerHTML = "";
 	}
 }
 

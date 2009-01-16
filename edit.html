@@ -19,11 +19,11 @@ var source_entity = getParams("source"); //get source entity for a factoid recor
 
 function init(){
     var spanTitle = document.getElementById("edit-title");
-	
+
 	if(rec_id){
 	    instance = "Edit"
 	    spanTitle.innerHTML = "<h3>"+instance+" Record</h3>";
-		doRecSearch(rec_id, 'primary'); 
+		doRecSearch(rec_id, 'primary');
 	}
 	if(rec_type_id){
 	   var rectype = HRecordTypeManager.getRecordTypeById(rec_type_id);
@@ -31,24 +31,24 @@ function init(){
 	   spanTitle.innerHTML = "<h3>"+instance+" Record</h3>";
 	   displayDetailsForRecordtype(rectype);
 	}
-   
-   
+
+
 }
-	
+
 function doRecSearch(id, option, detId, extra, constn) { //surely there must be a more elegant way of recycling the bugger
  var mysearch = new HSearch("ids:" + id);
- var loader = new HLoader(	
+ var loader = new HLoader(
  function(s,r) {
 		switch (option){
 			case "primary":
 			displayPrimaryResults(r[0]);
-			break; 
-				
+			break;
+
 			case "resource":
 			if (r[0]){
 			drawResourceDetails(r[0], detId, extra, constn);
 			}
-			break; 
+			break;
 		 }
 		},
  function(s,e) {alert("load failed: " + e);});
@@ -56,38 +56,38 @@ function doRecSearch(id, option, detId, extra, constn) { //surely there must be 
 }
 
 
-	
+
 function displayPrimaryResults(r) {
 	    document.getElementById("body-div").style.display = "";
-		
+
 		var dets = document.getElementById("details");
-		
+
 		    instance = r.getTitle();
 		    var recImage = r.getRecordType().getID();
 			var recTitle = r.getRecordType().getName();
 			var refId = r.getID();
 			var refTitle =r.getTitle();
-			var detailTypes =HDetailManager.getDetailTypesForRecordType(r.getRecordType()); //get all detail types for this record type 
+			var detailTypes =HDetailManager.getDetailTypesForRecordType(r.getRecordType()); //get all detail types for this record type
 			var url = drawUrlField(r);
-		    
-			
+
+
 			//if (url)dets.appendChild(url);
-			
+
 			 for (var i = 0; i < detailTypes.length; i++) {  //two loops, need to fully load "skin" before details, otherwise overwrites
 		       var rows =drawInputForm(detailTypes[i], r.getRecordType());
 			   if (rows) dets.appendChild(rows);
-			   
+
 			  }
-			 
+
 			 for (var b = 0; b < detailTypes.length; b++) {
 			   drawInputFormDetails(detailTypes[b].getID(), r.getID());
-			   
+
 			 }
 			drawRepeats();
-			
-			var tR = document.createElement("tr"); 
+
+			var tR = document.createElement("tr");
 			var tD = document.createElement("td");
-			
+
 			var button = document.createElement("input");
 			button.type = "button";
 			button.value = "save record";
@@ -100,28 +100,28 @@ function displayPrimaryResults(r) {
 function displayDetailsForRecordtype(rectype) {//This function is used for displaying detailtypes for a specific recordtype
 	document.getElementById("body-div").style.display = "";
 	var dets = document.getElementById("details");
-	
+
 	record.setRecordType(rectype);   //set record type for this record
 	var recImage = rectype.getID();
 	var recTitle = rectype.getName();
-	var detailTypes =HDetailManager.getDetailTypesForRecordType(rectype); //get all detail types for this record type 
+	var detailTypes =HDetailManager.getDetailTypesForRecordType(rectype); //get all detail types for this record type
 	var url = drawUrlField();
 	//if (url)dets.appendChild(url);
 	for (var i = 0; i < detailTypes.length; i++) {  //two loops, need to fully load "skin" before details, otherwise overwrites
 	   var rows =drawInputForm(detailTypes[i], rectype);
 	   if (rows) dets.appendChild(rows);
 	  }
-	
+
 	for (var b = 0; b < detailTypes.length; b++) {
 	   drawInputFormForAdding(detailTypes[b].getID(),rectype);
-	   
+
 	 }
 	drawRepeats();
-	
-	var tR = document.createElement("tr"); 
+
+	var tR = document.createElement("tr");
 	var tD = document.createElement("td");
-	
-	
+
+
 	var button = document.createElement("input");
 	button.type = "button";
 	button.value = "save record";
@@ -129,7 +129,7 @@ function displayDetailsForRecordtype(rectype) {//This function is used for displ
 	tD.appendChild(button);
 	tR.appendChild(tD);
 	dets.appendChild(tR);
-			
+
 }
 
 
@@ -145,14 +145,14 @@ function drawInputFormDetails(detailId,rid){              //This function is use
 	switchDraw(detVariety,detailId,detail);
 }
 
-function drawInputFormForAdding(detailId,rectype){              //This function is used for adding 
+function drawInputFormForAdding(detailId,rectype){              //This function is used for adding
     var detailType =  HDetailManager.getDetailTypeById(detailId); // HDetailType object
 	var detVariety = detailType.getVariety();
 	if(detailId==524 || detailId==525)      //because v2 of HAPI does not distinguish boolean from literal, set detVariety "boolean" when the fields are "fictional" and "exists"
 	   detVariety = "boolean";
 	var detail;
-	
-	
+
+
 	switchDraw(detVariety,detailId,detail);
 }
 
@@ -163,40 +163,40 @@ function switchDraw(detVariety,detailId,detail){
 	 case 'literal':
 	  drawInputField(detailId, detail);
 	 break;
-	 
-	
+
+
 	 case 'blocktext':
 	 drawTextArea (detailId, detail);
 	 break;
-	
+
 	 case 'reference': //ATTENTION: not an efficient way of outputing resource pointers! FIXME!
 	 var constRecType;
-	 if (detailType.getConstrainedRecordType()) constRecType = detailType.getConstrainedRecordType().getID(); 
+	 if (detailType.getConstrainedRecordType()) constRecType = detailType.getConstrainedRecordType().getID();
 	  drawResource(detailId, detail, constRecType,source_entity);
 	 break;
-	 
+
 	 case 'file':
 	 if(rec_id)drawFile(detailId, detail);                      //for editing
 	 if(rec_type_id) drawFileForAdding(detailId, detail);       //for adding
 	 break;
-	 
+
 	 case 'enumeration':
 	 drawEnums(detailId, detail);
 	 break;
-	 
-	 case 'geographic': 
+
+	 case 'geographic':
 	 drawGeo(detailId, detail);
 	 break;
-	 
+
 	 case 'boolean':
 	 drawBool(detailId, detail);
 	 break;
-	 
+
 	 case 'date': //TODO: add calendar
 	 drawDateField(detailId, detail);
-	 
+
 	 break;
-	 
+
 	 default:
 	 drawRest(detailId, detail);
 	 break;

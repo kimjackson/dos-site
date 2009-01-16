@@ -25,7 +25,7 @@
 				</div>
 			</xsl:when>
 		</xsl:choose>
-		
+
 		<table>
 			<xsl:choose>
 				<!-- render TEI document by a separate transform where the source document is WordML rather then TEI document -->
@@ -36,16 +36,16 @@
 							<nobr>TEI</nobr>
 						</td>
 						<td>
-							<a href="{$cocoonbase}/item/{//id}/wordml">									
+							<a href="{$cocoonbase}/item/{//id}/wordml">
 								[TEI document]
-							</a>	
+							</a>
 						</td>
 					</tr>
 				</xsl:otherwise>
 				</xsl:choose>
-			
-			
-			
+
+
+
 			<xsl:for-each select="detail[@id!=222 and @id!=223 and @id!=224 and @id!=230]">
 				<tr>
 					<td style="padding-right: 10px;">
@@ -79,12 +79,12 @@
 								<a href="{file_fetch_url}">
 									[<xsl:value-of select="file_orig_name"/>]
 								</a>
-								
-								
+
+
 							</xsl:when>
-							
-								
-							
+
+
+
 							<xsl:when test="@id=191">
 								<xsl:call-template name="paragraphise">
 									<xsl:with-param name="text">
@@ -97,14 +97,14 @@
 							</xsl:otherwise>
 						</xsl:choose>
 					</td>
-					
+
 				</tr>
-				
+
 			</xsl:for-each>
 			<tr><td colspan="2"><a  href='#' onclick="window.open('{$urlbase}/mm_annotations.htm?id={//id}','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;">List Multimedia Annotations</a></td></tr>
-			
+
 		</table>
-		
+
 
 		<xsl:call-template name="render_refs"/>
 
@@ -114,7 +114,7 @@
 		<!-- this is where the display work is done summarising the related items of various types - pictures, events etc -->
 		<!-- reftype-specific templates take precedence over this one -->
 		<xsl:param name="matches"/>
-		
+
 		<!-- trickiness!
 			First off, this template will catch a single related (/ pointer / reverse-pointer) record,
 			with the full list as a parameter ("matches").  This gives the template a chance to sort the records
@@ -127,22 +127,22 @@
 				</xsl:apply-templates>
 			</xsl:when>
 			<xsl:otherwise>
-				
+
 				<tr>
-					<td> 
+					<td>
 						<xsl:if test="detail[@id = 222 or @id=223 or @id=224]">
 							<xsl:if test="detail/file_thumb_url">
 								<a href="{$cocoonbase}/item/{id}">
-									
+
 									<img src="{detail/file_thumb_url}"/>
-									
-									
+
+
 								</a> <em>(Entry)</em>
 								<br/>
-								
+
 							</xsl:if>
 						</xsl:if>
-						
+
 						<a href="{$cocoonbase}/item/{id}/" class="sb_two">
 							<xsl:choose>
 								<!-- related / notes -->
@@ -160,7 +160,7 @@
 									<xsl:value-of select="title"/>
 								</xsl:otherwise>
 							</xsl:choose>
-						</a> 
+						</a>
 					</td>
 					<td align="right">
 						<!-- change this to pick up the actuall system name of the reftye or to use the mapping method as in JHSB that calls human-readable-names.xml -->
@@ -169,13 +169,13 @@
 				</tr>
 			</xsl:otherwise>
 		</xsl:choose>
-	</xsl:template>	
-	
+	</xsl:template>
+
 	<xsl:template match="related[reftype/@id=98] | pointer[reftype/@id=98] | reverse-pointer[reftype/@id=98]">
 		<!-- this is where the display work is done summarising the related items of various types - pictures, events etc -->
 		<!-- reftype-specific templates take precedence over this one -->
 		<xsl:param name="matches"/>
-		
+
 		<!-- trickiness!
 			First off, this template will catch a single related (/ pointer / reverse-pointer) record,
 			with the full list as a parameter ("matches").  This gives the template a chance to sort the records
@@ -188,7 +188,7 @@
 				</xsl:apply-templates>
 			</xsl:when>
 			<xsl:otherwise>
-				
+
 				<tr>
 					<td>
 					     <a href="{$urlbase}/edit.html?id={id}"
@@ -196,7 +196,7 @@
 							title="edit">
 						<img src="{$hbase}/img/edit-pencil.gif"/>
 						</a>
-						<a href="{$cocoonbase}/item/{id}" class="sb_two"><xsl:value-of select="detail[@id=160]"/></a> 
+						<a href="{$cocoonbase}/item/{id}" class="sb_two"><xsl:value-of select="detail[@id=160]"/></a>
 					</td>
 					<td align="right">
 						<!-- change this to pick up the actuall system name of the reftye or to use the mapping method as in JHSB that calls human-readable-names.xml -->
