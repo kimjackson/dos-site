@@ -87,6 +87,13 @@
     <map:serialize type="html"/>
    </map:match>
 
+   <map:match pattern="kmltrans/*">
+    <!-- generates heurist kml and transforms it based on the second parameter which should correspond to an xsl -->
+    <map:generate src="http://dos-sandbox.heuristscholar.org/heurist/mapper/googleearth.kml.php/heurist-map.kml?w=all&amp;q=relatedto:{1}"/>
+    <map:transform src="xsl/kmltrans.xsl" label="transformed"/>
+    <map:serialize type="xml"/>
+   </map:match>
+
   </map:pipeline>
  </map:pipelines>
 </map:sitemap>

@@ -21,6 +21,7 @@
 	<xsl:include href="teidoc.xsl"/>
 	<xsl:include href="teidoc_reference.xsl"/>
 	<xsl:include href="entity.xsl"/>
+	<xsl:include href="kml.xsl"/>
 
 	<xsl:variable name="currentid">
 		<xsl:value-of select="export/references/reference/id"/>
@@ -731,7 +732,7 @@
 		<xsl:param name="items"/>
 
 		<xsl:if test="count($items) > 0">
-			<xsl:if test="$reftype_id != 150">
+			<xsl:if test="$reftype_id != 150  or  ../reftype/@id = 103">
 				<tr>
 					<td>
 						<b>
@@ -773,7 +774,7 @@
 		<xsl:param name="items"/>
 
 		<xsl:if test="count($items) > 0">
-			<xsl:if test="$reftype_id != 150">
+			<xsl:if test="$reftype_id != 150  or  ../reftype/@id = 103">
 				<tr>
 					<td>
 						<b>
