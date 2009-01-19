@@ -44,11 +44,7 @@
 							<width>4</width>
 						</LineStyle>
 					</Style>
-					<LineString>
-						<coordinates>
-							<xsl:apply-templates select="kml:LineString"/>
-						</coordinates>
-					</LineString>
+					<xsl:copy-of select="kml:Point | kml:LineString | kml:MultiGeometry"/>
 				</Placemark>
 			</xsl:when>
 		</xsl:choose>
@@ -56,10 +52,6 @@
 
 	<xsl:template match="kml:a">
 		<xsl:param name="itemname"/>&lt;a href=http://heuristscholar.org/cocoon/dos/sandbox/item/<xsl:value-of select="substring-after(@href,'resource/')"/>&gt;<xsl:value-of select="$itemname"/>&lt;/a&gt;
-	</xsl:template>
-
-	<xsl:template match="kml:LineString">
-		<xsl:value-of select="kml:coordinates"/>
 	</xsl:template>
 
 </xsl:stylesheet>

@@ -5,10 +5,13 @@
 		<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
 		<script type="text/javascript">
 			window.onload = function() {
-				var gx;
 				if (GBrowserIsCompatible()) {
+					var gx;
 					var map = new GMap2(document.getElementById("map_canvas"));
 					map.setCenter(new GLatLng(<xsl:value-of select="detail[@id=211]"/>, <xsl:value-of select="detail[@id=210]"/>), <xsl:value-of select="detail[@id=491]"/>);
+					map.addControl(new GLargeMapControl());
+					map.addControl(new GMapTypeControl());
+
 					//map.addMapType(G_PHYSICAL_MAP);
 					//map.setCenter(mapCenter, mapZoom, G_PHYSICAL_MAP);
 
@@ -17,7 +20,7 @@
 					map.addOverlay(gx);
 					</xsl:for-each>
 
-					gx = new GGeoXml("http://heuristscholar.org/cocoon/dos/sandbox/kmltrans/<xsl:value-of select="id"/>");
+					gx = new GGeoXml("http://heuristscholar.org/cocoon/dos/sandbox/kmltrans/<xsl:value-of select="id"/>?dummy=moo");
 					map.addOverlay(gx);
 				}
 			}
