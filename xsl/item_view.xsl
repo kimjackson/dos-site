@@ -429,6 +429,12 @@
 					}
 
 					/* TEI styles */
+					
+					p.DoSBlockquote {
+						font-style: italic;
+						padding-right: 50px;
+						padding-left: 50px;
+					}
 					span.italics {
 						font-style: italic;
 					}
