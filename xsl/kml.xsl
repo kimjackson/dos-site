@@ -16,8 +16,20 @@
 					//map.setCenter(mapCenter, mapZoom, G_PHYSICAL_MAP);
 
 					<xsl:for-each select="detail[@id=221]">
-					gx = new GGeoXml("<xsl:value-of select="file_fetch_url"/>");
-					map.addOverlay(gx);
+						gx = new GGeoXml("<xsl:value-of select="file_fetch_url"/>");
+						map.addOverlay(gx);
+					</xsl:for-each>
+
+					<xsl:for-each select="detail[@id=551]">
+						gx = new GGeoXml("<xsl:value-of select="."/>");
+						map.addOverlay(gx);
+					</xsl:for-each>
+
+					<xsl:for-each select="pointer[@id=564]">
+						<!-- a kml reference -->
+						<xsl:variable name="kmlurl">http://dos-sandbox.heuristscholar.org/heurist-test/php/kml.php?id=<xsl:value-of select="id"/></xsl:variable>
+						gx = new GGeoXml("<xsl:value-of select="$kmlurl"/>");
+						map.addOverlay(gx);
 					</xsl:for-each>
 
 					gx = new GGeoXml("http://heuristscholar.org/cocoon/dos/sandbox/kmltrans/<xsl:value-of select="id"/>?dummy=moo");
