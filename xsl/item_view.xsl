@@ -431,7 +431,7 @@
 					/* TEI styles */
 					
 					p.DoSBlockquote {
-						font-style: italic;
+						font-family:"Times New Roman", Times, serif;
 						padding-right: 50px;
 						padding-left: 50px;
 					}
