@@ -92,8 +92,8 @@
    </map:match>
 
    <map:match pattern="kmltrans/*">
-    <!-- generates heurist kml and transforms it based on the second parameter which should correspond to an xsl -->
-    <map:generate src="http://dos-sandbox.heuristscholar.org/heurist/mapper/googleearth.kml.php/heurist-map.kml?w=all&amp;q=relatedto:{1}" label="rawkml"/>
+    <!-- generates heurist kml for the given query and transforms it -->
+    <map:generate src="http://dos-sandbox.heuristscholar.org/heurist/mapper/googleearth.kml.php/heurist-map.kml?w=all&amp;q={1}" label="rawkml"/>
     <map:transform src="xsl/kmltrans.xsl" label="transformed"/>
     <map:serialize type="xml"/>
    </map:match>

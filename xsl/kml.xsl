@@ -25,6 +25,7 @@
 						map.addOverlay(gx);
 					</xsl:for-each>
 
+
 					<xsl:for-each select="pointer[@id=564]">
 						<!-- a kml reference -->
 						<xsl:variable name="kmlurl">http://dos-sandbox.heuristscholar.org/heurist-test/php/kml.php?id=<xsl:value-of select="id"/></xsl:variable>
@@ -32,7 +33,12 @@
 						map.addOverlay(gx);
 					</xsl:for-each>
 
-					gx = new GGeoXml("http://heuristscholar.org/cocoon/dos/sandbox/kmltrans/<xsl:value-of select="id"/>?dummy=moo");
+					<xsl:for-each select="related[reftype/@id=151]">
+						gx = new GGeoXml("http://heuristscholar.org/cocoon/dos/sandbox/kmltrans/linkto:<xsl:value-of select="id"/>?dummy=moo");
+						map.addOverlay(gx);
+					</xsl:for-each>
+
+					gx = new GGeoXml("http://heuristscholar.org/cocoon/dos/sandbox/kmltrans/relatedto:<xsl:value-of select="id"/>?dummy=moo");
 					map.addOverlay(gx);
 				}
 			}
