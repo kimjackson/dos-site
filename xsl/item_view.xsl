@@ -21,7 +21,7 @@
 	<xsl:include href="teidoc.xsl"/>
 	<xsl:include href="teidoc_reference.xsl"/>
 	<xsl:include href="entity.xsl"/>
-	<xsl:include href="kml.xsl"/>
+	<xsl:include href="kml-timeline.xsl"/>
 
 	<xsl:variable name="currentid">
 		<xsl:value-of select="export/references/reference/id"/>
@@ -455,6 +455,64 @@
 					a.annotation.superscript {
 						display: none;
 					}
+					
+					/* timemap styles */
+					#map {
+					padding: 0;
+					margin: 0;
+					position: absolute;
+					top: 20px;
+					left: 10px;
+					right: 0;
+					bottom: 0;
+					overflow: auto;
+					text-align: center; 
+					
+					}
+					#timeline { 
+					padding: 0;
+					margin: 0;
+					position: absolute;
+					top: 400px;
+					left: 120px;
+					right: 0;
+					bottom: 0;
+					overflow: auto; 
+					text-align: center; float: left;
+					}
+					
+					#timeline-zoom {
+					padding: 0;
+					margin: 0;
+					position: absolute;
+					top: 400px;
+					width: 120px;
+					left: 10px;
+					right: 0;
+					bottom: 0;
+					
+					
+					
+					}
+					
+					
+					#div-main {
+					position:relative;
+					float:center;   
+					}
+					
+					a.timeline-zoom-a, a.timeline-zoom-a:hover, a.timeline-zoom-a:visited{
+					text-decoration:none;
+					padding-left: 5px;
+					font-size: 11px;
+					
+					}
+					
+					.selected{
+					font-size: 11px;
+					background-color: yellow;
+					}
+					
 
 				</style>
 
@@ -531,7 +589,12 @@
 					top.HEURIST.fireEvent = function(e, e){};
 				</script>
 				<script src="http://dos-sandbox.heuristscholar.org/heurist/php/js/heurist-obj-user.php"></script>
+				<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
+				<xsl:if test="/export/references/reference/reftype[@id=103]">
 
+					<script type="text/javascript" src="http://simile.mit.edu/timeline/api/timeline-api.js"></script>
+					<script src="http://heuristscholar.org/dos-sandbox/timemap.1.3/timemap.js" type="text/javascript"></script>
+				</xsl:if>
 			</head>
 			<body pub_id="{/export/@pub_id}"  >
 
