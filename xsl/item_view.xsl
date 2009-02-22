@@ -2,15 +2,13 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:str="http://exslt.org/strings" version="1.0">
 
-
-	<!-- modifications made by Steven Hayes - Feb 26 - to integrate changes illustrated in   -->
 	<xsl:param name="id"/>
 	<xsl:param name="related_reftype_filter"/>
 	<xsl:param name="flavour"/>
 
-	<xsl:variable name="hbase">http://dos-sandbox.heuristscholar.org/heurist</xsl:variable>
-	<xsl:variable name="urlbase">/dos-sandbox</xsl:variable>
-	<xsl:variable name="cocoonbase">/cocoon/dos/sandbox</xsl:variable>
+	<xsl:include href="myvariables.xsl"/>
+
+
 
 	<xsl:include href="author_editor.xsl"/>
 	<xsl:include href="books-etc.xsl"/>
@@ -508,8 +506,8 @@
 				<!-- text and table styling -->
 
 				<script>
-					var pathDos = "http://heuristscholar.org/cocoon/dos/sandbox/item/";
-					var imgpath = "http://heuristscholar.org/dos-sandbox/img/reftype/";
+					var pathDos = "http://heuristscholar.org/{$cocoonbase}/item/";
+					var imgpath = "http://heuristscholar.org/{$urlbase}/img/reftype/";
 
 					function showFootnote(recordID) {
 						document.getElementById("page").style.bottom = "205px";
@@ -566,10 +564,10 @@
 
 				</script>
 
-				<script src="http://hapi.heuristscholar.org/load?instance=dos-sandbox&amp;key=32cbfd399bdf50a8f78df916af30c961468964ee"></script>
+				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;key={$hapi-key}"></script>
 				<script>
 					if (!HCurrentUser.isLoggedIn()) {
-						window.location = 'http://dos-sandbox.heuristscholar.org/heurist/php/login-vanilla.php?logo=http://heuristscholar.org/dos-sandbox/images/logo.png&amp;home=http://heuristscholar.org/dos-sandbox';
+					window.location = 'http://{$instance}heuristscholar.org/heurist/php/login-vanilla.php?logo=http://heuristscholar.org{$urlbase}/images/logo.png&amp;home=http://heuristscholar.org{$urlbase}';
 					}
 				</script>
 				<script src="{$urlbase}/js/search.js"/>
@@ -577,7 +575,7 @@
 					top.HEURIST = {};
 					top.HEURIST.fireEvent = function(e, e){};
 				</script>
-				<script src="http://dos-sandbox.heuristscholar.org/heurist/php/js/heurist-obj-user.php"></script>
+				<script src="http://{$instance}heuristscholar.org/heurist/php/js/heurist-obj-user.php"></script>
 				<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
 				<xsl:if test="/export/references/reference/reftype[@id=103]">
 
@@ -596,7 +594,7 @@
 						frameborder="0" allowtransparency="true"/>
 
 					<div id="logo">
-						<a href="{$urlbase}/index.html" style="font-size: 30px;">SANDBOX</a>
+						<a href="{$urlbase}/index.html" style="font-size: 30px;"><xsl:value-of select="$site-title"/></a>
 					</div>
 
 
@@ -645,7 +643,7 @@
 						<script type="text/javascript">
 
 							var a = document.createElement("a");
-							a.href ='http://dos-sandbox.heuristscholar.org/heurist/php/login-vanilla.php?logo=http://heuristscholar.org/dos-sandbox/img/logo.png&amp;home=http://heuristscholar.org/dos-sandbox';
+							a.href ='http://{$instance}heuristscholar.org/heurist/php/login-vanilla.php?logo=http://heuristscholar.org/{$urlbase}/img/logo.png&amp;home=http://heuristscholar.org/{$urlbase}';
 
 
 							if (HCurrentUser.isLoggedIn()) {
@@ -659,7 +657,7 @@
 							document.getElementById("login").appendChild(a);
 
 						</script>
-						</td><td id="heurist-link"><a href="http://dos-sandbox.heuristscholar.org/heurist/">Heurist</a></td></tr>
+						</td><td id="heurist-link"><a href="http://{$instance}heuristscholar.org/heurist/">Heurist</a></td></tr>
 						</table>
 					</div>
 
