@@ -38,7 +38,7 @@
             }),
             data: {
             type: "kml", // Data to be loaded in KML - must be a local URL
-            url: "http://heuristscholar.org/dos-sandbox/blank.kml" // KML file to load
+            url: "http://heuristscholar.org<xsl:value-of select="$urlbase"/>/blank.kml" // KML file to load
             }
             }
             ,
@@ -52,7 +52,7 @@
                 }),
                 data: {
                 type: "kml", // Data to be loaded in KML - must be a local URL
-                url: "http://heuristscholar.org/cocoon/dos/sandbox/kmlfile/<xsl:value-of select="id"/>" // KML file to load
+                url: "http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmlfile/<xsl:value-of select="id"/>" // KML file to load
                 }
                 }
                 ,
@@ -66,7 +66,7 @@
             }),
             data: {
             type: "kml", // Data to be loaded in KML - must be a local URL
-            url: "http://heuristscholar.org/cocoon/dos/sandbox/kmltrans/<xsl:value-of select="id"/>" // KML file to load
+            url: "http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmltrans/relatedto:<xsl:value-of select="id"/>" // KML file to load
             }
             }
             ,
@@ -78,7 +78,7 @@
             }),
             data: {
             type: "kml", // Data to be loaded in KML - must be a local URL
-            url: "http://heuristscholar.org/dos-sandbox/blank.kml" // KML file to load
+            url: "http://heuristscholar.org<xsl:value-of select="$urlbase"/>/blank.kml" // KML file to load
             }
             }],
             bandInfo:[ {
