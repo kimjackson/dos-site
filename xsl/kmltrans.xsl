@@ -19,10 +19,7 @@
 		<Folder>
 			<name><xsl:value-of select="kml:name"/></name>
 			<description><xsl:value-of select="kml:description"/></description>
-			<TimeSpan>
-				<begin><xsl:value-of select="kml:TimeSpan/kml:begin"/></begin>
-				<end><xsl:value-of select="kml:TimeSpan/kml:end"/></end>
-			</TimeSpan>
+			
 			<xsl:apply-templates select="kml:Placemark"/>
 		</Folder>
 	</xsl:template>
@@ -36,7 +33,10 @@
 							<xsl:with-param name="itemname" select="kml:name"/>
 						</xsl:apply-templates>
 					</description>
-
+					<TimeSpan>
+						<begin><xsl:value-of select="../kml:TimeSpan/kml:begin"/></begin>
+						<end><xsl:value-of select="../kml:TimeSpan/kml:end"/></end>
+					</TimeSpan>
 					<!-- would be great to control style here -->
 					<Style>
 						<LineStyle>
