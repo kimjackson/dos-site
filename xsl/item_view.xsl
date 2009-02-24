@@ -4,7 +4,7 @@
 
 	<xsl:param name="id"/>
 	<xsl:param name="related_reftype_filter"/>
-	<xsl:param name="flavour"/>
+	
 
 	<xsl:include href="myvariables.xsl"/>
 
@@ -506,8 +506,8 @@
 				<!-- text and table styling -->
 
 				<script>
-					var pathDos = "http://heuristscholar.org/{$cocoonbase}/item/";
-					var imgpath = "http://heuristscholar.org/{$urlbase}/img/reftype/";
+					var pathDos = "http://heuristscholar.org/<xsl:value-of select="$cocoonbase"/>/item/";
+					var imgpath = "http://heuristscholar.org/<xsl:value-of select="$urlbase"/>/img/reftype/";
 
 					function showFootnote(recordID) {
 						document.getElementById("page").style.bottom = "205px";
@@ -567,7 +567,7 @@
 				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;key={$hapi-key}"></script>
 				<script>
 					if (!HCurrentUser.isLoggedIn()) {
-					window.location = 'http://{$instance}heuristscholar.org/heurist/php/login-vanilla.php?logo=http://heuristscholar.org{$urlbase}/images/logo.png&amp;home=http://heuristscholar.org{$urlbase}';
+					window.location = 'http://<xsl:value-of select="$instance_prefix"/>heuristscholar.org/heurist/php/login-vanilla.php?logo=http://heuristscholar.org<xsl:value-of select="$urlbase"/>/images/logo.png&amp;home=http://heuristscholar.org<xsl:value-of select="$urlbase"/>';
 					}
 				</script>
 				<script src="{$urlbase}/js/search.js"/>
@@ -575,12 +575,12 @@
 					top.HEURIST = {};
 					top.HEURIST.fireEvent = function(e, e){};
 				</script>
-				<script src="http://{$instance}heuristscholar.org/heurist/php/js/heurist-obj-user.php"></script>
+				<script src="http://{$instance_prefix}heuristscholar.org/heurist/php/js/heurist-obj-user.php"></script>
 				<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
 				<xsl:if test="/export/references/reference/reftype[@id=103]">
 
 					<script type="text/javascript" src="http://simile.mit.edu/timeline/api/timeline-api.js"></script>
-					<script src="http://heuristscholar.org/dos-sandbox/timemap.1.3/timemap.js" type="text/javascript"></script>
+					<script src="http://heuristscholar.org/{$urlbase}/timemap.1.3/timemap.js" type="text/javascript"></script>
 				</xsl:if>
 			</head>
 			<body pub_id="{/export/@pub_id}"  >
@@ -643,7 +643,7 @@
 						<script type="text/javascript">
 
 							var a = document.createElement("a");
-							a.href ='http://{$instance}heuristscholar.org/heurist/php/login-vanilla.php?logo=http://heuristscholar.org/{$urlbase}/img/logo.png&amp;home=http://heuristscholar.org/{$urlbase}';
+							a.href ='http://<xsl:value-of select="$instance_prefix"/>heuristscholar.org/heurist/php/login-vanilla.php?logo=http://heuristscholar.org/{$urlbase}/img/logo.png&amp;home=http://heuristscholar.org/{$urlbase}';
 
 
 							if (HCurrentUser.isLoggedIn()) {
@@ -657,7 +657,7 @@
 							document.getElementById("login").appendChild(a);
 
 						</script>
-						</td><td id="heurist-link"><a href="http://{$instance}heuristscholar.org/heurist/">Heurist</a></td></tr>
+						</td><td id="heurist-link"><a href="http://{$instance_prefix}heuristscholar.org/heurist/">Heurist</a></td></tr>
 						</table>
 					</div>
 
