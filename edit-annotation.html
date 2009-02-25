@@ -1,6 +1,6 @@
 <html>
  <head>
- 	<script src="http://hapi.heuristscholar.org/load?instance=gallipoli&key=11c1176c938b217c8a7eca9a428a6ab8f0d8b541"></script>
+ 	<script src=http://hapi.heuristscholar.org/load?instance=gallipoli&key=11c1176c938b217c8a7eca9a428a6ab8f0d8b541></script>
   <script>
 
 	var record;
@@ -76,7 +76,7 @@ function loadOptions(record){
 
 	function annotation_loaded() {
 	    // capitalize the title
-		var at = record.getDetail(HDetailManager.getDetailTypeById(359));
+		/*var at = record.getDetail(HDetailManager.getDetailTypeById(359));
 	    var title;
 	    switch (at) {
 			case "Annotation Entity":
@@ -104,10 +104,10 @@ function loadOptions(record){
 				title  = "Gloss Annotation";
 				annotation_type = "glossary";
 				break;
-		}
+		}*/
 
 
-		document.getElementById("pagetitle").innerHTML = "Add/edit " + title;
+		document.getElementById("pagetitle").innerHTML = "Add/edit annotation";
 		loadOptions(record);
 		for (var i in detail_types) {
 			var val = record.getDetail(detail_types[i]);
@@ -119,9 +119,9 @@ function loadOptions(record){
 				case 540: document.getElementById("end_e").value = val; break;
 				case 329: document.getElementById("start_w").value = val; break;
 				case 330: document.getElementById("end_w").value = val; break;
-				case 359: document.getElementById("type").value = val; break;
-				case 303: document.getElementById(303).value = val; break;
-				case 531: document.getElementById(531).value = val; break;
+				//case 359: document.getElementById("type").value = val; break;
+				//case 303: document.getElementById(303).value = val; break;
+				//case 531: document.getElementById(531).value = val; break;
 				case 199: if(val){setRecord(val.getID(), val.getTitle(), "linked");} break;
 				case 508: if(val){setRecord(val.getID(), val.getTitle(), "image");} break;
 			}
@@ -137,7 +137,7 @@ function loadOptions(record){
 		}
 
 		matches = window.location.href.match(/[?&]type=([a-z]+)/);
-		if (matches) {
+		/*if (matches) {
 			annotation_type = matches[1];
 		} else {
 			annotation_type = "entity";
@@ -147,14 +147,14 @@ function loadOptions(record){
 
 			document.getElementById("linked-record-tr").style.display = "none";
 			//document.getElementById("type-tr").style.display = "none";
-		}
+		}*/
 
 		// capitalize the title
 		// var tmpChar = annotation_type.substring(0,1).toUpperCase();
         // var postString = annotation_type.substring(1,annotation_type.length);
          //var title = tmpChar + postString;
-		 loadOptions();
-		  switch (annotation_type) {
+		// loadOptions();
+		 /* switch (annotation_type) {
 			case "entity":
 				title = "Entity Annotation";
 				break;
@@ -170,10 +170,10 @@ function loadOptions(record){
 			case "glossary":
 				title  = "Gloss Annotation";
 				break;
-		}
+		}*/
 
 
-		document.getElementById("pagetitle").innerHTML = "Add/edit "+title;
+		document.getElementById("pagetitle").innerHTML = "Add/edit annotation";
 
 		// disable section inputs
 		document.getElementById("start_e").disabled = true;
@@ -196,7 +196,7 @@ function loadOptions(record){
 		// WARNING BRITTLE CODE BELOW
 		// If the enum values for annotation type are changed this will break.
 		// There's no other way to do it though.
-		switch (annotation_type) {
+		/*switch (annotation_type) {
 			case "entity":
 				document.getElementById("type").value = "Annotation Entity";
 				break;
@@ -212,7 +212,7 @@ function loadOptions(record){
 			case "glossary":
 				document.getElementById("type").value = "Annotation Gloss";
 				break;
-		}
+		}*/
 
 		var refdoc_title;
 
@@ -293,9 +293,9 @@ function loadOptions(record){
 				case 540: val = end_e != start_e ? end_e : null; break;
 				case 329: val = start_w; break;
 				case 330: val = end_w != start_w ? end_w : null; break;
-				case 359: val = document.getElementById("type").value; break;
-				case 531: val = document.getElementById(531).value; break;
-				case 303: val = document.getElementById(303).value; break;
+				//case 359: val = document.getElementById("type").value; break;
+				//case 531: val = document.getElementById(531).value; break;
+				//case 303: val = document.getElementById(303).value; break;
 				case 199: val = linked_record;  break;
 				case 508: val = image_record; break;
 			}
@@ -368,7 +368,7 @@ function loadOptions(record){
 
 	}
 	function addRecordDiv(div, annotation_type, active_search){
-
+		annotation_type="text";
 		switch (annotation_type) {
 		case "entity":
 			div.innerHTML += "<br><br><input type=\"button\" value=\"Add Entity\" onclick=\"addRecord(151, '" + active_search + "');\"/>";
@@ -380,7 +380,7 @@ function loadOptions(record){
 			div.innerHTML += "<br><br><input type=\"button\" value=\"Add Multimedia\" onclick=\"addRecord(74, '" + active_search + "');\"/>";
 			break;
 		case "text":
-			div.innerHTML += "<br><br><input type=\"button\" value=\"Add Text\" onclick=\"addRecord(98, '" + active_search + "');\"/>";
+			div.innerHTML += "<br><br><input type=\"button\" value=\"Add\" onclick=\"addRecord(98, '" + active_search + "');\"/>";
 			break;
 		}
 		return div;
@@ -397,9 +397,9 @@ function loadOptions(record){
 		document.getElementById(active +"-search-span").style.display = "none";
 		document.getElementById(active +"-display-span").style.display = "inline";
 		document.getElementById(active +"-results-div").style.display = "none";
-		if (document.getElementById("type").value == "Annotation - Entity") {
-			document.getElementById("title").value = title;
-		}
+		//if (document.getElementById("type").value == "Annotation - Entity") {
+			//document.getElementById("title").value = title;
+		//}
 		var setRecord = function() {
 			if (active == "linked") {
 				linked_record = HeuristScholarDB.getRecord(id);
@@ -465,15 +465,13 @@ function loadOptions(record){
    </tr-->
 
    <tr>
-    <td>dc.title</td><td colspan=3><input type=text id=title style="width: 60ex;"/></td>
+    <td>Title</td><td colspan=3><input type=text id=title style="width: 60ex;"/></td>
    </tr>
    <tr>
     <td>caption</td><td colspan=3><textarea id=notes style="width: 70ex; height: 20ex;"></textarea></td>
    </tr>
    <tr><td>&nbsp;</td></tr>
-   <tr id="type-tr">
-    <td>dc.type</td><td><input type=text id="type" disabled="true"/></td>
-   </tr>
+   
    <form id="linked-search-form" onSubmit="doSearch('linked'); return false;">
     <tr id="linked-record-tr">
     <td>target</td>
@@ -534,12 +532,7 @@ function loadOptions(record){
      </table>
     </td>
    </tr>
- <tr>
-    <td>dos.notes</td><td colspan=3><textarea id=303 style="width: 70ex;"></textarea></td>
-   </tr>
-   <tr>
-    <td>dos.status</td><td colspan=3><select id="531"></select></td>
-   </tr>
+ 
    <tr><td>&nbsp;</td></tr>
    <tr>
     <td><input type=button value=save onclick="saveRecord();"/>
