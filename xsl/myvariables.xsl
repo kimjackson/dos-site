@@ -3,7 +3,7 @@
     <xsl:variable name="hbase">http://gallipoli.heuristscholar.org/heurist</xsl:variable>
     <xsl:variable name="urlbase">/gallipoli</xsl:variable>
     <xsl:variable name="cocoonbase">/cocoon/gallipoli</xsl:variable>
-    <xsl:variable name="hapi-key">d70e40a47f9b8451d9899cc166bc254aa69ee843</xsl:variable>
+    <xsl:variable name="hapi-key">11c1176c938b217c8a7eca9a428a6ab8f0d8b541</xsl:variable>
     <xsl:variable name="instance">gallipoli</xsl:variable>
     <xsl:variable name="instance_prefix">gallipoli.</xsl:variable>
     <xsl:variable name="site-title">gallipoli</xsl:variable>
