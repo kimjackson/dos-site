@@ -17,9 +17,13 @@
 
 	<xsl:template match="kml:Folder">
 		<Folder>
-			<name><xsl:value-of select="kml:name"/></name>
-			<description><xsl:value-of select="kml:description"/></description>
-			
+			<name>
+				<xsl:value-of select="kml:name"/>
+			</name>
+			<description>
+				<xsl:value-of select="kml:description"/>
+			</description>
+
 			<xsl:apply-templates select="kml:Placemark"/>
 		</Folder>
 	</xsl:template>
@@ -29,14 +33,32 @@
 			<xsl:when test="position() = 1">
 				<Placemark>
 					<description>
-						<xsl:apply-templates select="kml:description/kml:a">
+						
+						<!-- xsl:value-of select="../kml:description"/ -->
+						
+						<xsl:apply-templates select="../kml:description/kml:a">
 							<xsl:with-param name="itemname" select="kml:name"/>
 						</xsl:apply-templates>
 					</description>
-					<TimeSpan>
-						<begin><xsl:value-of select="../kml:TimeSpan/kml:begin"/></begin>
-						<end><xsl:value-of select="../kml:TimeSpan/kml:end"/></end>
-					</TimeSpan>
+					<xsl:choose>
+						<xsl:when test="../kml:TimeStamp/kml:when">
+							<TimeStamp>
+								<when>
+									<xsl:value-of select="../kml:TimeStamp/kml:when"/>
+								</when>
+							</TimeStamp>
+						</xsl:when>
+						<xsl:otherwise>
+							<TimeSpan>
+								<begin>...
+									<xsl:value-of select="../kml:TimeSpan/kml:begin"/>
+								</begin>
+								<end>
+									<xsl:value-of select="../kml:TimeSpan/kml:end"/>
+								</end>
+							</TimeSpan>
+						</xsl:otherwise>
+					</xsl:choose>
 					<!-- would be great to control style here -->
 					<Style>
 						<LineStyle>
@@ -51,7 +73,8 @@
 	</xsl:template>
 
 	<xsl:template match="kml:a">
-		<xsl:param name="itemname"/>&lt;a href=http://heuristscholar.org/cocoon/dos/sandbox/item/<xsl:value-of select="substring-after(@href,'resource/')"/>&gt;<xsl:value-of select="$itemname"/>&lt;/a&gt;
+		<xsl:param name="itemname"/>
+		[&lt;a<xsl:value-of select="@href"/>&gt;<xsl:value-of select="$itemname"/>&lt;/a&gt;] [<xsl:value-of select="@href"/>]
 	</xsl:template>
 
 </xsl:stylesheet>
