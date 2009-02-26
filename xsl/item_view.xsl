@@ -13,7 +13,7 @@
 	<xsl:include href="author_editor.xsl"/>
 	<xsl:include href="books-etc.xsl"/>
 	<xsl:include href="factoid.xsl"/>
-	<xsl:include href="historical_event.xsl"/>
+	<!-- xsl:include href="historical_event.xsl"/ -->
 	<xsl:include href="internet_bookmark.xsl"/>
 	<xsl:include href="media.xsl"/>
 	<xsl:include href="teidoc.xsl"/>
@@ -159,7 +159,7 @@
 					padding: 0;
 					margin: 0;
 					position: absolute;
-					top: 125px;
+					top: 75px;
 					left: 0px;
 					right: 250px;
 					bottom: 0px;
@@ -210,10 +210,10 @@
 					top: 0px;
 					right: 0px;
 					width: 200px;
-					height: 100px;
+					height: 50px;
 					overflow: auto;
 					/* IE only */
-					height: expression(document.documentElement.clientHeight-100);
+					height: expression(document.documentElement.clientHeight-50);
 					}
 
 					#map {
@@ -228,13 +228,13 @@
 					padding: 0;
 					margin: 0;
 					position: absolute;
-					top: 125px;
+					top: 75px;
 					right: 0px;
 					bottom: 0px;
 					overflow: auto;
 					width: 250px;
 					/* IE only */
-					height: expression(document.documentElement.clientHeight-100);
+					height: expression(document.documentElement.clientHeight-75);
 					}
 					#sidebar-inner { padding: 5px; }
 
@@ -242,7 +242,7 @@
 					padding: 0;
 					margin: 0;
 					position: absolute;
-					top: 100px;
+					top: 50px;
 					left: 0px;
 					right: 251px;
 					height: 25px;
@@ -256,7 +256,7 @@
 					padding: 0;
 					margin: 0;
 					position: absolute;
-					top: 100px;
+					top: 50px;
 					right: 0px;
 					bottom: 0px;
 
@@ -588,7 +588,7 @@
 				</script>
 				<script src="http://{$instance_prefix}heuristscholar.org/heurist/php/js/heurist-obj-user.php"></script>
 				<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
-				<xsl:if test="/export/references/reference/reftype[@id=103]">
+				<xsl:if test="/export/references/reference/reftype[@id=103 or @id=51 or @id=55]">
 
 					<script type="text/javascript" src="http://simile.mit.edu/timeline/api/timeline-api.js"></script>
 					<script src="http://heuristscholar.org/{$urlbase}/timemap.1.3/timemap.js" type="text/javascript"></script>
@@ -599,13 +599,13 @@
 
 
 				<div id="header">
-					<iframe
+					<!-- iframe
 						src="{$cocoonbase}/breadcrumbs?flavour={$flavour}&amp;title={export/references/reference/title}&amp;url=http://heuristscholar.org{$cocoonbase}/item/{$id}/{$related_reftype_filter}%3Fflavour={$flavour}"
 						style="width: 100%; height: 100%; border: none; overflow: visible;"
-						frameborder="0" allowtransparency="true"/>
+						frameborder="0" allowtransparency="true"/ -->
 
 					<div id="logo">
-						<a href="{$urlbase}/index.html" style="font-size: 30px;"><xsl:value-of select="$site-title"/></a>
+						<a href="{$cocoonbase}/item/{$home-id}" style="font-size: 30px;"><xsl:value-of select="$site-title"/></a>
 					</div>
 
 
@@ -617,7 +617,7 @@
 							<tr>
 								<xsl:if test=" $id != 2674">
 								<!--td style="font-size: 85%;padding-right:10px;">Add:</td-->
-								<td style="font-size: 85%;padding-right:10px; "><a  href='#' onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}&amp;type=term','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Term"><img src='{$urlbase}/images/152.gif' align="absmiddle"/></a> Term annotation</td>
+									<td style="font-size: 85%;padding-right:10px; "><xsl:value-of select="$urlbase"/> <a  href='#' onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}&amp;type=term','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Term"><img src='{$urlbase}/images/152.gif' align="absmiddle"/></a> Term annotation</td>
 
 								<td style="font-size: 85%;padding-right:10px; "><a  href='#' onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}&amp;type=multimedia','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Multimedia item"><img src='{$urlbase}/images/74.gif'  align="absmiddle"/></a> Multimedia annotation</td>
 
@@ -704,7 +704,7 @@
 				</div>
 
 				<div id="page">
-					<div id="page-inner">
+					<div id="page-inner" style="width: 40%; height: 370px; margin-right: auto; margin-left: 10px">
 						<h1>
 							<!-- <xsl:value-of select="export/references/reference[1]/title"/> -->
 							 <span style="padding-right:5px; vertical-align:top">

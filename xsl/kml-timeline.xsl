@@ -1,13 +1,14 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">    
     
-    <xsl:template name="kml" match="reference[reftype/@id=103]">
+    <xsl:template name="kml" match="reference[reftype/@id=103 or reftype/@id=51 or reftype/@id=55]">
         <div id="main" class="div-main">
-            <div id="map" class="map"  style="width: 990px; height: 370px;"/>
+            <xsl:choose><xsl:when test="reftype/@id=55 or reftype/@id=51"><div id="map" class="map"  style="width: 50%; height: 370px; margin-left: auto; margin-right: 10px"/></xsl:when>
+                <xsl:otherwise><div id="map" class="map"  style="width: 990px; height: 370px;"/></xsl:otherwise>
+            </xsl:choose>
             
-            <div id="timeline" class="timeline" style="width: 880px; height: 300px; overflow-x:hidden;"/>
+            <div id="timeline" class="timeline" style="width: 880px; height: 200px; overflow-x:hidden;"/>
             <div id="timeline-zoom"></div>
         </div>
-        
         
         <script type="text/javascript">
         
@@ -63,7 +64,21 @@
             title: "Related records",
             theme: TimeMapDataset.greenTheme({
             eventIconPath: '../images/'
-            }),
+            })
+            ,
+            data: {
+            type: "kml", // Data to be loaded in KML - must be a local URL
+            url: "http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmltrans/id:<xsl:value-of select="id"/>" // KML file to load
+            }
+            }
+            ,
+            
+            {
+            title: "focus record",
+            theme: TimeMapDataset.redTheme({
+            eventIconPath: '../images/'
+            })
+            ,
             data: {
             type: "kml", // Data to be loaded in KML - must be a local URL
             url: "http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmltrans/relatedto:<xsl:value-of select="id"/>" // KML file to load
@@ -85,7 +100,7 @@
             width: "50%",
             intervalUnit: tl1,
             intervalPixels: 100,
-            showEventText: true,
+            showEventText: false,
             trackHeight: 1.5,
             trackGap: 0.2
             }, {
