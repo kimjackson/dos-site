@@ -8,4 +8,6 @@
     <xsl:variable name="instance_prefix">gallipoli.</xsl:variable>
     <xsl:variable name="site-title">gallipoli</xsl:variable>
     <xsl:variable name="home-id">249</xsl:variable>
+    <xsl:variable name="default-timespan1">HOURS</xsl:variable>
+    <xsl:variable name="default-timespan2">DAYS</xsl:variable>
 </xsl:stylesheet>

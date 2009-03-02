@@ -101,7 +101,7 @@
             intervalUnit: tl1,
             intervalPixels: 100,
             showEventText: false,
-            trackHeight: 1.5,
+            trackHeight: 1,
             trackGap: 0.2
             }, {
             width: "50%",

@@ -50,7 +50,7 @@
 						</xsl:when>
 						<xsl:otherwise>
 							<TimeSpan>
-								<begin>...
+								<begin>
 									<xsl:value-of select="../kml:TimeSpan/kml:begin"/>
 								</begin>
 								<end>
