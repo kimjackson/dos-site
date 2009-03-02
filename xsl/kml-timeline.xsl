@@ -19,13 +19,13 @@
            }
             function onLoad(tl1,tl2,id) {
             if(!tl1) {
-            var tl1 = Timeline.DateTime.<xsl:choose><xsl:when test="detail[@id=565]"><xsl:value-of select="detail[@id=565]"/></xsl:when><xsl:otherwise>HOUR</xsl:otherwise></xsl:choose>;
+            var tl1 = Timeline.DateTime.<xsl:choose><xsl:when test="detail[@id=565]"><xsl:value-of select="detail[@id=565]"/></xsl:when><xsl:otherwise>MONTH</xsl:otherwise></xsl:choose>;
             }
             if(!tl2) {
-            var tl2 = Timeline.DateTime.<xsl:choose><xsl:when test="detail[@id=566]"><xsl:value-of select="detail[@id=566]"/></xsl:when><xsl:otherwise>DAY</xsl:otherwise></xsl:choose>;
+            var tl2 = Timeline.DateTime.<xsl:choose><xsl:when test="detail[@id=566]"><xsl:value-of select="detail[@id=566]"/></xsl:when><xsl:otherwise>YEAR</xsl:otherwise></xsl:choose>;
             }
             if(!id){
-            var id = "<xsl:choose><xsl:when test="detail[@id=565]"><xsl:value-of select="detail[@id=565]"/></xsl:when><xsl:otherwise>HOUR</xsl:otherwise></xsl:choose>-<xsl:choose><xsl:when test="detail[@id=566]"><xsl:value-of select="detail[@id=566]"/></xsl:when><xsl:otherwise>YEAR</xsl:otherwise></xsl:choose>";          
+            var id = "<xsl:choose><xsl:when test="detail[@id=565]"><xsl:value-of select="detail[@id=565]"/></xsl:when><xsl:otherwise>MONTH</xsl:otherwise></xsl:choose>-<xsl:choose><xsl:when test="detail[@id=566]"><xsl:value-of select="detail[@id=566]"/></xsl:when><xsl:otherwise>YEAR</xsl:otherwise></xsl:choose>";          
            }                   
            
             TimeMap.init({
