@@ -704,10 +704,13 @@
 				</div>
 
 				<div id="page">
-					<div id="page-inner" style="width: 40%; height: 370px; margin-right: auto; margin-left: 10px">
-						<h1>
+					<xsl:choose><xsl:when test="export/references/reference/reftype[@id = 51 or @id = 55]">
+						<div id="page-inner" style="width: 40%; height: 370px; margin-right: auto; margin-left: 10px">
+					
+						
+					<h1>
 							<!-- <xsl:value-of select="export/references/reference[1]/title"/> -->
-							 <span style="padding-right:5px; vertical-align:top">
+							 <span style="padding-right:5px; vertical-align:top;">
 							 	<a  href="#" onclick="window.open('{$urlbase}/edit.html?id={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false; " title="Edit main record">
 								 <img src="{$hbase}/img/edit-pencil.gif"  style="vertical-align: top;"/></a>
 							 </span>
@@ -716,7 +719,25 @@
 						</h1>
 						<!-- full version of record -->
 						<xsl:apply-templates select="export/references/reference"/>
-					</div>
+						</div>
+					</xsl:when>
+						<xsl:otherwise>
+							<div id="page-inner" style="width: 100%; height: 370px; margin-right: auto; margin-left: auto">
+								
+								
+								<h1>
+									<!-- <xsl:value-of select="export/references/reference[1]/title"/> -->
+									<span style="padding-right:5px; vertical-align:top">
+										<a  href="#" onclick="window.open('{$urlbase}/edit.html?id={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false; " title="Edit main record">
+											<img src="{$hbase}/img/edit-pencil.gif"  style="vertical-align: top;"/></a>
+									</span>
+									
+									<xsl:value-of select="export/references/reference[1]/title"/>
+								</h1>
+								<!-- full version of record -->
+								<xsl:apply-templates select="export/references/reference"/>
+							</div>
+						</xsl:otherwise></xsl:choose>
 				</div>
 
 				<div id="footnotes">
