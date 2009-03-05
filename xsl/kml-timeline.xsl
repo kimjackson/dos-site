@@ -2,8 +2,7 @@
     
     <xsl:template name="kml" match="reference[reftype/@id=103]">
         <div id="main" class="div-main">
-            <div id="map" class="map"  style="width: 990px; height: 370px;"/>
-            
+            <div id="map" class="map"  style="width: 990px; height: 370px; padding: 0; margin: 0; position: absolute; top: 20px; left: 10px; right: 0; bottom: 0; overflow: auto; text-align: center; "/>         
             <div id="timeline" class="timeline" style="width: 880px; height: 300px; overflow-x:hidden;"/>
             <div id="timeline-zoom"></div>
         </div>

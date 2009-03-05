@@ -457,18 +457,7 @@
 					}
 					
 					/* timemap styles */
-					#map {
-					padding: 0;
-					margin: 0;
-					position: absolute;
-					top: 20px;
-					left: 10px;
-					right: 0;
-					bottom: 0;
-					overflow: auto;
-					text-align: center; 
 					
-					}
 					#timeline { 
 					padding: 0;
 					margin: 0;
@@ -577,7 +566,7 @@
 
 				</script>
 
-				<script src="http://hapi.heuristscholar.org/load?instance=dos-sandbox&amp;key=32cbfd399bdf50a8f78df916af30c961468964ee"></script>
+				<script src="http://hapi.heuristscholar.org/load?instance=dos-sandbox&amp;key=1821e4121c3cccdbc38bf0ff23dc844c53f86ce0"></script>
 				<script>
 					if (!HCurrentUser.isLoggedIn()) {
 						window.location = 'http://dos-sandbox.heuristscholar.org/heurist/php/login-vanilla.php?logo=http://heuristscholar.org/dos-sandbox/images/logo.png&amp;home=http://heuristscholar.org/dos-sandbox';
