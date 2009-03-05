@@ -588,7 +588,7 @@
 				</script>
 				<script src="http://{$instance_prefix}heuristscholar.org/heurist/php/js/heurist-obj-user.php"></script>
 				<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
-				<xsl:if test="/export/references/reference/reftype[@id=103 or @id=51 or @id=55]">
+				<xsl:if test="/export/references/reference/reftype[@id=103 or @id=51]">
 
 					<script type="text/javascript" src="http://simile.mit.edu/timeline/api/timeline-api.js"></script>
 					<script src="http://heuristscholar.org/{$urlbase}/timemap.1.3/timemap.js" type="text/javascript"></script>
@@ -599,10 +599,13 @@
 
 
 				<div id="header">
-					<!-- iframe
-						src="{$cocoonbase}/breadcrumbs?flavour={$flavour}&amp;title={export/references/reference/title}&amp;url=http://heuristscholar.org{$cocoonbase}/item/{$id}/{$related_reftype_filter}%3Fflavour={$flavour}"
+					<iframe
+						src="{$cocoonbase}/breadcrumbs?id={$id}"
 						style="width: 100%; height: 100%; border: none; overflow: visible;"
-						frameborder="0" allowtransparency="true"/ -->
+						frameborder="0" allowtransparency="true"> </iframe>
+					
+					<!-- xsl:apply-templates select="document('http://heuristscholar.org/cocoon/hayes/breadcrumbs/xml')"/ -->
+					
 
 					<div id="logo">
 						<a href="{$cocoonbase}/item/{$home-id}" style="font-size: 30px;"><xsl:value-of select="$site-title"/></a>
@@ -704,13 +707,10 @@
 				</div>
 
 				<div id="page">
-					<xsl:choose><xsl:when test="export/references/reference/reftype[@id = 51 or @id = 55]">
-						<div id="page-inner" style="width: 40%; height: 370px; margin-right: auto; margin-left: 10px">
-					
-						
-					<h1>
+					<div id="page-inner">
+						<h1>
 							<!-- <xsl:value-of select="export/references/reference[1]/title"/> -->
-							 <span style="padding-right:5px; vertical-align:top;">
+							 <span style="padding-right:5px; vertical-align:top">
 							 	<a  href="#" onclick="window.open('{$urlbase}/edit.html?id={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false; " title="Edit main record">
 								 <img src="{$hbase}/img/edit-pencil.gif"  style="vertical-align: top;"/></a>
 							 </span>
@@ -719,25 +719,7 @@
 						</h1>
 						<!-- full version of record -->
 						<xsl:apply-templates select="export/references/reference"/>
-						</div>
-					</xsl:when>
-						<xsl:otherwise>
-							<div id="page-inner" style="width: 100%; height: 370px; margin-right: auto; margin-left: auto">
-								
-								
-								<h1>
-									<!-- <xsl:value-of select="export/references/reference[1]/title"/> -->
-									<span style="padding-right:5px; vertical-align:top">
-										<a  href="#" onclick="window.open('{$urlbase}/edit.html?id={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false; " title="Edit main record">
-											<img src="{$hbase}/img/edit-pencil.gif"  style="vertical-align: top;"/></a>
-									</span>
-									
-									<xsl:value-of select="export/references/reference[1]/title"/>
-								</h1>
-								<!-- full version of record -->
-								<xsl:apply-templates select="export/references/reference"/>
-							</div>
-						</xsl:otherwise></xsl:choose>
+					</div>
 				</div>
 
 				<div id="footnotes">
@@ -750,13 +732,11 @@
 			</body>
 		</html>
 	</xsl:template>
+	
 
 	<xsl:template match="breadcrumbs">
 		<xsl:for-each select="breadcrumb">
-			<xsl:sort select="id"/>
-			<a href="{url}">
-				<xsl:value-of select="title"/>
-			</a>
+			[<xsl:value-of select="id"/>]
 		</xsl:for-each>
 	</xsl:template>
 

@@ -1,14 +1,18 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">    
     
-    <xsl:template name="kml" match="reference[reftype/@id=103 or reftype/@id=51 or reftype/@id=55]">
+    <xsl:template name="kml" match="reference[reftype/@id=103 or reftype/@id=51]">
         <div id="main" class="div-main">
-            <xsl:choose><xsl:when test="reftype/@id=55 or reftype/@id=51"><div id="map" class="map"  style="width: 50%; height: 370px; margin-left: auto; margin-right: 10px"/></xsl:when>
-                <xsl:otherwise><div id="map" class="map"  style="width: 990px; height: 370px;"/></xsl:otherwise>
-            </xsl:choose>
+            <div id="map" class="map"  style="width: 990px; height: 370px;"/>
             
-            <div id="timeline" class="timeline" style="width: 880px; height: 200px; overflow-x:hidden;"/>
+            <div id="timeline" class="timeline" style="width: 880px; height: 300px; overflow-x:hidden;"/>
             <div id="timeline-zoom"></div>
+            
+            
+           
+            
+            
         </div>
+        
         
         <script type="text/javascript">
         
@@ -101,7 +105,7 @@
             intervalUnit: tl1,
             intervalPixels: 100,
             showEventText: false,
-            trackHeight: 1,
+            trackHeight: 1.5,
             trackGap: 0.2
             }, {
             width: "50%",

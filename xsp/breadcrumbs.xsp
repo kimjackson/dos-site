@@ -10,35 +10,24 @@
 
 	<breadcrumbs>
 		<xsp:logic>
-			ArrayList breadcrumbs = (ArrayList)session.getAttribute("dos-sandbox-breadcrumbs");
+			ArrayList breadcrumbs = (ArrayList)session.getAttribute("breadcrumbs");
 			if (breadcrumbs == null) {
 				breadcrumbs = new ArrayList();
 			}
 
-			String title = request.getParameter("title");
-			String url = request.getParameter("url");
+			String id = request.getParameter("id");
 
-			if (title != null &amp;&amp; url != null) {
-				String[] last = null;
-				if (breadcrumbs.size() &gt; 0) {
-					last = (String[]) breadcrumbs.get(breadcrumbs.size() - 1);
-				}
-
-				if (last == null  ||  ! url.equals(last[1])) {
-					while (breadcrumbs.size() &gt; 4) breadcrumbs.remove(0);
-					String[] crumb = {title, url};
+			if (id != null) {
+					String[] crumb = {id};
 					breadcrumbs.add(crumb);
-					session.setAttribute("dos-sandbox-breadcrumbs", breadcrumbs);
-				}
+					session.setAttribute("breadcrumbs", breadcrumbs);
 			}
 
-			for (int i = 0; i &lt; breadcrumbs.size(); ++i) {
+			for (int i = breadcrumbs.size()-1; i &gt;  -1; --i) {
 				String[] crumb = (String[]) breadcrumbs.get(i);
 				<xsp:content>
 					<breadcrumb>
-						<id><xsp:expr>i</xsp:expr></id>
-						<title><xsp:expr>crumb[0]</xsp:expr></title>
-						<url><xsp:expr>crumb[1]</xsp:expr></url>
+						<id><xsp:expr>crumb[0]</xsp:expr></id>
 					</breadcrumb>
 				</xsp:content>
 			}
