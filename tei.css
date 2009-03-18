@@ -1,0 +1,28 @@
+/* TEI styles */
+
+p.DoSBlockquote {
+	font-family:"Times New Roman", Times, serif;
+	padding-right: 50px;
+	padding-left: 50px;
+}
+span.italics {
+	font-style: italic;
+}
+span.bold {
+	font-weight: bold;
+}
+span.note {
+	display: none;
+}
+
+/* annotation styles */
+a.annotation {
+	background-color: #ffffc0;
+}
+a.annotation.multiple {
+	background-color: #ffff70;
+}
+a.annotation.superscript {
+	display: none;
+}
+

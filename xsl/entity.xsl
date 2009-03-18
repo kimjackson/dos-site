@@ -7,61 +7,6 @@
 
 	<xsl:param name="flavour"/>
 
-	<xsl:template
-		match="related[reftype/@id=151] | pointer[reftype/@id=151] | reverse-pointer[reftype/@id=151]">
-		<xsl:param name="matches"/>
-		<!-- trickiness!
-		     First off, this template will catch a single related (/ pointer / reverse-pointer) record,
-		     with the full list as a parameter ("matches").  This gives the template a chance to sort the records
-		     and call itself with those sorted records
-		-->
-		<xsl:choose>
-			<xsl:when test="$matches">
-				<xsl:apply-templates select="$matches">
-					<xsl:sort select="detail[@id=160]"/>
-				</xsl:apply-templates>
-			</xsl:when>
-			<xsl:otherwise>
-
-				<tr>
-					<xsl:element name="td">
-
-						<xsl:attribute name="class">relateditem</xsl:attribute>
-						<xsl:attribute name="title">{Relationship type: <xsl:value-of select="@type"
-							/>} <xsl:if test="@notes"> &#160; <xsl:value-of select="@notes"/>
-							</xsl:if>
-						</xsl:attribute>
-						<xsl:if test="detail/file_thumb_url">
-							<a href="{$cocoonbase}/item/{id}/{/export/references/reference/reftype/@id}?flavour={$flavour}"
-								class="sb_two">
-								<img src="{detail/file_thumb_url}"/>
-							</a>
-							<br/>
-						</xsl:if>
-						<a href="{$urlbase}/edit.html?id={id}"
-							onclick="window.open(this.href,'','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;"
-							title="edit">
-						<img src="{$hbase}/img/edit-pencil.gif"/>
-						</a>
-						<a
-							href="{$cocoonbase}/item/{id}/{/export/references/reference/reftype/@id}?flavour={$flavour}"
-							class="sb_two">
-							<xsl:value-of select="detail[@id=291]"/>
-							<xsl:text> </xsl:text>
-							<xsl:value-of select="detail[@id=160]"/>
-						</a>
-					</xsl:element>
-					<td align="right">
-						<!-- change this to pick up the actuall system name of the reftye or to use the mapping method as in JHSB that calls human-readable-names.xml -->
-						<img style="vertical-align: middle;horizontal-align: right"
-							src="{$hbase}/img/reftype/{reftype/@id}.gif"/>
-					</td>
-
-				</tr>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:template>
-
 
 	<xsl:template name="entity" match="reference[reftype/@id=151]">
 

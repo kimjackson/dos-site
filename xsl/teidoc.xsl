@@ -105,9 +105,6 @@
 
 		</table>
 
-
-		<xsl:call-template name="render_refs"/>
-
 	</xsl:template>
 
 	<xsl:template match="related | pointer | reverse-pointer">
@@ -161,42 +158,6 @@
 								</xsl:otherwise>
 							</xsl:choose>
 						</a>
-					</td>
-					<td align="right">
-						<!-- change this to pick up the actuall system name of the reftye or to use the mapping method as in JHSB that calls human-readable-names.xml -->
-						<img style="vertical-align: middle;horizontal-align: right" src="{$hbase}/img/reftype/{reftype/@id}.gif"/>
-					</td>
-				</tr>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:template>
-
-	<xsl:template match="related[reftype/@id=98] | pointer[reftype/@id=98] | reverse-pointer[reftype/@id=98]">
-		<!-- this is where the display work is done summarising the related items of various types - pictures, events etc -->
-		<!-- reftype-specific templates take precedence over this one -->
-		<xsl:param name="matches"/>
-
-		<!-- trickiness!
-			First off, this template will catch a single related (/ pointer / reverse-pointer) record,
-			with the full list as a parameter ("matches").  This gives the template a chance to sort the records
-			and call itself with those sorted records
-		-->
-		<xsl:choose>
-			<xsl:when test="$matches">
-				<xsl:apply-templates select="$matches">
-					<xsl:sort select="detail[@id=169]"/>
-				</xsl:apply-templates>
-			</xsl:when>
-			<xsl:otherwise>
-
-				<tr>
-					<td>
-					     <a href="{$urlbase}/edit.html?id={id}"
-							onclick="window.open(this.href,'','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;"
-							title="edit">
-						<img src="{$hbase}/img/edit-pencil.gif"/>
-						</a>
-						<a href="{$cocoonbase}/item/{id}" class="sb_two"><xsl:value-of select="detail[@id=160]"/></a>
 					</td>
 					<td align="right">
 						<!-- change this to pick up the actuall system name of the reftye or to use the mapping method as in JHSB that calls human-readable-names.xml -->

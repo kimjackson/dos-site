@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	xmlns:str="http://exslt.org/strings" version="1.0">
+                xmlns:str="http://exslt.org/strings"
+                xmlns:exsl="http://exslt.org/common"
+                extension-element-prefixes="exsl"
+                version="1.0">
 
 	<xsl:param name="id"/>
 	<xsl:param name="related_reftype_filter"/>
@@ -21,10 +24,6 @@
 	<xsl:include href="entity.xsl"/>
 	<xsl:include href="kml-timeline.xsl"/>
 
-	<xsl:variable name="currentid">
-		<xsl:value-of select="export/references/reference/id"/>
-	</xsl:variable>
-
 	<xsl:template match="/">
 
 		<html>
@@ -32,427 +31,9 @@
 				<title>
 					<xsl:value-of select="export/references/reference/title"/>
 				</title>
-				<!-- structural styling -->
+				<link href="{$urlbase}/style.css" rel="stylesheet" type="text/css" />
+				<link href="{$urlbase}/tei.css" rel="stylesheet" type="text/css" />
 				<style type="text/css">
-					/***** HEADINGS AND GENERIC FONT STYLING *****/
-
-					H1 { font-family: Arial, Verdana, Helvetica; color:#0096E3; font-size: 12pt; vertical-align: middle}
-					H2 { font-family: Arial, Verdana, Helvetica; color:#333; font-size: 11pt}
-					H3 { font-family: Arial, Verdana, Helvetica; color:#DC8501; font-size: 10pt}
-					H4 { font-family: Arial, Verdana, Helvetica; color:#000; font-size: 10pt }
-					H5 { font-family: Arial, Verdana, Helvetica; color:#999; font-size: 9pt }
-
-					P { font-family: Arial, Verdana, Helvetica; font-size: 10pt; color:#333 }
-					TD { font-family: Arial, Verdana, Helvetica; font-size: 10pt; color:#333 }
-					UL { font-family: Arial, Verdana, Helvetica; font-size: 10pt; color:#333 }
-
-					P.sb_ttl { font-family: Arial, Verdana, Helvetica; font-size: 9pt; font-weight: bold; color:#666 }
-
-					P.footer { font-family: Verdana, Arial, Helvetica; color:#999999; font-size: 8pt}
-					P.intro { font-family: Arial, Verdana, Helvetica; font-size: 12pt; color:#666 }
-
-
-
-					/***** LINK STYLING *****/
-
-
-					A:link { font-family: Arial, Verdana, Helvetica; color:#0065CF; font-size: 10pt }
-					A:visited { font-family: Arial, Verdana, Helvetica; color:#0065CF; font-size: 10pt }
-					A:active { font-family: Arial, Verdana, Helvetica; color:#0096E3; font-size: 10pt }
-					A:hover { font-family: Arial, Verdana, Helvetica; color:#0096E3; font-size: 10pt }
-
-					A.bnnavsoff:link { font-family: Arial, Verdana, Helvetica; color:#FFFFFF; text-decoration:none; font-weight: normal; font-size: 10pt }
-					A.bnnavsoff:visited { font-family: Arial, Verdana, Helvetica; color:#FFFFFF; text-decoration:none; font-weight: normal; font-size: 10pt }
-					A.bnnavsoff:active { font-family: Arial, Verdana, Helvetica; color:#FFCC00; text-decoration:none; font-weight: normal; font-size: 10pt }
-					A.bnnavsoff:hover { font-family: Arial, Verdana, Helvetica; color:#FFCC00; text-decoration:none; font-weight: normal; font-size: 10pt }
-
-					A.sb_title:link { font-family: Arial, Verdana, Helvetica; color:#333333; text-decoration:none; font-weight: normal; font-size: 13pt }
-					A.sb_title:visited { font-family: Arial, Verdana, Helvetica; color:#333333; text-decoration:none; font-weight: normal; font-size: 13pt }
-					A.sb_title:active { font-family: Arial, Verdana, Helvetica; color:#004F98; text-decoration:none; font-weight: normal; font-size: 13pt }
-					A.sb_title:hover { font-family: Arial, Verdana, Helvetica; color:#004F98; text-decoration:none; font-weight: normal; font-size: 13pt }
-
-					A.sb_one:link { font-family: Arial, Verdana, Helvetica; color:#0065CF; text-decoration:none; font-weight: bold; font-size: 10pt }
-					A.sb_one:visited { font-family: Arial, Verdana, Helvetica; color:#0065CF; text-decoration:none; font-weight: bold; font-size: 10pt }
-					A.sb_one:active { font-family: Arial, Verdana, Helvetica; color:#0096E3; text-decoration:none; font-weight: bold; font-size: 10pt }
-					A.sb_one:hover { font-family: Arial, Verdana, Helvetica; color:#0096E3; text-decoration:none; font-weight: bold; font-size: 10pt }
-
-					A.sb_two:link { font-family: Arial, Verdana, Helvetica; color:#0065CF; text-decoration:none; font-weight: normal; font-size: 10pt }
-					A.sb_two:visited { font-family: Arial, Verdana, Helvetica; color:#0065CF; text-decoration:none; font-weight: normal; font-size: 10pt }
-					A.sb_two:active { font-family: Arial, Verdana, Helvetica; color:#0096E3; text-decoration:none; font-weight: normal; font-size: 10pt }
-					A.sb_two:hover { font-family: Arial, Verdana, Helvetica; color:#0096E3; text-decoration:none; font-weight: normal; font-size: 10pt }
-
-					A.bodynav:link { font-family: Arial, Verdana, Helvetica; color:#666666; text-decoration:none; font-weight: bold; font-size: 9pt }
-					A.bodynav:visited { font-family: Arial, Verdana, Helvetica; color:#666666; text-decoration:none; font-weight: bold; font-size: 9pt }
-					A.bodynav:active { font-family: Arial, Verdana, Helvetica; color:#0096E3; text-decoration:none; font-weight: bold; font-size: 9pt }
-					A.bodynav:hover { font-family: Arial, Verdana, Helvetica; color:#0096E3; text-decoration:none; font-weight: bold; font-size: 9pt }
-
-					A.footer:link { font-family: Verdana, Arial, Helvetica; color:#666666; text-decoration:none; font-size: 8pt }
-					A.footer:visited { font-family: Verdana, Arial, Helvetica; color:#666666; text-decoration:none; font-size: 8pt }
-					A.footer:active { font-family: Verdana, Arial, Helvetica; color:#0065CF; text-decoration:none; font-size: 8pt }
-					A.footer:hover { font-family: Verdana, Arial, Helvetica; color:#0065CF; text-decoration:none; font-size: 8pt }
-
-
-
-					/***** STYLING FOR FORM FIELD ELEMENTS *****/
-
-
-					.inputone {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt; color: #333333; background-color: #FCFCFC; width: 95%px; clip:  rect(   )}
-					.formfield {  background-color: #FFFFFF; font-family: Arial, Courier, monospace; font-size:10pt; color: #000000; width: 95%; clip:   rect(   )}
-					.formbutton { font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #FFFFFF; font-weight: bold;  border: 1px; border-color: #FFFFFF; background-color: #000099; padding: 3pt;}
-
-
-					/***** THESE ROW AND CELL STYLES BELOW ARE TO BE USED TO CONTROL BRANDING COLOURS *****/
-
-					.colourcellone  { font-family: Arial, Helvetica, Verdana; color:#FFF; font-size: 10pt; font-weight: bold; background-color: #0096E3 }
-					.colourcelltwo { font-family: Arial, Helvetica, Verdana; color:#FFF; font-size: 10pt; background-color: #888888 }
-					.colourcellthree { font-family: Arial, Helvetica, Verdana; color:#333; font-size: 10pt; background-color: #EFEFEF }
-					.colourcellfour { font-family: Arial, Helvetica, Verdana; color:#333; font-size: 10pt; background-color: #B1B1B1 }
-					.colourcellfive { font-family: Arial, Helvetica, Verdana; color:#FFF; font-size: 10pt; background-color: #EEAC03 }
-					.colourcellsix { font-family: Arial, Helvetica, Verdana; color:#333; font-size: 10pt; background-color: #F8E061 }
-					.colourcellseven { font-family: Arial, Helvetica, Verdana; color:#333; font-size: 10pt; background-color: #DCE9FB }
-					.sb_divider {margin-bottom: 6px };
-
-					/**** annotation styles *****/
-
-					A.annotation1{ font-family: Arial, Verdana, Helvetica; background-color: #ffff70; color:#0065CF; text-decoration:none; font-weight: bold; font-size: 16pt };
-					//= (currentRefs.length > 1 ? "#ffff70" : "#ffffc0");
-
-					-->
-				</style>
-				<style>
-					html {
-					overflow: hidden;
-					}
-					input[type=text] {
-					border: 1px solid lightgrey;
-
-					}
-					#common-recordos-pretend-dropdown {
-					font-size: 85%;
-					}
-
-					input[type=button] {
-					font-weight:bold;
-					font-size: 85%;
-					}
-
-					body {
-					padding: 0;
-					margin: 0;
-					width: 100%;
-					height: 100%;
-					overflow: hidden;
-					}
-
-					#breadcrumbs {
-					padding: 0;
-					margin: 0;
-					position: absolute;
-					top: 0px;
-					left: 0px;
-					width: 100%;
-					height: 100px;
-					overflow: hidden;
-					}
-
-					#page {
-					padding: 0;
-					margin: 0;
-					position: absolute;
-					top: 125px;
-					left: 0px;
-					right: 250px;
-					bottom: 0px;
-					overflow: auto;
-					/* IE only */
-					height: expression(document.documentElement.clientHeight-100);
-					width: expression(document.documentElement.clientWidth-250);
-					}
-					#page-inner { padding: 25px; }
-
-					#entity {
-					padding: 0;
-					margin: 0;
-					position: absolute;
-					top: 20px;
-					left: 20px;
-					right:20px;
-					bottom: 0;
-					overflow: auto;
-					background-color: white;
-					z-index: 1;
-					/* IE only */
-					height: expression(document.documentElement.clientHeight-100);
-					width: expression(document.documentElement.clientWidth-250);
-					}
-
-					#factoid {
-					padding: 0;
-					margin: 0;
-					position: absolute;
-					top: 20px;
-					left: 20px;
-					right: 20px;
-					bottom: 0;
-					overflow: auto;
-					background-color: white;
-					border: 1px solid black;
-					z-index: 2;
-					/* IE only */
-					height: expression(document.documentElement.clientHeight-100);
-					width: expression(document.documentElement.clientWidth-250);
-					}
-
-					#logo {
-					padding: 0;
-					margin: 0;
-					position: absolute;
-					top: 0px;
-					right: 0px;
-					width: 200px;
-					height: 100px;
-					overflow: auto;
-					/* IE only */
-					height: expression(document.documentElement.clientHeight-100);
-					}
-
-					#map {
-					padding: 0;
-					margin: 20px;
-					margin-left: 0;
-					width: 90%;
-					height: 400px;
-					}
-
-					#sidebar {
-					padding: 0;
-					margin: 0;
-					position: absolute;
-					top: 125px;
-					right: 0px;
-					bottom: 0px;
-					overflow: auto;
-					width: 250px;
-					/* IE only */
-					height: expression(document.documentElement.clientHeight-100);
-					}
-					#sidebar-inner { padding: 5px; }
-
-					#pagetopcolour {
-					padding: 0;
-					margin: 0;
-					position: absolute;
-					top: 100px;
-					left: 0px;
-					right: 251px;
-					height: 25px;
-					overflow: auto;
-					/* IE only */
-					width: expression(document.documentElement.clientWidth-151);
-					}
-
-
-					#sidebartopcolour {
-					padding: 0;
-					margin: 0;
-					position: absolute;
-					top: 100px;
-					right: 0px;
-					bottom: 0px;
-
-					overflow: auto;
-					width: 250px;
-					}
-
-
-					#footnotesleft {
-					padding: 0;
-					margin: 0;
-					position: absolute;
-					left: 0px;
-					bottom: 0px;
-					height: 170px;
-					overflow: auto;
-					display: none;
-					/* IE only */
-					width: expression(document.documentElement.clientWidth-250);
-					}
-
-					#footnotesright {
-					padding: 0;
-					margin: 0;
-					position: absolute;
-					right: 0px;
-					bottom: 0px;
-					height: 170px;
-					overflow: auto;
-					display: none;
-					/* IE only */
-					width: expression(document.documentElement.clientWidth-250);
-					}
-
-					#footnotes {
-					padding: 0;
-					margin: 0;
-					border-top: 1px solid black;
-					position: absolute;
-					left: 0px;
-					right: 250px;
-					bottom: 0px;
-					height: 170px;
-					overflow: auto;
-					display: none;
-					/* IE only */
-					width: expression(document.documentElement.clientWidth-250);
-					}
-					#footnotes-inner { padding: 25px; }
-
-					.reftype-heading a { text-decoration: none; }
-					.reftype-heading a img { margin: 0; }
-					.reftype-heading a.open img.right { display: none; }
-					.reftype-heading a.closed img.down { display: none; }
-
-					#titleunderlinea {
-					padding: 0;
-					margin: 0;
-					position: absolute;
-					top: 60px;
-					left 0px;
-					bottom: 0px;
-					overflow: auto;
-					width: 200px;
-					/* IE only */
-					height: expression(document.documentElement.clientHeight-60);
-					}
-
-					# titleunderlineb {
-					padding: 0;
-					margin: 0;
-					position: absolute;
-					top: 60px;
-					left 0px;
-					bottom: 0px;
-					overflow: auto;
-					width: 200px;
-					/* IE only */
-					height: expression(document.documentElement.clientHeight-60);
-					}
-					.teidoc {
-					border : 1px solid lightgrey;
-					}
-
-					#search {
-						text-align: center;
-						padding-top: 10px;
-						padding-bottom: 10px;
-						border-bottom: 2px solid #888888;
-						margin-bottom: 20px;
-					}
-
-
-					#results-div {
-						padding: 25px;
-					}
-					#results-div img {
-						vertical-align: middle;
-					}
-
-					.add-annotation-button {
-						margin-bottom: 4px;
-					}
-
-					a img {
-						border: none;
-						vertical-align: middle;
-					}
-					#login {
-
-						padding-left: 5px;
-						padding-top: 3px;
-						vertical-align: middle;
-						font-size: 70%;
-
-					}
-
-					#login a {
-						font-size: 99%;
-						color: white;
-
-					}
-					#common-recordos-drop-span {
-						width: 120px;
-						font-size: 85%;
-						background-position:3px 1px;
-						cursor:pointer;
-					}
-					#common-recordos-drop-div {
-						border: 1px outset grey;
- 						width: 140px;
- 						position: absolute; top: -90px; left: 3px; /*was 650 px*/
- 						background-color:white;
-						color:black;
-						font-weight:normal;
-						font-size: 85%;
-					}
-					#common-recordos-drop-img{
-						padding:0;
-
-					}
-					#saved-searches{
-						padding-left: 15px;
-						font-size: 90%;
-
-					}
-
-					#saved-searches a{
-						font-size: 90%;
-					}
-
-
-					#saved-searches-header{
-						padding-top: 15px;
-						padding-bottom: 5px;
-						font-weight: bold;
-					}
-
-					#relations-table{
-						padding-left: 15px;
-						padding-bottom: 5px;
-						border-bottom:2px solid #888888;
-					}
-					#heurist-link  a{
-						text-align: right;
-						font-size: 80%;
-
-					}
-
-					/* TEI styles */
-					
-					p.DoSBlockquote {
-						font-family:"Times New Roman", Times, serif;
-						padding-right: 50px;
-						padding-left: 50px;
-					}
-					span.italics {
-						font-style: italic;
-					}
-					span.bold {
-						font-weight: bold;
-					}
-					span.note {
-						display: none;
-					}
-
-					/* annotation styles */
-					a.annotation {
-						background-color: #ffffc0;
-					}
-					a.annotation.multiple {
-						background-color: #ffff70;
-					}
-					a.annotation.superscript {
-						display: none;
-					}
 					
 					/* timemap styles */
 					
@@ -499,19 +80,16 @@
 					font-size: 11px;
 					background-color: yellow;
 					}
-					
 
 				</style>
-
-				<!-- text and table styling -->
 
 				<script>
 					var pathDos = "http://heuristscholar.org/<xsl:value-of select="$cocoonbase"/>/item/";
 					var imgpath = "http://heuristscholar.org/<xsl:value-of select="$urlbase"/>/img/reftype/";
 
 					function showFootnote(recordID) {
-						document.getElementById("page").style.bottom = "205px";
-						document.getElementById("footnotes").style.display = "block";
+						//document.getElementById("page").style.bottom = "205px";
+						//document.getElementById("footnotes").style.display = "block";
 
 						var elts = document.getElementsByName("footnote");
 						if (elts.length === 0) elts = document.getElementById("footnotes-inner").getElementsByTagName("div");  // fallback compatibility with IE
@@ -561,15 +139,9 @@
 						   elts.innerHTML += "&lt;br&gt;&lt;br&gt;&lt;span style=\"padding-right:5px; vertical-align:top\"&gt;&lt;a href=\""+pathDos+val.getID()+"\"&gt;"+val.getTitle()+"&lt;/a&gt;&lt;/span&gt;"+"&lt;img src=\"" + imgpath+val.getRecordType().getID() +".gif\"/&gt;";
 						}
 				   }
-
 				</script>
 
 				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;key={$hapi-key}"></script>
-				<script>
-					if (!HCurrentUser.isLoggedIn()) {
-					window.location = 'http://<xsl:value-of select="$instance_prefix"/>heuristscholar.org/heurist/php/login-vanilla.php?logo=http://heuristscholar.org<xsl:value-of select="$urlbase"/>/images/logo.png&amp;home=http://heuristscholar.org<xsl:value-of select="$urlbase"/>';
-					}
-				</script>
 				<script src="{$urlbase}/js/search.js"/>
 				<script>
 					top.HEURIST = {};
@@ -583,130 +155,106 @@
 					<script src="http://heuristscholar.org/{$urlbase}/timemap.1.3/timemap.js" type="text/javascript"></script>
 				</xsl:if>
 			</head>
-			<body pub_id="{/export/@pub_id}"  >
 
 
-
+			<body>
+			<div id="container">
 				<div id="header">
-					<iframe
-						src="{$cocoonbase}/breadcrumbs?flavour={$flavour}&amp;title={export/references/reference/title}&amp;url=http://heuristscholar.org{$cocoonbase}/item/{$id}/{$related_reftype_filter}%3Fflavour={$flavour}"
-						style="width: 100%; height: 100%; border: none; overflow: visible;"
-						frameborder="0" allowtransparency="true"/>
-
-					<div id="logo">
-						<a href="{$urlbase}/index.html" style="font-size: 30px;"><xsl:value-of select="$site-title"/></a>
+					<div class="logo"><a href="{$urlbase}"><img src="{$urlbase}/images/dictionary-of-sydney.jpg" width="148" height="97" /></a></div>
+					<div class="search"><h1>SEARCH</h1></div>
+					<form method="post" onsubmit="top.search(document.getElementById('search').value); return false;">
+						<div class="search-box"><input type="text" name="search" id="search" /></div>
+					</form>
+					<div class="advanced-search">
+						<ul>
+							<li><a title="Coming soon" onclick="alert('Coming soon!'); return false;" href="#">Advanced</a></li>
+						</ul>
 					</div>
-
-
-					<div id="pagetopcolour" class="colourcelltwo" style="overflow:visible;">
-						<div style="padding-left:20px ">
-							<!-- 2674 is ID of the "home page" file -->
-							<xsl:if test="export/references/reference/reftype/@id = 98">
-						    <table>
-							<tr>
-								<xsl:if test=" $id != 2674">
-								<!--td style="font-size: 85%;padding-right:10px;">Add:</td-->
-								<td style="font-size: 85%;padding-right:10px; "><a  href='#' onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}&amp;type=term','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Term"><img src='{$urlbase}/images/152.gif' align="absmiddle"/></a> Term annotation</td>
-
-								<td style="font-size: 85%;padding-right:10px; "><a  href='#' onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}&amp;type=multimedia','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Multimedia item"><img src='{$urlbase}/images/74.gif'  align="absmiddle"/></a> Multimedia annotation</td>
-
-								<td style="font-size: 85%;padding-right:10px; "><a  href='#' onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}&amp;type=entity','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Entity"><img src='{$urlbase}/images/151.gif'  align="absmiddle"/></a> Entity annotation</td>
-								<td style="font-size: 85%;padding-right:10px; "><a  href='#' onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}&amp;type=text','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Text"><img src='{$urlbase}/images/98.gif'  align="absmiddle"/></a> Text annotation</td>
-
-								<td style="font-size: 85%;padding-right:10px;"><a  href='#' onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}&amp;type=glossary','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Glossary"><img src='{$urlbase}/images/glossary1.gif'  align="absmiddle"/></a> Gloss annotation</td>
-								<td style="font-size: 85%;padding-right:10px;"><a  href='#' onclick="window.open('{$urlbase}/addrelationship.html?typeId=52&amp;source={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Relationship"><img src='{$urlbase}/images/52.gif'  align="absmiddle"/></a> Relationship</td>
-
-								</xsl:if>
-								<xsl:if test=" $id = 2674">
-								<td><input type="text" id ="common-recordos-pretend-dropdown" readonly="readonly"/><img id ="common-recordos-drop-img" align="absmiddle"></img>
-									<div id="common-recordos-drop-div" style="display:none;"></div>
-									<script type="text/javascript" src="{$urlbase}/js/record-dropdown.js"></script>
-								</td>
-									</xsl:if>
-							</tr>
-						    </table>
-							</xsl:if>
-							<!-- Add relationship only needs to be available for Entities, Terms and Media -->
-							<xsl:if test="export/references/reference/reftype/@id = 74 or export/references/reference/reftype/@id  = 151 or export/references/reference/reftype/@id  = 152 ">
-								<table>
-									<tr>
-								<td style="font-size: 85%;padding-right:10px;"><a  href='#' onclick="window.open('{$urlbase}/addrelationship.html?typeId=52&amp;source={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Relationship"><img src='{$urlbase}/images/52.gif'  align="absmiddle"/></a> Relationship</td>
-									</tr>
-								</table>
-							</xsl:if>
-						</div>
-					</div>
-					<div id="sidebartopcolour" class="colourcelltwo">
-					<table width="100%">
-					<tr>
-					<td id="login">
-						<script type="text/javascript">
-
-							var a = document.createElement("a");
-							a.href ='http://<xsl:value-of select="$instance_prefix"/>heuristscholar.org/heurist/php/login-vanilla.php?logo=http://heuristscholar.org/{$urlbase}/img/logo.png&amp;home=http://heuristscholar.org/{$urlbase}';
-
-
-							if (HCurrentUser.isLoggedIn()) {
-								document.getElementById("login").appendChild(document.createTextNode(HCurrentUser.getRealName() + " : "));
-								a.appendChild( document.createTextNode("Log out"));
-							} else {
-
-								a.appendChild(document.createTextNode("Log in"));
-							}
-
-							document.getElementById("login").appendChild(a);
-
-						</script>
-						</td><td id="heurist-link"><a href="http://{$instance_prefix}heuristscholar.org/heurist/">Heurist</a></td></tr>
-						</table>
-					</div>
-
-
+					<a href="#" class="left-arrow"><img src="{$urlbase}/images/img-left-arrow.jpg" width="13" height="24" /></a>
+					<a href="#" class="right-arrow"><img src="{$urlbase}/images/img-right-arrow.jpg" width="13" height="24" /></a>
 				</div>
+				<div id="menu">
+					<ul id="navigation">
+						<li><a href="#">Place</a></li>
+						<li><a href="#">Event</a></li>
+						<li><a href="#">Image</a></li>
+						<li><a href="#">Place</a></li>
+						<li><a href="#">Search</a></li>
+						<li><a href="#">Image</a></li>
+						<li><a href="#">Event</a></li>
+					</ul>
+				</div>
+				<div id="title">
+					<div id="entity-title" class="heading"><xsl:value-of select="export/references/reference[1]/title"/></div>
+				</div>
+				<div id="middle">
+					<div class="left-column">
+						<div class="content-top"></div>
+						<div class="content" id="content">
 
-				<div id="sidebar" class="colourcellthree">
+								<xsl:apply-templates select="export/references/reference"/>
 
-					<div id="sidebar-inner">
+							<!--div id="factoids" class="line-box big-thumb-gap">
 
-						<div id="search">
-							<form  method="post" onsubmit="search(document.getElementById('query-input').value); return false;">
-							<input type="text" id="query-input" value=""></input>
-							<input type="button" value="search"
-							onclick="search(document.getElementById('query-input').value);"/>
-							</form>
+								<xsl:apply-templates select="export/references/reference"/>
 
-							<div style="padding-left: 150px;">
-								<a title="Coming soon" onclick="alert('Coming soon!');" href="#"> (Advanced)</a>
+								<span class="gray">FACTOIDS</span><br />
+								<br />
+								<img src="{$urlbase}/images/img-default-image.jpg" width="158" height="116" /><img src="{$urlbase}/images/img-default-map.jpg" width="158" height="116" />
 							</div>
+							<div id="text" class="line-box">
+								<h1>TEXT</h1>
+								In non arcu. Suspendisse aliquam eleifend magna. Praesent congue. Phesellus suscipit facilisis nunc. Pellentesque semper eleifend tellus. Fusce porttitor condimentum quam. Quisque quis justo. Proin congue erat eget dolor bibendum rhoncus. Nullam sit amet magna Cras lorem ligula, ultncies et, hendrerit eget, bibendum id, ligula.
+							</div>
+							<div id="images" class="line-box big-thumb-gap">
+								<h1>IMAGES</h1>
+								In non arcu. Suspendisse aliquam eleifend magna. Praesent congue. Phesellus suscipit facilisis nunc. Pellentesque semper eleifend tellus. Fusce porttitor condimentum quam. Quisque quis justo. Proin congue erat eget dolor bibendum rhoncus. Nullam sit amet magna Cras lorem ligula, ultncies et, hendrerit eget, bibendum id.<br />
+								<br />
+								<img src="{$urlbase}/images/img-image.jpg" width="158" height="115" /><img src="{$urlbase}/images/img-image.jpg" width="158" height="115" />
+							</div>
+							<div id="audio" class="line-box small-thumb-gap">
+								<h1>AUDIO</h1>
+								<img src="{$urlbase}/images/img-audio.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-audio.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-audio.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-audio.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-audio.jpg" width="67" height="50" />
+							</div>
+							<div id="video" class="line-box small-thumb-gap">
+								<h1>VIDEO</h1>
+								<img src="{$urlbase}/images/img-video.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-video.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-video.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-video.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-video.jpg" width="67" height="50" /></div>
+							<div id="hi-res-images" class="line-box big-thumb-gap">
+								<h1>HI RES IMAGES</h1>
+							In non arcu. Suspendisse aliquam eleifend magna. Praesent congue. Phesellus suscipit facilisis nunc. Pellentesque semper eleifend tellus. Fusce porttitor condimentum quam. Quisque quis justo. Proin congue erat eget dolor bibendum rhoncus. Nullam sit amet magna Cras lorem ligula, ultncies et, hendrerit eget, bibendum id.<br />
+							<br />
+							<img src="{$urlbase}/images/img-image.jpg" width="158" height="115" /><img src="{$urlbase}/images/img-image.jpg" width="158" height="115" />
+							</div>
+							<div id="map" class="line-box small-thumb-gap">
+							  <h1>MAP</h1>
+								<img src="{$urlbase}/images/img-map.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-map.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-map.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-map.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-map.jpg" width="67" height="50" /></div-->
 						</div>
+						<div class="content-bottom"></div>
+					</div>
+						<div class="right-column">
+							<xsl:call-template name="related_items_section">
+								<xsl:with-param name="items"
+									select="export/references/reference/related |
+											export/references/reference/pointer |
+											export/references/reference/reverse-pointer"
+								/>
+							</xsl:call-template>
+					</div>
+					<div class="clear"></div>
+				</div>
 
-
-
-						<xsl:call-template name="related_items_section">
-							<xsl:with-param name="items"
-								select="export/references/reference/related |
-																 export/references/reference/pointer |
-																 export/references/reference/reverse-pointer"
-							/>
-						</xsl:call-template>
+				<div id="footer">
+					<div class="copyright">&#169; 2009 Dictionary of Sydney</div>
+					<div id="footer-navigation" class="footer-nav">
+						<ul>
+							<li><a href="#">Index</a></li>
+							<li><a href="#">About</a></li>
+							<li><a href="#">Contact</a></li>
+							<li><a href="#">RSS</a></li>
+						</ul>
 					</div>
 				</div>
 
-				<div id="page">
-					<div id="page-inner">
-						<h1>
-							<!-- <xsl:value-of select="export/references/reference[1]/title"/> -->
-							 <span style="padding-right:5px; vertical-align:top">
-							 	<a  href="#" onclick="window.open('{$urlbase}/edit.html?id={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false; " title="Edit main record">
-								 <img src="{$hbase}/img/edit-pencil.gif"  style="vertical-align: top;"/></a>
-							 </span>
-
-							<xsl:value-of select="export/references/reference[1]/title"/>
-						</h1>
-						<!-- full version of record -->
-						<xsl:apply-templates select="export/references/reference"/>
-					</div>
-				</div>
 
 				<div id="footnotes">
 					<div id="footnotes-inner">
@@ -715,114 +263,45 @@
 							mode="footnote"/>
 					</div>
 				</div>
+
+			</div>
 			</body>
 		</html>
 	</xsl:template>
 
-	<xsl:template match="breadcrumbs">
-		<xsl:for-each select="breadcrumb">
-			<xsl:sort select="id"/>
-			<a href="{url}">
-				<xsl:value-of select="title"/>
-			</a>
-		</xsl:for-each>
-	</xsl:template>
+
 
 	<xsl:template name="related_items_section">
 		<xsl:param name="items"/>
+		<!-- aggregate related items into groupings based on the type of related item -->
 
-		<!-- top of sidebar before you start listing the type of relationships -->
-		<table id = "relations-table"  cellpadding="2" border="0" width="100%">
-			<!-- this step of the code aggregates related items into groupings based on the type of related item -->
+		<xsl:variable name="type_names">
+			<type id="1" name="EXTERNAL LINKS" />
+			<type id="74" name="MULTIMEDIA" />
+			<type id="98" name="ENTRIES" />
+			<type id="99" name="ANNOTATIONS" />
+			<type id="103" name="MAPS" />
+			<type id="151" name="ENTITIES" />
+			<type id="152" name="TERMS" />
+			<type id="153" name="CONTRIBUTORS" />
+			<type id="154" name="REFERENCES" />
+		</xsl:variable>
 
-			<xsl:for-each select="$items[not(@type = preceding-sibling::*/@type)] ">
-				<xsl:choose>
-					<xsl:when test="@type != 'Source entity reference' and @type != 'Entity reference' and @type != 'Target entity reference'">
-						<xsl:call-template name="related_items_by_reltype">
-							<xsl:with-param name="reftype_id" select="reftype/@id"/>
-							<xsl:with-param name="reltype" select="@type"/>
-							<xsl:with-param name="items" select="$items[@type = current()/@type and reftype/@id != 52]"/>
-						</xsl:call-template>
-					</xsl:when>
-				</xsl:choose>
-			</xsl:for-each>
-
-		</table>
-		<div id= "saved-searches">
-			<div id = "saved-searches-header"></div>
-			<script>
-			if (HCurrentUser.isLoggedIn()) {
-				var savedSearches = top.HEURIST.user.workgroupSavedSearches["2"];
-				document.getElementById("saved-searches-header").innerHTML = "Saved Searches";
-				for (i in savedSearches) {
-					var div = document.createElement("div");
-					div.id = "saved-search-" + i;
-					var a = document.createElement("a");
-					a.href = "#";
-
-					var regexS = "[\\?&amp;]q=([^&amp;#]*)";
-					var regex = new RegExp( regexS );
-					var results = regex.exec( savedSearches[i][1]);
-					savedSearchesOnclick (a, results[1]);
-					a.appendChild(document.createTextNode(savedSearches[i][0]));
-					div.appendChild(a);
-					document.getElementById("saved-searches").appendChild(div);
-
-				}
-			}
-				function savedSearchesOnclick (e, res) {
-					e.onclick = function() {
-						document.getElementById('query-input').value = res;
-						search (res);
-					}
-				}
-
-			</script>
-		</div>
-	</xsl:template>
-
-
-	<xsl:template name="related_items_by_reltype">
-		<xsl:param name="reftype_id"/>
-		<xsl:param name="reltype"/>
-		<xsl:param name="items"/>
-
-		<xsl:if test="count($items) > 0">
-			<xsl:if test="$reftype_id != 150  or  ../reftype/@id = 103">
-				<tr>
-					<td>
-						<b>
-							<xsl:choose>
-								<xsl:when test="$reftype_id = 99"
-									>Annotations</xsl:when>
-								<xsl:otherwise>
-									<xsl:value-of select="$reltype"/>
-									<xsl:value-of select="../@id"/>
-									<!--(<xsl:value-of select="count($items)"/>) number of items with this relation -->
-								</xsl:otherwise>
-							</xsl:choose>
-						</b>
-					</td>
-				</tr>
-
-				<tr>
-					<td>
-						<!-- (<xsl:value-of select="$items[1]"/>) -->
-
-						<table width="100%">
-
-							<!-- p>id: <xsl:value-of select="$currentid"/> - [<xsl:value-of select="id"/>] - </p -->
-							<xsl:apply-templates select="$items[1]">
-								<xsl:with-param name="matches" select="$items"/>
-							</xsl:apply-templates>
-						</table>
-					</td>
-				</tr>
-			</xsl:if>
-
-		</xsl:if>
+		<xsl:for-each select="exsl:node-set($type_names)/type">
+			<xsl:choose>
+				<xsl:when test="(@id != 150  or  ../reftype/@id = 103)  and  @id != $related_reftype_filter">
+					<xsl:call-template name="related_items">
+						<xsl:with-param name="reftype_id" select="@id"/>
+						<xsl:with-param name="reftype_label" select="@name"/>
+						<xsl:with-param name="items" select="$items[reftype/@id = current()/@id]"/>
+					</xsl:call-template>
+				</xsl:when>
+			</xsl:choose>
+		</xsl:for-each>
 
 	</xsl:template>
+
+
 
 	<xsl:template name="related_items">
 		<xsl:param name="reftype_id"/>
@@ -830,32 +309,20 @@
 		<xsl:param name="items"/>
 
 		<xsl:if test="count($items) > 0">
-			<xsl:if test="$reftype_id != 150  or  ../reftype/@id = 103">
-				<tr>
-					<td>
-						<b>
-							<a href="#" onclick="openRelated({$reftype_id}); return false;">
-								<xsl:value-of select="$reftype_label"/>
-								<!-- (<xsl:value-of select="count($items)"/>) -->
-							</a>
-						</b>
-					</td>
-				</tr>
-
-				<tr name="related" reftype="{$reftype_id}">
-					<xsl:if test="$reftype_id!=$related_reftype_filter">
-						<xsl:attribute name="style">display: none;</xsl:attribute>
-					</xsl:if>
-					<td>
-
-						<table width="100%">
-							<xsl:apply-templates select="$items[1]">
-								<xsl:with-param name="matches" select="$items"/>
-							</xsl:apply-templates>
-						</table>
-					</td>
-				</tr>
-			</xsl:if>
+			<div>
+				<div class="sidebar-top"/>
+				<div class="sidebar">
+					<h4>
+						<xsl:value-of select="$reftype_label"/>
+					</h4>
+					<ul>
+						<xsl:apply-templates select="$items[1]">
+							<xsl:with-param name="matches" select="$items"/>
+						</xsl:apply-templates>
+					</ul>
+				</div>
+				<div class="sidebar-bottom"></div>
+			</div>
 		</xsl:if>
 
 	</xsl:template>
@@ -876,55 +343,29 @@
 			<xsl:when test="$matches">
 				<xsl:apply-templates select="$matches">
 					<xsl:sort select="detail[@id=160]"/>
-
 				</xsl:apply-templates>
 			</xsl:when>
 			<xsl:otherwise>
-
-				<tr>
-					<td>
-						<xsl:if test="detail[@id = 222 or @id=223 or @id=224]">
-							<xsl:if test="detail/file_thumb_url">
-								<a href="{$cocoonbase}/item/{id}">
-
-									<img src="{detail/file_thumb_url}"/>
-
-
-								</a>
-								<br/>
-
-							</xsl:if>
-						</xsl:if>
-						<a href="{$urlbase}/edit.html?id={id}"
-							onclick="window.open(this.href,'','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;"
-							title="edit">
-						<img src="{$hbase}/img/edit-pencil.gif"/>
-						</a>
-						<a href="{$cocoonbase}/item/{id}" class="sb_two">
-							<xsl:choose>
-								<!-- related / notes -->
-								<xsl:when test="@notes">
-									<xsl:attribute name="title">
-										<xsl:value-of select="@notes"/>
-									</xsl:attribute>
-								</xsl:when>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="detail[@id=160]">
-									<xsl:value-of select="detail[@id=160]"/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:value-of select="title"/>
-								</xsl:otherwise>
-							</xsl:choose>
-						</a>
-					</td>
-					<td align="right">
-						<!-- change this to pick up the actuall system name of the reftye or to use the mapping method as in JHSB that calls human-readable-names.xml -->
-						<img style="vertical-align: middle;horizontal-align: right"
-							src="{$hbase}/img/reftype/{reftype/@id}.gif"/>
-					</td>
-				</tr>
+				<li>
+					<a href="{$cocoonbase}/item/{id}">
+						<xsl:choose>
+							<!-- related / notes -->
+							<xsl:when test="@notes">
+								<xsl:attribute name="title">
+									<xsl:value-of select="@notes"/>
+								</xsl:attribute>
+							</xsl:when>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="detail[@id=160]">
+								<xsl:value-of select="detail[@id=160]"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="title"/>
+							</xsl:otherwise>
+						</xsl:choose>
+					</a>
+				</li>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>

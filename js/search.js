@@ -41,10 +41,6 @@ function loadAllRecords(query, options, loader) {
 }
 
 function showSearch(query) {
-	// hide footnotes
-	document.getElementById("footnotes").style.display = "none";
-	document.getElementById("page").style.bottom = "0px";
-
 	// turn off any highlighting
 	if (window.highlightElem) {
 		highlightElem("inline-annotation", null);
@@ -52,14 +48,15 @@ function showSearch(query) {
 	}
 
 	// hide page-inner and show results div
-	var pageInner = document.getElementById("page-inner");
+	var pageInner = document.getElementById("content");
 	pageInner.style.display = "none";
 	if (resultsDiv) {
 		resultsDiv.innerHTML = "";
 		resultsDiv.style.display = "block";
 	} else {
-		resultsDiv = pageInner.parentNode.appendChild(document.createElement("div"));
+		resultsDiv = pageInner.parentNode.insertBefore(document.createElement("div"), pageInner.nextSibling);
 		resultsDiv.id = "results-div";
+		resultsDiv.className = "content";
 	}
 
 	resultsDiv.innerHTML += "<a style=\"float: right;\" href=# onclick=\"hideResults(); return false;\">Return to previous view</a>";
@@ -88,7 +85,7 @@ function displayResults(s,r) {
 
 function hideResults() {
 	resultsDiv.style.display = "none";
-	document.getElementById("page-inner").style.display = "block";
+	document.getElementById("content").style.display = "block";
 	if (window.higlightOnLoad) highlightOnLoad();
 }
 

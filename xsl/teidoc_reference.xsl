@@ -18,45 +18,26 @@
 					<xsl:sort data-type="number" select="id"/>
 				</xsl:apply-templates>
 
+				<xsl:call-template name="render_refs"/>
+
 			</xsl:when>
 			<xsl:otherwise>
-				<tr>
-					<td>
-						<!--a href="{$base}/item/{id}/{/export/references/reference/reftype/@id}?flavour={$flavour}#ref1"-->
-
-						<!-- chose if base id = annotation target id - then include onclick handler and href is below -->
-						<a href="{$urlbase}/edit-annotation.html?id={id}"
-							onclick="window.open(this.href,'','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;"
-							title="edit">
-							<img src="{$hbase}/img/edit-pencil.gif"/>
-						</a>
-						<xsl:choose>
-							<xsl:when test="../id = pointer[@id=322]/id">
-								<a href="#ref{id}" annotation-id="{id}"
-									onclick="showFootnote({id}); highlightAnnotation({id});"
-									class="sb_two">
-									<xsl:value-of select="title"/>
-								</a>
-							</xsl:when>
-							<xsl:otherwise>
-								<a href="{$cocoonbase}/item/{pointer[@id=322]/id}/#ref{id}" class="sb_two">
-									<xsl:value-of select="title"/>
-								</a>
-								<br/>... (annotation in <em>
-									<xsl:value-of select="pointer[@id=322]/title"/>
-								</em>
-								<img style="vertical-align: middle;horizontal-align: right"
-									src="{$hbase}/img/reftype/{pointer[@id=322]/reftype/@id}.gif"/>)
-							</xsl:otherwise>
-						</xsl:choose>
-
-
-						<!-- iotherwise get the id if the target and -->
-
-
-
-					</td>
-				</tr>
+				<li>
+					<!-- chose if base id = annotation target id - then include onclick handler and href is below -->
+					<xsl:choose>
+						<xsl:when test="../id = pointer[@id=322]/id">
+							<a href="#ref{id}" annotation-id="{id}" onclick="showFootnote({id}); highlightAnnotation({id});">
+								<xsl:value-of select="title"/>
+							</a>
+						</xsl:when>
+						<xsl:otherwise>
+							<a href="{$cocoonbase}/item/{pointer[@id=322]/id}/#ref{id}">
+								<xsl:value-of select="title"/>
+							</a>
+							<br/>... (annotation in <em><xsl:value-of select="pointer[@id=322]/title"/></em>
+						</xsl:otherwise>
+					</xsl:choose>
+				</li>
 
 				<xsl:call-template name="add_ref">
 					<xsl:with-param name="ref" select="."/>
