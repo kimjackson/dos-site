@@ -5,7 +5,6 @@
 	<xsl:template name="xmldoc" match="reference[reftype/@id=98]">
 
 		<script src="{$urlbase}/js/highlight.js"/>
-		<script src="{$urlbase}/js/selection.js"/>
 
 		<style>
 			#tei a { text-decoration: none; }

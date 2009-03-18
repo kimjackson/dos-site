@@ -11,13 +11,7 @@
 
 	<xsl:include href="myvariables.xsl"/>
 
-
-
-	<xsl:include href="author_editor.xsl"/>
-	<xsl:include href="books-etc.xsl"/>
 	<xsl:include href="factoid.xsl"/>
-	<xsl:include href="historical_event.xsl"/>
-	<xsl:include href="internet_bookmark.xsl"/>
 	<xsl:include href="media.xsl"/>
 	<xsl:include href="teidoc.xsl"/>
 	<xsl:include href="teidoc_reference.xsl"/>
