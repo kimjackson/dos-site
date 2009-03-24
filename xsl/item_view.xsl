@@ -77,74 +77,10 @@
 
 				</style>
 
-				<script>
-					var pathDos = "http://heuristscholar.org/<xsl:value-of select="$cocoonbase"/>/item/";
-					var imgpath = "http://heuristscholar.org/<xsl:value-of select="$urlbase"/>/img/reftype/";
-
-					function showFootnote(recordID) {
-						//document.getElementById("page").style.bottom = "205px";
-						//document.getElementById("footnotes").style.display = "block";
-
-						var elts = document.getElementsByName("footnote");
-						if (elts.length === 0) elts = document.getElementById("footnotes-inner").getElementsByTagName("div");  // fallback compatibility with IE
-						for (var i = 0; i &lt; elts.length; ++i) {
-							var e = elts[i];
-							e.style.display = e.getAttribute("recordID") == recordID ? "" : "none";
-						}
-						load(recordID);
-					}
-
-					function load(id) {
-						var loader = new HLoader(
-							function(s,r) {
-								annotation_loaded(r[0]);
-							},
-							function(s,e) {
-								alert("load failed: " + e);
-							});
-						HeuristScholarDB.loadRecords(new HSearch("id:" + id), loader);
-				    }
-
-					function annotation_loaded(record) {
-				        var elts = document.getElementById("footnotes-inner");
-						var notes = record.getDetail(HDetailManager.getDetailTypeById(303));
-
-						elts.innerHTML = "&lt;p&gt;" + record.getTitle() + "&lt;/p&gt;";
-						if (notes) {
-							elts.innerHTML += "&lt;p&gt;" + notes + "&lt;/p&gt;";
-						}
-
-						var val = record.getDetail(HDetailManager.getDetailTypeById(199));
-						if (val){
-							HeuristScholarDB.loadRecords(new HSearch("id:"+val.getID()),
-                                  new HLoader(function(s,r){MM_loaded(r[0],record)})
-							);
-						}
-
-				   }
-				   function MM_loaded(val,record) {
-				        var elts = document.getElementById("footnotes-inner");
-
-						if (val.getRecordType().getID() == 74) {
-							var img=val.getDetail(HDetailManager.getDetailTypeById(221)). getThumbnailURL();
-							elts.innerHTML += "&lt;br&gt;&lt;a href=\""+pathDos+val.getID()+"\"&gt;&lt;img src=\"" + img+ "\"/&gt;&lt;/a&gt;";
-						}
-						else {
-						   elts.innerHTML += "&lt;br&gt;&lt;br&gt;&lt;span style=\"padding-right:5px; vertical-align:top\"&gt;&lt;a href=\""+pathDos+val.getID()+"\"&gt;"+val.getTitle()+"&lt;/a&gt;&lt;/span&gt;"+"&lt;img src=\"" + imgpath+val.getRecordType().getID() +".gif\"/&gt;";
-						}
-				   }
-				</script>
-
 				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;key={$hapi-key}"></script>
 				<script src="{$urlbase}/js/search.js"/>
-				<script>
-					top.HEURIST = {};
-					top.HEURIST.fireEvent = function(e, e){};
-				</script>
-				<script src="http://{$instance_prefix}heuristscholar.org/heurist/php/js/heurist-obj-user.php"></script>
 				<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
 				<xsl:if test="/export/references/reference/reftype[@id=103]">
-
 					<script type="text/javascript" src="http://simile.mit.edu/timeline/api/timeline-api.js"></script>
 					<script src="http://heuristscholar.org/{$urlbase}/timemap.1.3/timemap.js" type="text/javascript"></script>
 				</xsl:if>
@@ -186,53 +122,15 @@
 						<div class="content-top"></div>
 						<div class="content" id="content">
 
-								<xsl:apply-templates select="export/references/reference"/>
+							<xsl:apply-templates select="export/references/reference"/>
 
-							<!--div id="factoids" class="line-box big-thumb-gap">
-
-								<xsl:apply-templates select="export/references/reference"/>
-
-								<span class="gray">FACTOIDS</span><br />
-								<br />
-								<img src="{$urlbase}/images/img-default-image.jpg" width="158" height="116" /><img src="{$urlbase}/images/img-default-map.jpg" width="158" height="116" />
-							</div>
-							<div id="text" class="line-box">
-								<h1>TEXT</h1>
-								In non arcu. Suspendisse aliquam eleifend magna. Praesent congue. Phesellus suscipit facilisis nunc. Pellentesque semper eleifend tellus. Fusce porttitor condimentum quam. Quisque quis justo. Proin congue erat eget dolor bibendum rhoncus. Nullam sit amet magna Cras lorem ligula, ultncies et, hendrerit eget, bibendum id, ligula.
-							</div>
-							<div id="images" class="line-box big-thumb-gap">
-								<h1>IMAGES</h1>
-								In non arcu. Suspendisse aliquam eleifend magna. Praesent congue. Phesellus suscipit facilisis nunc. Pellentesque semper eleifend tellus. Fusce porttitor condimentum quam. Quisque quis justo. Proin congue erat eget dolor bibendum rhoncus. Nullam sit amet magna Cras lorem ligula, ultncies et, hendrerit eget, bibendum id.<br />
-								<br />
-								<img src="{$urlbase}/images/img-image.jpg" width="158" height="115" /><img src="{$urlbase}/images/img-image.jpg" width="158" height="115" />
-							</div>
-							<div id="audio" class="line-box small-thumb-gap">
-								<h1>AUDIO</h1>
-								<img src="{$urlbase}/images/img-audio.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-audio.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-audio.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-audio.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-audio.jpg" width="67" height="50" />
-							</div>
-							<div id="video" class="line-box small-thumb-gap">
-								<h1>VIDEO</h1>
-								<img src="{$urlbase}/images/img-video.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-video.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-video.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-video.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-video.jpg" width="67" height="50" /></div>
-							<div id="hi-res-images" class="line-box big-thumb-gap">
-								<h1>HI RES IMAGES</h1>
-							In non arcu. Suspendisse aliquam eleifend magna. Praesent congue. Phesellus suscipit facilisis nunc. Pellentesque semper eleifend tellus. Fusce porttitor condimentum quam. Quisque quis justo. Proin congue erat eget dolor bibendum rhoncus. Nullam sit amet magna Cras lorem ligula, ultncies et, hendrerit eget, bibendum id.<br />
-							<br />
-							<img src="{$urlbase}/images/img-image.jpg" width="158" height="115" /><img src="{$urlbase}/images/img-image.jpg" width="158" height="115" />
-							</div>
-							<div id="map" class="line-box small-thumb-gap">
-							  <h1>MAP</h1>
-								<img src="{$urlbase}/images/img-map.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-map.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-map.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-map.jpg" width="67" height="50" /><img src="{$urlbase}/images/img-map.jpg" width="67" height="50" /></div-->
 						</div>
 						<div class="content-bottom"></div>
 					</div>
-						<div class="right-column">
-							<xsl:call-template name="related_items_section">
-								<xsl:with-param name="items"
-									select="export/references/reference/related |
-											export/references/reference/pointer |
-											export/references/reference/reverse-pointer"
-								/>
-							</xsl:call-template>
+					<div class="right-column">
+
+						<xsl:call-template name="related_items_section"/>
+
 					</div>
 					<div class="clear"></div>
 				</div>
@@ -266,9 +164,11 @@
 
 
 	<xsl:template name="related_items_section">
-		<xsl:param name="items"/>
-		<!-- aggregate related items into groupings based on the type of related item -->
+		<xsl:variable name="items" select="export/references/reference/related |
+		                                   export/references/reference/pointer |
+		                                   export/references/reference/reverse-pointer"/>
 
+		<!-- aggregate related items into groupings based on the type of related item -->
 		<xsl:variable name="type_names">
 			<type id="1" name="EXTERNAL LINKS" />
 			<type id="74" name="MULTIMEDIA" />
