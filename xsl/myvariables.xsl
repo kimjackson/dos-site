@@ -5,5 +5,6 @@
     <xsl:variable name="cocoonbase">/cocoon/relbrowser</xsl:variable>
     <xsl:variable name="hapi-key">147983c93cdd221dd23f9a93884034f2246b7e01</xsl:variable>
     <xsl:variable name="instance"></xsl:variable>
+    <xsl:variable name="instance_prefix"></xsl:variable>
     <xsl:variable name="site-title">rel-browser</xsl:variable>
 </xsl:stylesheet>
