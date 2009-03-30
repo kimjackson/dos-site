@@ -42,7 +42,7 @@
    </map:match>
 
    <map:match pattern="item/*/*">
-    <map:generate src="http://dos-sandbox.heuristscholar.org/heurist/php/xmlexport.php?q=ids:{1}&amp;w=all&amp;stype=&amp;rev=yes&amp;related_details=160,169,177,178,191,291,223,221,230,323,324,325,326,327,328,329,330,526,529&amp;depth=1"
+    <map:generate src="http://dos-sandbox.heuristscholar.org/heurist/php/xmlexport.php?q=ids:{1}&amp;w=all&amp;stype=&amp;rev=yes&amp;related_details=160,169,177,178,191,291,223,221,230,289,323,324,325,326,327,328,329,330,526,529,569&amp;depth=2"
      label="xmlexport"/>
     <map:transform src="xsl/item_view.xsl" label="transformed">
      <map:parameter name="use-request-parameters" value="true"/>

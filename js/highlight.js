@@ -135,7 +135,7 @@ function transformTextNode (elem, refs, startingRefs, endingRefs, wordOffset) {
 		a.title = ref.title;
 		a.name = "ref" + ref.recordID;
 		a.setAttribute("annotation-id", ref.recordID);
-		a.onclick = function() { showFootnote(this.getAttribute("annotation-id")); highlightAnnotation(this.getAttribute("annotation-id")); };
+		a.onclick = function() { highlightAnnotation(this.getAttribute("annotation-id")); };
 		a.innerHTML = elem.textContent;
 		elem.parentNode.replaceChild(a, elem);
 
@@ -254,7 +254,7 @@ console.log("sections: " + sections.toSource());
 				a.title = ref.title;
 				a.name = "ref" + ref.recordID;
 				a.setAttribute("annotation-id", ref.recordID);
-				a.onclick = function() { showFootnote(this.getAttribute("annotation-id")); highlightAnnotation(this.getAttribute("annotation-id")); };
+				a.onclick = function() { highlightAnnotation(this.getAttribute("annotation-id")); };
 				a.innerHTML = wordString;
 				newElements.push(a);
 
@@ -264,7 +264,7 @@ console.log("sections: " + sections.toSource());
 					a.className = "annotation superscript";
 					a.href = "#ref" + (section.refNums[r] + 1);
 					a.title = ref.title;
-					a.onclick = function() { showFootnote(this.getAttribute("annotation-id")); highlightAnnotation(this.getAttribute("annotation-id")); };
+					a.onclick = function() { highlightAnnotation(this.getAttribute("annotation-id")); };
 					var s = a.appendChild(document.createElement("sup"));
 					s.innerHTML = "[" + (section.refNums[r] + 1) + "]";
 					//s.innerHTML = "";
@@ -345,7 +345,6 @@ function highlightElem (name, e) {
 function highlightOnLoad() {
 	var matches = window.location.hash.match(/#ref([0-9]+)/);
 	if (matches  &&  matches[1]) {
-		showFootnote(matches[1]);
 		highlightAnnotation(matches[1]);
 	}
 }

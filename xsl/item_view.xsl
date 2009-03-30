@@ -79,10 +79,12 @@
 
 				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;key={$hapi-key}"></script>
 				<script src="{$urlbase}/js/search.js"/>
-				<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
+				<xsl:if test="/export/references/reference/reftype[@id=103 or @id=151]">
+					<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
+				</xsl:if>
 				<xsl:if test="/export/references/reference/reftype[@id=103]">
-					<script type="text/javascript" src="http://simile.mit.edu/timeline/api/timeline-api.js"></script>
-					<script src="http://heuristscholar.org/{$urlbase}/timemap.1.3/timemap.js" type="text/javascript"></script>
+					<script src="http://simile.mit.edu/timeline/api/timeline-api.js"></script>
+					<script src="http://heuristscholar.org/{$urlbase}/timemap.1.3/timemap.js"></script>
 				</xsl:if>
 			</head>
 
@@ -129,7 +131,7 @@
 					</div>
 					<div class="right-column">
 
-						<xsl:call-template name="related_items_section"/>
+						<xsl:apply-templates select="export/references/reference" mode="sidebar"/>
 
 					</div>
 					<div class="clear"></div>
@@ -147,59 +149,17 @@
 					</div>
 				</div>
 
-
-				<div id="footnotes">
-					<div id="footnotes-inner">
-						<xsl:apply-templates
-							select="export/references/reference/reverse-pointer[reftype/@id=99]"
-							mode="footnote"/>
-					</div>
-				</div>
-
 			</div>
 			</body>
 		</html>
 	</xsl:template>
 
 
-
-	<xsl:template name="related_items_section">
-		<xsl:variable name="items" select="export/references/reference/related |
-		                                   export/references/reference/pointer |
-		                                   export/references/reference/reverse-pointer"/>
-
-		<!-- aggregate related items into groupings based on the type of related item -->
-		<xsl:variable name="type_names">
-			<type id="1" name="EXTERNAL LINKS" />
-			<type id="74" name="MULTIMEDIA" />
-			<type id="98" name="ENTRIES" />
-			<type id="99" name="ANNOTATIONS" />
-			<type id="103" name="MAPS" />
-			<type id="151" name="ENTITIES" />
-			<type id="152" name="TERMS" />
-			<type id="153" name="CONTRIBUTORS" />
-			<type id="154" name="REFERENCES" />
-		</xsl:variable>
-
-		<xsl:for-each select="exsl:node-set($type_names)/type">
-			<xsl:choose>
-				<xsl:when test="(@id != 150  or  ../reftype/@id = 103)  and  @id != $related_reftype_filter">
-					<xsl:call-template name="related_items">
-						<xsl:with-param name="reftype_id" select="@id"/>
-						<xsl:with-param name="reftype_label" select="@name"/>
-						<xsl:with-param name="items" select="$items[reftype/@id = current()/@id]"/>
-					</xsl:call-template>
-				</xsl:when>
-			</xsl:choose>
-		</xsl:for-each>
-
-	</xsl:template>
-
+	<xsl:template match="reference" mode="sidebar"/>
 
 
 	<xsl:template name="related_items">
-		<xsl:param name="reftype_id"/>
-		<xsl:param name="reftype_label"/>
+		<xsl:param name="label"/>
 		<xsl:param name="items"/>
 
 		<xsl:if test="count($items) > 0">
@@ -207,7 +167,7 @@
 				<div class="sidebar-top"/>
 				<div class="sidebar">
 					<h4>
-						<xsl:value-of select="$reftype_label"/>
+						<xsl:value-of select="$label"/>
 					</h4>
 					<ul>
 						<xsl:apply-templates select="$items[1]">
@@ -265,128 +225,6 @@
 	</xsl:template>
 
 
-
-	<!-- fall-back template for any reference types that aren't already handled -->
-	<xsl:template match="reference">
-		<xsl:if test="detail[@id=221]">
-			<img src="{detail[@id=221]/file_thumb_url}&amp;w=400"/>
-		</xsl:if>
-		<table>
-			<tr>
-				<td colspan="2">
-					<img style="vertical-align: middle;"
-						src="{$hbase}/img/reftype/{reftype/@id}.gif"/>
-					<xsl:text> </xsl:text>
-					<xsl:value-of select="reftype"/>
-				</td>
-
-			</tr>
-			<xsl:if test="url != ''">
-				<tr>
-					<td style="padding-right: 10px;">URL</td>
-					<td>
-						<a href="{url}">
-							<xsl:choose>
-								<xsl:when test="string-length(url) &gt; 50">
-									<xsl:value-of select="substring(url, 0, 50)"/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:value-of select="url"/>
-								</xsl:otherwise>
-							</xsl:choose>
-						</a>
-					</td>
-				</tr>
-			</xsl:if>
-
-			<!-- this calls  ? -->
-			<xsl:for-each select="detail[@id!=222 and @id!=223 and @id!=224]">
-				<tr>
-					<td style="padding-right: 10px;">
-						<nobr>
-							<xsl:choose>
-								<xsl:when test="string-length(@name)">
-									<xsl:value-of select="@name"/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:value-of select="@type"/>
-								</xsl:otherwise>
-							</xsl:choose>
-						</nobr>
-					</td>
-					<td>
-						<xsl:choose>
-							<!-- 268 = Contact details URL,  256 = Web links -->
-							<xsl:when test="@id=268  or  @id=256  or  starts-with(text(), 'http')">
-								<a href="{text()}">
-									<xsl:choose>
-										<xsl:when test="string-length() &gt; 50">
-											<xsl:value-of select="substring(text(), 0, 50)"/>
-										</xsl:when>
-										<xsl:otherwise>
-											<xsl:value-of select="text()"/>
-										</xsl:otherwise>
-									</xsl:choose>
-								</a>
-							</xsl:when>
-							<!-- 221 = AssociatedFile,  231 = Associated File -->
-							<xsl:when test="@id=221  or  @id=231">
-								<a href="{file_fetch_url}">
-									<xsl:value-of select="file_orig_name"/>
-								</a>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of select="text()"/>
-							</xsl:otherwise>
-						</xsl:choose>
-					</td>
-				</tr>
-			</xsl:for-each>
-
-
-			<tr>
-				<td style="padding-right: 10px;">
-					<xsl:value-of select="pointer[@id=264]/@name"/>
-				</td>
-				<td>
-					<xsl:apply-templates select="pointer[@id=264]"/>
-
-				</td>
-			</tr>
-			<tr>
-				<td style="padding-right: 10px;">
-					<xsl:value-of select="pointer[@id=267]/@name"/>
-				</td>
-				<td>
-
-					<xsl:apply-templates select="pointer[@id=267]"/>
-				</td>
-			</tr>
-
-			<xsl:if test="notes != ''">
-				<tr>
-					<td style="padding-right: 10px;">Notes</td>
-					<td>
-						<xsl:value-of select="notes"/>
-					</td>
-				</tr>
-			</xsl:if>
-
-			<xsl:if test="detail[@id=222 or @id=223 or @id=224]">
-				<tr>
-					<td style="padding-right: 10px;">Images</td>
-					<td>
-						<!-- 222 = Logo image,  223 = Thumbnail,  224 = Images -->
-						<xsl:for-each select="detail[@id=222 or @id=223 or @id=224]">
-							<a href="{file_fetch_url}">
-								<img src="{file_thumb_url}" border="0"/>
-							</a> &#160;&#160; </xsl:for-each>
-					</td>
-				</tr>
-			</xsl:if>
-		</table>
-	</xsl:template>
-
 	<xsl:template name="paragraphise">
 		<xsl:param name="text"/>
 		<xsl:for-each select="str:split($text, '&#xa;&#xa;')">
@@ -396,5 +234,12 @@
 		</xsl:for-each>
 	</xsl:template>
 
+
+	<xsl:template name="format_date">
+		<xsl:param name="date"/>
+		<xsl:if test="$date/year"><xsl:value-of select="$date/year"/></xsl:if>
+		<xsl:if test="$date/month">/<xsl:value-of select="$date/month"/></xsl:if>
+		<xsl:if test="$date/day">/<xsl:value-of select="$date/day"/></xsl:if>
+	</xsl:template>
 
 </xsl:stylesheet>

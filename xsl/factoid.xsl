@@ -38,51 +38,21 @@
 			</td>
 
 			<td><!-- Start -->
-				<xsl:if test="detail[@id=177]/year"><xsl:value-of select="detail[@id=177]/year"/></xsl:if>
-				<xsl:if test="detail[@id=177]/month">/<xsl:value-of select="detail[@id=177]/month"/></xsl:if>
-				<xsl:if test="detail[@id=177]/day">/<xsl:value-of select="detail[@id=177]/day"/></xsl:if>
+				<xsl:call-template name="format_date">
+					<xsl:with-param name="date" select="detail[@id=177]"/>
+				</xsl:call-template>
 			</td>
 
 			<td><!-- End -->
-				<xsl:if test="detail[@id=178]/year"><xsl:value-of select="detail[@id=178]/year"/></xsl:if>
-				<xsl:if test="detail[@id=178]/month">/<xsl:value-of select="detail[@id=178]/month"/></xsl:if>
-				<xsl:if test="detail[@id=178]/day">/<xsl:value-of select="detail[@id=178]/day"/></xsl:if>
+				<xsl:call-template name="format_date">
+					<xsl:with-param name="date" select="detail[@id=178]"/>
+				</xsl:call-template>
 			</td>
 
 			<td><!-- Place -->
 				<xsl:choose>
 					<xsl:when test="pointer[@id=528] and detail/@id=230">
-						<!-- nb detail 230 = type location so show map -->
-
 						see map
-
-
-						<script>
-							var HEURIST = {};
-						</script>
-						<!-- yes you do need this -->
-						<xsl:element name="script">
-							<xsl:attribute name="src"><xsl:value-of select="$hbase"/>/mapper/tmap-data.php?w=all&amp;q=id:<xsl:value-of select="id"/>
-								<xsl:for-each select="related">
-									<xsl:text>,</xsl:text>
-									<xsl:value-of select="id"/>
-								</xsl:for-each>
-							</xsl:attribute>
-						</xsl:element>
-						<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
-						<script src="{$hbase}/mapper/epoly.js"></script>
-						<script src="{$hbase}/mapper/mapper.js"></script>
-
-						<!-- script>
-							loadMap( { compact: true, highlight: [<xsl:value-of select="id"/>], onclick: function(record) { window.location = "<xsl:value-of select="$cocoonbase"/>/item/<xsl:value-of select="id"/>"; } } );
-							</script -->
-
-						<script>
-							window.onload = function() {
-								loadMap( { compact: true, highlight: [], onclick: function(record) { window.location = "/cocoon/dos/browser/item/"+record.bibID+"/"; } } );
-							};
-						</script>
-
 					</xsl:when>
 					<xsl:when test="pointer[@id=527]/id  and  ../id != pointer[@id=527]/id">
 						<a href="{$cocoonbase}/item/{pointer[@id=527]/id}">
@@ -93,7 +63,6 @@
 						<em>self</em>
 					</xsl:when>
 				</xsl:choose>
-
 			</td>
 		</tr>
 

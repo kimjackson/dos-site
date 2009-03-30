@@ -1,171 +1,181 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:str="http://exslt.org/strings" xmlns:xi="http://www.w3.org/2001/XInclude" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:str="http://exslt.org/strings" xmlns:regexp="http://exslt.org/regexp" xmlns:xi="http://www.w3.org/2001/XInclude" version="1.0">
 
+	<xsl:include href="clean_quote.xsl"/>
 
 	<xsl:template name="xmldoc" match="reference[reftype/@id=98]">
 
 		<script src="{$urlbase}/js/highlight.js"/>
 
-		<style>
-			#tei a { text-decoration: none; }
-		</style>
-
-		<xsl:choose>
-			<!-- detail 231 is associated WordML file -->
-			<xsl:when test="detail[@id=231]">
-				<div id="tei" style="padding-right: 10px">
-					<xi:include href="{detail[@id=231]/file_fetch_url}"/>
+		<div>
+			<div class="content-left">
+				<!-- dc.contributor -->
+				<div class="content-author">
+					<xsl:value-of select="pointer[@id=538]/detail[@id=160]"/>
 				</div>
-			</xsl:when>
-			<!-- detail 221 is associated TEI file -->
-			<xsl:when test="detail[@id=221]">
-				<div id="tei" style="padding-right: 10px">
-					<xi:include href="{detail[@id=221]/file_fetch_url}"/>
-				</div>
-			</xsl:when>
-		</xsl:choose>
 
-		<table>
-			<xsl:choose>
-				<!-- render TEI document by a separate transform where the source document is WordML rather then TEI document -->
-				<xsl:when test="detail[@id=221]"></xsl:when>
-				<xsl:otherwise>
-					<tr>
-						<td>
-							<nobr>TEI</nobr>
-						</td>
-						<td>
-							<a href="{$cocoonbase}/item/{//id}/wordml">
-								[TEI document]
-							</a>
-						</td>
-					</tr>
-				</xsl:otherwise>
+				<!-- dc.date -->
+				<div class="content-date">
+					<xsl:call-template name="format_date">
+						<xsl:with-param name="date" select="detail[@id=166]"/>
+					</xsl:call-template>
+				</div>
+
+				<div class="clear"/>
+
+				<xsl:choose>
+					<!-- detail 231 is associated WordML file -->
+					<xsl:when test="detail[@id=231]">
+						<div id="tei" style="padding-right: 10px">
+							<xi:include href="{detail[@id=231]/file_fetch_url}"/>
+						</div>
+					</xsl:when>
+					<!-- detail 221 is associated TEI file -->
+					<xsl:when test="detail[@id=221]">
+						<div id="tei" style="padding-right: 10px">
+							<xi:include href="{detail[@id=221]/file_fetch_url}"/>
+						</div>
+					</xsl:when>
 				</xsl:choose>
-
-
-
-			<xsl:for-each select="detail[@id!=222 and @id!=223 and @id!=224 and @id!=230]">
-				<tr>
-					<td style="padding-right: 10px;">
-						<nobr>
-							<xsl:choose>
-								<xsl:when test="string-length(@name)">
-									<xsl:value-of select="@name"/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:value-of select="@type"/>
-								</xsl:otherwise>
-							</xsl:choose>
-						</nobr>
-					</td>
-					<td>
-						<xsl:choose>
-							<!-- 268 = Contact details URL,  256 = Web links -->
-							<xsl:when test="@id=268  or  @id=256  or  starts-with(text(), 'http')">
-								<a href="{text()}">
-									<xsl:choose>
-										<xsl:when test="string-length() &gt; 50">
-											<xsl:value-of select="substring(text(), 0, 50)"/> ... </xsl:when>
-										<xsl:otherwise>
-											<xsl:value-of select="text()"/>
-										</xsl:otherwise>
-									</xsl:choose>
-								</a>
-							</xsl:when>
-							<!-- 231 = WordML File! -->
-							<xsl:when test="@id=231 or @id=221">
-								<a href="{file_fetch_url}">
-									[<xsl:value-of select="file_orig_name"/>]
-								</a>
-
-
-							</xsl:when>
-
-
-
-							<xsl:when test="@id=191">
-								<xsl:call-template name="paragraphise">
-									<xsl:with-param name="text">
-										<xsl:value-of select="text()"/>
-									</xsl:with-param>
-								</xsl:call-template>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of select="text()"/>
-							</xsl:otherwise>
-						</xsl:choose>
-					</td>
-
-				</tr>
-
-			</xsl:for-each>
-			<tr><td colspan="2"><a  href='#' onclick="window.open('{$urlbase}/mm_annotations.htm?id={//id}','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;">List Multimedia Annotations</a></td></tr>
-
-		</table>
+			</div>
+			
+			<div class="content-right">
+				<!--xsl:for-each select="reverse-pointer[@id=322][reftype/@id=99][detail[@id=359]='Annotation Multimedia']">
+					<xsl:for-each select="pointer[@id=199][reftype/@id=74][starts-with(detail[@id=289], 'image')]">
+						<img src="{detail[@id=221]/file_thumb_url}"/>
+						<br/>
+					</xsl:for-each>
+				</xsl:for-each-->
+				<xsl:apply-templates select="reverse-pointer[@id=322][reftype/@id=99][1]">
+					<xsl:with-param name="matches" select="reverse-pointer[@id=322][reftype/@id=99]"/>
+				</xsl:apply-templates>
+			</div>
+			
+			<div class="clear"/>
+		</div>
 
 	</xsl:template>
 
-	<xsl:template match="related | pointer | reverse-pointer">
-		<!-- this is where the display work is done summarising the related items of various types - pictures, events etc -->
-		<!-- reftype-specific templates take precedence over this one -->
-		<xsl:param name="matches"/>
 
-		<!-- trickiness!
-			First off, this template will catch a single related (/ pointer / reverse-pointer) record,
-			with the full list as a parameter ("matches").  This gives the template a chance to sort the records
-			and call itself with those sorted records
-		-->
+	<xsl:template match="reverse-pointer[@id=322][reftype/@id=99]">
+		<xsl:param name="matches"/>
 		<xsl:choose>
 			<xsl:when test="$matches">
+
+				<xsl:call-template name="setup_refs"/>
+
 				<xsl:apply-templates select="$matches">
-					<xsl:sort select="detail[@id=160]"/>
+					<!-- somewhat cumbersome way of sorting based on annotation position: -->
+					<xsl:sort select="substring-before(detail[@id=539], ',')" data-type="number"/>
+					<!--xsl:sort select="substring-before(substring-after(detail[@id=539], ','), ',')" data-type="number"/-->
+					<xsl:sort select="substring-after(detail[@id=539], ',')" data-type="text"/>
+					<!--xsl:sort data-type="text" select="regexp:replace(detail[@id=539], '(,|^)(\d)(?!\d)', 'g', '$10$2')"/-->
+					<xsl:sort select="detail[@id=329]" data-type="number"/>
 				</xsl:apply-templates>
+
+				<xsl:call-template name="render_refs"/>
+
 			</xsl:when>
 			<xsl:otherwise>
-
-				<tr>
-					<td>
-						<xsl:if test="detail[@id = 222 or @id=223 or @id=224]">
-							<xsl:if test="detail/file_thumb_url">
-								<a href="{$cocoonbase}/item/{id}">
-
-									<img src="{detail/file_thumb_url}"/>
-
-
-								</a> <em>(Entry)</em>
+				<xsl:choose>
+					<xsl:when test="detail[@id=359]='Annotation Multimedia'  and  pointer[@id=199][reftype/@id=74][starts-with(detail[@id=289], 'image')]">
+						<p>
+							<a href="../{pointer[@id=199]/id}">
+								<img src="{pointer[@id=199]/detail[@id=221]/file_thumb_url}"/>
+							</a>
+							<br/>
+							<xsl:value-of select="pointer[@id=199]/detail[@id=160]"/>
+							<xsl:for-each select="pointer[@id=199]/pointer[@id=538]">
 								<br/>
+								<xsl:choose>
+									<xsl:when test="detail[@id=569]">
+										<xsl:value-of select="detail[@id=569]"/>
+									</xsl:when>
+									<xsl:otherwise>
+										Contributed by: <xsl:value-of select="detail[@id=160]"/>
+									</xsl:otherwise>
+								</xsl:choose>
+							</xsl:for-each>
+						</p>
+					</xsl:when>
+					<xsl:otherwise>
+						<!--p>
+							<a href="#ref{id}" annotation-id="{id}" onclick="highlightAnnotation({id});">
+								<xsl:value-of select="title"/>
+							</a>
+						</p-->
+					</xsl:otherwise>
+				</xsl:choose>
 
-							</xsl:if>
-						</xsl:if>
+				<xsl:call-template name="add_ref">
+					<xsl:with-param name="ref" select="."/>
+				</xsl:call-template>
 
-						<a href="{$cocoonbase}/item/{id}/" class="sb_two">
-							<xsl:choose>
-								<!-- related / notes -->
-								<xsl:when test="@notes">
-									<xsl:attribute name="title">
-										<xsl:value-of select="@notes"/>
-									</xsl:attribute>
-								</xsl:when>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="detail[@id=160]">
-									<xsl:value-of select="detail[@id=160]"/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:value-of select="title"/>
-								</xsl:otherwise>
-							</xsl:choose>
-						</a>
-					</td>
-					<td align="right">
-						<!-- change this to pick up the actuall system name of the reftye or to use the mapping method as in JHSB that calls human-readable-names.xml -->
-						<img style="vertical-align: middle;horizontal-align: right" src="{$hbase}/img/reftype/{reftype/@id}.gif"/>
-					</td>
-				</tr>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
 
+
+	<xsl:template name="setup_refs">
+		<script>
+			if (! window["refs"]) {
+				window["refs"] = [];
+			}
+		</script>
+	</xsl:template>
+
+	<xsl:template name="add_ref">
+		<xsl:param name="ref"/>
+		<script>
+			if (window["refs"]) {
+				refs.push( {
+				startElems : [ <xsl:value-of select="detail[@id=539]"/> ],
+				endElems : [ <xsl:value-of select="detail[@id=540]"/> ],
+				startWord :
+					<xsl:choose>
+						<xsl:when test="detail[@id=329]"><xsl:value-of select="detail[@id=329]"/></xsl:when>
+						<xsl:otherwise>null</xsl:otherwise>
+					</xsl:choose>,
+				endWord :
+					<xsl:choose>
+						<xsl:when test="detail[@id=330]"><xsl:value-of select="detail[@id=330]"/></xsl:when>
+						<xsl:otherwise>null</xsl:otherwise>
+					</xsl:choose>,
+				href : "../<xsl:value-of select="id"/>/#ref1",
+				title : "<xsl:call-template name="cleanQuote"><xsl:with-param name="string" select="detail[@id=160]"/></xsl:call-template>",
+				recordID : "<xsl:value-of select="id"/>"
+				} );
+			}
+		</script>
+	</xsl:template>
+
+	<xsl:template name="render_refs">
+		<script>
+		<![CDATA[
+			var root = document.getElementById("tei");
+			if (root  &&  window["refs"])
+			highlight(root, refs);
+			window.onload = highlightOnLoad;
+		]]>
+		</script>
+	</xsl:template>
+
+
+	<xsl:template match="reference[reftype/@id=98]" mode="sidebar">
+
+		<!-- generate document index here -->
+
+		<xsl:variable name="items" select="related | pointer | reverse-pointer"/>
+
+		<xsl:call-template name="related_items">
+			<xsl:with-param name="label">Related Terms</xsl:with-param>
+			<xsl:with-param name="items" select="related[reftype/@id=152]"/>
+		</xsl:call-template>
+		<xsl:call-template name="related_items">
+			<xsl:with-param name="label">Referenced in</xsl:with-param>
+			<xsl:with-param name="items" select="reverse-pointer[@id=199][reftype/@id=99]"/>
+		</xsl:call-template>
+
+	</xsl:template>
 
 </xsl:stylesheet>
