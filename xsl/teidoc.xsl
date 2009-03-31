@@ -165,8 +165,7 @@
 
 		<!-- generate document index here -->
 
-		<xsl:variable name="items" select="related | pointer | reverse-pointer"/>
-
+		<xsl:call-template name="related_entities_by_type"/>
 		<xsl:call-template name="related_items">
 			<xsl:with-param name="label">Related Terms</xsl:with-param>
 			<xsl:with-param name="items" select="related[reftype/@id=152]"/>

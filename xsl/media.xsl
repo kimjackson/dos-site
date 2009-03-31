@@ -53,18 +53,7 @@
 
 
 	<xsl:template match="reference[reftype/@id=74]" mode="sidebar">
-
-		<xsl:variable name="items" select="related"/>
-
-		<xsl:call-template name="related_items">
-			<xsl:with-param name="label">This item is of:</xsl:with-param>
-			<xsl:with-param name="items" select="related[@type='isOf'][reftype/@id=151]"/>
-		</xsl:call-template>
-		<xsl:call-template name="related_items">
-			<xsl:with-param name="label">This item is related to:</xsl:with-param>
-			<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=151]"/>
-		</xsl:call-template>
-
+		<xsl:call-template name="related_entities_by_type"/>
 	</xsl:template>
 
 </xsl:stylesheet>
