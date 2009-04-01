@@ -10,6 +10,7 @@
 	
 
 	<xsl:include href="myvariables.xsl"/>
+	<xsl:include href="util.xsl"/>
 
 	<xsl:include href="factoid.xsl"/>
 	<xsl:include href="media.xsl"/>
@@ -116,8 +117,15 @@
 						<li><a href="#">Event</a></li>
 					</ul>
 				</div>
-				<div id="title">
-					<div id="entity-title" class="heading"><xsl:value-of select="export/references/reference[1]/title"/></div>
+				<div id="title" class="left-column">
+					<xsl:call-template name="icon">
+						<xsl:with-param name="record" select="export/references/reference"/>
+						<xsl:with-param name="size" select="'big'"/>
+					</xsl:call-template>
+					<xsl:value-of select="export/references/reference[1]/title"/>
+				</div>
+				<div class="right-column">
+					<div style="font-size: 16px; font-weight: bold; position: relative; top: 20px; left: 10px;">Connections</div>
 				</div>
 				<div id="middle">
 					<div class="left-column">
@@ -167,6 +175,10 @@
 				<div class="sidebar-top"/>
 				<div class="sidebar">
 					<h4>
+						<xsl:call-template name="icon">
+							<xsl:with-param name="record" select="$items[1]"/>
+							<xsl:with-param name="size" select="'small'"/>
+						</xsl:call-template>
 						<xsl:value-of select="$label"/>
 					</h4>
 					<ul>
@@ -224,22 +236,5 @@
 		</xsl:choose>
 	</xsl:template>
 
-
-	<xsl:template name="paragraphise">
-		<xsl:param name="text"/>
-		<xsl:for-each select="str:split($text, '&#xa;&#xa;')">
-			<p>
-				<xsl:value-of select="."/>
-			</p>
-		</xsl:for-each>
-	</xsl:template>
-
-
-	<xsl:template name="format_date">
-		<xsl:param name="date"/>
-		<xsl:if test="$date/year"><xsl:value-of select="$date/year"/></xsl:if>
-		<xsl:if test="$date/month">/<xsl:value-of select="$date/month"/></xsl:if>
-		<xsl:if test="$date/day">/<xsl:value-of select="$date/day"/></xsl:if>
-	</xsl:template>
 
 </xsl:stylesheet>

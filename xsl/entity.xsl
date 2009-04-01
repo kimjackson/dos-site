@@ -6,37 +6,6 @@
 
 		<div class="line-box">
 
-			<!-- dc.title -->
-			<h1>
-				<xsl:value-of select="detail[@id=160]"/>
-			</h1>
-
-			<!-- dc.type -->
-			<p>
-				<xsl:value-of select="detail[@id=523]"/>
-			</p>
-
-			<!-- dc.gender -->
-			<xsl:if test="detail[@id=399]">
-				<p>
-					<xsl:choose>
-						<xsl:when test="detail[@id=399] = 'Male'">Male</xsl:when>
-						<xsl:when test="detail[@id=399] = 'Female'">Female</xsl:when>
-						<xsl:otherwise>Unknown</xsl:otherwise>
-					</xsl:choose>
-				</p>
-			</xsl:if>
-
-			<!-- dos.real -->
-			<xsl:if test="detail[@id=524]">
-				<p>
-					<xsl:choose>
-						<xsl:when test="detail[@id=524] = 'true'">Real</xsl:when>
-						<xsl:otherwise>Fictional</xsl:otherwise>
-					</xsl:choose>
-				</p>
-			</xsl:if>
-
 			<!-- dc.description -->
 			<p>
 				<xsl:value-of select="detail[@id=191]"/>
@@ -81,7 +50,15 @@
 		<!-- related entries -->
 		<xsl:for-each select="related[reftype/@id=98]">
 			<div class="line-box">
-				<a href="../{id}"><h1><xsl:value-of select="detail[@id=160]"/></h1></a>
+				<a href="../{id}">
+					<h1>
+						<xsl:call-template name="icon">
+							<xsl:with-param name="record" select="."/>
+							<xsl:with-param name="size" select="'medium'"/>
+						</xsl:call-template>
+						<xsl:value-of select="detail[@id=160]"/>
+					</h1>
+				</a>
 				<p>Author: <xsl:value-of select="pointer[@id=538]/title"/></p>
 				<p><xsl:value-of select="detail[@id=191]"/></p>
 			</div>
@@ -91,7 +68,13 @@
 		<xsl:variable name="images_of" select="related[@type='IsInMM'][starts-with(detail[@id=289], 'image')]"/>
 		<xsl:if test="$images_of">
 			<div class="line-box big-thumb-gap">
-				<h1>Images of <xsl:value-of select="detail[@id=160]"/></h1>
+				<h1>
+					<xsl:call-template name="icon">
+						<xsl:with-param name="record" select="$images_of[1]"/>
+						<xsl:with-param name="size" select="'medium'"/>
+					</xsl:call-template>
+					Images of <xsl:value-of select="detail[@id=160]"/>
+				</h1>
 				<xsl:for-each select="$images_of">
 					<a href="../{id}"><img src="{detail[@id=221]/file_thumb_url}"/></a>
 				</xsl:for-each>
@@ -102,7 +85,13 @@
 		<xsl:variable name="audio_of" select="related[@type='IsInMM'][starts-with(detail[@id=289], 'audio')]"/>
 		<xsl:if test="$audio_of">
 			<div class="line-box">
-				<h1>Audio of <xsl:value-of select="detail[@id=160]"/></h1>
+				<h1>
+					<xsl:call-template name="icon">
+						<xsl:with-param name="record" select="$audio_of[1]"/>
+						<xsl:with-param name="size" select="'medium'"/>
+					</xsl:call-template>
+					Audio of <xsl:value-of select="detail[@id=160]"/>
+				</h1>
 				<xsl:for-each select="$audio_of">
 					<p><a href="../{id}"><xsl:value-of select="detail[@id=160]"/></a></p>
 				</xsl:for-each>
@@ -113,7 +102,13 @@
 		<xsl:variable name="video_of" select="related[@type='IsInMM'][starts-with(detail[@id=289], 'video')]"/>
 		<xsl:if test="$video_of">
 			<div class="line-box">
-				<h1>Video of <xsl:value-of select="detail[@id=160]"/></h1>
+				<h1>
+					<xsl:call-template name="icon">
+						<xsl:with-param name="record" select="$video_of[1]"/>
+						<xsl:with-param name="size" select="'medium'"/>
+					</xsl:call-template>
+					Video of <xsl:value-of select="detail[@id=160]"/>
+				</h1>
 				<xsl:for-each select="$video_of">
 					<p><a href="../{id}"><xsl:value-of select="detail[@id=160]"/></a></p>
 				</xsl:for-each>
@@ -124,7 +119,13 @@
 		<xsl:variable name="maps_of" select="related[@type='IsIn'][reftype/@id=103]"/>
 		<xsl:if test="$maps_of">
 			<div class="line-box">
-				<h1>Maps of <xsl:value-of select="detail[@id=160]"/></h1>
+				<h1>
+					<xsl:call-template name="icon">
+						<xsl:with-param name="record" select="$maps_of[1]"/>
+						<xsl:with-param name="size" select="'medium'"/>
+					</xsl:call-template>
+					Maps of <xsl:value-of select="detail[@id=160]"/>
+				</h1>
 				<xsl:for-each select="$maps_of">
 					<p><a href="../{id}"><xsl:value-of select="detail[@id=160]"/></a></p>
 				</xsl:for-each>
