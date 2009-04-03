@@ -25,6 +25,8 @@
 		}
 	}
 
+// not relevant to gallipoli!
+// Should be re-tasked as a generic option loader for all encountered details of type enum
 function loadOptions(record){
 	//load options for dos.status dropdown 531
 	var enums =[];
@@ -108,7 +110,7 @@ function loadOptions(record){
 
 
 		document.getElementById("pagetitle").innerHTML = "Add/edit annotation";
-		loadOptions(record);
+		//loadOptions(record);
 		for (var i in detail_types) {
 			var val = record.getDetail(detail_types[i]);
 			switch (detail_types[i].getID()) {
