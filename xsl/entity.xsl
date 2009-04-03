@@ -14,7 +14,14 @@
 
 			<!-- default image: dos.main_image -->
 			<xsl:if test="pointer[@id=508]">
-				<img src="pointer[@id=508][1]/detail[@id=221]/file_fetch_url"/>
+				<img>
+					<xsl:attribute name="src">
+						<xsl:call-template name="file_url">
+							<xsl:with-param name="file" select="pointer[@id=508][1]/detail[@id=221]"/>
+							<xsl:with-param name="size" select="'medium'"/>
+						</xsl:call-template>
+					</xsl:attribute>
+				</img>
 			</xsl:if>
 
 			<!-- default map -->
@@ -50,7 +57,7 @@
 		<!-- related entries -->
 		<xsl:for-each select="related[reftype/@id=98]">
 			<div class="line-box">
-				<a href="../{id}">
+				<a href="{id}">
 					<h1>
 						<xsl:call-template name="icon">
 							<xsl:with-param name="record" select="."/>
@@ -76,7 +83,16 @@
 					Images of <xsl:value-of select="detail[@id=160]"/>
 				</h1>
 				<xsl:for-each select="$images_of">
-					<a href="../{id}"><img src="{detail[@id=221]/file_thumb_url}"/></a>
+					<a href="{id}">
+						<img>
+							<xsl:attribute name="src">
+								<xsl:call-template name="file_url">
+									<xsl:with-param name="file" select="detail[@id=221]"/>
+									<xsl:with-param name="size" select="'small'"/>
+								</xsl:call-template>
+							</xsl:attribute>
+						</img>
+					</a>
 				</xsl:for-each>
 			</div>
 		</xsl:if>
@@ -93,7 +109,7 @@
 					Audio of <xsl:value-of select="detail[@id=160]"/>
 				</h1>
 				<xsl:for-each select="$audio_of">
-					<p><a href="../{id}"><xsl:value-of select="detail[@id=160]"/></a></p>
+					<p><a href="{id}"><xsl:value-of select="detail[@id=160]"/></a></p>
 				</xsl:for-each>
 			</div>
 		</xsl:if>
@@ -110,7 +126,7 @@
 					Video of <xsl:value-of select="detail[@id=160]"/>
 				</h1>
 				<xsl:for-each select="$video_of">
-					<p><a href="../{id}"><xsl:value-of select="detail[@id=160]"/></a></p>
+					<p><a href="{id}"><xsl:value-of select="detail[@id=160]"/></a></p>
 				</xsl:for-each>
 			</div>
 		</xsl:if>
@@ -127,7 +143,7 @@
 					Maps of <xsl:value-of select="detail[@id=160]"/>
 				</h1>
 				<xsl:for-each select="$maps_of">
-					<p><a href="../{id}"><xsl:value-of select="detail[@id=160]"/></a></p>
+					<p><a href="{id}"><xsl:value-of select="detail[@id=160]"/></a></p>
 				</xsl:for-each>
 			</div>
 		</xsl:if>

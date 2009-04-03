@@ -58,7 +58,28 @@
 			</xsl:choose>
 		</xsl:variable>
 
-		<img src="{$urlbase}/images/{$name}-{$pixels}.jpg"/>
+		<img src="{$urlbase}images/{$name}-{$pixels}.jpg"/>
+	</xsl:template>
+
+
+	<xsl:template name="file_url">
+		<xsl:param name="file"/>
+		<xsl:param name="size"/>
+		<xsl:variable name="dir">
+			<xsl:choose>
+				<xsl:when test="$size = 'small'">100</xsl:when>
+				<xsl:when test="$size = 'medium'">300</xsl:when>
+				<xsl:when test="$size = 'full'">full</xsl:when>
+				<xsl:otherwise>full</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+
+		<xsl:value-of select="$urlbase"/>
+		<xsl:text>files/</xsl:text>
+		<xsl:value-of select="$dir"/>
+		<xsl:text>/</xsl:text>
+		<xsl:value-of select="$file/file_id"/>
+
 	</xsl:template>
 
 </xsl:stylesheet>

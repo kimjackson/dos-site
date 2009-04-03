@@ -24,16 +24,16 @@
 				<title>
 					<xsl:value-of select="export/references/reference/title"/>
 				</title>
-				<link href="{$urlbase}/style.css" rel="stylesheet" type="text/css" />
-				<link href="{$urlbase}/tei.css" rel="stylesheet" type="text/css" />
+				<link href="{$urlbase}style.css" rel="stylesheet" type="text/css" />
+				<link href="{$urlbase}tei.css" rel="stylesheet" type="text/css" />
 				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;key={$hapi-key}"></script>
-				<script src="{$urlbase}/js/search.js"/>
+				<script src="{$urlbase}js/search.js"/>
 				<xsl:if test="/export/references/reference/reftype[@id=103 or @id=151]">
 					<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
 				</xsl:if>
 				<xsl:if test="/export/references/reference/reftype[@id=103]">
 					<script src="http://simile.mit.edu/timeline/api/timeline-api.js"></script>
-					<script src="http://heuristscholar.org/{$urlbase}/timemap.1.3/timemap.js"></script>
+					<script src="http://heuristscholar.org/{$urlbase}timemap.1.3/timemap.js"></script>
 				</xsl:if>
 			</head>
 
@@ -41,7 +41,7 @@
 			<body>
 			<div id="container">
 				<div id="header">
-					<div class="logo"><a href="{$urlbase}"><img src="{$urlbase}/images/dictionary-of-sydney.jpg" width="148" height="97" /></a></div>
+					<div class="logo"><a href="{$urlbase}"><img src="{$urlbase}images/dictionary-of-sydney.jpg" width="148" height="97" /></a></div>
 					<div class="search"><h1>SEARCH</h1></div>
 					<form method="post" onsubmit="top.search(document.getElementById('search').value); return false;">
 						<div class="search-box"><input type="text" name="search" id="search" /></div>
@@ -51,8 +51,8 @@
 							<li><a title="Coming soon" onclick="alert('Coming soon!'); return false;" href="#">Advanced</a></li>
 						</ul>
 					</div>
-					<a href="#" class="left-arrow"><img src="{$urlbase}/images/img-left-arrow.jpg" width="13" height="24" /></a>
-					<a href="#" class="right-arrow"><img src="{$urlbase}/images/img-right-arrow.jpg" width="13" height="24" /></a>
+					<a href="#" class="left-arrow"><img src="{$urlbase}images/img-left-arrow.jpg" width="13" height="24" /></a>
+					<a href="#" class="right-arrow"><img src="{$urlbase}images/img-right-arrow.jpg" width="13" height="24" /></a>
 				</div>
 				<div id="menu">
 					<ul id="navigation">
@@ -161,7 +161,7 @@
 			</xsl:when>
 			<xsl:otherwise>
 				<li>
-					<a href="{$cocoonbase}/item/{id}">
+					<a href="{id}">
 						<xsl:choose>
 							<xsl:when test="detail[@id=160]">
 								<xsl:value-of select="detail[@id=160]"/>

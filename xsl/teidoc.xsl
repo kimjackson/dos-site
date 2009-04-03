@@ -38,12 +38,6 @@
 			</div>
 			
 			<div class="content-right">
-				<!--xsl:for-each select="reverse-pointer[@id=322][reftype/@id=99][detail[@id=359]='Annotation Multimedia']">
-					<xsl:for-each select="pointer[@id=199][reftype/@id=74][starts-with(detail[@id=289], 'image')]">
-						<img src="{detail[@id=221]/file_thumb_url}"/>
-						<br/>
-					</xsl:for-each>
-				</xsl:for-each-->
 				<xsl:apply-templates select="reverse-pointer[@id=322][reftype/@id=99][1]">
 					<xsl:with-param name="matches" select="reverse-pointer[@id=322][reftype/@id=99]"/>
 				</xsl:apply-templates>
@@ -78,8 +72,15 @@
 				<xsl:choose>
 					<xsl:when test="detail[@id=359]='Annotation Multimedia'  and  pointer[@id=199][reftype/@id=74][starts-with(detail[@id=289], 'image')]">
 						<p>
-							<a href="../{pointer[@id=199]/id}">
-								<img src="{pointer[@id=199]/detail[@id=221]/file_thumb_url}"/>
+							<a href="{pointer[@id=199]/id}">
+								<img>
+									<xsl:attribute name="src">
+										<xsl:call-template name="file_url">
+											<xsl:with-param name="file" select="pointer[@id=199]/detail[@id=221]"/>
+											<xsl:with-param name="size" select="'small'"/>
+										</xsl:call-template>
+									</xsl:attribute>
+								</img>
 							</a>
 							<br/>
 							<xsl:value-of select="pointer[@id=199]/detail[@id=160]"/>

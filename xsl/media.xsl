@@ -31,7 +31,15 @@
 			</xsl:if>
 
 			<xsl:if test="starts-with(detail[@id=289], 'image')">
-				<img src="{detail/file_fetch_url}"/>
+				<img>
+					<xsl:attribute name="src">
+						<xsl:call-template name="file_url">
+							<xsl:with-param name="file" select="detail[@id=221]"/>
+							<xsl:with-param name="size" select="'medium'"/>
+						</xsl:call-template>
+					</xsl:attribute>
+				</img>
+
 			</xsl:if>
 
 			<xsl:for-each select="pointer[@id=538]">

@@ -72,7 +72,7 @@ function displayResults(s,r) {
 	for (var i = 0; i < r.length; i++) {
 		//if (r[i].getRecordType().getID() != 52) {
 			innerHTML += "<img src=\"http://dos-sandbox.heuristscholar.org/heurist/img/reftype/" + r[i].getRecordType().getID() + ".gif\"/>";
-			innerHTML += " <a href=../" + r[i].getID() + "/ target=\"_blank\">" + r[i].getTitle() + "</a><br/>";
+			innerHTML += " <a href=" + r[i].getID() + " target=\"_blank\">" + r[i].getTitle() + "</a><br/>";
 		//}
 	}
 

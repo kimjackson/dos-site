@@ -29,19 +29,19 @@
   <map:pipeline>
 
    <map:match pattern="item/*/raw">
-    <map:redirect-to uri="../{1}/?cocoon-view=raw"/>
+    <map:redirect-to uri="../{1}?cocoon-view=raw"/>
    </map:match>
 
 
    <map:match pattern="item/*/transformed">
-    <map:redirect-to uri="../{1}/?cocoon-view=transformed"/>
+    <map:redirect-to uri="../{1}?cocoon-view=transformed"/>
    </map:match>
 
    <map:match pattern="item/*/wordml">
-    <map:redirect-to uri="../{1}/?cocoon-view=wordml"/>
+    <map:redirect-to uri="../{1}?cocoon-view=wordml"/>
    </map:match>
 
-   <map:match pattern="item/*/">
+   <map:match pattern="item/*">
     <map:generate src="http://dos-sandbox.heuristscholar.org/heurist/php/xmlexport.php?q=ids:{1}&amp;w=all&amp;stype=&amp;rev=yes&amp;related_details=160,169,177,178,191,291,223,221,230,289,323,324,325,326,327,328,329,330,526,529,569&amp;depth=2"
      label="xmlexport"/>
     <map:transform src="xsl/item_view.xsl" label="transformed">
@@ -54,8 +54,8 @@
     <map:serialize type="html"/>
    </map:match>
 
-   <map:match pattern="item/*">
-    <map:redirect-to uri="{1}/"/>
+   <map:match pattern="item/*/">
+    <map:redirect-to uri="../{1}"/>
    </map:match>
 
    <map:match pattern="kmltrans/*">
