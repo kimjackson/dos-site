@@ -11,6 +11,23 @@
 	</xsl:template>
 
 
+	<xsl:template name="cleanQuote">
+		<xsl:param name="string"/>
+		<xsl:choose>
+			<xsl:when test="contains($string, '&#x22;')">
+				<xsl:value-of select="substring-before($string, '&#x22;')"/>
+				<xsl:text>\"</xsl:text>
+				<xsl:call-template name="cleanQuote">
+					<xsl:with-param name="string" select="substring-after($string, '&#x22;')"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$string"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+
 	<xsl:template name="format_date">
 		<xsl:param name="date"/>
 		<xsl:if test="$date/year"><xsl:value-of select="$date/year"/></xsl:if>

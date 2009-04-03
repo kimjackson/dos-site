@@ -6,8 +6,6 @@
                 version="1.0">
 
 	<xsl:param name="id"/>
-	<xsl:param name="related_reftype_filter"/>
-	
 
 	<xsl:include href="myvariables.xsl"/>
 	<xsl:include href="util.xsl"/>
@@ -28,56 +26,6 @@
 				</title>
 				<link href="{$urlbase}/style.css" rel="stylesheet" type="text/css" />
 				<link href="{$urlbase}/tei.css" rel="stylesheet" type="text/css" />
-				<style type="text/css">
-					
-					/* timemap styles */
-					
-					#timeline { 
-					padding: 0;
-					margin: 0;
-					position: absolute;
-					top: 400px;
-					left: 120px;
-					right: 0;
-					bottom: 0;
-					overflow: auto; 
-					text-align: center; float: left;
-					}
-					
-					#timeline-zoom {
-					padding: 0;
-					margin: 0;
-					position: absolute;
-					top: 400px;
-					width: 120px;
-					left: 10px;
-					right: 0;
-					bottom: 0;
-					
-					
-					
-					}
-					
-					
-					#div-main {
-					position:relative;
-					float:center;   
-					}
-					
-					a.timeline-zoom-a, a.timeline-zoom-a:hover, a.timeline-zoom-a:visited{
-					text-decoration:none;
-					padding-left: 5px;
-					font-size: 11px;
-					
-					}
-					
-					.selected{
-					font-size: 11px;
-					background-color: yellow;
-					}
-
-				</style>
-
 				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;key={$hapi-key}"></script>
 				<script src="{$urlbase}/js/search.js"/>
 				<xsl:if test="/export/references/reference/reftype[@id=103 or @id=151]">
@@ -214,14 +162,6 @@
 			<xsl:otherwise>
 				<li>
 					<a href="{$cocoonbase}/item/{id}">
-						<xsl:choose>
-							<!-- related / notes -->
-							<xsl:when test="@notes">
-								<xsl:attribute name="title">
-									<xsl:value-of select="@notes"/>
-								</xsl:attribute>
-							</xsl:when>
-						</xsl:choose>
 						<xsl:choose>
 							<xsl:when test="detail[@id=160]">
 								<xsl:value-of select="detail[@id=160]"/>

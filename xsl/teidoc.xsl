@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:str="http://exslt.org/strings" xmlns:regexp="http://exslt.org/regexp" xmlns:xi="http://www.w3.org/2001/XInclude" version="1.0">
 
-	<xsl:include href="clean_quote.xsl"/>
-
 	<xsl:template name="xmldoc" match="reference[reftype/@id=98]">
 
 		<script src="{$urlbase}/js/highlight.js"/>
