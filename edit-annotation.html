@@ -300,8 +300,9 @@ function loadOptions(record){
 				case 508: val = image_record; break;
 			}
 
-			if (val)
+			if (val || detail_types[i].getID() == 191 || detail_types[i].getID() == 303) {
 				record.setDetails(detail_types[i], [val]);
+			}
 		}
 
 		var saver = new HSaver(

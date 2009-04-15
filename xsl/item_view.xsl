@@ -554,7 +554,7 @@
 				        var elts = document.getElementById("footnotes-inner");
 
 						if (val.getRecordType().getID() == 74) {
-							var img=val.getDetail(HDetailManager.getDetailTypeById(221)). getThumbnailURL();
+							var img=val.getDetail(HDetailManager.getDetailTypeById(221)).getThumbnailURL() + "&amp;w=400";
 							elts.innerHTML += "&lt;br&gt;&lt;a href=\""+pathDos+val.getID()+"\"&gt;&lt;img src=\"" + img+ "\"/&gt;&lt;/a&gt;";
 						}
 						else {

@@ -35,6 +35,8 @@
 								<a href="#ref{id}" annotation-id="{id}"
 									onclick="showFootnote({id}); highlightAnnotation({id});"
 									class="sb_two">
+									<xsl:value-of select="id"/>
+									<xsl:text> </xsl:text>
 									<xsl:value-of select="title"/>
 								</a>
 							</xsl:when>
