@@ -124,6 +124,10 @@ img { border: 0 }
 	padding-left: 20px;
 }
 
+.timeline-scale.selected {
+	background-color: yellow;
+}
+
 /*RIGHT-COLUMN
 --------------------------------------------------*/
 .right-column {	width: 165px; float: right; display: block }

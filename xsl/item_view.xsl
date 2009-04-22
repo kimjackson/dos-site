@@ -15,7 +15,7 @@
 	<xsl:include href="teidoc.xsl"/>
 	<xsl:include href="teidoc_reference.xsl"/>
 	<xsl:include href="entity.xsl"/>
-	<xsl:include href="kml-timeline.xsl"/>
+	<xsl:include href="map.xsl"/>
 
 	<xsl:template match="/">
 

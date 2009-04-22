@@ -26,7 +26,20 @@
 
 			<!-- default map -->
 			<xsl:if test="reverse-pointer[reftype/@id=150][detail/@id=230]">
-				<div id="map"></div>
+				<div id="map" style="width: 400px; height: 300px;"></div>
+				<div id="timeline" style="width: 400px; height: 200px;"></div>
+				<div id="timeline-scales"></div>
+				<script>
+					window.mapdata = {
+						timemap: [ {
+							data: {
+								type: "kml",
+								url: "http://heuristscholar.org<xsl:value-of select="$urlbase"/>kml/<xsl:value-of select="id"/>.kml"
+							}
+						} ]
+					};
+					$(initTMap);
+				</script>
 			</xsl:if>
 
 			<!-- factoids -->
