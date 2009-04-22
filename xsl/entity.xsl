@@ -2,7 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:str="http://exslt.org/strings" version="1.0">
 
-	<xsl:template name="entity" match="reference[reftype/@id=151]">
+	<xsl:template name="entity" match="reference[reftype/@id=151 or reftype/@id=91]">
 
 		<div class="line-box">
 
@@ -31,25 +31,7 @@
 
 			<!-- factoids -->
 			<xsl:if test="reverse-pointer[reftype/@id=150]">
-				<table class="factoids" border="0" cellpadding="2" width="100%" align="center">
-					<tr>
-						<th>Type</th>
-						<th>Source</th>
-						<th>Related</th>
-						<th>Start</th>
-						<th>End</th>
-						<th>Place</th>
-					</tr>
-					<xsl:apply-templates select="reverse-pointer[reftype/@id=150]">
-						<xsl:sort select="detail[@id=526]"/>
-						<xsl:sort select="detail[@id=177]/year"/>
-						<xsl:sort select="detail[@id=177]/month"/>
-						<xsl:sort select="detail[@id=177]/day"/>
-						<xsl:sort select="detail[@id=178]/year"/>
-						<xsl:sort select="detail[@id=178]/month"/>
-						<xsl:sort select="detail[@id=178]/day"/>
-					</xsl:apply-templates>
-				</table>
+				<xsl:call-template name="factoids"/>
 			</xsl:if>
 
 		</div>

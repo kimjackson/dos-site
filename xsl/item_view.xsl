@@ -28,12 +28,12 @@
 				<link href="{$urlbase}tei.css" rel="stylesheet" type="text/css" />
 				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;key={$hapi-key}"></script>
 				<script src="{$urlbase}js/search.js"/>
-				<xsl:if test="/export/references/reference/reftype[@id=103 or @id=151]">
+				<xsl:if test="/export/references/reference[reftype/@id=103 or (reftype/@id=151 and reverse-pointer[reftype/@id=150][detail/@id=230])]">
 					<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
-				</xsl:if>
-				<xsl:if test="/export/references/reference/reftype[@id=103]">
-					<script src="http://simile.mit.edu/timeline/api/timeline-api.js"></script>
-					<script src="http://heuristscholar.org/{$urlbase}timemap.1.3/timemap.js"></script>
+					<script src="http://static.simile.mit.edu/timeline/api-2.2.0/timeline-api.js" type="text/javascript"></script>
+					<script src="{$urlbase}timemap1.4/timemap.js" type="text/javascript"></script>
+					<script src="{$urlbase}timemap1.4/kmlparser.js" type="text/javascript"></script>					
+					<script src="{$urlbase}js/mapping.js"></script>
 				</xsl:if>
 			</head>
 

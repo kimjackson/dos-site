@@ -30,9 +30,9 @@
 
 	<xsl:template name="format_date">
 		<xsl:param name="date"/>
+		<xsl:if test="$date/day"><xsl:value-of select="$date/day"/> / </xsl:if>
+		<xsl:if test="$date/month"><xsl:value-of select="$date/month"/> / </xsl:if>
 		<xsl:if test="$date/year"><xsl:value-of select="$date/year"/></xsl:if>
-		<xsl:if test="$date/month">/<xsl:value-of select="$date/month"/></xsl:if>
-		<xsl:if test="$date/day">/<xsl:value-of select="$date/day"/></xsl:if>
 	</xsl:template>
 
 
