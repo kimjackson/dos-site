@@ -3,7 +3,8 @@
 
 	<xsl:template name="xmldoc" match="reference[reftype/@id=98]">
 
-		<script src="{$urlbase}/js/highlight.js"/>
+		<script src="/jquery/jquery.js"/>
+		<script src="{$urlbase}js/highlight.js"/>
 
 		<div>
 			<div class="content-left">
@@ -21,6 +22,11 @@
 
 				<div class="clear"/>
 
+				<div id="entry-page-controls-top">
+					<a class="entry-prev-page-link" href="#">previous</a>
+					<xsl:text> </xsl:text>
+					<a class="entry-next-page-link" href="#">next</a>
+				</div>
 				<xsl:choose>
 					<!-- detail 231 is associated WordML file -->
 					<xsl:when test="detail[@id=231]">
@@ -35,6 +41,11 @@
 						</div>
 					</xsl:when>
 				</xsl:choose>
+				<div id="entry-page-controls-bottom">
+					<a class="entry-prev-page-link" href="#">previous</a>
+					<xsl:text> </xsl:text>
+					<a class="entry-next-page-link" href="#">next</a>
+				</div>
 			</div>
 			
 			<div class="content-right">
@@ -71,7 +82,7 @@
 			<xsl:otherwise>
 				<xsl:choose>
 					<xsl:when test="detail[@id=359]='Annotation Multimedia'  and  pointer[@id=199][reftype/@id=74][starts-with(detail[@id=289], 'image')]">
-						<p>
+						<div class="annotation-img" annotation-id="{id}">
 							<a href="{pointer[@id=199]/id}">
 								<img>
 									<xsl:attribute name="src">
@@ -95,7 +106,7 @@
 									</xsl:otherwise>
 								</xsl:choose>
 							</xsl:for-each>
-						</p>
+						</div>
 					</xsl:when>
 					<xsl:otherwise>
 						<!--p>
@@ -154,6 +165,8 @@
 			var root = document.getElementById("tei");
 			if (root  &&  window["refs"])
 			highlight(root, refs);
+			showSection(0);
+			setupPageControls();
 			window.onload = highlightOnLoad;
 		]]>
 		</script>
@@ -163,6 +176,13 @@
 	<xsl:template match="reference[reftype/@id=98]" mode="sidebar">
 
 		<!-- generate document index here -->
+		<div>
+			<div class="sidebar-top"></div>
+			<div class="sidebar" id="entry-index">
+				<h4>Index</h4>
+			</div>
+			<div class="sidebar-bottom"></div>
+		</div>
 
 		<xsl:call-template name="related_entities_by_type"/>
 		<xsl:call-template name="related_items">

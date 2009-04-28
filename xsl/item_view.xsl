@@ -32,7 +32,7 @@
 					<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
 					<script src="http://static.simile.mit.edu/timeline/api-2.2.0/timeline-api.js" type="text/javascript"></script>
 					<script src="{$urlbase}timemap1.4/timemap.js" type="text/javascript"></script>
-					<script src="{$urlbase}timemap1.4/kmlparser.js" type="text/javascript"></script>					
+					<script src="{$urlbase}timemap1.4/kmlparser.js" type="text/javascript"></script>
 					<script src="{$urlbase}js/mapping.js"></script>
 				</xsl:if>
 			</head>

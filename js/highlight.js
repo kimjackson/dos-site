@@ -177,8 +177,8 @@ function transformTextNode (elem, refs, startingRefs, endingRefs, wordOffset) {
 		startPositions = startPositions.sort(sortfunc);
 		endPositions = endPositions.sort(sortfunc);
 
-console.log("startPositions:" + startPositions.toSource());
-console.log("endPositions:" + endPositions.toSource());
+//console.log("startPositions:" + startPositions.toSource());
+//console.log("endPositions:" + endPositions.toSource());
 
 		var refStack = [];
 		var sections = [];
@@ -236,7 +236,7 @@ console.log("endPositions:" + endPositions.toSource());
 			section.endWord = words.length;
 			sections.push(section);
 		}
-console.log("sections: " + sections.toSource());
+//console.log("sections: " + sections.toSource());
 
 		for (var i = 0; i < sections.length; ++i) {
 			var section = sections[i];
@@ -258,6 +258,7 @@ console.log("sections: " + sections.toSource());
 				a.innerHTML = wordString;
 				newElements.push(a);
 
+/*
 				for (var r = 0; r < section.refNums.length; ++r) {
 					var ref = refs[section.refNums[r]];
 					var a = document.createElement("a");
@@ -270,7 +271,7 @@ console.log("sections: " + sections.toSource());
 					//s.innerHTML = "";
 					newElements.push(a);
 				}
-
+*/
 			} else {
 				newElements.push(document.createTextNode(wordString));
 			}
@@ -310,35 +311,13 @@ console.log("sections: " + sections.toSource());
 
 /* functions for highlighting annotation links */
 
-var highlighted = {
-	"inline-annotation" : null,
-	"annotation-link" : null
-};
-
 function highlightAnnotation (id) {
-	var links = document.getElementsByTagName("a");
-	for (var i = 0; i < links.length; ++i) {
-		var e = links[i];
-		if (e.getAttribute("annotation-id") == id) {
-			if (e.id.match(/^ref/)) {
-				highlightElem("inline-annotation", e);
-			} else {
-				highlightElem("annotation-link", e);
-			}
-		}
-	}
-}
-
-function highlightElem (name, e) {
-	if (highlighted[name]) {
-		var oldbg = highlighted[name].getAttribute("old-bg-color");
-		highlighted[name].style.backgroundColor = oldbg;
-		highlighted[name].setAttribute("old-bg-color", null);
-	}
-	if (e) {
-		e.setAttribute("old-bg-color", e.style.backgroundColor);
-		e.style.backgroundColor = "#ffbb00";
-		highlighted[name] = e;
+	$("#tei a.annotation.highlighted").removeClass("highlighted");
+	$link = $("#tei a[annotation-id="+id+"]");
+	$link.addClass("highlighted");
+	$section = $link.parent().parent();
+	if (! $section.is(":visible")) {
+		showSection($("#tei div").index($section[0]));
 	}
 }
 
@@ -347,4 +326,59 @@ function highlightOnLoad() {
 	if (matches  &&  matches[1]) {
 		highlightAnnotation(matches[1]);
 	}
+}
+
+function setupPageControls() {
+	$("a.entry-prev-page-link").click(function() {
+		$("#tei div:has(~ div:visible):last").each(function() {
+			showSection($("#tei div").index(this));
+		});
+		return false;
+	});
+	$("a.entry-next-page-link").click(function() {
+		$("#tei div:visible ~ div:first").each(function() {
+			showSection($("#tei div").index(this));
+		});
+		return false;
+	});
+}
+
+function showSection(i) {
+	// note index begins at 0; -1 means show all sections
+	if (i < 0) {
+		$("#tei div").show();
+		$("a.entry-prev-page-link").add("a.entry-next-page-link").hide();
+	} else {
+		$("#tei div").hide().eq(i).show();
+		if (i == 0) {
+			$("a.entry-prev-page-link").hide();
+		} else {
+			$("a.entry-prev-page-link").show();
+		}
+		if (i == $("#tei div").length - 1) {
+			$("a.entry-next-page-link").hide();
+		} else {
+			$("a.entry-next-page-link").show();
+		}
+	}
+	alignImages();
+}
+
+function alignImages() {
+	var PAD = 16;	// magic: top margin / padding of annotation thumbnails
+	$(".content-right div.annotation-img").each(function() {
+		var $annotation = $("#tei a[annotation-id=" + $(this).attr("annotation-id") + "]");
+		if ($annotation.parent().parent().is(":visible")) {
+			$(this).css("margin-top", "0px");
+			$(this).show();
+			var textpos = $annotation.offset().top;
+			var imgpos = $(this).offset().top;
+			var delta = textpos - (imgpos + PAD);
+			if (delta > 0) {
+				$(this).css("margin-top", delta + "px");
+			}
+		} else {
+			$(this).hide();
+		}
+	});
 }

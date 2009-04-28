@@ -82,7 +82,7 @@ img { border: 0 }
 	float: right
 }
 
-.content-right img { padding: 16px 0px 2px 0px }
+.content-right img { margin: 16px 0px 2px 0px }
 
 .content-author { width: 200px; padding: 0px 0px 10px 0px; float: left }
 
@@ -126,6 +126,10 @@ img { border: 0 }
 
 .timeline-scale.selected {
 	background-color: yellow;
+}
+
+#entry-page-controls-top, #entry-page-controls-bottom {
+	text-align: right;
 }
 
 /*RIGHT-COLUMN

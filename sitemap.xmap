@@ -8,18 +8,19 @@
   <map:view from-label="transformed" name="transformed">
    <map:serialize type="xml"/>
   </map:view>
-  <map:view from-label="xinclude" name="xinclude">
-   <map:serialize type="xml"/>
-  </map:view>
   <map:view from-label="wordml" name="wordml">
-   <map:transform src="xsl/tei_only.xsl"/>
    <map:serialize type="xml"/>
   </map:view>
-
   <map:view from-label="tei" name="tei">
    <map:serialize type="xml"/>
   </map:view>
-
+  <map:view from-label="tei-only" name="tei-only">
+   <map:transform src="xsl/tei_only.xsl"/>
+   <map:serialize type="xml"/>
+  </map:view>
+  <map:view from-label="html" name="html">
+   <map:serialize type="xml"/>
+  </map:view>
   <map:view from-label="rawkml" name="rawkml">
    <map:serialize type="xml"/>
   </map:view>
@@ -48,9 +49,10 @@
      <map:parameter name="use-request-parameters" value="true"/>
      <map:parameter name="id" value="{1}"/>
     </map:transform>
-    <map:transform type="xinclude" label="xinclude"/>
-    <map:transform src="xsl/wordml2TEI.xsl" label="wordml"/>
-    <map:transform src="xsl/tei_to_html_basic.xsl" label="tei"/>
+    <map:transform type="xinclude" label="wordml"/>
+    <map:transform src="xsl/wordml2TEI.xsl" label="tei"/>
+    <map:transform src="xsl/tei_to_html_basic.xsl" label="html"/>
+    <map:transform src="xsl/tei_index.xsl"/>
     <map:serialize type="html"/>
    </map:match>
 

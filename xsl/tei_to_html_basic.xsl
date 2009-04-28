@@ -15,6 +15,12 @@
 	</xsl:template>
 
 
+	<!-- this gets rid of the leftover processing-instruction from wordml -->
+	<xsl:template match="div[@id='tei']">
+		<xsl:copy>
+			<xsl:apply-templates select="TEI|@*"/>
+		</xsl:copy>
+	</xsl:template>
 
 	<!-- only use text/body/div from TEI, discard the rest -->
 	<xsl:template match="TEI">

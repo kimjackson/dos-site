@@ -22,7 +22,7 @@ a.annotation {
 a.annotation.multiple {
 	background-color: #ffff70;
 }
-a.annotation.superscript {
-	display: none;
+a.annotation.highlighted {
+	background-color: #ffbb00;
 }
 
