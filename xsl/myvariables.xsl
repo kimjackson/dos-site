@@ -7,4 +7,5 @@
     <xsl:variable name="instance"></xsl:variable>
     <xsl:variable name="instance_prefix"></xsl:variable>
     <xsl:variable name="site-title">rel-browser</xsl:variable>
+    <xsl:variable name="home-id">205</xsl:variable>
 </xsl:stylesheet>
