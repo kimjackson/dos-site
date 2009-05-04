@@ -10,9 +10,9 @@
 					<xsl:choose>
 						<xsl:when test="string-length(url) > 0">
 
-							<!--iframe id="heuristpublishiframe" frameborder="0"
-								src="{url}" width="100%" height="900px"
-								scrolling="auto"/-->
+							<iframe id="relbrowserframe" frameborder="0"
+								src="{url}" width="95%" height="900px"
+								scrolling="auto"/>
 							<p><xsl:value-of select="url"/></p>
 						</xsl:when>
 						<xsl:otherwise>
@@ -57,23 +57,6 @@
 		</table>
 	</xsl:template>
 
-	<!-- xsl:template name="person-summary" match="reference[reftype/@id=55]">
-		<table>
-			<tr>
-				<td>
-					<xsl:if test="detail[@id=223]">
-
-						<div style="float: left;">
-							<xsl:for-each select="detail[@id=223]">
-								<img src="{file_thumb_url}" vspace="10" hspace="10"/>
-							</xsl:for-each>
-						</div>
-					</xsl:if>
-
-					<h1><xsl:value-of select="title"/></h1>
-				</td>
-			</tr>
-		</table>
-	</xsl:template -->
+	
 
 </xsl:stylesheet>
