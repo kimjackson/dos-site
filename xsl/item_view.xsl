@@ -13,7 +13,6 @@
 	<xsl:include href="author_editor.xsl"/>
 	<xsl:include href="books-etc.xsl"/>
 	<xsl:include href="factoid.xsl"/>
-	<!-- xsl:include href="historical_event.xsl"/ -->
 	<xsl:include href="internet_bookmark.xsl"/>
 	<xsl:include href="media.xsl"/>
 	<xsl:include href="teidoc.xsl"/>
@@ -101,24 +100,28 @@
 					}
 				</script>
 				<script src="{$urlbase}/js/search.js"/>
-				<script src="{$urlbase}/js/track.js"/>
-				<script src="{$urlbase}/js/zoomtrack.js"/>
+				
 				<script>
 					top.HEURIST = {};
 					top.HEURIST.fireEvent = function(e, e){};
 				</script>
 				<script src="http://{$instance_prefix}heuristscholar.org/heurist/php/js/heurist-obj-user.php"></script>
 				<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
+				
+				<!-- Time Map rendering -->
 				<xsl:if test="/export/references/reference/reftype[@id=103 or @id=51 or @id=165]">
 					<script src="http://heuristscholar.org/{$urlbase}/js/timeline-api.js" type="text/javascript"></script>
 					<script src="http://heuristscholar.org/{$urlbase}/js/timemap.js" type="text/javascript"></script>
-					<script src="http://heuristscholar.org/{$urlbase}/js/kmlparser.js" type="text/javascript"></script>
-					
-					</xsl:if>	
-				
+					<script src="http://heuristscholar.org/{$urlbase}/js/kmlparser.js" type="text/javascript"></script>					
 					<script> 			
-					var crumbColours = [<xsl:value-of select="$crumbColours"/>];
+						var crumbColours = [<xsl:value-of select="$crumbColours"/>];
+						var maptrackCrumbNumber = <xsl:value-of select="$maptrackCrumbNumber"/>;
 					</script>
+					<script src="{$urlbase}/js/track.js"/>
+					<script src="{$urlbase}/js/zoomtrack.js"/>
+				</xsl:if>	
+				
+					
 			</head>
 			<body pub_id="{/export/@pub_id}" >
 				<div id="header">
@@ -313,29 +316,30 @@
 			<div id = "saved-searches-header"></div>
 			<script>
 				if (HCurrentUser.isLoggedIn()) {
-				var savedSearches = top.HEURIST.user.workgroupSavedSearches["2"];
-				document.getElementById("saved-searches-header").innerHTML = "Saved Searches";
-				for (i in savedSearches) {
-				var div = document.createElement("div");
-				div.id = "saved-search-" + i;
-				var a = document.createElement("a");
-				a.href = "#";
-				
-				var regexS = "[\\?&amp;]q=([^&amp;#]*)";
-				var regex = new RegExp( regexS );
-				var results = regex.exec( savedSearches[i][1]);
-				savedSearchesOnclick (a, results[1]);
-				a.appendChild(document.createTextNode(savedSearches[i][0]));
-				div.appendChild(a);
-				document.getElementById("saved-searches").appendChild(div);
-				
+					var savedSearches = top.HEURIST.user.workgroupSavedSearches["2"];
+					document.getElementById("saved-searches-header").innerHTML = "Saved Searches";
+					for (i in savedSearches) {
+						var div = document.createElement("div");
+						div.id = "saved-search-" + i;
+						var a = document.createElement("a");
+						a.href = "#";
+						
+						var regexS = "[\\?&amp;]q=([^&amp;#]*)";
+						var regex = new RegExp( regexS );
+						var results = regex.exec( savedSearches[i][1]);
+						savedSearchesOnclick (a, results[1]);
+						a.appendChild(document.createTextNode(savedSearches[i][0]));
+						div.appendChild(a);
+						document.getElementById("saved-searches").appendChild(div);
+						
+					}
 				}
-				}
+				
 				function savedSearchesOnclick (e, res) {
-				e.onclick = function() {
-				document.getElementById('query-input').value = res;
-				search (res);
-				}
+					e.onclick = function() {
+						document.getElementById('query-input').value = res;
+						search (res);
+					}
 				}
 				
 			</script>

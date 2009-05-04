@@ -26,4 +26,7 @@
         '#ffcccc'
     </xsl:variable>
 
+	<!-- number of breadcrumbs in "my map track " -->
+	<xsl:variable name="maptrackCrumbNumber">5</xsl:variable>
+
 </xsl:stylesheet>

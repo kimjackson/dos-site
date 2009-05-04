@@ -40,9 +40,7 @@
           //a blank timeMap object
            var blankDataSet =   {
            title: "blank",
-           theme: TimeMapDataset.redTheme({
-           eventIconPath: '../images/'
-           }),
+          			theme: TimeMapDataset.redTheme(),
            data: {
            type: "kml", // Data to be loaded in KML - must be a local URL
            url: "http://heuristscholar.org<xsl:value-of select="$urlbase"/>/blank.kml" // KML file to load
@@ -53,12 +51,9 @@
 
 
             <xsl:for-each select="pointer[@id=564]">
-                dataSets.push (
-                {
+	                	dataSets.push ({
                 title: "<xsl:value-of select="title"/>",
-                theme: TimeMapDataset.<xsl:choose><xsl:when test="detail[@id=567]"><xsl:value-of select="detail[@id=567]"/></xsl:when><xsl:otherwise>red</xsl:otherwise></xsl:choose>Theme({
-                eventIconPath: '../images/'
-                }),
+	                		theme: TimeMapDataset.<xsl:choose><xsl:when test="detail[@id=567]"><xsl:value-of select="detail[@id=567]"/></xsl:when><xsl:otherwise>red</xsl:otherwise></xsl:choose>Theme(),
                 data: {
                 type: "kml", // Data to be loaded in KML - must be a local URL
                 url: "http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmlfile/<xsl:value-of select="id"/>" // KML file to load
@@ -71,8 +66,7 @@
             title: "Focus record",
             <xsl:choose>
                 <xsl:when test="detail[@id=567]">
-                    theme: TimeMapDataset.<xsl:value-of select="detail[@id=567]"/>Theme()
-                    ,
+                    				theme: TimeMapDataset.<xsl:value-of select="detail[@id=567]"/>Theme(),
                     data: {
                     type: "kml", // Data to be loaded in KML - must be a local URL
                     url: "http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmlfile/<xsl:value-of select="id"/>" // KML file to load
@@ -82,8 +76,7 @@
                     theme: TimeMapDataset.redTheme({
                     iconImage:'<xsl:value-of select="$timelineIconImage"/>',
                     color:'<xsl:value-of select="$timelineColour"/>'
-                    })
-                    ,
+                    				}),
                     data: {
                     type: "kml", // Data to be loaded in KML - must be a local URL
                     url: "http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmltrans/id:<xsl:value-of select="id"/>" // KML file to load
@@ -99,8 +92,7 @@
             theme: TimeMapDataset.redTheme({
             iconImage:'<xsl:value-of select="$timelineRelatedIconImage"/>',
             color:'<xsl:value-of select="$timelineRelatedColour"/>'
-            })
-            ,
+            			}),
             data: {
             type: "kml", // Data to be loaded in KML - must be a local URL
             url: "http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmltrans/relatedto:<xsl:value-of select="id"/>" // KML file to load
@@ -111,9 +103,9 @@
 
             // and time map objects based on breadcrumbs!
            HAPI.PJ.retrieve("bcrumb", function (name, value){
-           if (value)  value.reverse();
-
-           for (var i = 1; i &lt; (value.length &lt; 6 ? value.length : 6); ++i){
+           			if (value)  {
+              				value.reverse();
+              				for (var i = 1; i &lt; (value.length &lt; parseInt(maptrackCrumbNumber + 1) ? value.length : parseInt(maptrackCrumbNumber + 1)); ++i) {
            var link;
 
            if (value[i].recType &amp;&amp; value[i].recType == '165') {
@@ -125,10 +117,8 @@
               var timeCrumb = {
                   title: "Breadcrumb"+i,
                   theme: TimeMapDataset.redTheme({
-                  eventIconPath: '../images/',
                   color:crumbColours[i-1]
-                })
-                ,
+                   					}),
                 data: {
                 type: "kml", // Data to be loaded in KML - must be a local URL
                 url:   (value[i]? link :  "http://heuristscholar.org<xsl:value-of select="$urlbase"/>/blank.kml") // KML file to load
@@ -137,7 +127,7 @@
 
                 dataSets.push(timeCrumb);
            }
-
+           			}
 
             dataSets.push (focusRecord);
             dataSets.push (relatedRecords);
