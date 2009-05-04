@@ -26,8 +26,6 @@
 	</xsl:template>
 
 	<xsl:template match="kml:Placemark">
-		<xsl:choose>
-			<xsl:when test="position() = 1">
 				<Placemark>
 					<description>
 						<xsl:apply-templates select="kml:description/kml:a">
@@ -47,8 +45,6 @@
 					</Style>
 					<xsl:copy-of select="kml:Point | kml:LineString | kml:MultiGeometry"/>
 				</Placemark>
-			</xsl:when>
-		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template match="kml:a">
