@@ -1,7 +1,6 @@
+var path = window.opener.HAPI.instance ? "http://" + window.opener.HAPI.instance + ".heuristscholar.org/heurist/" : "http://heuristscholar.org/heurist/";
 
 var record = new HRecord();
-
-
 
 isEmpty = function (object){
 	for (var o in object){ return false;}
@@ -636,8 +635,10 @@ function saveRecord(record) {
 		      		break;
 
 			  	case "date":
+				
 					var cleanDate = parseDate(fields[f]);
 					if (!cleanDate) { return; }
+					console.log(cleanDate);
 					record.addDetail(detTypes[d], cleanDate); //yyyy, mm, dd
 		      		break;
 
@@ -661,24 +662,22 @@ function saveRecord(record) {
 			if (rec_type_id == 150 || recType.getID() == 150){
 				window.opener.location.reload(true);
 			}
-//			if ((window.opener.location.pathname==("/dos/addrelationship.html")) || (window.opener.location.pathname == ("/dos/edit-annotation.html")) || (window.opener.location.pathname ==("/dos/edit-annotation-t.html"))) {
-				if(window.opener.document.getElementById("results") ){
-					 window.opener.document.getElementById("search").value = "id:"+r.getID();
-					 eval(window.opener.document.getElementById("searchbutton").onclick());
-					 window.opener.document.getElementById("search").value = "";
+			if(window.opener.document.getElementById("results") ){
+				window.opener.document.getElementById("search").value = "id:"+r.getID();
+				eval(window.opener.document.getElementById("searchbutton").onclick());
+				window.opener.document.getElementById("search").value = "";
+			}
+			if (window.opener.document.getElementById("linked-results") || window.opener.document.getElementById("image-results")) {
+				if (window.opener.document.getElementById("active-search") == "image") {
+					window.opener.document.getElementById("image-search").value = "id:"+r.getID();
+					eval(window.opener.document.getElementById("image-search-form").onsubmit());
+					window.opener.document.getElementById("image-search").value = "";
+				} else {
+					window.opener.document.getElementById("linked-search").value = "id:"+r.getID();
+					eval(window.opener.document.getElementById("linked-search-form").onsubmit());
+					window.opener.document.getElementById("linked-search").value = "";
 				}
-				if (window.opener.document.getElementById("linked-results") || window.opener.document.getElementById("image-results")) {
-					if (window.opener.document.getElementById("active-search") == "image") {
-						window.opener.document.getElementById("image-search").value = "id:"+r.getID();
-						eval(window.opener.document.getElementById("image-search-form").onsubmit());
-						window.opener.document.getElementById("image-search").value = "";
-					} else {
-						window.opener.document.getElementById("linked-search").value = "id:"+r.getID();
-						eval(window.opener.document.getElementById("linked-search-form").onsubmit());
-						window.opener.document.getElementById("linked-search").value = "";
-					}
-				}
-//			}
+			}
 			window.close();
 
 		},

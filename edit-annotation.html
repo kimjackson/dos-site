@@ -1,8 +1,7 @@
 <html>
  <head>
-  <script src=http://hapi.heuristscholar.org/load?instance=dos-sandbox&key=904dccc9750634a42b0467bbb3436238efddd3c4&v=d></script>
   <script>
-
+	window.opener.HAPI.importSymbols(window.opener, this);
 	var record;
 	var annotation_type;
 	var related_id;
@@ -12,103 +11,33 @@
 	var detail_types;
 	var linked_record, image_record;
 
-
-
-	function init() {
-		record_type = HRecordTypeManager.getRecordTypeById(99);
-		detail_types = HDetailManager.getDetailTypesForRecordType(record_type);
-		var matches = window.location.href.match(/[?&]id=([0-9]+)/);
-		if (matches) {
-			load_annotation(matches[1]);
-		} else {
-			fill_form();
-		}
-	}
-
-function loadOptions(record){
-	//load options for dos.status dropdown 531
-	var enums =[];
-	var recSelect = document.getElementById("531");
-	enums = HDetailManager.getDetailTypeById(531).getEnumerationValues();
-
-	if (record) {
-	  var detail = record.getDetail(HDetailManager.getDetailTypeById(191));
-	}
-	if (detail){
-	  	for (d in detail){
-			for (var i in enums) {
-				var opt = document.createElement("option");
-				opt.value = enums[i];
-				opt.innerHTML = enums[i];
-				if (detail[d] == enums[i]){
-				 opt.selected = true;
-				}
-				recSelect.appendChild(opt);
-			}
-	 	}
+function init() {
+	record_type = HRecordTypeManager.getRecordTypeById(99);
+	detail_types = HDetailManager.getDetailTypesForRecordType(record_type);
+	var matches = window.location.href.match(/[?&]id=([0-9]+)/);
+	if (matches) {
+		load_annotation(matches[1]);
 	} else {
-		var opt = document.createElement("option");
-		opt.disabled = false;
-		recSelect.appendChild(opt);
-		for (var i in enums) {
-			opt = document.createElement("option");
-			opt.value = enums[i];
-			opt.innerHTML = enums[i];
-			if (detail == enums[i]){
-				opt.selected = true;
-			}
-			recSelect.appendChild(opt);
-		}
+		fill_form();
 	}
 }
 
-	function load_annotation(id) {
-		var loader = new HLoader(
-			function(s,r) {
-				record = r[0];
-				annotation_loaded();
-			},
-			function(s,e) {
-				alert("load failed: " + e);
-			});
-		HeuristScholarDB.loadRecords(new HSearch("id:" + id), loader);
-	}
 
-	function annotation_loaded() {
-	    // capitalize the title
-		var at = record.getDetail(HDetailManager.getDetailTypeById(359));
+function load_annotation(id) {
+	var loader = new HLoader(
+		function(s,r) {
+			record = r[0];
+			annotation_loaded();
+		},
+		function(s,e) {
+			alert("load failed: " + e);
+		});
+	HeuristScholarDB.loadRecords(new HSearch("id:" + id), loader);
+}
+
+function annotation_loaded() {
 	    var title;
-	    switch (at) {
-			case "Annotation Entity":
-			    document.getElementById("type").value = "Annotation Entity";
-				title = "Entity Annotation";
-				annotation_type = "entity";
-				break;
-			case "Annotation Term":
-			    document.getElementById("type").value = "Annotation Term";
-				title  = "Term Annotation";
-				annotation_type = "term";
-				break;
-			case "Annotation Multimedia":
-			    document.getElementById("type").value = "Annotation Multimedia";
-				title  = "Multimedia Annotation";
-				annotation_type = "multimedia";
-				break;
-			case "Annotation Text":
-			    document.getElementById("type").value = "Annotation Text";
-				title  = "Text Annotation";
-				annotation_type = "text";
-				break;
-			case "Annotation Gloss":
-			    document.getElementById("type").value = "Annotation Glossary";
-				title  = "Gloss Annotation";
-				annotation_type = "glossary";
-				break;
-		}
-
-
-		document.getElementById("pagetitle").innerHTML = "Add/edit " + title;
-		loadOptions(record);
+		document.getElementById("pagetitle").innerHTML = "Add/edit annotation";
 		for (var i in detail_types) {
 			var val = record.getDetail(detail_types[i]);
 			switch (detail_types[i].getID()) {
@@ -119,61 +48,21 @@ function loadOptions(record){
 				case 540: document.getElementById("end_e").value = val; break;
 				case 329: document.getElementById("start_w").value = val; break;
 				case 330: document.getElementById("end_w").value = val; break;
-				case 359: document.getElementById("type").value = val; break;
-				case 303: document.getElementById(303).value = val; break;
-				case 531: document.getElementById(531).value = val; break;
 				case 199: if(val){setRecord(val.getID(), val.getTitle(), "linked");} break;
 				case 508: if(val){setRecord(val.getID(), val.getTitle(), "image");} break;
 			}
 		}
-	}
+}
 
 
-	function fill_form() {
+function fill_form() {
 
 		var matches = window.location.href.match(/[?&]refid=([0-9]+)/);
 		if (matches) {
 			related_id = matches[1];
 		}
 
-		matches = window.location.href.match(/[?&]type=([a-z]+)/);
-		if (matches) {
-			annotation_type = matches[1];
-		} else {
-			annotation_type = "entity";
-		}
-
-		if (annotation_type == "glossary") {
-
-			document.getElementById("linked-record-tr").style.display = "none";
-			//document.getElementById("type-tr").style.display = "none";
-		}
-
-		// capitalize the title
-		// var tmpChar = annotation_type.substring(0,1).toUpperCase();
-        // var postString = annotation_type.substring(1,annotation_type.length);
-         //var title = tmpChar + postString;
-		 loadOptions();
-		  switch (annotation_type) {
-			case "entity":
-				title = "Entity Annotation";
-				break;
-			case "term":
-				title  = "Term Annotation";
-				break;
-			case "multimedia":
-				title  = "Multimedia Annotation";
-				break;
-			case "text":
-				title  = "Text Annotation";
-				break;
-			case "glossary":
-				title  = "Gloss Annotation";
-				break;
-		}
-
-
-		document.getElementById("pagetitle").innerHTML = "Add/edit "+title;
+		document.getElementById("pagetitle").innerHTML = "Add/edit annotation";
 
 		// disable section inputs
 		document.getElementById("start_e").disabled = true;
@@ -193,38 +82,15 @@ function loadOptions(record){
 				document.getElementById("end_w").value = ref.endWord;
 		}
 
-		// WARNING BRITTLE CODE BELOW
-		// If the enum values for annotation type are changed this will break.
-		// There's no other way to do it though.
-		switch (annotation_type) {
-			case "entity":
-				document.getElementById("type").value = "Annotation Entity";
-				break;
-			case "term":
-				document.getElementById("type").value = "Annotation Term";
-				break;
-			case "multimedia":
-				document.getElementById("type").value = "Annotation Multimedia";
-				break;
-			case "text":
-				document.getElementById("type").value = "Annotation Text";
-				break;
-			case "glossary":
-				document.getElementById("type").value = "Annotation Gloss";
-				break;
-		}
-
 		var refdoc_title;
 
 		try {
 			refdoc_title = window.opener.getSelection().toString();
 		} catch (e) { }
 
-		if (annotation_type == "entity") {
-			document.getElementById("linked-search").value = refdoc_title;
-		} else {
-			document.getElementById("title").value = refdoc_title;
-		}
+		
+		document.getElementById("title").value = refdoc_title;
+		
 
 
 		var loader = new HLoader(
@@ -235,42 +101,15 @@ function loadOptions(record){
 				alert("load failed: " + e);
 			});
 		HeuristScholarDB.loadRecords(new HSearch("id:" + related_id), loader);
-	}
+}
 
 
-	function getSearchRestriction() {
-		var i = getRestrictedType();
-		return (i ? " type:" + i : "");
-	}
-
-	function getRestrictedType() {
-	    switch (annotation_type) {
-		case "entity":
-			return "entity";
-			break;
-		case "term":
-			return "term";
-			break;
-		case "multimedia":
-			return 74;
-			break;
-		case "text":
-			return 98;
-			break;
-		default:
-			return null;
-		}
-
-	}
-
-
-
-	function saveRecord() {
+function saveRecord() {
 		if (! record) {
 			record = new HRecord();
 			record.setRecordType(record_type);
 
-			if (related.getWorkgroup()) {
+			if (related && related.getWorkgroup()) {
 				record.setWorkgroup(related.getWorkgroup());
 				record.setNonWorkgroupVisible(true);
 			}
@@ -293,9 +132,6 @@ function loadOptions(record){
 				case 540: val = end_e != start_e ? end_e : null; break;
 				case 329: val = start_w; break;
 				case 330: val = end_w != start_w ? end_w : null; break;
-				case 359: val = document.getElementById("type").value; break;
-				case 531: val = document.getElementById(531).value; break;
-				case 303: val = document.getElementById(303).value; break;
 				case 199: val = linked_record;  break;
 				case 508: val = image_record; break;
 			}
@@ -316,9 +152,9 @@ function loadOptions(record){
 			});
 
 		HeuristScholarDB.saveRecord(record, saver);
-	}
+}
 
-	function doSearch(active) {
+function doSearch(active) {
 	    var q = document.getElementById(active + "-search").value;
 		if (!q) {
 			alert ("Enter a search string");
@@ -327,9 +163,7 @@ function loadOptions(record){
 
 		if (active == "image") {
 			q = q + " type:74";
-		} else {
-			q += getSearchRestriction();
-		}
+		} 
 
 		var loader = new HLoader(
 			function(s,r) {
@@ -340,8 +174,9 @@ function loadOptions(record){
 			}
 		);
 		HeuristScholarDB.loadRecords(new HSearch(q), loader);
-	}
-	function displayResults(r, active) {
+}
+	
+function displayResults(r, active) {
 		document.getElementById(active +"-results-div").style.display = "block";
 		var div = document.getElementById(active +"-results");
 		var innerHTML = "";
@@ -349,7 +184,6 @@ function loadOptions(record){
 			if (r[i].getRecordType().getID() != 52) {
 				innerHTML += "<img src=/heurist/img/reftype/"+r[i].getRecordType().getID()+".gif> ";
 				innerHTML += "<a href=# onclick=\"setRecord("+r[i].getID()+", this.innerHTML, '" + active +"'); return false;\">" + r[i].getTitle() + "</a><br/>";
-				//innerHTML += "<a href=# onclick=\"setLinkedRecord("+r[i].getID()+", this.innerHTML); return false;\">" + r[i].getTitle() + "</a><br/>";
 			}
 		}
 		if (innerHTML.length) {
@@ -357,77 +191,55 @@ function loadOptions(record){
 		} else {
 			div.innerHTML = "No matching records";
 		}
-
+		var b;
+		b = document.createElement("input");
+		b.type = "button";
+		
 		if (active == "image") {
-			addRecordDiv(div, "multimedia", "image");
-
+			b.value = "Add multimedia record";
+			b.onclick = function () {
+				document.getElementById("active-search").value = "image";
+				window.open("edit.html?typeId=74","","status=0,scrollbars=1,resizable=1,width=800,height=600");
+			}
 		} else {
-			addRecordDiv(div, annotation_type, "");
-
+			b.value = "Add a record";
+			b.onclick = function () {
+				document.getElementById("active-search").value = "";
+				//HERE IT WILL BREAK
+				window.open("edit.html?typeId=","","status=0,scrollbars=1,resizable=1,width=800,height=600");
+			}
 		}
+		div.appendChild(b);
 
-	}
-	function addRecordDiv(div, annotation_type, active_search){
+}
 
-		switch (annotation_type) {
-		case "entity":
-			div.innerHTML += "<br><br><input type=\"button\" value=\"Add Entity\" onclick=\"addRecord(151, '" + active_search + "');\"/>";
-			break;
-		case "term":
-			div.innerHTML += "<br><br><input type=\"button\" value=\"Add Term\" onclick=\"addRecord(152, '" + active_search + "');\"/>";
-			break;
-		case "multimedia":
-			div.innerHTML += "<br><br><input type=\"button\" value=\"Add Multimedia\" onclick=\"addRecord(74, '" + active_search + "');\"/>";
-			break;
-		case "text":
-			div.innerHTML += "<br><br><input type=\"button\" value=\"Add Text\" onclick=\"addRecord(98, '" + active_search + "');\"/>";
-			break;
-		}
-		return div;
-
-	}
-	function addRecord(recTypeId, active_search){
-		document.getElementById("active-search").value = active_search;
-		window.open("edit.html?typeId="+recTypeId,"","status=0,scrollbars=1,resizable=1,width=800,height=600");
-
-	}
-
-	function setRecord(id, title, active) {
+function setRecord(id, title, active) {
 		document.getElementById(active +"-record-span").innerHTML = "\"" + title + "\"";
 		document.getElementById(active +"-search-span").style.display = "none";
 		document.getElementById(active +"-display-span").style.display = "inline";
 		document.getElementById(active +"-results-div").style.display = "none";
-		if (document.getElementById("type").value == "Annotation - Entity") {
-			document.getElementById("title").value = title;
-		}
-		var setRecord = function() {
-			if (active == "linked") {
-				linked_record = HeuristScholarDB.getRecord(id);
-			}
-			if (active == "image") {
-				image_record = HeuristScholarDB.getRecord(id);
-			}
-		}();
+		doSet(active, HeuristScholarDB.getRecord(id));
+}
 
-	}
-
-	function change(active) {
+function change(active) {
 		document.getElementById(active +"-search-span").style.display = "inline";
 		document.getElementById(active +"-display-span").style.display = "none";
 		document.getElementById(active +"-results-div").style.display = "none";
-		var resetRecord = function() {
-			if (active == "linked") {
-				linked_record = null;
-			}
-			if (active == "image") {
-				image_record = null;
-			}
-		}();
-	}
+		doSet (active, null);
+}
+	
+function doSet(active, value) {
+		if (active == "linked") {
+			linked_record = value;
+		}
+		if (active == "image") {
+			image_record = value;
+		}
+}
 
-	function typeChanged() {
+function typeChanged() {
 		change();
-	}
+}
 
   </script>
   <style>
@@ -465,18 +277,15 @@ function loadOptions(record){
    </tr-->
 
    <tr>
-    <td>dc.title</td><td colspan=3><input type=text id=title style="width: 60ex;"/></td>
+    <td>Title</td><td colspan=3><input type=text id=title style="width: 60ex;"/></td>
    </tr>
    <tr>
-    <td>caption</td><td colspan=3><textarea id=notes style="width: 70ex; height: 20ex;"></textarea></td>
+    <td>Caption</td><td colspan=3><textarea id=notes style="width: 70ex; height: 20ex;"></textarea></td>
    </tr>
    <tr><td>&nbsp;</td></tr>
-   <tr id="type-tr">
-    <td>dc.type</td><td><input type=text id="type" disabled="true"/></td>
-   </tr>
    <form id="linked-search-form" onSubmit="doSearch('linked'); return false;">
     <tr id="linked-record-tr">
-    <td>target</td>
+    <td>Resource</td>
     <td colspan=3>
 
      <span id=linked-search-span>
@@ -533,12 +342,6 @@ function loadOptions(record){
       </tr>
      </table>
     </td>
-   </tr>
- <tr>
-    <td>dos.notes</td><td colspan=3><textarea id=303 style="width: 70ex;"></textarea></td>
-   </tr>
-   <tr>
-    <td>dos.status</td><td colspan=3><select id="531"></select></td>
    </tr>
    <tr><td>&nbsp;</td></tr>
    <tr>

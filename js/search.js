@@ -12,8 +12,8 @@ function search(query) {
 		}
 	);
 	loadAllRecords(query, null, loader);
-	//HeuristScholarDB.loadRecords(new HSearch(query), loader);
 	showSearch(query);
+	
 }
 
 function loadAllRecords(query, options, loader) {
@@ -72,11 +72,10 @@ function displayResults(s,r) {
 	l.parentNode.removeChild(l);
 
 	var innerHTML = "";
+	var thisInstancePath = HAPI.instance ? "http://"+ HAPI.instance +".heuristscholar.org/heurist/" : "http://heuristscholar.org/heurist/";
 	for (var i = 0; i < r.length; i++) {
-		//if (r[i].getRecordType().getID() != 52) {
-			innerHTML += "<img src=\"http://dos-sandbox.heuristscholar.org/heurist/img/reftype/" + r[i].getRecordType().getID() + ".gif\"/>";
+			innerHTML += "<img src=\""+ thisInstancePath + "img/reftype/" + r[i].getRecordType().getID() + ".gif\"/>";
 			innerHTML += " <a href=../" + r[i].getID() + "/ target=\"_blank\">" + r[i].getTitle() + "</a><br/>";
-		//}
 	}
 
 	if (innerHTML.length) {

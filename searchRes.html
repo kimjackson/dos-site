@@ -1,13 +1,12 @@
 <html>
  <head>
-  <title>HAPI Search sample application</title>
-
-  <script src=http://hapi.heuristscholar.org/load?instance=dos-sandbox&key=904dccc9750634a42b0467bbb3436238efddd3c4></script>
-
-
-
+  <title>Add a resource</title>
   <script>
-  var path ="http://dos-sandbox.heuristscholar.org/heurist/";
+   window.opener.HAPI.importSymbols(window.opener, this);
+  </script>
+  <script src="common-functions.js"></script>
+  <script>
+  
   var rec_det_id = getParams("id");
   var t = getParams("t");
   var q = urldecode(getParams("q"));
@@ -107,7 +106,7 @@ function pickMe(rid, rtitle, r_d_id, extra){
 
 
   </script>
-  <link rel="stylesheet" type="text/css" href="forms.css">
+  <link rel="stylesheet" type="text/css" href="css/forms.css">
  </head>
 
  <body onLoad="init();">

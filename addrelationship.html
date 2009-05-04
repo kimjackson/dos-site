@@ -1,11 +1,9 @@
 <html>
  <head>
-  <script src=http://hapi.heuristscholar.org/load?instance=dos-sandbox&key=904dccc9750634a42b0467bbb3436238efddd3c4></script>
 
   <script>
-  //relationships need to be hardcoded, because the requirement is to provide only relationship types, not their inverses,
-  //and there is no method in HAPI that distinguishes one from another unless the record already exists.
-  var validRelationships = new Array("isAbout", "isOf", "isRelatedTo", "hasSubject", "hasPrimarySubject", "hasNarrowerTerm", "hasRelatedTerm", "hasExternalLink", "hasContributor", "hasReference");
+  window.opener.HAPI.importSymbols(window.opener, this);
+  var validRelationships = HAPI.Relationship.getRelationshipTypes();
 
 
 	function getParams (name){
@@ -88,7 +86,7 @@
 					 alert("relationships save failed:"+e);
 
 				});
-		HeuristScholarDB.saveRecord(hrelationship,saver); ///PAY ATTENTION @@@@@@@@@@@@@@@@@@@@@@@@@@@
+		HeuristScholarDB.saveRecord(hrelationship,saver);
 
 	}
 
@@ -110,9 +108,11 @@
 		document.getElementById("results-div").style.display = "block";
 		var div = document.getElementById("results");
 		var innerHTML = "";
+		var thisInstancePath = HAPI.instance ? "http://"+ HAPI.instance +".heuristscholar.org/heurist/" : "http://heuristscholar.org/heurist/";
+
 		for (var i = 0; i < r.length; i++) {
 			if (r[i].getRecordType().getID() != 52) {
-				innerHTML += "<img src=http://dos-sandbox.heuristscholar.org/heurist/img/reftype/"+r[i].getRecordType().getID()+".gif> ";
+				innerHTML += "<img src=\""+ thisInstancePath + "img/reftype/" + r[i].getRecordType().getID() + ".gif\"/>";
 				innerHTML += "<a href=# onclick=\"setLinkedRecord("+r[i].getID()+", this.innerHTML); return false;\">" + r[i].getTitle() + "</a><br/>";
 			}
 		}
@@ -197,19 +197,19 @@
     <td>Select record type: </td><td><select id="record_type_select" onchange="changeType();"/></td>
    </tr-->
 	<tr>
-    <td>dc.title</td><td colspan=3><input type=text id=160 style="width: 60ex;"/></td>
+    <td>Title</td><td colspan=3><input type=text id=160 style="width: 60ex;"/></td>
    </tr>
     <tr>
-    <td>dc.description</td><td colspan=3><textarea id=303 style="width: 70ex;"></textarea></td>
+    <td>Description</td><td colspan=3><textarea id=303 style="width: 70ex;"></textarea></td>
    </tr>
    <tr>
-    <td>primary_resource</td><td colspan=3><input type=text id=primaryrecord style="width: 60ex;"/></td>
+    <td>Primary resource</td><td colspan=3><input type=text id=primaryrecord style="width: 60ex;"/></td>
    </tr>
    <tr>
-    <td>dc.type</td><td colspan=3><select id=type onchange="typeChanged();" style="width: 30ex;"></select></td>
+    <td>Type</td><td colspan=3><select id=type onchange="typeChanged();" style="width: 30ex;"></select></td>
    </tr>
    <tr>
-    <td>linked_resource</td>
+    <td>Linked resource</td>
     <td colspan=4>
      <span id=search-span>
       <input type=text id=search style="width: 30ex;" onkeypress="if (event.which==13 || event.keycode==13) search();"/>
@@ -226,7 +226,7 @@
     </td>
    </tr>
    <tr>
-    <td>dos.notes</td><td colspan=3><textarea id=191 style="width: 70ex;"></textarea></td>
+    <td>Short Summary</td><td colspan=3><textarea id=191 style="width: 70ex;"></textarea></td>
    </tr>
     <tr>
     <td><input type=button value=save onclick="save();"/></td>

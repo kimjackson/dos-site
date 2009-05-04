@@ -5,12 +5,7 @@
 
 	<xsl:param name="id"/>
 	<xsl:param name="related_reftype_filter"/>
-	
-
 	<xsl:include href="myvariables.xsl"/>
-
-
-
 	<xsl:include href="author_editor.xsl"/>
 	<xsl:include href="books-etc.xsl"/>
 	<xsl:include href="factoid.xsl"/>
@@ -18,7 +13,6 @@
 	<xsl:include href="media.xsl"/>
 	<xsl:include href="teidoc.xsl"/>
 	<xsl:include href="teidoc_reference.xsl"/>
-	<xsl:include href="entity.xsl"/>
 	<xsl:include href="kml-timeline.xsl"/>
 
 	<xsl:variable name="currentid">
@@ -30,13 +24,13 @@
 
 		<html>
 			<head>
-			<link rel="stylesheet" href="{$urlbase}/browser.css"/>
+			<link rel="stylesheet" href="{$urlbase}/css/browser.css"/>
 				<title>
 					<xsl:value-of select="export/references/reference/title"/>
 				</title>
 				
 				<script>
-					var pathDos = "http://heuristscholar.org/<xsl:value-of select="$cocoonbase"/>/item/";
+					var itemPath = "http://heuristscholar.org/<xsl:value-of select="$cocoonbase"/>/item/";
 					var imgpath = "http://heuristscholar.org/<xsl:value-of select="$urlbase"/>/img/reftype/";
 					
 					function showFootnote(recordID) {
@@ -85,10 +79,10 @@
 
 						if (val.getRecordType().getID() == 74) {
 							var img=val.getDetail(HDetailManager.getDetailTypeById(221)). getThumbnailURL();
-							elts.innerHTML += "&lt;br&gt;&lt;a href=\""+pathDos+val.getID()+"\"&gt;&lt;img src=\"" + img+ "\"/&gt;&lt;/a&gt;";
+							elts.innerHTML += "&lt;br&gt;&lt;a href=\""+itemPath+val.getID()+"\"&gt;&lt;img src=\"" + img+ "\"/&gt;&lt;/a&gt;";
 						}
 						else {
-						   elts.innerHTML += "&lt;br&gt;&lt;br&gt;&lt;span style=\"padding-right:5px; vertical-align:top\"&gt;&lt;a href=\""+pathDos+val.getID()+"\"&gt;"+val.getTitle()+"&lt;/a&gt;&lt;/span&gt;"+"&lt;img src=\"" + imgpath+val.getRecordType().getID() +".gif\"/&gt;";
+						   elts.innerHTML += "&lt;br&gt;&lt;br&gt;&lt;span style=\"padding-right:5px; vertical-align:top\"&gt;&lt;a href=\""+itemPath+val.getID()+"\"&gt;"+val.getTitle()+"&lt;/a&gt;&lt;/span&gt;"+"&lt;img src=\"" + imgpath+val.getRecordType().getID() +".gif\"/&gt;";
 						}
 				   }
 
@@ -144,40 +138,18 @@
 
 
 					<div id="pagetopcolour" class="colourcelltwo" style="overflow:visible;">
-						<div style="padding-left:20px ">
-							<!-- 2674 is ID of the "home page" file -->
-							<xsl:if test="export/references/reference/reftype/@id = 98">
-						    <table>
-							<tr>
-								<xsl:if test=" $id != 2674">
-								<!--td style="font-size: 85%;padding-right:10px;">Add:</td-->
-								<td style="font-size: 85%;padding-right:10px; "><xsl:value-of select="$urlbase"/> <a  href='#' onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}&amp;type=term','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Term"><img src='{$urlbase}/images/152.gif' align="absmiddle"/></a> Term annotation</td>
-
-								<td style="font-size: 85%;padding-right:10px; "><a  href='#' onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}&amp;type=multimedia','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Multimedia item"><img src='{$urlbase}/images/74.gif'  align="absmiddle"/></a> Multimedia annotation</td>
-								<td style="font-size: 85%;padding-right:10px; "><a  href='#' onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}&amp;type=entity','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Entity"><img src='{$urlbase}/images/151.gif'  align="absmiddle"/></a> Entity annotation</td>
-								<td style="font-size: 85%;padding-right:10px; "><a  href='#' onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}&amp;type=text','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Text"><img src='{$urlbase}/images/98.gif'  align="absmiddle"/></a> Text annotation</td>
-
-								<td style="font-size: 85%;padding-right:10px;"><a  href='#' onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}&amp;type=glossary','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Glossary"><img src='{$urlbase}/images/glossary1.gif'  align="absmiddle"/></a> Gloss annotation</td>
-								<td style="font-size: 85%;padding-right:10px;"><a  href='#' onclick="window.open('{$urlbase}/addrelationship.html?typeId=52&amp;source={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Relationship"><img src='{$urlbase}/images/52.gif'  align="absmiddle"/></a> Relationship</td>
-
-								</xsl:if>
-								<xsl:if test=" $id = 2674">
-								<td><input type="text" id ="common-recordos-pretend-dropdown" readonly="readonly"/><img id ="common-recordos-drop-img" align="absmiddle"></img>
-									<div id="common-recordos-drop-div" style="display:none;"></div>
-									<script type="text/javascript" src="{$urlbase}/js/record-dropdown.js"></script>
-								</td>
-									</xsl:if>
-							</tr>
-						    </table>
-							</xsl:if>
-							<!-- Add relationship only needs to be available for Entities, Terms and Media -->
-							<xsl:if test="export/references/reference/reftype/@id = 74 or export/references/reference/reftype/@id  = 151 or export/references/reference/reftype/@id  = 152 ">
-								<table>
-									<tr>
-								<td style="font-size: 85%;padding-right:10px;"><a  href='#' onclick="window.open('{$urlbase}/addrelationship.html?typeId=52&amp;source={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Relationship"><img src='{$urlbase}/images/52.gif'  align="absmiddle"/></a> Relationship</td>
-									</tr>
-								</table>
-							</xsl:if>
+						<div style="padding-left:20px ">	
+							<table>
+								<tr>
+								<xsl:if test="export/references/reference/reftype/@id = 98">
+						    
+									<xsl:if test=" $id != $home-id">					
+										<td style="font-size: 85%;padding-right:10px; "><a  href='#' onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=700,height=500'); return false;" title="add Annotation"><img src='{$urlbase}/images/152.gif' align="absmiddle"/></a> Add Annotation</td>
+									</xsl:if>									
+									</xsl:if>														
+								<td style="font-size: 85%;padding-right:10px;"><a  href='#' onclick="window.open('{$urlbase}/addrelationship.html?typeId=52&amp;source={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=700,height=500'); return false;" title="add Relationship"><img src='{$urlbase}/images/52.gif'  align="absmiddle"/></a> Relationship</td>
+								</tr>
+							</table>							
 						</div>
 					</div>
 					<div id="sidebartopcolour" class="colourcelltwo">
@@ -321,7 +293,7 @@
 			<script>
 				if (HCurrentUser.isLoggedIn()) {
 					var savedSearches = top.HEURIST.user.workgroupSavedSearches["2"];
-					document.getElementById("saved-searches-header").innerHTML = "Saved Searches";
+					if (savedSearches) document.getElementById("saved-searches-header").innerHTML = "Saved Searches";
 					for (i in savedSearches) {
 						var div = document.createElement("div");
 						div.id = "saved-search-" + i;
