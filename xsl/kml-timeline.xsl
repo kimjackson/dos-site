@@ -251,10 +251,10 @@ xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 	<xsl:if test="$record/detail[@id=230]='p'">
 		<img src="{exsl:node-set($timeMapThemes)/theme[@name=$themeToUse]/icon}" height="15"/>
 	</xsl:if>
-	<!-- the stupid document function refuses to work, so for now we'll just cheat -->
+	<!--TODO: rendering of legend based on contents of uploaded file -->
 	<!--xsl:if test="contains(document(detail[@id=221]/file_fetch_url), 'kml')">
 		<span style="background-color: {exsl:node-set($timeMapThemes)/theme[@name=$relatedTheme]/colour}; padding-right: 10px; padding-left: 5px;"/>
-		</xsl:if-->
+	</xsl:if-->
 	
 	<!-- KML File (165) -->							
 	<xsl:if test="contains($record/detail[@id=551],'Polygon') or contains($record/detail[@id=551],'LineString') or contains($record/detail[@id=551],'MultiGeometry')">
