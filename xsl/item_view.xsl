@@ -590,9 +590,10 @@
 				<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
 				<xsl:if test="/export/references/reference/reftype[@id=103 or @id=51 or @id=55]">
 
-					<script type="text/javascript" src="http://simile.mit.edu/timeline/api/timeline-api.js"></script>
-					<script src="/hayes/js/timemap.js" type="text/javascript"></script>
-					<script src="/hayes/js/kmlparser.js" type="text/javascript"></script>
+					<!-- script type="text/javascript" src="http://simile.mit.edu/timeline/api/timeline-api.js"></script -->
+					<script src="http://heuristscholar.org/{$urlbase}/js/timeline-api.js" type="text/javascript"></script>"
+					<script src="http://heuristscholar.org/{$urlbase}/js/timemap.js" type="text/javascript"></script>
+					<script src="http://heuristscholar.org/{$urlbase}/js/kmlparser.js" type="text/javascript"></script>
 					
 				</xsl:if>
 			</head>
