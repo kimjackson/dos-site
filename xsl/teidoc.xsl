@@ -14,7 +14,7 @@
 		<xsl:choose>
 			<!-- detail 231 is associated WordML file -->
 			<xsl:when test="detail[@id=231]">
-				<div id="tei" style="padding-right: 10px">
+				<div id="tei" style="padding-right: 80px">
 					<xi:include href="{detail[@id=231]/file_fetch_url}"/>
 				</div>
 			</xsl:when>
@@ -36,7 +36,7 @@
 							<nobr>TEI</nobr>
 						</td>
 						<td>
-							<a href="{$cocoonbase}/item/{//id}/wordml">
+							<a href="{$cocoonbase}/item/{//id}/tei">
 								[TEI document]
 							</a>
 						</td>

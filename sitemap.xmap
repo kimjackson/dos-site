@@ -11,7 +11,7 @@
   <map:view from-label="xinclude" name="xinclude">
    <map:serialize type="xml"/>
   </map:view>
-  <map:view from-label="wordml" name="wordml">
+  <map:view from-label="wordmltotei" name="wordmltotei">
    <map:transform src="xsl/tei_only.xsl"/>
    <map:serialize type="xml"/>
   </map:view>
@@ -37,8 +37,8 @@
     <map:redirect-to uri="../{1}/?cocoon-view=transformed"/>
    </map:match>
 
-   <map:match pattern="item/*/wordml">
-    <map:redirect-to uri="../{1}/?cocoon-view=wordml"/>
+   <map:match pattern="item/*/tei">
+    <map:redirect-to uri="../{1}/?cocoon-view=wordmltotei"/>
    </map:match>
 
    <map:match pattern="item/*/*">
@@ -50,7 +50,7 @@
      <map:parameter name="related_reftype_filter" value="{2}"/>
     </map:transform>
     <map:transform type="xinclude" label="xinclude"/>
-    <map:transform src="xsl/wordml2TEI.xsl" label="wordml"/>
+    <map:transform src="xsl/wordml2TEI.xsl" label="wordmltotei"/>
     <map:transform src="xsl/tei_to_html_basic.xsl" label="tei"/>
     <map:serialize type="html"/>
    </map:match>
