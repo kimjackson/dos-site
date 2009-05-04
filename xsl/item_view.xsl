@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	xmlns:str="http://exslt.org/strings" version="1.0">
+	xmlns:str="http://exslt.org/strings" version="1.0"
+	xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 
 	<xsl:param name="id"/>
 	<xsl:param name="related_reftype_filter"/>
@@ -109,16 +110,18 @@
 				<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
 				
 				<!-- Time Map rendering -->
-				<xsl:if test="/export/references/reference/reftype[@id=103 or @id=51 or @id=165]">
+				<xsl:if test="export/references/reference/reftype[@id=103 or @id=51 or @id=165 ]">
 					<script src="http://heuristscholar.org/{$urlbase}/js/timeline-api.js" type="text/javascript"></script>
 					<script src="http://heuristscholar.org/{$urlbase}/js/timemap.js" type="text/javascript"></script>
 					<script src="http://heuristscholar.org/{$urlbase}/js/kmlparser.js" type="text/javascript"></script>					
 					<script> 			
-						var crumbColours = [<xsl:value-of select="$crumbColours"/>];
 						var maptrackCrumbNumber = <xsl:value-of select="$maptrackCrumbNumber"/>;
+						var crumbThemes = [];
+						<xsl:for-each select="exsl:node-set($mapCrumbThemes)/theme">
+							crumbThemes.push({colour:'<xsl:value-of select="exsl:node-set($timeMapThemes)/theme[@name=current()]/colour"/>' , icon : '<xsl:value-of select="exsl:node-set($timeMapThemes)/theme[@name=current()]/icon"/>'});
+						</xsl:for-each>
 					</script>
 					<script src="{$urlbase}/js/track.js"/>
-					<script src="{$urlbase}/js/zoomtrack.js"/>
 				</xsl:if>	
 				
 					
@@ -126,13 +129,14 @@
 			<body pub_id="{/export/@pub_id}" >
 				<div id="header">
 					<h2>
-					<xsl:if test="(export/references/reference/reftype/@id = 103 or export/references/reference/reftype/@id=51) and export/references/reference/detail[@id=230] and export/references/reference/detail[@id=230] !='p'">
-						<span style="background-color: {$timelineColour}; padding-right: 10px; padding-left: 5px;"/>&#160; 
-					</xsl:if>
-					<xsl:if test="(export/references/reference/reftype/@id = 103 or export/references/reference/reftype/@id=51) and export/references/reference/detail[@id=230] and export/references/reference/detail[@id=230] ='p'">
-						<img src="{$timelineIconImage}" height="15"/>&#160; 
-					</xsl:if>
-						<xsl:value-of select="export/references/reference/title"/>
+						<!-- PRESENTATION  for KML Map 103, Historical Event 51, KML file 165 -->
+						<xsl:if test="export/references/reference/reftype[@id=103 or @id=51 or @id=165 ]">
+							<xsl:call-template name="renderAppropriateLegend">
+								<xsl:with-param name="record" select="export/references/reference"/>
+								<xsl:with-param name="themeToUse" select="$focusTheme"/>
+							</xsl:call-template>
+						</xsl:if>					
+						<span style="margin-left:5px;"><xsl:value-of select="export/references/reference/title"/></span>
 					</h2>
 					<div id="logo">
 						<a href="{$cocoonbase}/item/{$home-id}" style="font-size: 30px;"><xsl:value-of select="$site-title"/></a>
@@ -147,7 +151,7 @@
 							<tr>
 								<xsl:if test=" $id != 2674">
 								<!--td style="font-size: 85%;padding-right:10px;">Add:</td-->
-									<td style="font-size: 85%;padding-right:10px; "><xsl:value-of select="$urlbase"/> <a  href='#' onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}&amp;type=term','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Term"><img src='{$urlbase}/images/152.gif' align="absmiddle"/></a> Term annotation</td>
+								<td style="font-size: 85%;padding-right:10px; "><xsl:value-of select="$urlbase"/> <a  href='#' onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}&amp;type=term','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Term"><img src='{$urlbase}/images/152.gif' align="absmiddle"/></a> Term annotation</td>
 
 								<td style="font-size: 85%;padding-right:10px; "><a  href='#' onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}&amp;type=multimedia','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Multimedia item"><img src='{$urlbase}/images/74.gif'  align="absmiddle"/></a> Multimedia annotation</td>
 								<td style="font-size: 85%;padding-right:10px; "><a  href='#' onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}&amp;type=entity','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="add Entity"><img src='{$urlbase}/images/151.gif'  align="absmiddle"/></a> Entity annotation</td>
@@ -452,16 +456,14 @@
 
 				<tr>
 					<td>
-						<xsl:if test="((../reftype/@id = 103 or ../reftype/@id=51) and detail[@id=230] and detail[@id=230] !='p' )">
-							<!--or ./reftype/@id = 165 and (detail[@id=551] or detail[@id=221])-->
-							
-							<span style="background-color: {$timelineRelatedColour}; padding-right: 10px; padding-left: 5px;"/>
-						</xsl:if>
-						<xsl:if test="(../reftype/@id = 103 or ../reftype/@id=51) and detail[@id=230] and detail[@id=230]='p'">
-							
-							<img src="{$timelineRelatedIconImage}" height="15"/>
-						</xsl:if>
-						
+					<!-- PRESENTATION  for KML Map 103, Historical Event 51, KML file 165 -->
+					<xsl:if test="(../reftype/@id = 103 or ../reftype/@id=51 or ../reftype/@id = 165)">
+						<xsl:call-template name="renderAppropriateLegend">
+							<xsl:with-param name="record" select="."/>
+							<xsl:with-param name="themeToUse" select="$relatedTheme"/>
+						</xsl:call-template>
+					</xsl:if>
+
 						<xsl:if test="detail[@id = 222 or @id=223 or @id=224]">
 							<xsl:if test="detail/file_thumb_url">
 								<a href="{$cocoonbase}/item/{id}">
@@ -637,6 +639,6 @@
 			</p>
 		</xsl:for-each>
 	</xsl:template>
-
-
+	
+	
 </xsl:stylesheet>

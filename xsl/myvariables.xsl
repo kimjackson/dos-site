@@ -10,23 +10,70 @@
     <xsl:variable name="home-id">205</xsl:variable>
 
 
-    <!-- custom timemap colours -->
+	<!-- custom timemap colours -->
+	<xsl:variable name="focusTheme">purple</xsl:variable>
+	<xsl:variable name="relatedTheme">blue</xsl:variable>
+	<xsl:variable name="mapCrumbThemes">
+		<theme>red</theme>
+		<theme>orange</theme>
+		<theme>yellow</theme>
+		<theme>green</theme>
+		<theme>black</theme>
+	</xsl:variable>
 
-    <xsl:variable name="timelineColour">purple</xsl:variable>
-    <xsl:variable name="timelineIconImage"><xsl:value-of select="$urlbase"/>/images/purple-dot.png</xsl:variable>
+	<!-- number of breadcrumbs in "my map track", calculated based on number of themes defined in $mapCrumbThemes
+	 - DO NOT CHANGE THIS VARIABLE -->
+	<xsl:variable name="maptrackCrumbNumber"><xsl:value-of select="count(exsl:node-set($mapCrumbThemes)/theme)"/></xsl:variable>
 
-    <xsl:variable name="timelineRelatedColour">yellow</xsl:variable>
-    <xsl:variable name="timelineRelatedIconImage"><xsl:value-of select="$urlbase"/>/images/yellow-dot.png</xsl:variable>
-
-    <xsl:variable name="crumbColours">
-        '#ff0000',
-        '#ff3333',
-        '#ff6666',
-        '#ff9999',
-        '#ffcccc'
-    </xsl:variable>
-
-	<!-- number of breadcrumbs in "my map track " -->
-	<xsl:variable name="maptrackCrumbNumber">5</xsl:variable>
-
+	<xsl:variable name="timeMapThemes">
+		<theme name="red">
+			<colour>red</colour>
+			<icon><xsl:value-of select="$urlbase"/>/images/purple-dot.png</icon>
+		</theme>
+		<theme name="black">
+			<colour>black</colour>
+			<icon><xsl:value-of select="$urlbase"/>/images/purple-dot.png</icon>
+		</theme>
+		<theme name="orange">
+			<colour>orange</colour>
+			<icon><xsl:value-of select="$urlbase"/>/images/purple-dot.png</icon>
+		</theme>
+		<theme name="purple">
+			<colour>purple</colour>
+			<icon><xsl:value-of select="$urlbase"/>/images/purple-dot.png</icon>
+		</theme>
+		<theme name="green">
+			<colour>green</colour>
+			<icon><xsl:value-of select="$urlbase"/>/images/purple-dot.png</icon>
+		</theme>
+		<theme name="blue">
+			<colour>blue</colour>
+			<icon><xsl:value-of select="$urlbase"/>/images/purple-dot.png</icon>
+		</theme>
+		<theme name="yellow">
+			<colour>yellow</colour>
+			<icon><xsl:value-of select="$urlbase"/>/images/yellow-dot.png</icon>
+		</theme>
+		<theme name="customOne">
+			<colour>#ff0000</colour>
+			<icon><xsl:value-of select="$urlbase"/>/images/red-dot.png</icon>
+		</theme>
+		<theme name="customTwo">
+			<colour>#ff3333</colour>
+			<icon><xsl:value-of select="$urlbase"/>/images/red-dot.png</icon>
+		</theme>
+		<theme name="customThree">
+			<colour>#ff6666</colour>
+			<icon><xsl:value-of select="$urlbase"/>/images/red-dot.png</icon>
+		</theme>
+		<theme name="customFour">
+			<colour>#ff9999</colour>
+			<icon><xsl:value-of select="$urlbase"/>/images/red-dot.png</icon>
+		</theme>
+		<theme name="customFive">
+			<colour>#ffcccc</colour>
+			<icon><xsl:value-of select="$urlbase"/>/images/red-dot.png</icon>
+		</theme>
+	</xsl:variable>
+	
 </xsl:stylesheet>
