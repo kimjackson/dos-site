@@ -10,7 +10,8 @@
   -> Rather then using "heading" styles  in document format, use "Strong" and "Emphasis" - this will render appropriate elements
 
 
-  -->
+-->
+  <xsl:include href="myvariables.xsl"/>
   <xsl:output indent="yes"/>
 
   <!-- xsl:template match="wx:sub-section[parent::wx:sect]" -->
@@ -26,7 +27,7 @@
   <!-- to be dropped into the <item> element of the revision description in the TEI Header. -->
 
   <!-- URL root: the root of the URL to which image links should point. Should correspond to the directory contained in $fileRoot. -->
-  <xsl:param name="urlroot">http://dos.heuristscholar.org/</xsl:param>
+	<xsl:param name="urlroot"><xsl:value-of select="$hbase"/></xsl:param>
   <!-- File root: absolute path to the directory into which images are to be written -->
   <xsl:param name="fileRoot">
     <xsl:value-of select="$urlroot"/>
@@ -100,7 +101,7 @@
           </availability>
         </publicationStmt>
         <sourceDesc>
-          <p>Compiled from existing internal DOS documents.</p>
+          <p>Compiled from existing internal documents.</p>
         </sourceDesc>
       </fileDesc>
       <revisionDesc>
