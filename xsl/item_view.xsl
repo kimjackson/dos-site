@@ -442,6 +442,9 @@
 		<xsl:choose>
 			<xsl:when test="$matches">
 				<xsl:apply-templates select="$matches">
+					<xsl:sort select="detail[@id=177]/year"/>
+					<xsl:sort select="detail[@id=177]/month"/>
+					<xsl:sort select="detail[@id=177]/day"/>
 					<xsl:sort select="detail[@id=160]"/>
 				</xsl:apply-templates>
 			</xsl:when>
