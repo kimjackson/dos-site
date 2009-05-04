@@ -2,6 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:kml="http://earth.google.com/kml/2.0" version="1.0">
 
+	<xsl:include href="myvariables.xsl"/>
 	<xsl:template match="kml:kml">
 		<kml xmlns="http://earth.google.com/kml/2.0">
 			<!-- the following removes all placemark nodes other than the first -->
@@ -51,7 +52,7 @@
 	</xsl:template>
 
 	<xsl:template match="kml:a">
-		<xsl:param name="itemname"/>&lt;a href=http://heuristscholar.org/cocoon/hayes/item/<xsl:value-of select="substring-after(@href,'resource/')"/>&gt;<xsl:value-of select="$itemname"/>&lt;/a&gt;
+		<xsl:param name="itemname"/>&lt;a href=http://heuristscholar.org/cocoon/<xsl:value-of select="$urlbase"/>/item/<xsl:value-of select="substring-after(@href,'resource/')"/>&gt;<xsl:value-of select="$itemname"/>&lt;/a&gt;
 	</xsl:template>
 
 </xsl:stylesheet>
