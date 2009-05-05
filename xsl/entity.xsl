@@ -34,7 +34,7 @@
 						timemap: [ {
 							data: {
 								type: "kml",
-								url: "http://heuristscholar.org<xsl:value-of select="$urlbase"/>kml/<xsl:value-of select="id"/>.kml"
+								url: "<xsl:value-of select="$urlbase"/>kml/<xsl:value-of select="id"/>.kml"
 							}
 						} ]
 					};

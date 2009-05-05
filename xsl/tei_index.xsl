@@ -14,12 +14,12 @@
 			<xsl:copy-of select="@*|node()"/>
 			<xsl:for-each select="//div[@id='tei']/div">
 				<div>
-					<a href="#" onclick="showSection({position()-1}); return false;"><xsl:value-of select="h2"/></a>
+					<a href="#" onclick="showSection({position()}); return false;"><xsl:value-of select="h2"/></a>
 				</div>
 			</xsl:for-each>
 			<div>
 				<br/>
-				<a href="#" onclick="showSection(-1); return false;"><xsl:value-of select="h2"/>Show all</a>
+				<a href="#" onclick="showSection('all'); return false;"><xsl:value-of select="h2"/>Show all</a>
 			</div>
 		</xsl:copy>
 	</xsl:template>

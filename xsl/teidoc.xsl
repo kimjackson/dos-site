@@ -3,8 +3,15 @@
 
 	<xsl:template name="xmldoc" match="reference[reftype/@id=98]">
 
+		<script src="http://yui.yahooapis.com/2.7.0/build/yahoo/yahoo-debug.js"></script>
+		<script src="http://yui.yahooapis.com/2.7.0/build/event/event-debug.js"></script>
+		<script src="http://yui.yahooapis.com/2.7.0/build/history/history-debug.js"></script>
+
 		<script src="/jquery/jquery.js"/>
 		<script src="{$urlbase}js/highlight.js"/>
+
+		<iframe id="yui-history-iframe" src="{$urlbase}images/logo.png"></iframe>
+		<input id="yui-history-field" type="hidden"></input>
 
 		<div>
 			<div class="content-left">
@@ -165,9 +172,6 @@
 			var root = document.getElementById("tei");
 			if (root  &&  window["refs"])
 			highlight(root, refs);
-			showSection(0);
-			setupPageControls();
-			window.onload = highlightOnLoad;
 		]]>
 		</script>
 	</xsl:template>

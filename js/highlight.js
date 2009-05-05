@@ -131,11 +131,11 @@ function transformTextNode (elem, refs, startingRefs, endingRefs, wordOffset) {
 		var ref = refs[currentRefs[0]];
 		var a = document.createElement("a");
 		a.className = (currentRefs.length > 1 ? "annotation multiple" : "annotation");
-		a.href = "#ref" + ref.recordID;
+		a.href = "#ref=" + ref.recordID;
 		a.title = ref.title;
 		a.name = "ref" + ref.recordID;
 		a.setAttribute("annotation-id", ref.recordID);
-		a.onclick = function() { highlightAnnotation(this.getAttribute("annotation-id")); };
+		a.onclick = function() { highlightAnnotation(this.getAttribute("annotation-id")); return false; };
 		a.innerHTML = elem.textContent;
 		elem.parentNode.replaceChild(a, elem);
 
@@ -250,11 +250,11 @@ function transformTextNode (elem, refs, startingRefs, endingRefs, wordOffset) {
 				var ref = refs[section.refId];
 				var a = document.createElement("a");
 				a.className = (section.refCount > 1 ? "annotation multiple" : "annotation");
-				a.href = "#ref" + ref.recordID;
+				a.href = "#ref=" + ref.recordID;
 				a.title = ref.title;
 				a.name = "ref" + ref.recordID;
 				a.setAttribute("annotation-id", ref.recordID);
-				a.onclick = function() { highlightAnnotation(this.getAttribute("annotation-id")); };
+				a.onclick = function() { highlightAnnotation(this.getAttribute("annotation-id")); return false; };
 				a.innerHTML = wordString;
 				newElements.push(a);
 
@@ -308,62 +308,6 @@ function transformTextNode (elem, refs, startingRefs, endingRefs, wordOffset) {
 }
 
 
-
-/* functions for highlighting annotation links */
-
-function highlightAnnotation (id) {
-	$("#tei a.annotation.highlighted").removeClass("highlighted");
-	$link = $("#tei a[annotation-id="+id+"]");
-	$link.addClass("highlighted");
-	$section = $link.parent().parent();
-	if (! $section.is(":visible")) {
-		showSection($("#tei div").index($section[0]));
-	}
-}
-
-function highlightOnLoad() {
-	var matches = window.location.hash.match(/#ref([0-9]+)/);
-	if (matches  &&  matches[1]) {
-		highlightAnnotation(matches[1]);
-	}
-}
-
-function setupPageControls() {
-	$("a.entry-prev-page-link").click(function() {
-		$("#tei div:has(~ div:visible):last").each(function() {
-			showSection($("#tei div").index(this));
-		});
-		return false;
-	});
-	$("a.entry-next-page-link").click(function() {
-		$("#tei div:visible ~ div:first").each(function() {
-			showSection($("#tei div").index(this));
-		});
-		return false;
-	});
-}
-
-function showSection(i) {
-	// note index begins at 0; -1 means show all sections
-	if (i < 0) {
-		$("#tei div").show();
-		$("a.entry-prev-page-link").add("a.entry-next-page-link").hide();
-	} else {
-		$("#tei div").hide().eq(i).show();
-		if (i == 0) {
-			$("a.entry-prev-page-link").hide();
-		} else {
-			$("a.entry-prev-page-link").show();
-		}
-		if (i == $("#tei div").length - 1) {
-			$("a.entry-next-page-link").hide();
-		} else {
-			$("a.entry-next-page-link").show();
-		}
-	}
-	alignImages();
-}
-
 function alignImages() {
 	var PAD = 16;	// magic: top margin / padding of annotation thumbnails
 	$(".content-right div.annotation-img").each(function() {
@@ -382,3 +326,104 @@ function alignImages() {
 		}
 	});
 }
+
+
+function setupPageControls() {
+	$("a.entry-prev-page-link").click(function() {
+		$("#tei div:has(~ div:visible):last").each(function() {
+			showSection($("#tei div").index(this) + 1);
+		});
+		return false;
+	});
+	$("a.entry-next-page-link").click(function() {
+		$("#tei div:visible ~ div:first").each(function() {
+			showSection($("#tei div").index(this) + 1);
+		});
+		return false;
+	});
+}
+
+function showSection(i) {
+	if (i === "all") {
+		YAHOO.util.History.navigate("page", "all");
+	} else {
+		YAHOO.util.History.multiNavigate({"page": ""+i, "ref": ""});
+	}
+}
+
+function highlightAnnotation (id) {
+	YAHOO.util.History.navigate("ref", ""+id);
+}
+
+YAHOO.util.Event.onDOMReady(function() {
+
+	function _showSection(i) {
+		if (i) {
+			// note index begins at 1; "all" means show all sections
+			if (i === "all") {
+				$("#tei div").show();
+				$("a.entry-prev-page-link").add("a.entry-next-page-link").hide();
+			} else {
+				$("#tei div").hide().eq(i-1).show();
+				if (i == 1) {
+					$("a.entry-prev-page-link").hide();
+				} else {
+					$("a.entry-prev-page-link").show();
+				}
+				if (i == $("#tei div").length) {
+					$("a.entry-next-page-link").hide();
+				} else {
+					$("a.entry-next-page-link").show();
+				}
+			}
+			alignImages();
+		}
+	}
+
+	function _highlightAnnotation(id) {
+		if (id) {
+			$("#tei a.annotation.highlighted").removeClass("highlighted");
+			$link = $("#tei a[annotation-id="+id+"]");
+			$link.addClass("highlighted");
+			$section = $link.parent().parent();
+			if (! $section.is(":visible")) {
+				_showSection($("#tei div").index($section[0]) + 1);
+			}
+		}
+	}
+
+	var initPage, initAnnotation,
+
+	initPage = YAHOO.util.History.getBookmarkedState("page");
+	initAnnotation = YAHOO.util.History.getBookmarkedState("ref");
+
+	if (! initPage) {
+		initPage = "1";
+	}
+	if (! initAnnotation) {
+		initAnnotation = "";
+	}
+
+	YAHOO.util.History.register("page", initPage, function(state) {
+		_showSection(state);
+	});
+	YAHOO.util.History.register("ref", initAnnotation, function(state) {
+		_highlightAnnotation(state);
+	});
+
+	YAHOO.util.History.onReady(function() {
+		_showSection(YAHOO.util.History.getCurrentState("page"));
+		_highlightAnnotation(YAHOO.util.History.getCurrentState("ref"));
+	});
+
+	try {
+		YAHOO.util.History.initialize("yui-history-field", "yui-history-iframe");
+	} catch (e) {
+		console.log("history manager init failed");
+	}
+
+	setupPageControls();
+
+});
+
+
