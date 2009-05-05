@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
 	xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
-    <xsl:variable name="hbase">http://heuristscholar.org/heurist</xsl:variable>
-    <xsl:variable name="urlbase">/relbrowser</xsl:variable>
-    <xsl:variable name="cocoonbase">/cocoon/relbrowser</xsl:variable>
-    <xsl:variable name="hapi-key">147983c93cdd221dd23f9a93884034f2246b7e01</xsl:variable>
-    <xsl:variable name="instance"></xsl:variable>
-    <xsl:variable name="instance_prefix"></xsl:variable>
-    <xsl:variable name="site-title">rel-browser</xsl:variable>
-    <xsl:variable name="home-id">205</xsl:variable>
+<xsl:variable name="hbase">http://balipaintings.heuristscholar.org/heurist</xsl:variable>
+<xsl:variable name="urlbase">/bali-paintings</xsl:variable>
+<xsl:variable name="cocoonbase">/cocoon/bali-paintings</xsl:variable>
+<xsl:variable name="hapi-key">42a2ea64e433d2d0e65d1208c7cb1956681e0986</xsl:variable>
+<xsl:variable name="instance">balipaintings</xsl:variable>
+<xsl:variable name="instance_prefix">balipaintings.</xsl:variable>
+<xsl:variable name="site-title">bali paintings</xsl:variable>
+<xsl:variable name="home-id">1</xsl:variable>
 
 
 	<!-- custom timemap colours -->
