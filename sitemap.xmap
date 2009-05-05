@@ -74,7 +74,6 @@
 
    <map:match pattern="kmltrans/*">
     <!-- generates heurist kml for the given query and transforms it -->
-    <map:generate src="http://heuristscholar.org/heurist/mapper/googleearth.kml.php/heurist-map.kml?w=all&amp;q={1}" label="rawkml"/>
     <map:generate src="http://heuristscholar.org/heurist/mapper/googleearth.kml.php/heurist-map.kml?w=all&amp;multilevel=false&amp;q={1}" label="rawkml"/>
     <map:transform src="xsl/kmltrans.xsl" label="transformed"/>
     <map:serialize type="xml"/>
