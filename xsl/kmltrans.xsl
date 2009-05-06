@@ -20,31 +20,53 @@
 		<Folder>
 			<name><xsl:value-of select="kml:name"/></name>
 			<description><xsl:value-of select="kml:description"/></description>
-			
-			<xsl:apply-templates select="kml:Placemark"/>
+			<xsl:choose>
+				<xsl:when test="kml:Placemark">
+					<xsl:apply-templates select="kml:Placemark"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<!-- for those records that don't have geographic data -->
+					<xsl:apply-templates select="kml:TimeSpan"/>
+				</xsl:otherwise>
+			</xsl:choose>			
 		</Folder>
+	</xsl:template>
+	
+	<xsl:template match="kml:TimeSpan">
+		<Placemark>
+			<description>
+				<xsl:apply-templates select="../kml:description/kml:a">
+					<xsl:with-param name="itemname" select="../kml:name"/>
+				</xsl:apply-templates>
+			</description>
+		<TimeSpan>
+			<begin><xsl:value-of select="kml:begin"/></begin>
+			<end><xsl:value-of select="kml:end"/></end>
+		</TimeSpan>
+		
+		</Placemark>
 	</xsl:template>
 
 	<xsl:template match="kml:Placemark">
-				<Placemark>
-					<description>
-						<xsl:apply-templates select="kml:description/kml:a">
-							<xsl:with-param name="itemname" select="kml:name"/>
-						</xsl:apply-templates>
-					</description>
-					<TimeSpan>
-						<begin><xsl:value-of select="../kml:TimeSpan/kml:begin"/></begin>
-						<end><xsl:value-of select="../kml:TimeSpan/kml:end"/></end>
-					</TimeSpan>
-					<!-- would be great to control style here -->
-					<Style>
-						<LineStyle>
-							<color>ff0000cc</color>
-							<width>4</width>
-						</LineStyle>
-					</Style>
-					<xsl:copy-of select="kml:Point | kml:LineString | kml:MultiGeometry"/>
-				</Placemark>
+		<Placemark>
+			<description>
+				<xsl:apply-templates select="kml:description/kml:a">
+					<xsl:with-param name="itemname" select="kml:name"/>
+				</xsl:apply-templates>
+			</description>
+			<TimeSpan>
+				<begin><xsl:value-of select="../kml:TimeSpan/kml:begin"/></begin>
+				<end><xsl:value-of select="../kml:TimeSpan/kml:end"/></end>
+			</TimeSpan>
+			<!-- would be great to control style here -->
+			<Style>
+				<LineStyle>
+					<color>ff0000cc</color>
+					<width>4</width>
+				</LineStyle>
+			</Style>
+			<xsl:copy-of select="kml:Point | kml:LineString | kml:MultiGeometry"/>
+		</Placemark>
 	</xsl:template>
 
 	<xsl:template match="kml:a">
