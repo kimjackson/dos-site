@@ -99,8 +99,8 @@ xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 		
 		
 		// and time map objects based on breadcrumbs!
-		HAPI.PJ.retrieve("bcrumb", function (name, value){
-			gatherCrumbs("bcrumb", value,<xsl:value-of select="id"/>);
+		HAPI.PJ.retrieve(_nameTrack, function (name, value){
+		gatherCrumbs(_nameTrack, value,<xsl:value-of select="id"/>);
 			if (value)  {
 				var i;				
 				for ((value[0].recId == <xsl:value-of select="id"/>?i=1: i=0); i &lt; value.length; ++i) {

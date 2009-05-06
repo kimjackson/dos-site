@@ -10,6 +10,7 @@
     <xsl:variable name="site-title">rel-browser</xsl:variable>
     <xsl:variable name="home-id">205</xsl:variable>
 
+	<xsl:variable name="bcrumbNameTrack">anythingyouwant</xsl:variable> <!-- a more or less unique name for map track recording -->
 
 	<!-- custom timemap colours -->
 	<xsl:variable name="focusTheme">purple</xsl:variable>

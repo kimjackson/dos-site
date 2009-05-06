@@ -111,6 +111,7 @@
 					<script> 			
 						var maptrackCrumbNumber = <xsl:value-of select="$maptrackCrumbNumber"/>;
 						var crumbThemes = [];
+						var _nameTrack ='bcrumb' + '<xsl:value-of select="$bcrumbNameTrack"/>'; //global name for the PJ object
 						<xsl:for-each select="exsl:node-set($mapCrumbThemes)/theme">
 							crumbThemes.push({colour:'<xsl:value-of select="exsl:node-set($timeMapThemes)/theme[@name=current()]/colour"/>' , icon : '<xsl:value-of select="exsl:node-set($timeMapThemes)/theme[@name=current()]/icon"/>'});
 						</xsl:for-each>
