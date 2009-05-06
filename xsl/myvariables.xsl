@@ -19,7 +19,7 @@
 		<theme>orange</theme>
 		<theme>yellow</theme>
 		<theme>green</theme>
-		<theme>black</theme>
+		<theme>pink</theme>
 	</xsl:variable>
 
 	<!-- number of breadcrumbs in "my map track", calculated based on number of themes defined in $mapCrumbThemes
@@ -29,7 +29,7 @@
 	<xsl:variable name="timeMapThemes">
 		<theme name="red">
 			<colour>red</colour>
-			<icon><xsl:value-of select="$urlbase"/>/images/purple-dot.png</icon>
+			<icon><xsl:value-of select="$urlbase"/>/images/red-dot.png</icon>
 		</theme>
 		<theme name="black">
 			<colour>black</colour>
@@ -37,7 +37,7 @@
 		</theme>
 		<theme name="orange">
 			<colour>orange</colour>
-			<icon><xsl:value-of select="$urlbase"/>/images/purple-dot.png</icon>
+			<icon><xsl:value-of select="$urlbase"/>/images/orange-dot.png</icon>
 		</theme>
 		<theme name="purple">
 			<colour>purple</colour>
@@ -45,15 +45,23 @@
 		</theme>
 		<theme name="green">
 			<colour>green</colour>
-			<icon><xsl:value-of select="$urlbase"/>/images/purple-dot.png</icon>
+			<icon><xsl:value-of select="$urlbase"/>/images/green-dot.png</icon>
 		</theme>
 		<theme name="blue">
 			<colour>blue</colour>
-			<icon><xsl:value-of select="$urlbase"/>/images/purple-dot.png</icon>
+			<icon><xsl:value-of select="$urlbase"/>/images/blue-dot.png</icon>
 		</theme>
 		<theme name="yellow">
 			<colour>yellow</colour>
 			<icon><xsl:value-of select="$urlbase"/>/images/yellow-dot.png</icon>
+		</theme>
+		<theme name="ltblue">
+			<colour>blue</colour>
+			<icon><xsl:value-of select="$urlbase"/>/images/ltblue-dot.png</icon>
+		</theme>
+		<theme name="pink">
+			<colour>yellow</colour>
+			<icon><xsl:value-of select="$urlbase"/>/images/pink-dot.png</icon>
 		</theme>
 		<theme name="customOne">
 			<colour>#ff0000</colour>
