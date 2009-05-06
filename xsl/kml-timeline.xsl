@@ -2,7 +2,7 @@
 xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 
 
-<xsl:template name="kml" match="reference[reftype/@id=103 or reftype/@id=51 or reftype/@id=165 ]">
+	<xsl:template name="kml" match="reference[reftype/@id=103 or reftype/@id=51 or reftype/@id=165 or reftype/@id=122 or reftype/@id=57]">
 	<div id="main" class="div-main">
 	<div id="map" class="map"  style="width: 990px; height: 370px;"/>
 	<div id="timeline" class="timeline" style="width: 880px; height: 300px; overflow-x:hidden;"/>
@@ -49,6 +49,7 @@ xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 		</xsl:call-template>
 		<!-- related records -->
 		<xsl:for-each select="related">
+			<!-- Related KML Maps (103) and KML Files (165) -->
 			<xsl:call-template name="getRelatedKMLItems">
 				<xsl:with-param name="related"><xsl:value-of select="."/></xsl:with-param>
 				<xsl:with-param name="currentId"><xsl:value-of select="id"/></xsl:with-param>
@@ -59,6 +60,14 @@ xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 			<xsl:with-param name="link">http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmltrans/relatedto:<xsl:value-of select="id"/></xsl:with-param>
 			<xsl:with-param name="theme"><xsl:value-of select="$relatedTheme"/></xsl:with-param>
 		</xsl:call-template>
+		<!-- pointer to Site Record (57) for Historical Events -->
+		<xsl:for-each select="pointer[@id=276]">
+			<xsl:call-template name="generateTimeMapObjects">
+				<xsl:with-param name="title">Site reference</xsl:with-param>
+				<xsl:with-param name="link">http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmltrans/id:<xsl:value-of select="id"/></xsl:with-param>
+				<xsl:with-param name="theme"><xsl:value-of select="$focusTheme"/></xsl:with-param>
+			</xsl:call-template>
+		</xsl:for-each>
 		<!-- pointer to KML File (165) in case with KML map -->
 		<xsl:for-each select="pointer[@id=564]">
 			<xsl:call-template name="generateTimeMapObjects">
@@ -134,7 +143,7 @@ xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 	
 <xsl:template name="checkForGeoData">	
 		<!-- Historical event 51 -->
-		<xsl:if test="reftype/@id = 51">
+	<xsl:if test="reftype/@id = 51 or reftype/@id = 122 or reftype/@id = 57">
 			<xsl:for-each select="detail[@id=230]">
 				<xsl:value-of select="."/><xsl:if test="position() != last()">,</xsl:if>				
 			</xsl:for-each>

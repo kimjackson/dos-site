@@ -104,7 +104,7 @@
 				<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
 				
 				<!-- Time Map rendering -->
-				<xsl:if test="export/references/reference/reftype[@id=103 or @id=51 or @id=165 ]">
+				<xsl:if test="export/references/reference/reftype[@id=103 or @id=51 or @id=165 or @id=122 or @id=57]">
 					<script src="http://heuristscholar.org/{$urlbase}/js/timeline-api.js" type="text/javascript"></script>
 					<script src="http://heuristscholar.org/{$urlbase}/js/timemap.js" type="text/javascript"></script>
 					<script src="http://heuristscholar.org/{$urlbase}/js/kmlparser.js" type="text/javascript"></script>					
@@ -125,7 +125,7 @@
 				<div id="header">
 					<h2>
 						<!-- PRESENTATION  for KML Map 103, Historical Event 51, KML file 165 -->
-						<xsl:if test="export/references/reference/reftype[@id=103 or @id=51 or @id=165 ]">
+						<xsl:if test="export/references/reference/reftype[@id=103 or @id=51 or @id=165 or @id=122 or @id=57]">
 							<xsl:call-template name="renderAppropriateLegend">
 								<xsl:with-param name="record" select="export/references/reference"/>
 								<xsl:with-param name="themeToUse" select="$focusTheme"/>
@@ -429,14 +429,29 @@
 
 				<tr>
 					<td>
-					<!-- PRESENTATION  for KML Map 103, Historical Event 51, KML file 165 -->
-					<xsl:if test="(../reftype/@id = 103 or ../reftype/@id=51 or ../reftype/@id = 165)">
+					<!-- PRESENTATION  for KML Map 103, Historical Event 51, KML file 165 , Place record 122 and Site record 57-->
+					<xsl:if test="(../reftype/@id = 103 or ../reftype/@id = 165 or ../reftype/@id = 122 or ../reftype/@id = 57)">
 						<xsl:call-template name="renderAppropriateLegend">
 							<xsl:with-param name="record" select="."/>
 							<xsl:with-param name="themeToUse" select="$relatedTheme"/>
 						</xsl:call-template>
 					</xsl:if>
-
+					<xsl:if test=" ../reftype/@id=51">
+						<xsl:choose>
+							<xsl:when test="@id = 276"><!-- pointer to a site record -->
+								<xsl:call-template name="renderAppropriateLegend">
+									<xsl:with-param name="record" select="."/>
+									<xsl:with-param name="themeToUse" select="$focusTheme"/>
+								</xsl:call-template>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:call-template name="renderAppropriateLegend">
+									<xsl:with-param name="record" select="."/>
+									<xsl:with-param name="themeToUse" select="$relatedTheme"/>
+								</xsl:call-template>
+							</xsl:otherwise>												
+						</xsl:choose>
+					</xsl:if>
 						<xsl:if test="detail[@id = 222 or @id=223 or @id=224]">
 							<xsl:if test="detail/file_thumb_url">
 								<a href="{$cocoonbase}/item/{id}">
