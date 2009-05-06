@@ -1,5 +1,3 @@
-
-var _nameTrack ='bcrumb'; //global name for the PJ object
 var _nameZoom ='zoomtrackPJ'; //global name for the PJ object
 
 // Functions for storing zoom level (scale persistence)
