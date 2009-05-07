@@ -61,7 +61,7 @@ xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 			<xsl:with-param name="theme"><xsl:value-of select="$relatedTheme"/></xsl:with-param>
 		</xsl:call-template>
 		<!-- pointer to Site Record (57) for Historical Events -->
-		<xsl:for-each select="pointer[@id=276]">
+		<xsl:for-each select="pointer[@id=276] | reverse-pointer[@id=276]">
 			<xsl:call-template name="generateTimeMapObjects">
 				<xsl:with-param name="title">Site reference</xsl:with-param>
 				<xsl:with-param name="link">http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmltrans/id:<xsl:value-of select="id"/></xsl:with-param>
