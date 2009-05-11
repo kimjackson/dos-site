@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
 	xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
-    <xsl:variable name="hbase">http://heuristscholar.org/heurist</xsl:variable>
-    <xsl:variable name="urlbase">/relbrowser</xsl:variable>
-    <xsl:variable name="cocoonbase">/cocoon/relbrowser</xsl:variable>
-    <xsl:variable name="hapi-key">147983c93cdd221dd23f9a93884034f2246b7e01</xsl:variable>
-    <xsl:variable name="instance"></xsl:variable>
-    <xsl:variable name="instance_prefix"></xsl:variable>
-    <xsl:variable name="site-title">rel-browser</xsl:variable>
-    <xsl:variable name="home-id">205</xsl:variable>
+	<xsl:variable name="hbase">http://gallipoli.heuristscholar.org/heurist</xsl:variable>
+	<xsl:variable name="urlbase">/gallipoli-demo</xsl:variable>
+	<xsl:variable name="cocoonbase">/cocoon/gallipoli-demo</xsl:variable>
+	<xsl:variable name="hapi-key">11c1176c938b217c8a7eca9a428a6ab8f0d8b541</xsl:variable>
+	<xsl:variable name="instance">gallipoli</xsl:variable>
+	<xsl:variable name="instance_prefix">gallipoli.</xsl:variable>
+	<xsl:variable name="site-title">gallipoli demo</xsl:variable>
+	<xsl:variable name="home-id">249</xsl:variable>
 
-	<xsl:variable name="bcrumbNameTrack">anythingyouwant</xsl:variable> <!-- a more or less unique name for map track recording -->
+	<xsl:variable name="bcrumbNameTrack">gallipolidemo</xsl:variable> <!-- a more or less unique name for map track recording -->
 
 	<!-- custom timemap colours -->
 	<xsl:variable name="focusTheme">purple</xsl:variable>
