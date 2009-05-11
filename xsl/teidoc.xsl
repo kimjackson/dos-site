@@ -15,16 +15,9 @@
 
 		<div>
 			<div class="content-left">
-				<!-- dc.contributor -->
-				<div class="content-author">
-					<xsl:value-of select="pointer[@id=538]/detail[@id=160]"/>
-				</div>
-
-				<!-- dc.date -->
-				<div class="content-date">
-					<xsl:call-template name="format_date">
-						<xsl:with-param name="date" select="detail[@id=166]"/>
-					</xsl:call-template>
+				<!-- dc.contributor, dc.date -->
+				<div class="content-byline">
+					by <xsl:value-of select="pointer[@id=538]/detail[@id=160]"/>, <xsl:value-of select="detail[@id=166]/year"/>
 				</div>
 
 				<div class="clear"/>
@@ -100,19 +93,6 @@
 									</xsl:attribute>
 								</img>
 							</a>
-							<br/>
-							<xsl:value-of select="pointer[@id=199]/detail[@id=160]"/>
-							<xsl:for-each select="pointer[@id=199]/pointer[@id=538]">
-								<br/>
-								<xsl:choose>
-									<xsl:when test="detail[@id=569]">
-										<xsl:value-of select="detail[@id=569]"/>
-									</xsl:when>
-									<xsl:otherwise>
-										Contributed by: <xsl:value-of select="detail[@id=160]"/>
-									</xsl:otherwise>
-								</xsl:choose>
-							</xsl:for-each>
 						</div>
 					</xsl:when>
 					<xsl:otherwise>

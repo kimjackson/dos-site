@@ -69,7 +69,9 @@
 
 	<xsl:template match="TEI//note">
 		<span class="note">
-			<xsl:apply-templates/>
+			<sup>
+				<a href="#" onclick="return false;" title="{.}">[<xsl:number count="TEI//note" level="any"/>]</a>
+			</sup>
 		</span>
 	</xsl:template>
 
@@ -102,6 +104,10 @@
 		<li>
 			<xsl:apply-templates/>
 		</li>
+	</xsl:template>
+
+	<xsl:template match="TEI//lb">
+		<br/>
 	</xsl:template>
 
 </xsl:stylesheet>

@@ -205,13 +205,24 @@
             <xsl:apply-templates mode="pict"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:copy-of select="w:t/text()"/>
+            <xsl:apply-templates select="w:t|w:br"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template match="w:t">
+    <xsl:apply-templates select="text()|w:br"/>
+  </xsl:template>
+
+  <xsl:template match="w:t/text()">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="w:br">
+    <lb/>
+  </xsl:template>
 
   <xsl:template match="w:endnote|w:footnote" mode="endnote">
     <note>
@@ -315,12 +326,12 @@
         </list>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates select="w:pPr"></xsl:apply-templates>
-    <xsl:apply-templates select="w:r" ></xsl:apply-templates>
+    <xsl:apply-templates select="w:pPr"/>
+    <xsl:apply-templates select="w:r"/>
   </xsl:template>
 
-<xsl:template match="w:pPr" ></xsl:template>
- <xsl:template match="w:r" ></xsl:template>
+  <xsl:template match="w:pPr"/>
+  <xsl:template match="w:r"/>
 
   <xsl:template name="writeListItem">
     <xsl:variable name="rendValues">
