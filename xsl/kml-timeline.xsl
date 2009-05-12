@@ -11,8 +11,7 @@ xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 	
 	<script type="text/javascript">			
 	loadZooms();
-	saveAndLoad({recId: <xsl:value-of select="id"/>, recTitle: '<xsl:value-of select="title"/>', recType: '<xsl:value-of select="reftype/@id"/>', hasGeoData:'<xsl:call-template name="checkForGeoData"/>'});	
-		
+	saveAndLoad({recId: <xsl:value-of select="id"/>, recTitle: document.getElementById("<xsl:value-of select="id"/>").text, recType: '<xsl:value-of select="reftype/@id"/>', hasGeoData:'<xsl:call-template name="checkForGeoData"/>'});	
 	<xsl:call-template name = "generateIntervalUnit">
 		<xsl:with-param name="varName">tl1</xsl:with-param>
 		<xsl:with-param name="value">
