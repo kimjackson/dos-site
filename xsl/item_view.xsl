@@ -25,7 +25,7 @@
 		<html>
 			<head>
 			<link rel="stylesheet" href="{$urlbase}/css/browser.css"/>
-				<title>
+				<title id = "{$currentid}">
 					<xsl:value-of select="export/references/reference/title"/>
 				</title>
 				
@@ -131,7 +131,11 @@
 								<xsl:with-param name="themeToUse" select="$focusTheme"/>
 							</xsl:call-template>
 						</xsl:if>					
-						<span style="margin-left:5px;"><xsl:value-of select="export/references/reference/title"/></span>
+						<span style="margin-left:5px;">
+							<xsl:call-template name="minimise_text">
+								<xsl:with-param name="sstring"><xsl:value-of select="export/references/reference/title"/></xsl:with-param>
+							</xsl:call-template>
+						</span>
 					</h2>
 					<div id="logo">
 						<a href="{$cocoonbase}/item/{$home-id}" style="font-size: 30px;"><xsl:value-of select="$site-title"/></a>
@@ -626,6 +630,17 @@
 				<xsl:value-of select="."/>
 			</p>
 		</xsl:for-each>
+	</xsl:template>
+	
+	<xsl:template name="minimise_text">
+		<xsl:param name="sstring"></xsl:param>
+		<xsl:choose>
+			<xsl:when test="string-length($sstring) &gt; 130">
+				<span  title="{$sstring}"><xsl:value-of select="substring($sstring, 0, 130)"/> ... </span></xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$sstring"/>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	
 	
