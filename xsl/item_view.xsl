@@ -105,10 +105,8 @@
 				
 				<!-- Time Map rendering -->
 				<xsl:if test="export/references/reference/reftype[@id=103 or @id=51 or @id=165 or @id=122 or @id=57]">
-					<script src="http://heuristscholar.org/{$urlbase}/js/timeline-api.js" type="text/javascript"></script>
-					<script src="http://heuristscholar.org/{$urlbase}/js/timemap.js" type="text/javascript"></script>
-					<script src="http://heuristscholar.org/{$urlbase}/js/kmlparser.js" type="text/javascript"></script>					
-					<script> 			
+					<script>
+						var urlbase = '<xsl:value-of select="$urlbase"/>';
 						var maptrackCrumbNumber = <xsl:value-of select="$maptrackCrumbNumber"/>;
 						var crumbThemes = [];
 						var _nameTrack ='bcrumb' + '<xsl:value-of select="$bcrumbNameTrack"/>'; //global name for the PJ object
@@ -116,6 +114,9 @@
 							crumbThemes.push({colour:'<xsl:value-of select="exsl:node-set($timeMapThemes)/theme[@name=current()]/colour"/>' , icon : '<xsl:value-of select="exsl:node-set($timeMapThemes)/theme[@name=current()]/icon"/>'});
 						</xsl:for-each>
 					</script>
+					<script src="http://heuristscholar.org/{$urlbase}/js/timeline-api.js" type="text/javascript"></script>
+					<script src="http://heuristscholar.org/{$urlbase}/js/timemap.js" type="text/javascript"></script>
+					<script src="http://heuristscholar.org/{$urlbase}/js/kmlparser.js" type="text/javascript"></script>
 					<script src="{$urlbase}/js/track.js"/>
 				</xsl:if>	
 				
