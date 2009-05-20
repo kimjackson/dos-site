@@ -383,6 +383,14 @@
 
 					/* TEI styles */
 					
+					.poetry-line {
+						line-height:0.5
+					}
+
+					.separator {
+						padding-bottom:5px;
+					}
+
 					p.DoSBlockquote {
 						font-family:"Times New Roman", Times, serif;
 						padding-right: 50px;

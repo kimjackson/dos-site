@@ -18,7 +18,7 @@
 
 	<!-- only use text/body/div from TEI, discard the rest -->
 	<xsl:template match="TEI">
-		<xsl:apply-templates select="text/body/div"/>
+		<xsl:apply-templates select="text/body"/>
 	</xsl:template>
 
 
@@ -97,5 +97,18 @@
 			<xsl:apply-templates/>
 		</li>
 	</xsl:template>
+
+	<xsl:template match="TEI//lg">
+		<p class="separator">
+			<xsl:apply-templates/>
+		</p>
+	</xsl:template>
+
+	<xsl:template match="TEI//l">
+		<p class="poetry-line">
+			<xsl:apply-templates/>
+		</p>
+	</xsl:template>
+
 
 </xsl:stylesheet>

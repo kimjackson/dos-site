@@ -101,7 +101,7 @@
 				</tr>
 
 			</xsl:for-each>
-			<tr><td colspan="2"><a  href='#' onclick="window.open('{$urlbase}/mm_annotations.htm?id={//id}','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;">List Multimedia Annotations</a></td></tr>
+
 
 		</table>
 
