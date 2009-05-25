@@ -76,15 +76,25 @@ TimeMapDataset.parseKML = function(kml) {
         // get title & description
 	//
 	//modified - ms 2009-05-14
-	//data["title"] =  getTagValue(pm, "name");
 	
 	var desc = getNodeList(pm, "description");
-	var ahref = getNodeList(desc[0], "a");
-	var id = ahref[0].getAttribute("href").split('resource/');
 
-	data["title"] = "<a href=\"http://heuristscholar.org/cocoon" + urlbase +  "/item/" + id[1] + "\">" + getTagValue(pm, "name") + "</a>";
-	// data.options["description"] = getTagValue(pm, "description");
-	
+	if (desc.length > 0) {
+		var ahref = getNodeList(desc[0], "a");
+		if (ahref.length > 0){
+			var id = ahref[0].getAttribute("href").split('resource/');
+			data["title"] = "<a href=\"http://heuristscholar.org/cocoon" + urlbase +  "/item/" + id[1] + "\">" + getTagValue(pm, "name") + "</a>";
+		} else {
+			data["title"] =  getTagValue(pm, "name");
+			data.options["description"] = getTagValue(pm, "description");
+		}
+
+	} else {
+		data["title"] =  getTagValue(pm, "name");
+		data.options["description"] = getTagValue(pm, "description");
+	}
+
+
 	// get time information
         findNodeTime(pm, data);
         // find placemark
