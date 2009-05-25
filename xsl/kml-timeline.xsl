@@ -56,14 +56,14 @@ xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 		</xsl:for-each>
 		<xsl:call-template name="generateTimeMapObjects">
 			<xsl:with-param name="title">Related records</xsl:with-param>
-			<xsl:with-param name="link">http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmltrans/relatedto:<xsl:value-of select="id"/></xsl:with-param>
+			<xsl:with-param name="link">http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kml/relatedto:<xsl:value-of select="id"/></xsl:with-param>
 			<xsl:with-param name="theme"><xsl:value-of select="$relatedTheme"/></xsl:with-param>
 		</xsl:call-template>
 		<!-- pointer to Site Record (57) for Historical Events -->
 		<xsl:for-each select="pointer[@id=276] | reverse-pointer[@id=276]">
 			<xsl:call-template name="generateTimeMapObjects">
 				<xsl:with-param name="title">Site reference</xsl:with-param>
-				<xsl:with-param name="link">http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmltrans/id:<xsl:value-of select="id"/></xsl:with-param>
+				<xsl:with-param name="link">http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kml/id:<xsl:value-of select="id"/></xsl:with-param>
 				<xsl:with-param name="theme"><xsl:value-of select="$focusTheme"/></xsl:with-param>
 			</xsl:call-template>
 		</xsl:for-each>
@@ -90,7 +90,7 @@ xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 			<xsl:with-param name="link">
 				<xsl:choose>
 					<xsl:when test="reftype[@id = 165]">http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmlfile/<xsl:value-of select="id"/></xsl:when>
-					<xsl:otherwise>http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmltrans/id:<xsl:value-of select="id"/></xsl:otherwise>
+					<xsl:otherwise>http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kml/id:<xsl:value-of select="id"/></xsl:otherwise>
 				</xsl:choose>
 			</xsl:with-param>
 			<xsl:with-param name="theme">
@@ -118,7 +118,7 @@ xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 					if (value[i].recType &amp; value[i].recType == '165') {
 						link = "http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmlfile/" + value[i].recId;
 					} else {
-						link = "http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmltrans/id:" + value[i].recId;
+						link = "http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kml/id:" + value[i].recId;
 					}
 					
 					var timeCrumb = {
@@ -182,7 +182,7 @@ xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 				<xsl:if test="../id != $currentId">
 					<xsl:call-template name="generateTimeMapObjects">
 						<xsl:with-param name="title">Related records</xsl:with-param>
-						<xsl:with-param name="link">http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmltrans/id:<xsl:value-of select="../id"/></xsl:with-param>
+						<xsl:with-param name="link">http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kml/id:<xsl:value-of select="../id"/></xsl:with-param>
 						<xsl:with-param name="theme"><xsl:value-of select="$relatedTheme"/></xsl:with-param>
 					</xsl:call-template>
 				</xsl:if>

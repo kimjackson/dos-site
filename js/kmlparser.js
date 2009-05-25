@@ -2,7 +2,7 @@
  * TimeMap Copyright 2008 Nick Rabinowitz.
  * Licensed under the MIT License (see LICENSE.txt)
  */
- 
+
 /*----------------------------------------------------------------------------
  * KML Parser
  *
@@ -20,16 +20,17 @@
 TimeMapDataset.parseKML = function(kml) {
     var items = [], data, kmlnode, placemarks, pm;
     kmlnode = GXml.parse(kml);
-    
+
     // get TimeMap utilty functions
     // assigning to variables should compress better
     var getTagValue = TimeMap.getTagValue,
         getNodeList = TimeMap.getNodeList,
         trim = TimeMap.trim;
-    
+
     // recursive time data search
     var findNodeTime = function(n, data) {
         var check = false;
+	
         // look for instant timestamp
         var nList = getNodeList(n, "TimeStamp");
         if (nList.length > 0) {
@@ -50,22 +51,41 @@ TimeMapDataset.parseKML = function(kml) {
         // try looking recursively at parent nodes
         if (!check) {
             var pn = n.parentNode;
-            if (pn.nodename == "Folder" || pn.nodename=="Document") {
+            if (pn.nodeName == "Folder" || pn.nodeName=="Document") {
                 findNodeTime(pn, data);
             }
             pn = null;
         }
     }
-    
+
+
+   
     // look for placemarks
     placemarks = getNodeList(kmlnode, "Placemark");
+
+    if (placemarks.length === 0){
+	//in the absence of placemark nodes we want to look a level up at the folders - 
+	//for cases when there is time data but no geographical data.
+	var placemarks = getNodeList(kmlnode, "Folder");
+
+    }
+
     for (var i=0; i<placemarks.length; i++) {
         pm = placemarks[i];
         data = { options: {} };
         // get title & description
-        data["title"] = getTagValue(pm, "name");
-        data.options["description"] = getTagValue(pm, "description");
-        // get time information
+	//
+	//modified - ms 2009-05-14
+	//data["title"] =  getTagValue(pm, "name");
+	
+	var desc = getNodeList(pm, "description");
+	var ahref = getNodeList(desc[0], "a");
+	var id = ahref[0].getAttribute("href").split('resource/');
+
+	data["title"] = "<a href=\"http://heuristscholar.org/cocoon" + urlbase +  "/item/" + id[1] + "\">" + getTagValue(pm, "name") + "</a>";
+	// data.options["description"] = getTagValue(pm, "description");
+	
+	// get time information
         findNodeTime(pm, data);
         // find placemark
         PLACEMARK: {
@@ -107,7 +127,8 @@ TimeMapDataset.parseKML = function(kml) {
         }
         items.push(data);
     }
-    
+
+     
     // look for ground overlays
     placemarks = getNodeList(kmlnode, "GroundOverlay");
     for (var i=0; i<placemarks.length; i++) {
@@ -129,11 +150,13 @@ TimeMapDataset.parseKML = function(kml) {
         data.overlay["west"] = getTagValue(nList[0], "west");
         items.push(data);
     }
-    
+
     // clean up
     kmlnode = null;
     placemarks = null;
     pm = null;
     nList = null;
     return items;
+
+    
 }

@@ -79,6 +79,12 @@
     <map:serialize type="xml"/>
    </map:match>
 
+  <map:match pattern="kml/*">
+  <!-- generates heurist kml for the given query and transforms it -->
+  <map:generate src="http://heuristscholar.org/heurist/mapper/googleearth.kml.php/heurist-map.kml?w=all&amp;multilevel=false&amp;q={1}" label="rawkml"/>
+  <map:serialize type="xml"/>
+  </map:match>
+
    <map:match pattern="kmlfile/*">
     <!-- generates heurist kml for the given query and transforms it -->
     <map:generate src="http://balipaintings.heuristscholar.org/heurist/php/kml.php?id={1}"/>
