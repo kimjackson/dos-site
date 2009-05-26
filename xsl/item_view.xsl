@@ -85,13 +85,16 @@
 						   elts.innerHTML += "&lt;br&gt;&lt;br&gt;&lt;span style=\"padding-right:5px; vertical-align:top\"&gt;&lt;a href=\""+itemPath+val.getID()+"\"&gt;"+val.getTitle()+"&lt;/a&gt;&lt;/span&gt;"+"&lt;img src=\"" + imgpath+val.getRecordType().getID() +".gif\"/&gt;";
 						}
 				   }
+				   
+				  
 
 </script>
 
 				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;key={$hapi-key}"></script>
+				
 				<script>
 					if (!HCurrentUser.isLoggedIn()) {
-					window.location = 'http://<xsl:value-of select="$instance_prefix"/>heuristscholar.org/heurist/php/login-vanilla.php?logo=http://heuristscholar.org<xsl:value-of select="$urlbase"/>/images/logo.png&amp;home=http://heuristscholar.org<xsl:value-of select="$urlbase"/>';
+						window.location = 'http://<xsl:value-of select="$instance_prefix"/>heuristscholar.org/heurist/php/login-vanilla.php?logo=http://heuristscholar.org<xsl:value-of select="$urlbase"/>/images/logo.png&amp;home=http://heuristscholar.org<xsl:value-of select="$urlbase"/>';
 					}
 				</script>
 				<script src="{$urlbase}/js/search.js"/>
@@ -101,24 +104,29 @@
 					top.HEURIST.fireEvent = function(e, e){};
 				</script>
 				<script src="http://{$instance_prefix}heuristscholar.org/heurist/php/js/heurist-obj-user.php"></script>
-
 				
 				<!-- Time Map rendering -->
 				<xsl:if test="export/references/reference/reftype[@id=103 or @id=51 or @id=165 or @id=122 or @id=57]">
-					<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
 					<script>
 						var urlbase = '<xsl:value-of select="$urlbase"/>';
-						var maptrackCrumbNumber = <xsl:value-of select="$maptrackCrumbNumber"/>;
-						var crumbThemes = [];
-						var _nameTrack ='bcrumb' + '<xsl:value-of select="$bcrumbNameTrack"/>'; //global name for the PJ object
-						<xsl:for-each select="exsl:node-set($mapCrumbThemes)/theme">
-							crumbThemes.push({colour:'<xsl:value-of select="exsl:node-set($timeMapThemes)/theme[@name=current()]/colour"/>' , icon : '<xsl:value-of select="exsl:node-set($timeMapThemes)/theme[@name=current()]/icon"/>'});
-						</xsl:for-each>
+						var enableMapTrack  = <xsl:value-of select="$enableMapTrack"/>;
 					</script>
+					<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
 					<script src="http://heuristscholar.org/{$urlbase}/js/timeline-api.js" type="text/javascript"></script>
 					<script src="http://heuristscholar.org/{$urlbase}/js/timemap.js" type="text/javascript"></script>
 					<script src="http://heuristscholar.org/{$urlbase}/js/kmlparser.js" type="text/javascript"></script>
-					<script src="{$urlbase}/js/track.js"/>
+					<script src="{$urlbase}/js/timemap_relbrowser.js"/>
+					<xsl:if test="$enableMapTrack = 'true'">
+						<script>
+							var maptrackCrumbNumber = <xsl:value-of select="$maptrackCrumbNumber"/>;
+							var crumbThemes = [];
+							var _nameTrack ='bcrumb' + '<xsl:value-of select="$bcrumbNameTrack"/>'; //global name for the PJ object
+							<xsl:for-each select="exsl:node-set($mapCrumbThemes)/theme">
+								crumbThemes.push({colour:'<xsl:value-of select="exsl:node-set($timeMapThemes)/theme[@name=current()]/colour"/>' , icon : '<xsl:value-of select="exsl:node-set($timeMapThemes)/theme[@name=current()]/icon"/>'});
+							</xsl:for-each>
+						</script>
+						<script src="{$urlbase}/js/track.js"/>
+					</xsl:if>
 				</xsl:if>	
 				
 					
@@ -292,7 +300,6 @@
 			</xsl:for-each>
 
 		</table>
-		
 		<div id="track-placeholder">
 		</div>
 		<div id= "saved-searches">

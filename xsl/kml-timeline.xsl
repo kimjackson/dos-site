@@ -2,7 +2,7 @@
 xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 
 
-	<xsl:template name="kml" match="reference[reftype/@id=103 or reftype/@id=51 or reftype/@id=165 or reftype/@id=122 or reftype/@id=57]">
+<xsl:template name="kml" match="reference[reftype/@id=103 or reftype/@id=51 or reftype/@id=165 or reftype/@id=122 or reftype/@id=57]">
 	<div id="main" class="div-main">
 	<div id="map" class="map"  style="width: 990px; height: 370px;"/>
 	<div id="timeline" class="timeline" style="width: 880px; height: 300px; overflow-x:hidden;"/>
@@ -11,7 +11,11 @@ xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 	
 	<script type="text/javascript">			
 	loadZooms();
-	saveAndLoad({recId: <xsl:value-of select="id"/>, recTitle: document.getElementById("<xsl:value-of select="id"/>").text, recType: '<xsl:value-of select="reftype/@id"/>', hasGeoData:'<xsl:call-template name="checkForGeoData"/>'});	
+	if (enableMapTrack){
+		saveAndLoad({recId: <xsl:value-of select="id"/>, recTitle: document.getElementById("<xsl:value-of select="id"/>").text, recType: '<xsl:value-of select="reftype/@id"/>', hasGeoData:'<xsl:call-template name="checkForGeoData"/>'});	
+	} else {
+		loadSavedView('<xsl:value-of select="reftype/@id"/>');
+	}
 	<xsl:call-template name = "generateIntervalUnit">
 		<xsl:with-param name="varName">tl1</xsl:with-param>
 		<xsl:with-param name="value">
@@ -104,40 +108,45 @@ xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 				</xsl:choose>
 			</xsl:with-param>
 		</xsl:call-template>
+		<xsl:call-template name="generateTimeMapObjectsForCrumbs"></xsl:call-template>
 		
 		
-		// and time map objects based on breadcrumbs!
-		HAPI.PJ.retrieve(_nameTrack, function (name, value){
-		gatherCrumbs(_nameTrack, value,<xsl:value-of select="id"/>);
-			if (value)  {
-				var i;				
-				for ((value[0].recId == <xsl:value-of select="id"/>?i=1: i=0); i &lt; value.length; ++i) {
-					var link;
-					var title = "MapCrumb" + i;
-			
-					if (value[i].recType &amp; value[i].recType == '165') {
-						link = "http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmlfile/" + value[i].recId;
-					} else {
-						link = "http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kml/id:" + value[i].recId;
-					}
-					
-					var timeCrumb = {
-						title: "Breadcrumb"+i,
-						theme: TimeMapDataset.redTheme({
-							color: crumbThemes[(value[0].recId == <xsl:value-of select="id"/>?i-1: i)].colour,
-							iconImage: crumbThemes[(value[0].recId == <xsl:value-of select="id"/>?i-1: i)].icon
-						}),
-						data: {
-							type: "kml", 
-							url: link
-						}
-					}					
-					dataSets.push(timeCrumb);
-				}
-			}
-
-		}); //end hapi           
         	</script>
+</xsl:template>
+	
+<xsl:template name="generateTimeMapObjectsForCrumbs">
+	if (enableMapTrack){
+	// and time map objects based on breadcrumbs!
+	HAPI.PJ.retrieve(_nameTrack, function (name, value){
+		gatherCrumbs(_nameTrack, value,<xsl:value-of select="id"/>);
+		if (value)  {
+			var i;				
+			for ((value[0].recId == <xsl:value-of select="id"/>?i=1: i=0); i &lt; value.length; ++i) {
+				var link;
+				var title = "MapCrumb" + i;
+	
+				if (value[i].recType &amp; value[i].recType == '165') {
+					link = "http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmlfile/" + value[i].recId;
+				} else {
+					link = "http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kml/id:" + value[i].recId;
+				}
+	
+				var timeCrumb = {
+					title: "Breadcrumb"+i,
+					theme: TimeMapDataset.redTheme({
+						color: crumbThemes[(value[0].recId == <xsl:value-of select="id"/>?i-1: i)].colour,
+						iconImage: crumbThemes[(value[0].recId == <xsl:value-of select="id"/>?i-1: i)].icon
+					}),
+					data: {
+						type: "kml", 
+						url: link
+					}
+				}					
+				dataSets.push(timeCrumb);
+			}
+		}	
+	}); //end hapi   
+	}
 </xsl:template>
 	
 <xsl:template name="checkForGeoData">	
