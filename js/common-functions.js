@@ -211,10 +211,10 @@ function drawDateField(id, detail){
 	if (!isEmpty(detail)){
 	  for (i in detail){
 
-		html += "<div class=\"inp-div\"><input type=text  name=\""+id+"\" id=\""+id+"\" value=\""+detail[i]+"\">&nbsp<img src=\""+path+"/img/calendar.gif\" id=\"calendar"+id+"\" align = \"absbottom\" onclick=\"window.open('calendar.html?id="+id+"','mywin','width=300, height=150, resizable=no');\"></div>";
+		html += "<div class=\"inp-div\"><input type=text  name=\""+id+"\" id=\""+id+"\" value=\""+detail[i]+"\">&nbsp<img src=\""+path+"/img/calendar.gif\" id=\"calendar"+id+"\" align = \"absbottom\" onclick=\"window.open('calendar.html?id="+id+"','mywin','width=300, height=150, resizable=no');\"><div class=\"hint\">Note:The date should be in yyyy-mm-dd format optionally followed by space then hh:mm:ss, where ss is also optional. Date in format yyyy, mm-yyyy or yyyy-mm will aslo be accepted but without time string.</div></div>";
 	  }
 	}else{
-	  html += "<div class=\"inp-div\"><input type=text  name=\""+id+"\" id=\""+id+"\" value=\"\">&nbsp<img src=\""+path+"/img/calendar.gif\" id=\"calendar"+id+"\" align = \"absbottom\" onclick=\"window.open('calendar.html?id="+id+"','mywin','width=300, height=150, resizable=no');\"></div>";
+	  html += "<div class=\"inp-div\"><input type=text  name=\""+id+"\" id=\""+id+"\" value=\"\">&nbsp<img src=\""+path+"/img/calendar.gif\" id=\"calendar"+id+"\" align = \"absbottom\" onclick=\"window.open('calendar.html?id="+id+"','mywin','width=300, height=150, resizable=no');\"><div class=\"hint\">Note:The date should be in yyyy-mm-dd format optionally followed by space then hh:mm:ss, where ss is also optional. Date in format yyyy, mm-yyyy or yyyy-mm will aslo be accepted but without time string.</div></div>";
 	}
 	sel.innerHTML += html;
 }
@@ -691,13 +691,13 @@ function saveRecord(record) {
 //TODO: date/month recognition
 
 function dirtyDate(input){
-	var reg = new RegExp ("[^0-9-]");
+	var reg = new RegExp ("[^0-9-]\s:");
 	return reg.test(input);
 }
 
 function parseDate(input){
  	if (dirtyDate(input.value)){
-		alert ("Please only use numbers and  hyphens in date fields!");
+		alert ("Please only use numbers, dashes and colons in date fields.");
 		return;
 	} else {
 	  	if (matchFullDate(input.value)) {
@@ -709,7 +709,7 @@ function parseDate(input){
 	  			//string
 				return input.value;
 	  		} else {
-				alert ("Invalid date");
+				alert ("Invalid date. The date should be in yyyy-mm-dd format optionally followed by space then hh:mm:ss, where ss is also optional. Date formats yyyy, mm-yyyy or yyyy-mm will aslo be accepted but without time string");
 				return;
 			}
 		}
@@ -717,11 +717,11 @@ function parseDate(input){
 }
 
 function matchFullDate(input) {
- 	var date1 = new RegExp ("^\\d{2}[-]\\d{2}[-]\\d{4}$"); //12[separator]12[separator]1234
- 	var date2 = new RegExp ("^\\d{4}[-]\\d{2}[-]\\d{2}$"); //1234[separator]12[separator]12
- 	if (date1.test(input) || date2.test(input)){
+	var date1 = new RegExp ("^\\d{4}-\\d{2}-\\d{2}((\\s|\T)\\d{2}[:]\\d{2}([:]\\d{2})?)?$"); //1234-12-12 (space or T 12:12 or 12:12:12)-optional
+
+	if (date1.test(input)){
 		return true;
- 	} else {
+	} else {
 		return false;
 	}
 }
