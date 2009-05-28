@@ -2,7 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:str="http://exslt.org/strings" version="1.0">
 
-	<xsl:template name="entity" match="reference[reftype/@id=151 or reftype/@id=91]">
+	<xsl:template name="entity" match="reference[reftype/@id=151]">
 
 		<div class="line-box">
 

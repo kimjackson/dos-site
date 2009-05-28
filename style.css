@@ -117,11 +117,19 @@ img { border: 0 }
 	vertical-align: middle;
 }
 
-.factoids th {
+table.factoids {
+	width: 100%;
+}
+table.factoids th {
 	text-align: left;
 }
-.factoids td {
+table.factoids td {
 	padding-left: 20px;
+}
+div.role-factoids {
+	margin-top: 20px;
+	padding-top: 10px;
+	border-top: 1px solid #cdced0;
 }
 
 .timeline-scale.selected {
