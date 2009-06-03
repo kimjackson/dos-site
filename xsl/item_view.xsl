@@ -112,9 +112,9 @@
 						var enableMapTrack  = <xsl:value-of select="$enableMapTrack"/>;
 					</script>
 					<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
-					<script src="http://heuristscholar.org/{$urlbase}/js/timeline-api.js" type="text/javascript"></script>
-					<script src="http://heuristscholar.org/{$urlbase}/js/timemap.js" type="text/javascript"></script>
-					<script src="http://heuristscholar.org/{$urlbase}/js/kmlparser.js" type="text/javascript"></script>
+					<script src="http://heuristscholar.org{$urlbase}/js/timeline-api.js" type="text/javascript"></script>
+					<script src="http://heuristscholar.org{$urlbase}/timemap.js/timemap.js" type="text/javascript"></script>
+					<script src="http://heuristscholar.org{$urlbase}/timemap.js/kmlparser.js" type="text/javascript"></script>
 					<script src="{$urlbase}/js/timemap_relbrowser.js"/>
 					<xsl:if test="$enableMapTrack = 'true'">
 						<script>
