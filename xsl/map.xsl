@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:exsl="http://exslt.org/common"
+                version="1.0">
 
 	<xsl:template match="reference[reftype/@id=103]">
 
@@ -17,27 +19,40 @@
 				</p>
 			</xsl:if>
 
-			<div id="map" style="width: 400px; height: 300px;"></div>
-			<div id="timeline" style="width: 400px; height: 200px;"></div>
-			<div id="timeline-scales"></div>
+			<div id="map-types"></div>
+			<div id="map" style="width: 600px; height: 400px;"></div>
+			<div id="timeline-zoom"></div>
+			<div id="timeline" style="width: 550px; height: 200px;"></div>
 			<script>
-				var units_top, unit_bottom = null;
-				<xsl:if test="detail[@id=565]">
-					units_top = Timeline.DateTime.<xsl:value-of select="detail[@id=565]"/>;
-				</xsl:if>
-				<xsl:if test="detail[@id=566]">
-					units_bottom = Timeline.DateTime.<xsl:value-of select="detail[@id=566]"/>;
-				</xsl:if>
+				<xsl:variable name="sources">
+					<!-- kml references -->
+					<xsl:for-each select="pointer[@id=564]">
+						<source>
+							<title><xsl:value-of select="detail[@id=160]"/></title>
+							<url><xsl:call-template name="file_url">
+									<xsl:with-param name="file" select="detail[@id=221]"/>
+								</xsl:call-template></url>
+						</source>
+					</xsl:for-each>
+					<!-- related entities that have a TimePlace factoid -->
+					<xsl:for-each select="related[reftype/@id=151]
+					                             [reverse-pointer[@id=528]
+					                                             [detail[@id=526]='TimePlace']]">
+						<source>
+							<title><xsl:value-of select="detail[@id=160]"/></title>
+							<url><xsl:value-of select="$urlbase"/>kml/summary/<xsl:value-of select="id"/>.kml</url>
+						</source>
+					</xsl:for-each>
+				</xsl:variable>
 
 				window.mapdata = {
 					timemap: [
-						<xsl:for-each select="pointer[@id=564]">
+						<xsl:for-each select="exsl:node-set($sources)/source">
 						{
-							title: "<xsl:value-of select="detail[@id=160]"/>",
+							title: "<xsl:value-of select="title"/>",
 							data: {
 								type: "kml",
-								<!--url: "<xsl:value-of select="$urlbase"/>kml/<xsl:value-of select="id"/>.kml"-->
-								url: "<xsl:call-template name="file_url"><xsl:with-param name="file" select="detail[@id=221]"/></xsl:call-template>"
+								url: "<xsl:value-of select="url"/>"
 							}
 						}<xsl:if test="position() != last()">,</xsl:if>
 						</xsl:for-each>
@@ -45,7 +60,7 @@
 					layers: [
 						<xsl:for-each select="pointer[@id=588]">
 						{
-							title: "<xsl:value-of select="detail[@id=160]"/>",
+							title: "<xsl:value-of select="detail[@id=173]"/>",
 							type: "<xsl:value-of select="detail[@id=585]"/>",
 							url: "<xsl:value-of select="detail[@id=339]"/>",
 							mime_type: "<xsl:value-of select="detail[@id=289]"/>",
@@ -58,7 +73,7 @@
 				};
 
 				$(function() {
-					initTMap(units_top, units_bottom);
+					initTMap();
 				});
 			</script>
 

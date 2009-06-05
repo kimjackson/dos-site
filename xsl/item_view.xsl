@@ -29,11 +29,17 @@
 				<link href="{$urlbase}tei.css" rel="stylesheet" type="text/css" />
 				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;key={$hapi-key}"></script>
 				<script src="{$urlbase}js/search.js"/>
-				<xsl:if test="/export/references/reference[reftype/@id=103 or (reftype/@id=151 and reverse-pointer[reftype/@id=150][detail/@id=230])]">
+				<xsl:if test="/export/references/reference[reftype/@id=103 or reftype/@id=151]">
 					<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
-					<script src="http://static.simile.mit.edu/timeline/api-2.2.0/timeline-api.js" type="text/javascript"></script>
+					<script>
+						Timeline_urlPrefix = "<xsl:value-of select="$urlbase"/>timeline/timeline_js/";
+						Timeline_ajax_url = "<xsl:value-of select="$urlbase"/>timeline/timeline_ajax/simile-ajax-api.js";
+						Timeline_parameters = "bundle=true";
+					</script>
+					<script src="{$urlbase}timeline/timeline_js/timeline-api.js" type="text/javascript"></script>
 					<script src="{$urlbase}timemap.js/timemap.js" type="text/javascript"></script>
 					<script src="{$urlbase}timemap.js/kmlparser.js" type="text/javascript"></script>
+					<script src="{$urlbase}timemap.js/manipulation.js" type="text/javascript"></script>
 					<script src="{$urlbase}js/mapping.js"></script>
 				</xsl:if>
 			</head>

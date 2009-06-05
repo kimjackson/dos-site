@@ -11,12 +11,12 @@ body {
 
 img { border: 0 }
 
-#container { width: 685px; margin: 0 auto }
+#container { width: 885px; margin: 0 auto }
 
 #header { width: 100%; height: 228px }
 
 #menu {
-	width: 681px; height: 43px;
+	width: 881px; height: 43px;
 	text-align: center;
 	background: url(images/bg-navigation-box.jpg);
 	padding: 10px 0 0 4px; margin: 0 0 4px 0
@@ -44,7 +44,7 @@ img { border: 0 }
 	font-weight: bold;
 	text-transform: uppercase;
 	color: #231f20;
-	background: url(images/bg-title-box.jpg);
+	/*background: url(images/bg-title-box.jpg);*/
 	margin: 0 0 10px 0
 }
 
@@ -56,22 +56,22 @@ img { border: 0 }
 
 /*LEFT-COLUMN
 --------------------------------------------------*/
-.left-column { width: 509px; float: left }
+.left-column { width: 709px; float: left }
 
 .content-top {
 	width: 100%; height: 10px;
 	font-size: 0;
-	background: url(images/bg-big-top-box.jpg)
+	/*background: url(images/bg-big-top-box.jpg)*/
 }
 
 .content {
-	width: 477px;
-	background: url(images/bg-big-middle-box.jpg);
+	width: 100%;
+	/*background: url(images/bg-big-middle-box.jpg);*/
 	padding: 10px 16px 9px 16px
 }
 
 .content-left {
-	width: 340px;
+	width: 540px;
 	float: left
 }
 
@@ -91,7 +91,7 @@ img { border: 0 }
 .content-bottom {
 	width: 100%; height: 10px;
 	font-size: 0;
-	background: url(images/bg-big-bottom-box.jpg)
+	/*background: url(images/bg-big-bottom-box.jpg)*/
 }
 
 .content-next {
@@ -102,7 +102,6 @@ img { border: 0 }
 }
 
 .line-box {
-	width: 477px;
 	border-bottom: 1px solid #cdced0;
 	padding: 0 0 13px 0; margin: 0 0 15px 0
 }
@@ -132,8 +131,23 @@ div.role-factoids {
 	border-top: 1px solid #cdced0;
 }
 
-.timeline-scale.selected {
+#map-types {
+	float: right;
+	width: 100px;
+}
+#map-types div {
+	margin-top: 5px;
+}
+.map-type.selected {
 	background-color: yellow;
+}
+
+#timeline-zoom {
+	float: left;
+	width: 50px;
+}
+#timeline-zoom div {
+	margin-top: 5px;
 }
 
 #entry-page-controls-top, #entry-page-controls-bottom {

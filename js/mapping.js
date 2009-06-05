@@ -18,76 +18,217 @@
 }
 */
 
+// FIXME: make JSLint-happy
+
+var scales = [
+	Timeline.DateTime.HOUR,
+	Timeline.DateTime.DAY,
+	Timeline.DateTime.MONTH,
+	Timeline.DateTime.YEAR,
+	Timeline.DateTime.DECADE,
+	Timeline.DateTime.CENTURY
+];
+
+var zoomSteps = [
+//	{ pixelsPerInterval: 100,  unit: Timeline.DateTime.HOUR },	// hours are weird
+//	{ pixelsPerInterval:  50,  unit: Timeline.DateTime.HOUR },
+	{ pixelsPerInterval: 200,  unit: Timeline.DateTime.DAY },
+	{ pixelsPerInterval: 100,  unit: Timeline.DateTime.DAY },
+	{ pixelsPerInterval:  50,  unit: Timeline.DateTime.DAY },
+	{ pixelsPerInterval: 400,  unit: Timeline.DateTime.MONTH },
+	{ pixelsPerInterval: 200,  unit: Timeline.DateTime.MONTH },
+	{ pixelsPerInterval: 100,  unit: Timeline.DateTime.MONTH },
+	{ pixelsPerInterval:  50,  unit: Timeline.DateTime.MONTH },
+	{ pixelsPerInterval: 200,  unit: Timeline.DateTime.YEAR },
+	{ pixelsPerInterval: 100,  unit: Timeline.DateTime.YEAR },
+	{ pixelsPerInterval:  50,  unit: Timeline.DateTime.YEAR },
+	{ pixelsPerInterval: 200,  unit: Timeline.DateTime.DECADE },
+	{ pixelsPerInterval: 100,  unit: Timeline.DateTime.DECADE },
+	{ pixelsPerInterval:  50,  unit: Timeline.DateTime.DECADE },
+	{ pixelsPerInterval: 200,  unit: Timeline.DateTime.CENTURY },
+	{ pixelsPerInterval: 100,  unit: Timeline.DateTime.CENTURY } // default zoomIndex
+];
+var initZoomIndex = zoomSteps.length - 1;
+
+var mapTypes = [
+	G_NORMAL_MAP,
+	G_SATELLITE_MAP,
+	G_PHYSICAL_MAP,
+];
+
+// FIXME: wrap all this global shit up!
+
+function renderMapTypeList() {
+	var div = document.getElementById("map-types");
+	if (! div) return;
+	div.innerHTML = "Layers:<br>";
+
+	for (var m in mapTypes) {
+		(function(m) {
+			$("<a href='#' class='map-type'>" + mapTypes[m].getName() + "</a>")
+				.click(function() {
+					$(".map-type.selected").removeClass("selected");
+					$(this).addClass("selected");
+					window.tmap.map.setMapType(mapTypes[m]);
+					return false;
+				})
+				.appendTo($("<div>").appendTo(div));
+		})(m);
+	}
+
+	if (mapTypes.length > 3) {
+		$("<input type='checkbox'></input>")
+			.change(function() {
+				var opacity = this.checked ? 0.7 : 1;
+				for (var i = 3; i < mapTypes.length; ++i) {
+					mapTypes[i].getTileLayers()[1].opacity = opacity;
+				}
+				var mapType = tmap.map.getCurrentMapType();
+				tmap.map.setMapType(mapTypes[0]);
+				tmap.map.setMapType(mapType);
+			})
+			.appendTo($("<div>").appendTo(div)).after(" Transparent");
+	}
+}
+
+function renderTimelineZoom() {
+	var div = document.getElementById("timeline-zoom");
+	if (! div) return;
+
+	var zoom = function(zoomIn) {
+		var band = tmap.timeline.getBand(0);
+		var x = ($(tmap.tElement).width() / 2) - band.getViewOffset();
+		band.zoom(zoomIn, x);
+		tmap.timeline.paint();
+	};
+
+	$("<a href='#'>Zoom in</a>")
+		.click(function() {
+			zoom(true);
+			return false;
+		})
+		.appendTo($("<div>").appendTo(div));
+	$("<a href='#'>Zoom out</a>")
+		.click(function() {
+			zoom(false);
+			return false;
+		})
+		.appendTo($("<div>").appendTo(div));
+}
+
+/*
 // timemap time scales
 function renderScales() {
 	var div = document.getElementById("timeline-scales");
 	if (! div) return;
 	div.innerHTML = "Scale<br>";
 
-	var scales = [
-		[ "Seconds / Minutes", Timeline.DateTime.SECOND, Timeline.DateTime.MINUTE ],
-		[ "Minutes / Hours", Timeline.DateTime.MINUTE, Timeline.DateTime.HOUR ],
-		[ "Hours / Days", Timeline.DateTime.HOUR, Timeline.DateTime.DAY ],
-		[ "Days / Months", Timeline.DateTime.DAY, Timeline.DateTime.MONTH ],
-		[ "Months / Years", Timeline.DateTime.MONTH, Timeline.DateTime.YEAR ],
-		[ "Years / Decades", Timeline.DateTime.YEAR, Timeline.DateTime.DECADE ],
-		[ "Decades / Centuries", Timeline.DateTime.DECADE, Timeline.DateTime.CENTURY ]
-	];
-
-	var makeClickFn = function(i) {
-		return function() {
-			$(".timeline-scale.selected").removeClass("selected");
-			$(this).addClass("selected");
-			loadTMap(scales[i][1], scales[i][2]);
-			return false;
-		};
+	var scales = {
+		"Seconds":   TimeMap.intervals.sec,
+		"Minutes":     TimeMap.intervals.min,
+		"Hours":        TimeMap.intervals.hr,
+		"Days":       [ Timeline.DateTime.DAY, Timeline.DateTime.MONTH ],
+		"Months":      TimeMap.intervals.mon,
+		"Years":     TimeMap.intervals.yr,
+		"Decades": TimeMap.intervals.dec
 	};
 
-	for (var i = 0; i < scales.length; ++i) {
-		$("<a href='#' class='timeline-scale'>" + scales[i][0] + "</a>")
-			.click(makeClickFn(i))
-			.appendTo($("<div>").appendTo(div));
+	for (var s in scales) {
+		(function(s) {
+			$("<a href='#' class='timeline-scale'>" + s + "</a>")
+				.click(function() {
+					$(".timeline-scale.selected").removeClass("selected");
+					$(this).addClass("selected");
+					window.tmap.changeTimeIntervals(scales[s]);
+					return false;
+				})
+				.appendTo($("<div>").appendTo(div));
+		})(s);
 	}
 }
+*/
 
-
-function initTMap(units_top, units_bottom) {
-	if (! (units_top  &&  units_bottom)) {
-		units_top = Timeline.DateTime.MONTH;
-		units_bottom = Timeline.DateTime.YEAR;
-	}
-
+function initTMap() {
 	SimileAjax.History.enabled = false;
-	renderScales();
-
-	loadTMap(units_top, units_bottom);
-}
-
-function loadTMap(units_top, units_bottom) {
-	window.tmap = TimeMap.init({
-		mapId: "map", // Id of map div element (required)
-		timelineId: "timeline", // Id of timeline div element (required)
-		datasets: window.mapdata.timemap,
-		bandInfo: [ {
-			width: "50%",
-			intervalUnit: units_top,
-			intervalPixels: 50,
-			showEventText: false,
-			trackHeight: 1.5,
-			trackGap: 0.2
-			}, {
-			width: "50%",
-			intervalUnit: units_bottom,
-			intervalPixels: 100,
-			showEventText: false,
-			trackHeight: 1.5,
-			trackGap: 0.2
-		} ]
-	});
 
 	if (window.mapdata["layers"]) {
 		addLayers();
 	}
+
+	renderTimelineZoom();
+	renderMapTypeList();
+
+	// modify timeline theme
+	var tl_theme = Timeline.ClassicTheme.create();
+	//tl_theme.mouseWheel = "zoom";
+	tl_theme.autoWidth = true;
+
+	// modify preset timemap themes
+	var opts = { eventIconPath: "http://heuristscholar.org/timemap.js/images/" };
+	TimeMapDataset.themes = {
+		'red': TimeMapDataset.redTheme(opts),
+		'blue': TimeMapDataset.blueTheme(opts),
+		'green': TimeMapDataset.greenTheme(opts),
+		'ltblue': TimeMapDataset.ltblueTheme(opts),
+		'orange': TimeMapDataset.orangeTheme(opts),
+		'yellow': TimeMapDataset.yellowTheme(opts),
+		'purple': TimeMapDataset.purpleTheme(opts)
+	};
+
+	var onDataLoaded = function(tm) {
+		// find centre date, choose scale to show entire dataset
+		var d = new Date();
+		var eventSource = tm.timeline.getBand(0).getEventSource()
+		if (eventSource.getCount() > 0) {
+			var start = eventSource.getEarliestDate();
+			var end = eventSource.getLatestDate();
+			d = midPoint(start, end);
+
+			var zoomIndex = findScale(start, end, zoomSteps, ($(tm.tElement).width()));
+
+			var changeScale = function(bandIndex) {
+				var band = tm.timeline.getBand(bandIndex);
+				var interval = zoomSteps[zoomIndex].unit;
+				band._zoomIndex = zoomIndex;
+				band.getEther()._pixelsPerInterval = zoomSteps[zoomIndex].pixelsPerInterval;
+				band.getEther()._interval = Timeline.DateTime.gregorianUnitLengths[interval];
+				band.getEtherPainter()._unit = interval;
+			};
+			changeScale(0);
+			changeScale(1);
+		}
+		tm.timeline.getBand(0).setCenterVisibleDate(d);
+		tm.timeline.layout();
+	};
+
+	window.tmap = TimeMap.init({
+		mapId: "map", // Id of map div element (required)
+		timelineId: "timeline", // Id of timeline div element (required)
+		datasets: window.mapdata.timemap,
+		options: {
+			showMapTypeCtrl: false,
+			mapTypes: mapTypes,
+			mapType: mapTypes.length > 3 ? mapTypes[3] : mapTypes[0],
+			theme: TimeMapDataset.themes.blue
+		},
+		bandInfo: [ {
+			theme: tl_theme,
+			showEventText: true,
+			intervalUnit: zoomSteps[initZoomIndex].unit,
+			intervalPixels: zoomSteps[initZoomIndex].pixelsPerInterval,
+            zoomIndex: initZoomIndex,
+            zoomSteps: zoomSteps,
+			}, {
+			overview: true,
+			theme: tl_theme,
+			showEventText: false,
+			intervalUnit: zoomSteps[initZoomIndex].unit,
+			intervalPixels: zoomSteps[initZoomIndex].pixelsPerInterval,
+			trackHeight: 10,
+			trackGap: 0.2
+		} ],
+		dataLoadedFunction: onDataLoaded
+	});
 }
 
 function tileToQuadKey (x, y, zoom) {
@@ -103,37 +244,63 @@ function tileToQuadKey (x, y, zoom) {
 }
 
 function addLayers() {
-	var map = window.tmap.map;
-
 	for (var i = 0; i < window.mapdata.layers.length; ++i) {
-		var layer = window.mapdata.layers[i];
+		(function(layer) {
 
-		var newLayer = new GTileLayer(new GCopyrightCollection(""),layer.min_zoom, layer.max_zoom);
-// tileToQuadKey only for "virtual earth" maps!
-		newLayer.getTileUrl = function (a,b) {
-			return layer.url + tileToQuadKey(a.x,a.y,b) + (layer.mime_type == "image/png" ? ".png" : ".gif");
-		};
-		newLayer.getCopyright = function(a,b) { return layer.copyright; };
-		newLayer.isPng = function() { return layer.mime_type == "image/png"; };
+			var newLayer = new GTileLayer(new GCopyrightCollection(""),layer.min_zoom, layer.max_zoom);
+			// tileToQuadKey only for "virtual earth" maps!
+			newLayer.getTileUrl = function (a,b) {
+				return layer.url + tileToQuadKey(a.x,a.y,b) + (layer.mime_type == "image/png" ? ".png" : ".gif");
+			};
+			newLayer.getCopyright = function(a,b) { return layer.copyright; };
+			newLayer.isPng = function() { return layer.mime_type == "image/png"; };
+			newLayer.getOpacity = function() { return this.opacity; };
+			newLayer.opacity = 1;
 
-		var newMapType = new GMapType([newLayer], G_NORMAL_MAP.getProjection(), layer.title);
-		map.addMapType(newMapType);
+			var newMapType = new GMapType([G_NORMAL_MAP.getTileLayers()[0], newLayer], G_NORMAL_MAP.getProjection(), layer.title);
 
+			mapTypes.push(newMapType);
 
-		var newLayer2 = new GTileLayer(new GCopyrightCollection(""),layer.min_zoom, layer.max_zoom);
-// tileToQuadKey only for "virtual earth" maps!
-		newLayer2.getTileUrl = function (a,b) {
-			return layer.url + tileToQuadKey(a.x,a.y,b) + (layer.mime_type == "image/png" ? ".png" : ".gif");
-		};
-		newLayer2.getCopyright = function(a,b) { return layer.copyright; };
-		newLayer2.isPng = function() { return layer.mime_type == "image/png"; };
-		newLayer2.getOpacity = function() { return 0.8; };
-
-		var newMapType2 = new GMapType([G_NORMAL_MAP.getTileLayers()[0], newLayer2], G_NORMAL_MAP.getProjection(), layer.title);
-		map.addMapType(newMapType2);
-
-		var control = new GHierarchicalMapTypeControl();
-		control.addRelationship(newMapType, newMapType2, "hybrid");
-		map.addControl(control);
+		})(window.mapdata.layers[i]);
 	}
 }
+
+function midPoint(start, end) {
+	var d, diff;
+	d = new Date();
+	diff = end.getTime() - start.getTime();
+	d.setTime(start.getTime() + diff/2);
+	return d;
+}
+
+function findScale(start, end, scales, timelineWidth) {
+	var diff, span, unitLength, intervals, i;
+	s = new Date();
+	e = new Date();
+	diff = end.getTime() - start.getTime();
+	span = diff * 1.1;	// pad by 5% each end
+	for (i = 0; i < scales.length; ++i) {
+		unitLength = Timeline.DateTime.gregorianUnitLengths[scales[i].unit];
+		intervals = timelineWidth / scales[i].pixelsPerInterval;
+		if (span / unitLength <= intervals) {
+			return i;
+		}
+	}
+	return i;
+}
+/*
+function findScale(start, end, scales, maxIntervals) {
+	var diff, span, unit, i;
+	s = new Date();
+	e = new Date();
+	diff = end.getTime() - start.getTime();
+	span = diff * 1.2;	// pad by 10% each end
+	for (i in scales) {
+		unit = Timeline.DateTime.gregorianUnitLengths[scales[i]];
+		if (span / unit <= maxIntervals) {
+			return scales[i];
+		}
+	}
+	return scales[i];
+}
+*/

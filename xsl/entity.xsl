@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	xmlns:str="http://exslt.org/strings" version="1.0">
+                xmlns:str="http://exslt.org/strings"
+                version="1.0">
 
 	<xsl:template name="entity" match="reference[reftype/@id=151]">
 
@@ -25,22 +26,30 @@
 			</xsl:if>
 
 			<!-- default map -->
-			<xsl:if test="reverse-pointer[reftype/@id=150][detail/@id=230]">
-				<div id="map" style="width: 400px; height: 300px;"></div>
-				<div id="timeline" style="width: 400px; height: 200px;"></div>
-				<div id="timeline-scales"></div>
+				<!-- FIXME: move style to external CSS? -->
+				<style>
+					#map, #map-types {
+						display: none;
+					}
+				</style>
+				<div id="map-types"></div>
+				<div id="map" style="width: 600px; height: 400px;"></div>
+				<div id="timeline-zoom"></div>
+				<div id="timeline" style="width: 550px; height: 200px;"></div>
 				<script>
 					window.mapdata = {
 						timemap: [ {
 							data: {
 								type: "kml",
-								url: "<xsl:value-of select="$urlbase"/>kml/<xsl:value-of select="id"/>.kml"
+								url: "<xsl:value-of select="$urlbase"/>kml/full/<xsl:value-of select="id"/>.kml"
 							}
 						} ]
 					};
 					$(initTMap);
 				</script>
-			</xsl:if>
+				<xsl:if test="reverse-pointer[reftype/@id=150]/detail[@id=230]">
+					<style>#map, #map-types { display: block; }</style>
+				</xsl:if>
 
 			<!-- factoids -->
 			<xsl:if test="reverse-pointer[reftype/@id=150]">
