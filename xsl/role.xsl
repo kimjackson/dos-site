@@ -43,7 +43,7 @@
 							</xsl:choose>
 						</td>
 						<td>
-							<xsl:call-template name="format_date">
+							<xsl:call-template name="formatDate">
 								<xsl:with-param name="date" select="detail[@id=177]"/>
 							</xsl:call-template>
 						</td>
@@ -51,7 +51,7 @@
 							<xsl:if test="detail[@id=178]/year != detail[@id=177]/year or
 										  detail[@id=178]/month != detail[@id=177]/month or
 										  detail[@id=178]/day != detail[@id=177]/day">
-								<xsl:call-template name="format_date">
+								<xsl:call-template name="formatDate">
 									<xsl:with-param name="date" select="detail[@id=178]"/>
 								</xsl:call-template>
 							</xsl:if>
@@ -126,7 +126,7 @@
 						</a>
 					</td>
 					<td>
-						<xsl:call-template name="format_date">
+						<xsl:call-template name="formatDate">
 							<xsl:with-param name="date" select="detail[@id=177]"/>
 						</xsl:call-template>
 					</td>
@@ -134,7 +134,7 @@
 						<xsl:if test="detail[@id=178]/year != detail[@id=177]/year or
 						              detail[@id=178]/month != detail[@id=177]/month or
 						              detail[@id=178]/day != detail[@id=177]/day">
-							<xsl:call-template name="format_date">
+							<xsl:call-template name="formatDate">
 								<xsl:with-param name="date" select="detail[@id=178]"/>
 							</xsl:call-template>
 						</xsl:if>

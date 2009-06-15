@@ -29,7 +29,8 @@
 				<link href="{$urlbase}tei.css" rel="stylesheet" type="text/css" />
 				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;key={$hapi-key}"></script>
 				<script src="{$urlbase}js/search.js"/>
-				<xsl:if test="/export/references/reference[reftype/@id=103 or reftype/@id=151]">
+				<xsl:if test="/export/references/reference[reftype/@id=103]  |
+				              /export/references/reference[reftype/@id=151][reverse-pointer[reftype/@id=150]/detail[@id=230 or @id=177]]">
 					<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
 					<script>
 						Timeline_urlPrefix = "<xsl:value-of select="$urlbase"/>timeline/timeline_js/";
@@ -46,73 +47,89 @@
 
 
 			<body>
-			<div id="container">
-				<div id="header">
-					<div class="logo"><a href="{$urlbase}"><img src="{$urlbase}images/dictionary-of-sydney.jpg" width="148" height="97" /></a></div>
-					<div class="search"><h1>SEARCH</h1></div>
-					<form method="post" onsubmit="top.search(document.getElementById('search').value); return false;">
-						<div class="search-box"><input type="text" name="search" id="search" /></div>
-					</form>
-					<div class="advanced-search">
-						<ul>
-							<li><a title="Coming soon" onclick="alert('Coming soon!'); return false;" href="#">Advanced</a></li>
-						</ul>
-					</div>
-					<a href="#" class="left-arrow"><img src="{$urlbase}images/img-left-arrow.jpg" width="13" height="24" /></a>
-					<a href="#" class="right-arrow"><img src="{$urlbase}images/img-right-arrow.jpg" width="13" height="24" /></a>
+			<div id="header"></div>
+			<div id="subheader">
+				<div id="subheader-content">
+					<a class="browse" href="{$urlbase}"></a>
+					<!--ul id="navigation">
+						<li class="nav-search"><a href="#">search</a></li>
+						<li class="nav-entry"><a href="#">entry</a></li>
+						<li class="nav-contributor"><a href="#">contributor</a></li>
+						<li class="nav-building"><a href="#">building</a></li>
+						<li class="nav-artifact"><a href="#">artifact</a></li>
+						<li class="nav-entry2"><a href="#">entry2</a></li>
+						<li class="nav-video"><a href="#">video</a></li>
+						<li class="nav-term"><a href="#">term</a></li>
+						<li class="nav-structure"><a href="#">structure</a></li>
+						<li class="nav-sound"><a href="#">sound</a></li>
+						<li class="nav-role"><a href="#">role</a></li>
+						<li class="nav-reference"><a href="#">reference</a></li>
+						<li class="nav-place"><a href="#">place</a></li>
+						<li class="nav-people"><a href="#">people</a></li>
+						<li class="nav-map"><a href="#">map</a></li>
+						<li class="nav-organisation"><a href="#">organisation</a></li>
+						<li class="nav-image"><a href="#">image</a></li>
+						<li class="nav-natural"><a href="#">natural</a></li>
+						<li class="nav-link"><a href="#">link</a></li>
+					</ul-->
 				</div>
-				<div id="menu">
-					<ul id="navigation">
-						<li><a href="#">Place</a></li>
-						<li><a href="#">Event</a></li>
-						<li><a href="#">Image</a></li>
-						<li><a href="#">Place</a></li>
-						<li><a href="#">Search</a></li>
-						<li><a href="#">Image</a></li>
-						<li><a href="#">Event</a></li>
-					</ul>
-				</div>
-				<div id="title" class="left-column">
-					<xsl:call-template name="icon">
-						<xsl:with-param name="record" select="export/references/reference"/>
-						<xsl:with-param name="size" select="'big'"/>
-					</xsl:call-template>
-					<xsl:value-of select="export/references/reference[1]/title"/>
-				</div>
-				<div class="right-column">
-					<div style="font-size: 16px; font-weight: bold; position: relative; top: 20px; left: 10px;">Connections</div>
-				</div>
-				<div id="middle">
-					<div class="left-column">
-						<div class="content-top"></div>
-						<div class="content" id="content">
+			</div>
+
+			<div id="middle">
+				<div id="container">
+
+					<div id="left-col">
+						<div id="content">
+
+							<div id="heading">
+								<xsl:call-template name="makeTitleDiv">
+									<xsl:with-param name="record" select="export/references/reference[1]"/>
+								</xsl:call-template>
+							</div>
 
 							<xsl:apply-templates select="export/references/reference"/>
 
 						</div>
-						<div class="content-bottom"></div>
 					</div>
-					<div class="right-column">
+
+					<div id="right-col">
+						<img src="{$urlbase}images/img-logo.jpg" alt="Dictionary of Sydney" width="198" height="125" class="logo"/>
+						<div id="search-bar">
+							<form method="post" onsubmit="top.search(document.getElementById('search').value); return false;">
+								<input type="text" name="search" id="search" value="search..." size="20" maxlength="40"/>
+							</form>
+						</div>
 
 						<xsl:apply-templates select="export/references/reference" mode="sidebar"/>
 
 					</div>
-					<div class="clear"></div>
-				</div>
 
-				<div id="footer">
-					<div class="copyright">&#169; 2009 Dictionary of Sydney</div>
-					<div id="footer-navigation" class="footer-nav">
-						<ul>
-							<li><a href="#">Index</a></li>
-							<li><a href="#">About</a></li>
-							<li><a href="#">Contact</a></li>
-							<li><a href="#">RSS</a></li>
-						</ul>
-					</div>
-				</div>
+					<div class="clearfix"/>
+					<div id="container-bottom"/>
 
+				</div>
 			</div>
+
+			<div id="footer">
+				<div id="footer-content">
+					<ul id="footer-left-col">
+						<li class="no-bullet"><a href="#">Home</a></li>
+						<li><a href="#">About</a></li>
+						<li><a href="#">Copyright</a></li>
+						<li><a href="#">RSS</a></li>
+						<li><a href="#">FAQ</a></li>
+						<li><a href="#">Browse</a></li>
+						<li><a href="#">Contact</a></li>
+						<li><a href="#">Font - +</a></li>
+					</ul>
+					<ul id="footer-right-col">
+						<li class="no-bullet"><a href="#">Print</a></li>
+						<li><a href="#">Contribute</a></li>
+						<li><a href="#">Share</a></li>
+					</ul>
+				</div>
+			</div>
+
 			</body>
 		</html>
 	</xsl:template>
@@ -125,25 +142,21 @@
 		<xsl:param name="label"/>
 		<xsl:param name="items"/>
 
+		<xsl:variable name="type">
+			<xsl:call-template name="getRecordTypeClassName">
+				<xsl:with-param name="record" select="$items[1]"/>
+			</xsl:call-template>
+		</xsl:variable>
+
 		<xsl:if test="count($items) > 0">
-			<div>
-				<div class="sidebar-top"/>
-				<div class="sidebar">
-					<h4>
-						<xsl:call-template name="icon">
-							<xsl:with-param name="record" select="$items[1]"/>
-							<xsl:with-param name="size" select="'small'"/>
-						</xsl:call-template>
-						<xsl:value-of select="$label"/>
-					</h4>
-					<ul>
-						<xsl:apply-templates select="$items[1]">
-							<xsl:with-param name="matches" select="$items"/>
-						</xsl:apply-templates>
-					</ul>
-				</div>
-				<div class="sidebar-bottom"></div>
-			</div>
+			<li class="menu-{$type}">
+				<a class="parent" href="#"><xsl:value-of select="$label"/></a>
+				<ul>
+					<xsl:apply-templates select="$items[1]">
+						<xsl:with-param name="matches" select="$items"/>
+					</xsl:apply-templates>
+				</ul>
+			</li>
 		</xsl:if>
 
 	</xsl:template>

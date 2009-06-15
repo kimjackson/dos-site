@@ -44,6 +44,13 @@ function highlight(root, refs) {
 
 	currentRefs = [];
 	traverse(root, refs, []);
+
+
+	$("a.annotation").filter(".hide").click(function () {
+		highlightAnnotation(this.getAttribute("annotation-id"));
+		return false;
+	});
+
 }
 
 function traverse(elem, refs, address) {
@@ -186,15 +193,11 @@ function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 	if (! myStartingRefs.length  &&  ! myEndingRefs.length) {
 		ref = refs[currentRefs[0]];
 		a = document.createElement("a");
-		a.className = (currentRefs.length > 1 ? "annotation multiple" : "annotation");
-		a.href = "#ref=" + ref.recordID;
+		a.className = "annotation" + (currentRefs.length > 1 ? " multiple" : "") + (ref.hide ? " hide" : "");
+		if (! ref.hide) { a.href = "#ref=" + ref.recordID; }
 		a.title = ref.title;
 		a.name = "ref" + ref.recordID;
 		a.setAttribute("annotation-id", ref.recordID);
-		a.onclick = function () {
-			highlightAnnotation(this.getAttribute("annotation-id"));
-			return false;
-		};
 		a.innerHTML = elem.nodeValue;
 		elem.parentNode.replaceChild(a, elem);
 
@@ -304,15 +307,11 @@ function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 			if (section.refId !== null) {
 				ref = refs[section.refId];
 				a = document.createElement("a");
-				a.className = (section.refCount > 1 ? "annotation multiple" : "annotation");
-				a.href = "#ref=" + ref.recordID;
+				a.className = "annotation" + (currentRefs.length > 1 ? " multiple" : "") + (ref.hide ? " hide" : "");
+				if (! ref.hide) { a.href = "#ref=" + ref.recordID; }
 				a.title = ref.title;
 				a.name = "ref" + ref.recordID;
 				a.setAttribute("annotation-id", ref.recordID);
-				a.onclick = function () {
-					highlightAnnotation(this.getAttribute("annotation-id"));
-					return false;
-				};
 				a.innerHTML = wordString;
 				newElements.push(a);
 
@@ -357,20 +356,31 @@ function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 
 
 function alignImages() {
-	var PAD = 16,	// magic: top margin / padding of annotation thumbnails
-		$annotation,
+	var $annotation,
+		$section,
 		textpos,
 		imgpos,
-		delta;
+		imgbottom,
+		delta,
+		textbottom,
+		$img;
 
-	$(".content-right div.annotation-img").each(function () {
+	$("div.annotation-img").each(function () {
 		$annotation = $("#tei a[annotation-id=" + $(this).attr("annotation-id") + "]");
-		if ($annotation.parent().parent().is(":visible")) {
+		$section = $annotation.parent().parent();
+		if ($section.is(":visible")) {
+			textbottom = $section.offset().top + $section.height();
+
 			$(this).css("margin-top", "0px");
 			$(this).show();
 			textpos = $annotation.offset().top;
-			imgpos = $(this).offset().top;
-			delta = textpos - (imgpos + PAD);
+			$img = $(this).find("img");
+			imgpos = $img.offset().top;
+			imgbottom = imgpos + $img.outerHeight();
+			delta = textpos - (imgpos);
+			if (imgbottom + delta > textbottom) {
+				delta -= (imgbottom + delta - textbottom);
+			}
 			if (delta > 0) {
 				$(this).css("margin-top", delta + "px");
 			}
@@ -382,13 +392,13 @@ function alignImages() {
 
 
 function setupPageControls() {
-	$("a.entry-prev-page-link").click(function () {
+	$("#previous").click(function () {
 		$("#tei div:has(~ div:visible):last").each(function () {
 			showSection($("#tei div").index(this) + 1);
 		});
 		return false;
 	});
-	$("a.entry-next-page-link").click(function () {
+	$("#next").click(function () {
 		$("#tei div:visible ~ div:first").each(function () {
 			showSection($("#tei div").index(this) + 1);
 		});
@@ -420,18 +430,19 @@ YAHOO.util.Event.onDOMReady(function () {
 			// note index begins at 1; "all" means show all sections
 			if (i === "all") {
 				$("#tei div").show();
-				$("a.entry-prev-page-link").add("a.entry-next-page-link").hide();
+				$("#previous").add("#next").hide();
 			} else {
+				i = i - 0;
 				$("#tei div").hide().eq(i - 1).show();
 				if (i === 1) {
-					$("a.entry-prev-page-link").hide();
+					$("#previous").hide();
 				} else {
-					$("a.entry-prev-page-link").show();
+					$("#previous").show();
 				}
 				if (i === $("#tei div").length) {
-					$("a.entry-next-page-link").hide();
+					$("#next").hide();
 				} else {
-					$("a.entry-next-page-link").show();
+					$("#next").show();
 				}
 			}
 			alignImages();

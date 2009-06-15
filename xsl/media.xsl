@@ -3,17 +3,7 @@
 
 	<xsl:template name="media" match="reference[reftype/@id=74]">
 
-		<div>
-
-			<!-- dc.title -->
-			<h1>
-				<xsl:value-of select="detail[@id=160]"/>
-			</h1>
-
-			<!-- dc.type -->
-			<p>
-				<xsl:value-of select="detail[@id=289]"/>
-			</p>
+		<div id="resource">
 
 			<!-- dc.description -->
 			<xsl:if test="detail[@id=303]">
@@ -22,38 +12,50 @@
 				</p>
 			</xsl:if>
 
-			<!-- dc.coverage.start - dc.coverage.finish -->
+			<!-- dc.coverage.start - dc.coverage.finish>
 			<xsl:if test="detail[@id=177]">
 				<p>
 					<xsl:value-of select="detail[@id=177]"/>
 					<xsl:if test="detail[@id=178]"> - <xsl:value-of select="detail[@id=178]"/></xsl:if>
 				</p>
-			</xsl:if>
+			</xsl:if-->
 
 			<xsl:if test="starts-with(detail[@id=289], 'image')">
 				<img>
 					<xsl:attribute name="src">
-						<xsl:call-template name="file_url">
+						<xsl:call-template name="getFileURL">
 							<xsl:with-param name="file" select="detail[@id=221]"/>
-							<xsl:with-param name="size" select="'medium'"/>
+							<xsl:with-param name="size" select="'large'"/>
 						</xsl:call-template>
 					</xsl:attribute>
 				</img>
 
 			</xsl:if>
 
-			<xsl:for-each select="pointer[@id=538]">
-				<p>
-				<xsl:choose>
-					<xsl:when test="detail[@id=569]">
-						<xsl:value-of select="detail[@id=569]"/>
-					</xsl:when>
-					<xsl:otherwise>
-						Contributed by: <xsl:value-of select="detail[@id=160]"/>
-					</xsl:otherwise>
-				</xsl:choose>
-				</p>
-			</xsl:for-each>
+			<p>
+				<xsl:call-template name="makeMediaAttributionStatement">
+					<xsl:with-param name="record" select="."/>
+				</xsl:call-template>
+			</p>
+
+			<xsl:choose>
+				<xsl:when test="detail[@id=590] = 'CC-Generic'">
+					<p>
+						<a rel="license" href="http://creativecommons.org/licenses/by/2.5/au/">
+							<img alt="Creative Commons License" src="http://i.creativecommons.org/l/by/2.5/au/80x15.png"/>
+						</a>
+					</p>
+				</xsl:when>
+				<xsl:when test="detail[@id=590] = 'CC-SA'">
+					<p>
+						<a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/au/">
+							<img alt="Creative Commons License" src="http://i.creativecommons.org/l/by-sa/2.5/au/80x15.png"/>
+						</a>
+					</p>
+				</xsl:when>
+			</xsl:choose>
+
+			<p>View large version...</p>
 
 		</div>
 
@@ -61,7 +63,16 @@
 
 
 	<xsl:template match="reference[reftype/@id=74]" mode="sidebar">
-		<xsl:call-template name="related_entities_by_type"/>
+		<div id="connections">
+			<h3>Connections</h3>
+			<ul id="menu">
+				<xsl:call-template name="related_entities_by_type"/>
+				<xsl:call-template name="related_items">
+					<xsl:with-param name="label">Mentioned in</xsl:with-param>
+					<xsl:with-param name="items" select="reverse-pointer[@id=199][reftype/@id=99]"/>
+				</xsl:call-template>
+			</ul>
+		</div>
 	</xsl:template>
 
 </xsl:stylesheet>

@@ -9,18 +9,21 @@
 	</xsl:template>
 
 
-	<xsl:template match="//div[@id='entry-index']">
+	<xsl:template match="//div[@id='chapters']">
 		<xsl:copy>
 			<xsl:copy-of select="@*|node()"/>
-			<xsl:for-each select="//div[@id='tei']/div">
-				<div>
-					<a href="#" onclick="showSection({position()}); return false;"><xsl:value-of select="h2"/></a>
-				</div>
-			</xsl:for-each>
-			<div>
-				<br/>
-				<a href="#" onclick="showSection('all'); return false;"><xsl:value-of select="h2"/>Show all</a>
-			</div>
+			<ul>
+				<xsl:for-each select="//div[@id='tei']/div">
+					<li>
+						<a href="#" onclick="showSection({position()}); return false;"><xsl:value-of select="h2"/></a>
+					</li>
+				</xsl:for-each>
+			</ul>
+			<ul class="extra">
+				<li>
+					<a href="#" onclick="showSection('all'); return false;"><xsl:value-of select="h2"/>Show all</a>
+				</li>
+			</ul>
 		</xsl:copy>
 	</xsl:template>
 

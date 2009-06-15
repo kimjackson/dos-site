@@ -13,49 +13,31 @@
 		<iframe id="yui-history-iframe" src="{$urlbase}images/logo.png"></iframe>
 		<input id="yui-history-field" type="hidden"></input>
 
-		<div>
-			<div class="content-left">
-				<!-- dc.contributor, dc.date -->
-				<div class="content-byline">
-					by <xsl:value-of select="pointer[@id=538]/detail[@id=160]"/>, <xsl:value-of select="detail[@id=166]/year"/>
-				</div>
+		<div id="content-left-col">
 
-				<div class="clear"/>
+			<div id="tei">
+				<xi:include>
+					<xsl:attribute name="href">
+						<xsl:call-template name="getFileURL">
+							<xsl:with-param name="file" select="detail[@id=231 or @id=221]"/>
+						</xsl:call-template>
+					</xsl:attribute>
+				</xi:include>
+			</div>
 
-				<div id="entry-page-controls-top">
-					<a class="entry-prev-page-link" href="#">previous</a>
-					<xsl:text> </xsl:text>
-					<a class="entry-next-page-link" href="#">next</a>
-				</div>
-				<xsl:choose>
-					<!-- detail 231 is associated WordML file -->
-					<xsl:when test="detail[@id=231]">
-						<div id="tei" style="padding-right: 10px">
-							<xi:include href="{detail[@id=231]/file_fetch_url}"/>
-						</div>
-					</xsl:when>
-					<!-- detail 221 is associated TEI file -->
-					<xsl:when test="detail[@id=221]">
-						<div id="tei" style="padding-right: 10px">
-							<xi:include href="{detail[@id=221]/file_fetch_url}"/>
-						</div>
-					</xsl:when>
-				</xsl:choose>
-				<div id="entry-page-controls-bottom">
-					<a class="entry-prev-page-link" href="#">previous</a>
-					<xsl:text> </xsl:text>
-					<a class="entry-next-page-link" href="#">next</a>
-				</div>
+			<div id="pagination">
+				<a id="previous" href="#">&lt; Previous</a>
+				<a id="next" href="#">Next &gt;</a>
 			</div>
-			
-			<div class="content-right">
-				<xsl:apply-templates select="reverse-pointer[@id=322][reftype/@id=99][1]">
-					<xsl:with-param name="matches" select="reverse-pointer[@id=322][reftype/@id=99]"/>
-				</xsl:apply-templates>
-			</div>
-			
-			<div class="clear"/>
 		</div>
+
+		<div id="content-right-col">
+			<xsl:apply-templates select="reverse-pointer[@id=322][reftype/@id=99][1]">
+				<xsl:with-param name="matches" select="reverse-pointer[@id=322][reftype/@id=99]"/>
+			</xsl:apply-templates>
+		</div>
+
+		<div class="clearfix"/>
 
 	</xsl:template>
 
@@ -86,7 +68,7 @@
 							<a href="{pointer[@id=199]/id}">
 								<img>
 									<xsl:attribute name="src">
-										<xsl:call-template name="file_url">
+										<xsl:call-template name="getFileURL">
 											<xsl:with-param name="file" select="pointer[@id=199]/detail[@id=221]"/>
 											<xsl:with-param name="size" select="'small'"/>
 										</xsl:call-template>
@@ -94,20 +76,17 @@
 								</img>
 							</a>
 						</div>
+						<xsl:call-template name="add_ref">
+							<xsl:with-param name="ref" select="."/>
+							<xsl:with-param name="hide">true</xsl:with-param>
+						</xsl:call-template>
 					</xsl:when>
 					<xsl:otherwise>
-						<!--p>
-							<a href="#ref{id}" annotation-id="{id}" onclick="highlightAnnotation({id});">
-								<xsl:value-of select="title"/>
-							</a>
-						</p-->
+						<xsl:call-template name="add_ref">
+							<xsl:with-param name="ref" select="."/>
+						</xsl:call-template>
 					</xsl:otherwise>
 				</xsl:choose>
-
-				<xsl:call-template name="add_ref">
-					<xsl:with-param name="ref" select="."/>
-				</xsl:call-template>
-
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
@@ -123,24 +102,28 @@
 
 	<xsl:template name="add_ref">
 		<xsl:param name="ref"/>
+		<xsl:param name="hide"/>
 		<script>
 			if (window["refs"]) {
 				refs.push( {
-				startElems : [ <xsl:value-of select="detail[@id=539]"/> ],
-				endElems : [ <xsl:value-of select="detail[@id=540]"/> ],
-				startWord :
-					<xsl:choose>
-						<xsl:when test="detail[@id=329]"><xsl:value-of select="detail[@id=329]"/></xsl:when>
-						<xsl:otherwise>null</xsl:otherwise>
-					</xsl:choose>,
-				endWord :
-					<xsl:choose>
-						<xsl:when test="detail[@id=330]"><xsl:value-of select="detail[@id=330]"/></xsl:when>
-						<xsl:otherwise>null</xsl:otherwise>
-					</xsl:choose>,
-				href : "../<xsl:value-of select="id"/>/#ref1",
-				title : "<xsl:call-template name="cleanQuote"><xsl:with-param name="string" select="detail[@id=160]"/></xsl:call-template>",
-				recordID : "<xsl:value-of select="id"/>"
+					startElems : [ <xsl:value-of select="detail[@id=539]"/> ],
+					endElems : [ <xsl:value-of select="detail[@id=540]"/> ],
+					startWord :
+						<xsl:choose>
+							<xsl:when test="detail[@id=329]"><xsl:value-of select="detail[@id=329]"/></xsl:when>
+							<xsl:otherwise>null</xsl:otherwise>
+						</xsl:choose>,
+					endWord :
+						<xsl:choose>
+							<xsl:when test="detail[@id=330]"><xsl:value-of select="detail[@id=330]"/></xsl:when>
+							<xsl:otherwise>null</xsl:otherwise>
+						</xsl:choose>,
+					<xsl:if test="$hide='true'">
+					hide : true,
+					</xsl:if>
+					href : "../<xsl:value-of select="id"/>/#ref1",
+					title : "<xsl:call-template name="cleanQuote"><xsl:with-param name="string" select="detail[@id=160]"/></xsl:call-template>",
+					recordID : "<xsl:value-of select="id"/>"
 				} );
 			}
 		</script>
@@ -159,24 +142,47 @@
 
 	<xsl:template match="reference[reftype/@id=98]" mode="sidebar">
 
-		<!-- generate document index here -->
-		<div>
-			<div class="sidebar-top"></div>
-			<div class="sidebar" id="entry-index">
-				<h4>Index</h4>
-			</div>
-			<div class="sidebar-bottom"></div>
+		<div id="chapters">
+			<h3>Chapters</h3>
+			<!-- document index generated here -->
 		</div>
 
-		<xsl:call-template name="related_entities_by_type"/>
-		<xsl:call-template name="related_items">
-			<xsl:with-param name="label">Related Terms</xsl:with-param>
-			<xsl:with-param name="items" select="related[reftype/@id=152]"/>
-		</xsl:call-template>
-		<xsl:call-template name="related_items">
-			<xsl:with-param name="label">Referenced in</xsl:with-param>
-			<xsl:with-param name="items" select="reverse-pointer[@id=199][reftype/@id=99]"/>
-		</xsl:call-template>
+		<div id="connections">
+			<h3>Connections</h3>
+			<ul id="menu">
+				<xsl:call-template name="related_entities_by_type"/>
+
+				<!-- FIXME factor out -->
+				<xsl:call-template name="related_items">
+					<xsl:with-param name="label">Pictures</xsl:with-param>
+					<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=74][starts-with(detail[@id=289], 'image')]"/>
+				</xsl:call-template>
+				<xsl:call-template name="related_items">
+					<xsl:with-param name="label">Sound</xsl:with-param>
+					<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=74][starts-with(detail[@id=289], 'audio')]"/>
+				</xsl:call-template>
+				<xsl:call-template name="related_items">
+					<xsl:with-param name="label">Video</xsl:with-param>
+					<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=74][starts-with(detail[@id=289], 'video')]"/>
+				</xsl:call-template>
+				<xsl:call-template name="related_items">
+					<xsl:with-param name="label">Maps</xsl:with-param>
+					<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=103]"/>
+				</xsl:call-template>
+				<xsl:call-template name="related_items">
+					<xsl:with-param name="label">Subjects</xsl:with-param>
+					<xsl:with-param name="items" select="related[reftype/@id=152]"/>
+				</xsl:call-template>
+				<xsl:call-template name="related_items">
+					<xsl:with-param name="label">Mentioned in</xsl:with-param>
+					<xsl:with-param name="items" select="reverse-pointer[@id=199][reftype/@id=99]"/>
+				</xsl:call-template>
+				<xsl:call-template name="related_items">
+					<xsl:with-param name="label">External links</xsl:with-param>
+					<xsl:with-param name="items" select="related[@type='hasExternalLink'][reftype/@id=1]"/>
+				</xsl:call-template>
+			</ul>
+		</div>
 
 	</xsl:template>
 

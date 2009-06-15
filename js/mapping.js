@@ -148,7 +148,7 @@ function renderScales() {
 }
 */
 
-function initTMap() {
+function initTMap(mini) {
 	SimileAjax.History.enabled = false;
 
 	if (window.mapdata["layers"]) {
@@ -206,6 +206,7 @@ function initTMap() {
 		timelineId: "timeline", // Id of timeline div element (required)
 		datasets: window.mapdata.timemap,
 		options: {
+			showMapCtrl: ! mini,
 			showMapTypeCtrl: false,
 			mapTypes: mapTypes,
 			mapType: mapTypes.length > 3 ? mapTypes[3] : mapTypes[0],
@@ -229,6 +230,10 @@ function initTMap() {
 		} ],
 		dataLoadedFunction: onDataLoaded
 	});
+
+	if (mini) {
+		tmap.map.addControl(new GSmallMapControl());
+	}
 }
 
 function tileToQuadKey (x, y, zoom) {

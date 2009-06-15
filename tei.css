@@ -21,3 +21,7 @@ a.annotation.highlighted {
 	background-color: #ffbb00;
 }
 
+a.annotation.hide {
+	background-color: #ffffff;
+}
+
