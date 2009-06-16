@@ -138,6 +138,38 @@
 	<xsl:template match="reference" mode="sidebar"/>
 
 
+	<xsl:template name="connections">
+		<xsl:call-template name="related_items">
+			<xsl:with-param name="label">Pictures</xsl:with-param>
+			<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=74][starts-with(detail[@id=289], 'image')]"/>
+		</xsl:call-template>
+		<xsl:call-template name="related_items">
+			<xsl:with-param name="label">Sound</xsl:with-param>
+			<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=74][starts-with(detail[@id=289], 'audio')]"/>
+		</xsl:call-template>
+		<xsl:call-template name="related_items">
+			<xsl:with-param name="label">Video</xsl:with-param>
+			<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=74][starts-with(detail[@id=289], 'video')]"/>
+		</xsl:call-template>
+		<xsl:call-template name="related_items">
+			<xsl:with-param name="label">Maps</xsl:with-param>
+			<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=103]"/>
+		</xsl:call-template>
+		<xsl:call-template name="related_items">
+			<xsl:with-param name="label">Subjects</xsl:with-param>
+			<xsl:with-param name="items" select="related[reftype/@id=152]"/>
+		</xsl:call-template>
+		<xsl:call-template name="related_items">
+			<xsl:with-param name="label">Mentioned in</xsl:with-param>
+			<xsl:with-param name="items" select="reverse-pointer[@id=199][reftype/@id=99]"/>
+		</xsl:call-template>
+		<xsl:call-template name="related_items">
+			<xsl:with-param name="label">External links</xsl:with-param>
+			<xsl:with-param name="items" select="related[@type='hasExternalLink'][reftype/@id=1]"/>
+		</xsl:call-template>
+	</xsl:template>
+
+
 	<xsl:template name="related_items">
 		<xsl:param name="label"/>
 		<xsl:param name="items"/>
@@ -164,10 +196,7 @@
 
 
 	<xsl:template match="related | pointer | reverse-pointer">
-		<!-- this is where the display work is done summarising the related items of various types - pictures, events etc -->
-		<!-- reftype-specific templates take precedence over this one -->
 		<xsl:param name="matches"/>
-
 		<!-- trickiness!
 		     First off, this template will catch a single related (/ pointer / reverse-pointer) record,
 		     with the full list as a parameter ("matches").  This gives the template a chance to sort the records

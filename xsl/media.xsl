@@ -67,10 +67,7 @@
 			<h3>Connections</h3>
 			<ul id="menu">
 				<xsl:call-template name="related_entities_by_type"/>
-				<xsl:call-template name="related_items">
-					<xsl:with-param name="label">Mentioned in</xsl:with-param>
-					<xsl:with-param name="items" select="reverse-pointer[@id=199][reftype/@id=99]"/>
-				</xsl:call-template>
+				<xsl:call-template name="connections"/>
 			</ul>
 		</div>
 	</xsl:template>

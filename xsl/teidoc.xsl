@@ -63,23 +63,25 @@
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:choose>
-					<xsl:when test="detail[@id=359]='Annotation Multimedia'  and  pointer[@id=199][reftype/@id=74][starts-with(detail[@id=289], 'image')]">
-						<div class="annotation-img" annotation-id="{id}">
-							<a href="{pointer[@id=199]/id}">
-								<img>
-									<xsl:attribute name="src">
-										<xsl:call-template name="getFileURL">
-											<xsl:with-param name="file" select="pointer[@id=199]/detail[@id=221]"/>
-											<xsl:with-param name="size" select="'small'"/>
-										</xsl:call-template>
-									</xsl:attribute>
-								</img>
-							</a>
-						</div>
-						<xsl:call-template name="add_ref">
-							<xsl:with-param name="ref" select="."/>
-							<xsl:with-param name="hide">true</xsl:with-param>
-						</xsl:call-template>
+					<xsl:when test="detail[@id=359]='Annotation Multimedia'">
+						<xsl:if test="pointer[@id=199][reftype/@id=74]">
+							<div class="annotation-img" annotation-id="{id}">
+								<a href="{pointer[@id=199]/id}">
+									<img>
+										<xsl:attribute name="src">
+											<xsl:call-template name="getFileURL">
+												<xsl:with-param name="file" select="pointer[@id=199]/detail[@id=221]"/>
+												<xsl:with-param name="size" select="'small'"/>
+											</xsl:call-template>
+										</xsl:attribute>
+									</img>
+								</a>
+							</div>
+							<xsl:call-template name="add_ref">
+								<xsl:with-param name="ref" select="."/>
+								<xsl:with-param name="hide">true</xsl:with-param>
+							</xsl:call-template>
+						</xsl:if>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:call-template name="add_ref">
@@ -151,36 +153,7 @@
 			<h3>Connections</h3>
 			<ul id="menu">
 				<xsl:call-template name="related_entities_by_type"/>
-
-				<!-- FIXME factor out -->
-				<xsl:call-template name="related_items">
-					<xsl:with-param name="label">Pictures</xsl:with-param>
-					<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=74][starts-with(detail[@id=289], 'image')]"/>
-				</xsl:call-template>
-				<xsl:call-template name="related_items">
-					<xsl:with-param name="label">Sound</xsl:with-param>
-					<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=74][starts-with(detail[@id=289], 'audio')]"/>
-				</xsl:call-template>
-				<xsl:call-template name="related_items">
-					<xsl:with-param name="label">Video</xsl:with-param>
-					<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=74][starts-with(detail[@id=289], 'video')]"/>
-				</xsl:call-template>
-				<xsl:call-template name="related_items">
-					<xsl:with-param name="label">Maps</xsl:with-param>
-					<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=103]"/>
-				</xsl:call-template>
-				<xsl:call-template name="related_items">
-					<xsl:with-param name="label">Subjects</xsl:with-param>
-					<xsl:with-param name="items" select="related[reftype/@id=152]"/>
-				</xsl:call-template>
-				<xsl:call-template name="related_items">
-					<xsl:with-param name="label">Mentioned in</xsl:with-param>
-					<xsl:with-param name="items" select="reverse-pointer[@id=199][reftype/@id=99]"/>
-				</xsl:call-template>
-				<xsl:call-template name="related_items">
-					<xsl:with-param name="label">External links</xsl:with-param>
-					<xsl:with-param name="items" select="related[@type='hasExternalLink'][reftype/@id=1]"/>
-				</xsl:call-template>
+				<xsl:call-template name="connections"/>
 			</ul>
 		</div>
 
