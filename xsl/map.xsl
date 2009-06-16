@@ -40,7 +40,7 @@
 						<source>
 							<title><xsl:value-of select="detail[@id=160]"/></title>
 							<!--url><xsl:value-of select="$urlbase"/>kml/summary/<xsl:value-of select="id"/>.kml</url-->
-							<url>../kml/summary/<xsl:value-of select="id"/></url>
+							<url>../kml/summary/rename/<xsl:value-of select="id"/></url>
 						</source>
 					</xsl:for-each>
 				</xsl:variable>

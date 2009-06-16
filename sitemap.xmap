@@ -21,9 +21,6 @@
   <map:view from-label="html" name="html">
    <map:serialize type="xml"/>
   </map:view>
-  <map:view from-label="rawkml" name="rawkml">
-   <map:serialize type="xml"/>
-  </map:view>
  </map:views>
 
  <map:pipelines>
@@ -67,6 +64,24 @@
 
    <map:match pattern="kml/summary/*">
     <map:generate src="http://dos-sandbox.heuristscholar.org/heurist/mapper/googleearth.kml.php?multilevel=false&amp;w=all&amp;q=linkto:{1}+type:150+f:526=TimePlace"/>
+    <map:serialize type="xml"/>
+   </map:match>
+
+   <map:match pattern="kml/full/rename/*">
+    <map:aggregate element="data">
+	 <map:part src="cocoon:/kml/full/{1}"/>
+	 <map:part src="cocoon:/item/{1}?cocoon-view=raw"/>
+    </map:aggregate>
+    <map:transform src="xsl/kml_rename_full.xsl"/>
+    <map:serialize type="xml"/>
+   </map:match>
+
+   <map:match pattern="kml/summary/rename/*">
+    <map:aggregate element="data">
+	 <map:part src="cocoon:/kml/summary/{1}"/>
+	 <map:part src="cocoon:/item/{1}?cocoon-view=raw"/>
+    </map:aggregate>
+    <map:transform src="xsl/kml_rename_summary.xsl"/>
     <map:serialize type="xml"/>
    </map:match>
 
