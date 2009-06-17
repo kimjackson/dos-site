@@ -20,22 +20,22 @@
 
 	<xsl:template name="formatDate">
 		<xsl:param name="date"/>
-		<!--xsl:if test="$date/day"><xsl:value-of select="$date/day"/> / </xsl:if>
-		<xsl:if test="$date/month"><xsl:value-of select="$date/month"/> / </xsl:if>
-		<xsl:if test="$date/year"><xsl:value-of select="$date/year"/></xsl:if-->
 		<xsl:if test="$date/day">
-			<xsl:if test="$date/day &lt; 10">
-				<xsl:text>0</xsl:text>
-			</xsl:if>
 			<xsl:value-of select="$date/day"/>
-			<xsl:text>-</xsl:text>
-		</xsl:if>
-		<xsl:if test="$date/month">
-			<xsl:if test="$date/month &lt; 10">
-				<xsl:text>0</xsl:text>
-			</xsl:if>
-			<xsl:value-of select="$date/month"/>
-			<xsl:text>-</xsl:text>
+			<xsl:choose>
+				<xsl:when test="$date/month = 1"> Jan </xsl:when>
+				<xsl:when test="$date/month = 2"> Feb </xsl:when>
+				<xsl:when test="$date/month = 3"> Mar </xsl:when>
+				<xsl:when test="$date/month = 4"> Apr </xsl:when>
+				<xsl:when test="$date/month = 5"> May </xsl:when>
+				<xsl:when test="$date/month = 6"> Jun </xsl:when>
+				<xsl:when test="$date/month = 7"> Jul </xsl:when>
+				<xsl:when test="$date/month = 8"> Aug </xsl:when>
+				<xsl:when test="$date/month = 9"> Sep </xsl:when>
+				<xsl:when test="$date/month = 10"> Oct </xsl:when>
+				<xsl:when test="$date/month = 11"> Nov </xsl:when>
+				<xsl:when test="$date/month = 12"> Dec </xsl:when>
+			</xsl:choose>
 		</xsl:if>
 		<xsl:if test="$date/year">
 			<xsl:value-of select="$date/year"/>

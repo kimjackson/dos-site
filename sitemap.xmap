@@ -72,7 +72,7 @@
 	 <map:part src="cocoon:/kml/full/{1}"/>
 	 <map:part src="cocoon:/item/{1}?cocoon-view=raw"/>
     </map:aggregate>
-    <map:transform src="xsl/kml_rename_full.xsl"/>
+    <map:transform src="xsl/kml_rename.xsl"/>
     <map:serialize type="xml"/>
    </map:match>
 
@@ -81,7 +81,7 @@
 	 <map:part src="cocoon:/kml/summary/{1}"/>
 	 <map:part src="cocoon:/item/{1}?cocoon-view=raw"/>
     </map:aggregate>
-    <map:transform src="xsl/kml_rename_summary.xsl"/>
+    <map:transform src="xsl/kml_rename.xsl"/>
     <map:serialize type="xml"/>
    </map:match>
 
