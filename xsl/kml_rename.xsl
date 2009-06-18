@@ -3,6 +3,9 @@
                 xmlns:kml="http://www.opengis.net/kml/2.2"
                 version="1.0">
 
+	<xsl:include href="factoid.xsl"/>
+	<xsl:include href="util.xsl"/>
+
 	<xsl:variable name="record" select="/data/export/references/reference"/>
 	<xsl:variable name="factoids" select="$record/reverse-pointer"/>
 
@@ -33,7 +36,7 @@
 					<xsl:value-of select="$record/detail[@id=160]"/>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:call-template name="getRoleName">
+					<xsl:call-template name="getKMLRoleName">
 						<xsl:with-param name="factoid" select="$factoid"/>
 					</xsl:call-template>
 					<xsl:call-template name="getTarget">
@@ -46,21 +49,14 @@
 	</xsl:template>
 
 
-	<xsl:template name="getRoleName">
+	<xsl:template name="getKMLRoleName">
 		<xsl:param name="factoid"/>
-		<xsl:variable name="role" select="$factoid/pointer[@id=529]"/>
 
-		<xsl:choose>
-			<xsl:when test="$factoid/@id = 527  and  $role/detail[@id=174]">
-				<!-- dc.title.inverse -->
-				<xsl:value-of select="$role/detail[@id=174]"/>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:value-of select="$role/detail[@id=160]"/>
-			</xsl:otherwise>
-		</xsl:choose>
+		<xsl:call-template name="getRoleName">
+			<xsl:with-param name="factoid" select="$factoid"/>
+		</xsl:call-template>
 
-		<xsl:if test="$role/detail[@id=591] = 'Name'"> name</xsl:if>
+		<xsl:if test="$factoid/pointer[@id=529]/detail[@id=591] = 'Name'"> name</xsl:if>
 
 	</xsl:template>
 

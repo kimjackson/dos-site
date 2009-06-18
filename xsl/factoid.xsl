@@ -3,26 +3,32 @@
 	xmlns:str="http://exslt.org/strings" version="1.0">
 
 	<xsl:template name="factoids">
+		<xsl:if test="count(reverse-pointer[reftype/@id=150][detail[@id=526]='Type']) > 1">
 			<xsl:call-template name="factoidGroup">
-				<xsl:with-param name="heading">Names</xsl:with-param>
-				<xsl:with-param name="factoids" select="reverse-pointer[reftype/@id=150][detail[@id=526]='Name']"/>
+				<xsl:with-param name="heading">Types</xsl:with-param>
+				<xsl:with-param name="factoids" select="reverse-pointer[reftype/@id=150][detail[@id=526]='Type']"/>
 			</xsl:call-template>
-			<xsl:call-template name="factoidGroup">
-				<xsl:with-param name="heading">Milestones</xsl:with-param>
-				<xsl:with-param name="factoids" select="reverse-pointer[reftype/@id=150][detail[@id=526]='Milestone']"/>
-			</xsl:call-template>
-			<xsl:call-template name="factoidGroup">
-				<xsl:with-param name="heading">Relationships</xsl:with-param>
-				<xsl:with-param name="factoids" select="reverse-pointer[reftype/@id=150][detail[@id=526]='Relationship']"/>
-			</xsl:call-template>
-			<xsl:call-template name="factoidGroup">
-				<xsl:with-param name="heading">Occupations</xsl:with-param>
-				<xsl:with-param name="factoids" select="reverse-pointer[reftype/@id=150][detail[@id=526]='Occupation']"/>
-			</xsl:call-template>
-			<xsl:call-template name="factoidGroup">
-				<xsl:with-param name="heading">Positions</xsl:with-param>
-				<xsl:with-param name="factoids" select="reverse-pointer[reftype/@id=150][detail[@id=526]='Position']"/>
-			</xsl:call-template>
+		</xsl:if>
+		<xsl:call-template name="factoidGroup">
+			<xsl:with-param name="heading">Names</xsl:with-param>
+			<xsl:with-param name="factoids" select="reverse-pointer[reftype/@id=150][detail[@id=526]='Name']"/>
+		</xsl:call-template>
+		<xsl:call-template name="factoidGroup">
+			<xsl:with-param name="heading">Milestones</xsl:with-param>
+			<xsl:with-param name="factoids" select="reverse-pointer[reftype/@id=150][detail[@id=526]='Milestone']"/>
+		</xsl:call-template>
+		<xsl:call-template name="factoidGroup">
+			<xsl:with-param name="heading">Relationships</xsl:with-param>
+			<xsl:with-param name="factoids" select="reverse-pointer[reftype/@id=150][detail[@id=526]='Relationship']"/>
+		</xsl:call-template>
+		<xsl:call-template name="factoidGroup">
+			<xsl:with-param name="heading">Occupations</xsl:with-param>
+			<xsl:with-param name="factoids" select="reverse-pointer[reftype/@id=150][detail[@id=526]='Occupation']"/>
+		</xsl:call-template>
+		<xsl:call-template name="factoidGroup">
+			<xsl:with-param name="heading">Positions</xsl:with-param>
+			<xsl:with-param name="factoids" select="reverse-pointer[reftype/@id=150][detail[@id=526]='Position']"/>
+		</xsl:call-template>
 	</xsl:template>
 
 
@@ -53,35 +59,49 @@
 
 
 	<xsl:template match="reverse-pointer[reftype/@id=150]">
-		<div class="entity-information-col01">
-			<xsl:choose>
-				<xsl:when test="detail[@id=526]='Name' or detail[@id=526]='Milestone'">
-					<xsl:call-template name="getRoleName"/>
-				</xsl:when>
-				<xsl:otherwise>
-					<a href="{pointer[@id=529]/id}">
-						<xsl:call-template name="getRoleName"/>
-					</a>
-				</xsl:otherwise>
-			</xsl:choose>
-		</div>
-		<div class="entity-information-col02">
-			<xsl:choose>
-				<xsl:when test="@id=527 and pointer[@id=528]">
-					<a href="{pointer[@id=528]/id}">
-						<xsl:value-of select="pointer[@id=528]/detail[@id=160]"/>
-					</a>
-				</xsl:when>
-				<xsl:when test="@id=528 and pointer[@id=527]">
-					<a href="{pointer[@id=527]/id}">
-						<xsl:value-of select="pointer[@id=527]/detail[@id=160]"/>
-					</a>
-				</xsl:when>
-				<xsl:when test="@id=528 and detail[@id=179]">
-					<xsl:value-of select="detail[@id=179]"/>
-				</xsl:when>
-			</xsl:choose>
-		</div>
+		<xsl:choose>
+			<xsl:when test="pointer[@id=529]/detail[@id=160] = 'Generic'">
+				<div class="entity-information-col01-02">
+					<xsl:value-of select="detail[@id=160]"/>
+				</div>
+			</xsl:when>
+			<xsl:otherwise>
+				<div class="entity-information-col01">
+					<xsl:choose>
+						<xsl:when test="detail[@id=526]='Name' or detail[@id=526]='Milestone'">
+							<xsl:call-template name="getRoleName">
+								<xsl:with-param name="factoid" select="."/>
+							</xsl:call-template>
+						</xsl:when>
+						<xsl:otherwise>
+							<a href="{pointer[@id=529]/id}">
+								<xsl:call-template name="getRoleName">
+									<xsl:with-param name="factoid" select="."/>
+								</xsl:call-template>
+							</a>
+						</xsl:otherwise>
+					</xsl:choose>
+				</div>
+				<div class="entity-information-col02">
+					<xsl:choose>
+						<xsl:when test="@id=527 and pointer[@id=528]">
+							<a href="{pointer[@id=528]/id}">
+								<xsl:value-of select="pointer[@id=528]/detail[@id=160]"/>
+							</a>
+						</xsl:when>
+						<xsl:when test="@id=528 and pointer[@id=527]">
+							<a href="{pointer[@id=527]/id}">
+								<xsl:value-of select="pointer[@id=527]/detail[@id=160]"/>
+							</a>
+						</xsl:when>
+						<xsl:when test="@id=528 and detail[@id=179]">
+							<xsl:value-of select="detail[@id=179]"/>
+						</xsl:when>
+					</xsl:choose>
+				</div>
+			</xsl:otherwise>
+		</xsl:choose>
+
 		<div class="entity-information-col03">
 			<xsl:call-template name="formatDate">
 				<xsl:with-param name="date" select="detail[@id=177]"/>
@@ -103,13 +123,19 @@
 
 
 	<xsl:template name="getRoleName">
+		<xsl:param name="factoid"/>
+		<xsl:variable name="role" select="$factoid/pointer[@id=529]"/>
 		<xsl:choose>
-			<xsl:when test="@id=527 and pointer[@id=529]/detail[@id=174]">
+			<xsl:when test="$role/detail[@id=160] = 'Generic'">
+				<!-- generic role, use factoid title instead -->
+				<xsl:value-of select="$factoid/detail[@id=160]"/>
+			</xsl:when>
+			<xsl:when test="$factoid/@id = 527  and  $role/detail[@id=174]">
 				<!-- use inverse role name -->
-				<xsl:value-of select="pointer[@id=529]/detail[@id=174]"/>
+				<xsl:value-of select="$role/detail[@id=174]"/>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:value-of select="pointer[@id=529]/detail[@id=160]"/>
+				<xsl:value-of select="$role/detail[@id=160]"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>

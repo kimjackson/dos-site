@@ -47,11 +47,14 @@
 
 			<!-- map -->
 			<xsl:if test="reverse-pointer[reftype/@id=150]/detail[@id=230 or @id=177]">
-				<style>#map { display: none; }</style>
+				<xsl:if test="not(reverse-pointer[reftype/@id=150]/detail[@id=230])">
+					<style>#map { display: none; }</style>
+				</xsl:if>
 				<div id="map" class="{$mapclass}"/>
 				<div class="clearfix"/>
 				<div id="timeline-zoom"/>
 				<div id="timeline" class="entity-timeline"/>
+				<div class="clearfix"/>
 				<script>
 					window.mapdata = {
 						timemap: [ {
@@ -66,9 +69,6 @@
 						initTMap(true);
 					});
 				</script>
-				<xsl:if test="reverse-pointer[reftype/@id=150]/detail[@id=230]">
-					<style>#map { display: block; }</style>
-				</xsl:if>
 			</xsl:if>
 
 			<!-- factoids -->

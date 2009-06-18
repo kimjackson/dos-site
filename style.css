@@ -695,15 +695,16 @@ img { border: 0 }
 .entity-information {
 	background: #e6deda;
 	padding: 3px 22px 7px 19px; margin: 10px 0 0 0;
-	border: 1px solid #320a0a;
+	border: 1px solid #320a0a
 }
 
 .entity-information-heading { font-weight: bold }
 .entity-information-col01 { margin: 4px 20px 0 20px; float: left; width: 90px }
-.entity-information-col02 { margin: 4px 10px 0 0; float: left; width: 260px; }
-.entity-information-col03 { margin: 4px 0 0 0; float: left; text-align: right; width: 82px; }
+.entity-information-col02 { margin: 4px 10px 0 0; float: left; width: 260px }
+.entity-information-col03 { margin: 4px 0 0 0; float: left; text-align: right; width: 82px }
 .entity-information-col04 { margin: 4px 6px 0; float: left }
-.entity-information-col05 { margin: 4px 0 0 0; float: left; width: 82px; }
+.entity-information-col05 { margin: 4px 0 0 0; float: left; width: 82px }
+.entity-information-col01-02 { margin: 4px 20px 0 20px; float: left; width: 360px }
 
 .entity-audio a {
 	width: 109px; height: 26px;
