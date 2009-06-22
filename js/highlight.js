@@ -379,7 +379,27 @@ function alignImages() {
 			imgbottom = imgpos + $img.outerHeight();
 			delta = textpos - (imgpos);
 			if (imgbottom + delta > textbottom) {
+				// image would protrude below the bottom of the text for this section - try to move it up
 				delta -= (imgbottom + delta - textbottom);
+				if (delta < 0) {
+					// we can't apply a -ve margin; see if there are preceding images in this section
+					// that we can nudge up a bit
+					$prev = $(this).prevAll("div").eq(0);
+					while ($prev.length > 0  &&  $section.find("a[annotation-id=" + $prev.attr("annotation-id") + "]").length > 0) {
+						m = parseInt($prev.css("margin-top"));
+						if (m > 0) {
+							if (m + delta < 0) {
+								$prev.css("margin-top", "0px");
+								delta += m;
+							} else {
+								$prev.css("margin-top", (m + delta) + "px");
+								delta = 0;
+								break;
+							}
+						}
+						$prev = $prev.prevAll("div").eq(0);
+					}
+				}
 			}
 			if (delta > 0) {
 				$(this).css("margin-top", delta + "px");
