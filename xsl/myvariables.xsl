@@ -10,7 +10,8 @@
 <xsl:variable name="site-title">bali paintings</xsl:variable>
 <xsl:variable name="home-id">1</xsl:variable>
 
-	<xsl:variable name="bcrumbNameTrack">bali</xsl:variable> <!-- a more or less unique name for map track recording -->
+  <xsl:variable name="enableMapTrack">false</xsl:variable> <!-- include map track functionality for this  browser instance -->
+  <xsl:variable name="bcrumbNameTrack">bali</xsl:variable> <!-- a more or less unique name for map track recording -->
 
 	<!-- custom timemap colours -->
 	<xsl:variable name="focusTheme">purple</xsl:variable>
