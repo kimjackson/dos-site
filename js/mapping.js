@@ -1,33 +1,5 @@
 
-/*window.onload = function() {
-	if (GBrowserIsCompatible()) {
-		var gx;
-		var map = new GMap2(document.getElementById("map"));
-		map.addControl(new GLargeMapControl());
-		map.addControl(new GMapTypeControl());
-		map.addMapType(G_PHYSICAL_MAP);
-		map.enableScrollWheelZoom();
-		map.setCenter(new GLatLng(-33.9, 151.2), 5);
-
-		if (window["mapdata"]  &&  window.mapdata["kml"]) {
-			for (var i in window.mapdata.kml) {
-				map.addOverlay(new GGeoXml(window.mapdata.kml[i]));
-			}
-		}
-	}
-}
-*/
-
 // FIXME: make JSLint-happy
-
-var scales = [
-	Timeline.DateTime.HOUR,
-	Timeline.DateTime.DAY,
-	Timeline.DateTime.MONTH,
-	Timeline.DateTime.YEAR,
-	Timeline.DateTime.DECADE,
-	Timeline.DateTime.CENTURY
-];
 
 var zoomSteps = [
 //	{ pixelsPerInterval: 100,  unit: Timeline.DateTime.HOUR },	// hours are weird
@@ -59,9 +31,9 @@ var mapTypes = [
 // FIXME: wrap all this global shit up!
 
 function renderMapTypeList() {
-	var div = document.getElementById("map-types");
-	if (! div) return;
-	div.innerHTML = "Layers:<br>";
+	var $div = $("#map-types");
+	if ($div.length < 1) { return; }
+	$div.html("Layers:<br>");
 
 	for (var m in mapTypes) {
 		(function(m) {
@@ -72,7 +44,7 @@ function renderMapTypeList() {
 					window.tmap.map.setMapType(mapTypes[m]);
 					return false;
 				})
-				.appendTo($("<div>").appendTo(div));
+				.appendTo($("<div>").appendTo($div));
 		})(m);
 	}
 
@@ -87,13 +59,13 @@ function renderMapTypeList() {
 				tmap.map.setMapType(mapTypes[0]);
 				tmap.map.setMapType(mapType);
 			})
-			.appendTo($("<div>").appendTo(div)).after(" Transparent");
+			.appendTo($("<div>").appendTo($div)).after(" Transparent");
 	}
 }
 
 function renderTimelineZoom() {
-	var div = document.getElementById("timeline-zoom");
-	if (! div) return;
+	var $div = $("#timeline-zoom");
+	if ($div.length < 1) { return; }
 
 	var zoom = function(zoomIn) {
 		var band = tmap.timeline.getBand(0);
@@ -102,51 +74,18 @@ function renderTimelineZoom() {
 		tmap.timeline.paint();
 	};
 
-	$("<a href='#'>Zoom in</a>")
-		.click(function() {
+	$("<div title='Zoom In'><img src='"+RelBrowser.baseURL+"images/plus.png'></img></div>")
+		.click(function () {
 			zoom(true);
-			return false;
 		})
-		.appendTo($("<div>").appendTo(div));
-	$("<a href='#'>Zoom out</a>")
-		.click(function() {
+		.appendTo($div);
+	$("<div title='Zoom Out'><img src='"+RelBrowser.baseURL+"images/minus.png'></img></div>")
+		.click(function () {
 			zoom(false);
-			return false;
 		})
-		.appendTo($("<div>").appendTo(div));
+		.appendTo($div);
 }
 
-/*
-// timemap time scales
-function renderScales() {
-	var div = document.getElementById("timeline-scales");
-	if (! div) return;
-	div.innerHTML = "Scale<br>";
-
-	var scales = {
-		"Seconds":   TimeMap.intervals.sec,
-		"Minutes":     TimeMap.intervals.min,
-		"Hours":        TimeMap.intervals.hr,
-		"Days":       [ Timeline.DateTime.DAY, Timeline.DateTime.MONTH ],
-		"Months":      TimeMap.intervals.mon,
-		"Years":     TimeMap.intervals.yr,
-		"Decades": TimeMap.intervals.dec
-	};
-
-	for (var s in scales) {
-		(function(s) {
-			$("<a href='#' class='timeline-scale'>" + s + "</a>")
-				.click(function() {
-					$(".timeline-scale.selected").removeClass("selected");
-					$(this).addClass("selected");
-					window.tmap.changeTimeIntervals(scales[s]);
-					return false;
-				})
-				.appendTo($("<div>").appendTo(div));
-		})(s);
-	}
-}
-*/
 
 function initTMap(mini) {
 	SimileAjax.History.enabled = false;
@@ -155,7 +94,6 @@ function initTMap(mini) {
 		addLayers();
 	}
 
-	renderTimelineZoom();
 	renderMapTypeList();
 
 	// modify timeline theme
@@ -164,7 +102,7 @@ function initTMap(mini) {
 	tl_theme.autoWidth = true;
 
 	// modify preset timemap themes
-	var opts = { eventIconPath: "http://heuristscholar.org/timemap.js/images/" };
+	var opts = { eventIconPath: RelBrowser.baseURL + "timemap.js/images/" };
 	TimeMapDataset.themes = {
 		'red': TimeMapDataset.redTheme(opts),
 		'blue': TimeMapDataset.blueTheme(opts),
@@ -178,7 +116,7 @@ function initTMap(mini) {
 	var onDataLoaded = function(tm) {
 		// find centre date, choose scale to show entire dataset
 		var d = new Date();
-		var eventSource = tm.timeline.getBand(0).getEventSource()
+		var eventSource = tm.timeline.getBand(0).getEventSource();
 		if (eventSource.getCount() > 0) {
 			var start = eventSource.getEarliestDate();
 			var end = eventSource.getLatestDate();
@@ -199,6 +137,9 @@ function initTMap(mini) {
 		}
 		tm.timeline.getBand(0).setCenterVisibleDate(d);
 		tm.timeline.layout();
+
+		// finally, draw the zoom control
+		renderTimelineZoom();
 	};
 
 	window.tmap = TimeMap.init({
@@ -293,19 +234,4 @@ function findScale(start, end, scales, timelineWidth) {
 	}
 	return i;
 }
-/*
-function findScale(start, end, scales, maxIntervals) {
-	var diff, span, unit, i;
-	s = new Date();
-	e = new Date();
-	diff = end.getTime() - start.getTime();
-	span = diff * 1.2;	// pad by 10% each end
-	for (i in scales) {
-		unit = Timeline.DateTime.gregorianUnitLengths[scales[i]];
-		if (span / unit <= maxIntervals) {
-			return scales[i];
-		}
-	}
-	return scales[i];
-}
-*/
+

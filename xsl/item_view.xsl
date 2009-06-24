@@ -27,6 +27,11 @@
 				</title>
 				<link href="{$urlbase}style.css" rel="stylesheet" type="text/css" />
 				<link href="{$urlbase}tei.css" rel="stylesheet" type="text/css" />
+				<script>
+					RelBrowser = {
+						baseURL: "<xsl:value-of select="$urlbase"/>"
+					};
+				</script>
 				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;key={$hapi-key}"></script>
 				<script src="{$urlbase}js/search.js"/>
 				<xsl:if test="/export/references/reference[reftype/@id=103]  |

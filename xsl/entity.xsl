@@ -19,30 +19,17 @@
 				</div>
 			</xsl:if>
 
-			<xsl:variable name="mapclass">
-				<xsl:choose>
-					<xsl:when test="pointer[@id=508]">
-						<xsl:text>entity-map</xsl:text>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:text>entity-map wide</xsl:text>
-					</xsl:otherwise>
-				</xsl:choose>
-			</xsl:variable>
-
 			<!-- default image: dos.main_image -->
 			<xsl:if test="pointer[@id=508]">
-				<div class="entity-picture">
-					<img>
-						<xsl:attribute name="alt"/><!-- FIXME -->
-						<xsl:attribute name="src">
-							<xsl:call-template name="getFileURL">
-								<xsl:with-param name="file" select="pointer[@id=508][1]/detail[@id=221]"/>
-								<xsl:with-param name="size" select="'medium'"/>
-							</xsl:call-template>
-						</xsl:attribute>
-					</img>
-				</div>
+				<img class="entity-picture">
+					<xsl:attribute name="alt"/><!-- FIXME -->
+					<xsl:attribute name="src">
+						<xsl:call-template name="getFileURL">
+							<xsl:with-param name="file" select="pointer[@id=508][1]/detail[@id=221]"/>
+							<xsl:with-param name="size" select="'medium'"/>
+						</xsl:call-template>
+					</xsl:attribute>
+				</img>
 			</xsl:if>
 
 			<!-- map -->
@@ -50,10 +37,10 @@
 				<xsl:if test="not(reverse-pointer[reftype/@id=150]/detail[@id=230])">
 					<style>#map { display: none; }</style>
 				</xsl:if>
-				<div id="map" class="{$mapclass}"/>
+				<div id="map" class="entity-map"/>
 				<div class="clearfix"/>
 				<div id="timeline-zoom"/>
-				<div id="timeline" class="entity-timeline"/>
+				<div id="timeline"/>
 				<div class="clearfix"/>
 				<script>
 					window.mapdata = {
@@ -66,7 +53,12 @@
 						} ]
 					};
 					$(function () {
-						initTMap(true);
+						var $img = $("img.entity-picture");
+						if ($img.length > 0) {
+							$img.load(function () { initTMap(true); });
+						} else {
+							initTMap(true);
+						}
 					});
 				</script>
 			</xsl:if>

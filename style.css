@@ -687,9 +687,9 @@ img { border: 0 }
 --------------------------------------------------*/
 .entity-content p { margin: 0 0 20px 0 }
 
-.entity-picture img {
+img.entity-picture {
 	float: left;
-	margin: 0 24px 8px 0;
+	margin: 0 20px 8px 0;
 	border: 1px solid #320a0a
 }
 
@@ -807,18 +807,16 @@ ul#menu li ul li a:hover {
 
 
 #map {
-	width: 600px;
-	height: 400px;
 	margin-bottom: 8px;
 	overflow: hidden;
 }
+#map.full {
+	width: 600px;
+	height: 400px;
+}
 #map.entity-map {
-	width: 300px;
 	height: 200px;
 	border: 1px solid #320a0a;
-}
-#map.entity-map.wide {
-	width: 627px;
 }
 #map-controls {
 	float: right;
@@ -835,17 +833,17 @@ ul#menu li ul li a:hover {
 }
 
 #timeline {
-	width: 525px;
-}
-#timeline.entity-timeline {
-	width: 554px;
+	border: 1px solid #320a0a;
 }
 #timeline-zoom {
-	float: left;
-	width: 75px;
+	position: absolute;
+	margin-top: 4px;
+	margin-left: 5px;
+	z-index: 2000;
 }
 #timeline-zoom div {
-	margin-top: 5px;
+	cursor: pointer;
+	margin-top: 1px;
 }
 
 #entry-page-controls-top, #entry-page-controls-bottom {

@@ -18,7 +18,7 @@
 				<div id="map-types"/>
 				<div id="map-key"/>
 			</div>
-			<div id="map"/>
+			<div id="map" class="full"/>
 			<div id="timeline-zoom"/>
 			<div id="timeline"/>
 			<script>

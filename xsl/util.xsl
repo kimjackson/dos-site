@@ -101,7 +101,7 @@
 			</xsl:when>
 			<xsl:when test="$size = 'medium'">
 				<xsl:value-of select="$file/file_thumb_url"/>
-				<xsl:text>&amp;w=300&amp;h=300</xsl:text>
+				<xsl:text>&amp;h=200</xsl:text>
 			</xsl:when>
 			<xsl:when test="$size = 'large'">
 				<xsl:value-of select="$file/file_thumb_url"/>
