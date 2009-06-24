@@ -5,8 +5,6 @@
                 extension-element-prefixes="exsl"
                 version="1.0">
 
-	<xsl:param name="id"/>
-
 	<xsl:include href="myvariables.xsl"/>
 	<xsl:include href="util.xsl"/>
 
