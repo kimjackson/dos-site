@@ -41,13 +41,13 @@
 					<xsl:value-of select="$heading"/>
 				</div>
 				<xsl:for-each select="$factoids">
-					<xsl:sort select="pointer[@id=529]/detail[@id=160]"/>
 					<xsl:sort select="detail[@id=177]/year"/>
 					<xsl:sort select="detail[@id=177]/month"/>
 					<xsl:sort select="detail[@id=177]/day"/>
 					<xsl:sort select="detail[@id=178]/year"/>
 					<xsl:sort select="detail[@id=178]/month"/>
 					<xsl:sort select="detail[@id=178]/day"/>
+					<xsl:sort select="pointer[@id=529]/detail[@id=160]"/>
 
 					<xsl:apply-templates select="."/>
 
@@ -59,10 +59,32 @@
 
 
 	<xsl:template match="reverse-pointer[reftype/@id=150]">
+
+		<xsl:variable name="roleLink">
+			<xsl:if test="pointer[@id=529]">
+				<xsl:value-of select="pointer[@id=529]/id"/>
+				<xsl:if test="pointer[@id=527]">
+					<xsl:text>#</xsl:text>
+					<xsl:value-of select="pointer[@id=527]/id"/>
+				</xsl:if>
+			</xsl:if>
+		</xsl:variable>
+
+
 		<xsl:choose>
+			<!-- generic and type factoids can span two columns -->
 			<xsl:when test="pointer[@id=529]/detail[@id=160] = 'Generic'">
 				<div class="entity-information-col01-02">
 					<xsl:value-of select="detail[@id=160]"/>
+				</div>
+			</xsl:when>
+			<xsl:when test="detail[@id=526]='Type'">
+				<div class="entity-information-col01-02">
+					<a href="{$roleLink}">
+						<xsl:call-template name="getRoleName">
+							<xsl:with-param name="factoid" select="."/>
+						</xsl:call-template>
+					</a>
 				</div>
 			</xsl:when>
 			<xsl:otherwise>
@@ -74,7 +96,7 @@
 							</xsl:call-template>
 						</xsl:when>
 						<xsl:otherwise>
-							<a href="{pointer[@id=529]/id}">
+							<a href="{$roleLink}">
 								<xsl:call-template name="getRoleName">
 									<xsl:with-param name="factoid" select="."/>
 								</xsl:call-template>
@@ -130,7 +152,7 @@
 				<!-- generic role, use factoid title instead -->
 				<xsl:value-of select="$factoid/detail[@id=160]"/>
 			</xsl:when>
-			<xsl:when test="$factoid/@id = 527  and  $role/detail[@id=174]">
+			<xsl:when test="$factoid/@id = 527 and $role/detail[@id=174]">
 				<!-- use inverse role name -->
 				<xsl:value-of select="$role/detail[@id=174]"/>
 			</xsl:when>

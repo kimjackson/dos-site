@@ -139,9 +139,22 @@
 	</xsl:template>
 
 
-	<xsl:template name="getEntityRole">
+	<xsl:template name="getEntityTypeList">
 		<xsl:param name="entity"/>
-		<xsl:value-of select="$entity/reverse-pointer[@id=528][detail[@id=526]='Type']/pointer[@id=529]/detail[@id=160]"/>
+		<xsl:for-each select="$entity/reverse-pointer[@id=528][detail[@id=526]='Type']">
+			<xsl:sort select="detail[@id=177]/year"/>
+			<xsl:sort select="detail[@id=177]/month"/>
+			<xsl:sort select="detail[@id=177]/day"/>
+			<xsl:sort select="detail[@id=178]/year"/>
+			<xsl:sort select="detail[@id=178]/month"/>
+			<xsl:sort select="detail[@id=178]/day"/>
+			<xsl:call-template name="getRoleName">
+				<xsl:with-param name="factoid" select="."/>
+			</xsl:call-template>
+			<xsl:if test="position() != last()">
+				<xsl:text>, </xsl:text>
+			</xsl:if>
+		</xsl:for-each>
 	</xsl:template>
 
 
@@ -175,7 +188,7 @@
 		<span id="sub-title">
 			<xsl:choose>
 				<xsl:when test="$record/reftype/@id = 151">
-					<xsl:call-template name="getEntityRole">
+					<xsl:call-template name="getEntityTypeList">
 						<xsl:with-param name="entity" select="$record"/>
 					</xsl:call-template>
 				</xsl:when>
