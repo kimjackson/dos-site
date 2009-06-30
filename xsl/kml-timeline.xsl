@@ -2,45 +2,36 @@
 xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 
 
-<xsl:template name="kml" match="reference[reftype/@id=103 or reftype/@id=51 or reftype/@id=165 or reftype/@id=122 or reftype/@id=57]">
+<xsl:template name="kml" match="reference[reftype/@id=103 or reftype/@id=51 or reftype/@id=165 or reftype/@id=122 or reftype/@id=57 or reftype/@id=168]">
 	<div id="main" class="div-main">
-	<div id="map" class="map"  style="width: 990px; height: 370px;"/>
-	<div id="timeline" class="timeline" style="width: 880px; height: 300px; overflow-x:hidden;"/>
-	<div id="timeline-zoom"></div>
+		<div id="map" class="map"/>
+		<div id="timeline" class="timeline"/>
+		<div id="map-types" class="map-timeline-key"/>
+		<div id="timeline-zoom" class="timeline-zoom"/>
 	</div>
 	
 	<script type="text/javascript">			
-	loadZooms();
-	if (enableMapTrack){
-		saveAndLoad({recId: <xsl:value-of select="id"/>, recTitle: document.getElementById("<xsl:value-of select="id"/>").text, recType: '<xsl:value-of select="reftype/@id"/>', hasGeoData:'<xsl:call-template name="checkForGeoData"/>'});	
-	} else {
-		loadSavedView('<xsl:value-of select="reftype/@id"/>');
-	}
-	<xsl:call-template name = "generateIntervalUnit">
-		<xsl:with-param name="varName">tl1</xsl:with-param>
-		<xsl:with-param name="value">
-			<xsl:choose>
-				<xsl:when test="detail[@id=565]">
-					<xsl:value-of select="detail[@id=565]"/>
-				</xsl:when>
-				<xsl:otherwise>MONTH</xsl:otherwise>
-			</xsl:choose>
-		</xsl:with-param>
-	</xsl:call-template>
-	<xsl:call-template name = "generateIntervalUnit">
-		<xsl:with-param name="varName">tl2</xsl:with-param>
-		<xsl:with-param name="value">
-			<xsl:choose>
-				<xsl:when test="detail[@id=566]">
-					<xsl:value-of select="detail[@id=566]"/>
-				</xsl:when>
-				<xsl:otherwise>YEAR</xsl:otherwise>
-			</xsl:choose>
-		</xsl:with-param>
-	</xsl:call-template>
-	var id = "<xsl:choose><xsl:when test="detail[@id=565]"><xsl:value-of select="detail[@id=565]"/></xsl:when><xsl:otherwise>MONTH</xsl:otherwise></xsl:choose>-<xsl:choose><xsl:when test="detail[@id=566]"><xsl:value-of select="detail[@id=566]"/></xsl:when><xsl:otherwise>YEAR</xsl:otherwise></xsl:choose>";
-	
-	var dataSets = [];
+
+		window.mapdata = {
+			timemap: []
+		};
+
+		<xsl:if test="pointer[@id=588]">
+			<!-- this template creates additional map layers in gmaps -->
+			window.mapdata.layers = [
+				<xsl:for-each select="pointer[@id=588]">
+				{
+					title: "<xsl:value-of select="detail[@id=173]"/>",
+					type: "<xsl:value-of select="detail[@id=585]"/>",
+					url: "<xsl:value-of select="detail[@id=339]"/>",
+					mime_type: "<xsl:value-of select="detail[@id=289]"/>",
+					min_zoom: "<xsl:value-of select="detail[@id=586]"/>",
+					max_zoom: "<xsl:value-of select="detail[@id=587]"/>",
+					copyright: "<xsl:value-of select="detail[@id=311]"/>"
+				}<xsl:if test="position() != last()">,</xsl:if>
+				</xsl:for-each>
+			];
+		</xsl:if>
 	
 	//from here down we are constructing various timeMap objects for our map
 	
@@ -110,7 +101,11 @@ xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 		</xsl:call-template>
 		<xsl:call-template name="generateTimeMapObjectsForCrumbs"></xsl:call-template>
 		
-		
+	if (enableMapTrack){
+		saveAndLoad({recId: <xsl:value-of select="id"/>, recTitle: document.getElementById("<xsl:value-of select="id"/>").text, recType: '<xsl:value-of select="reftype/@id"/>', hasGeoData:'<xsl:call-template name="checkForGeoData"/>'});	
+	} else {
+		initTMap();
+	}
         	</script>
 </xsl:template>
 	
@@ -142,7 +137,7 @@ xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 						url: link
 					}
 				}					
-				dataSets.push(timeCrumb);
+				window.mapdata.timemap.push(timeCrumb);
 			}
 		}	
 	}); //end hapi   
@@ -221,12 +216,13 @@ xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 		</xsl:otherwise>
 	</xsl:choose>
 </xsl:template>
+
 <xsl:template name="generateTimeMapObjects">
 	<xsl:param name="title"/>
 	<xsl:param name="link"/>
 	<xsl:param name="theme"/>
 
-	dataSets.push({	
+	window.mapdata.timemap.push({
 		title: "<xsl:value-of select="$title"/>",
 		<xsl:choose>
 			<xsl:when test="exsl:node-set($timeMapThemes)/theme[@name=$theme]/@name">

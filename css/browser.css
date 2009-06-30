@@ -25,6 +25,11 @@
 					A:active { font-family: Arial, Verdana, Helvetica; color:#0096E3; font-size: 11px }
 					A:hover { font-family: Arial, Verdana, Helvetica; color:#0096E3; font-size: 11px }
 
+					A.map-type { text-decoration: none; font-weight: bold; }
+					A.map-type:link, A.map-type:visited {  color:#666666; }
+					A.map-type:active, A.map-type:hover { color:#0096E3; }
+
+
 					A.bnnavsoff:link { font-family: Arial, Verdana, Helvetica; color:#FFFFFF; text-decoration:none; font-weight: normal; font-size: 11px }
 					A.bnnavsoff:visited { font-family: Arial, Verdana, Helvetica; color:#FFFFFF; text-decoration:none; font-weight: normal; font-size: 11px }
 					A.bnnavsoff:active { font-family: Arial, Verdana, Helvetica; color:#FFCC00; text-decoration:none; font-weight: normal; font-size: 11px }
@@ -118,6 +123,12 @@
 					overflow: hidden;
 					}
 
+					#artwork {
+						text-align: center; /* for IE */
+						margin: 0 auto; /* for the rest */
+						width: 400px;
+					}
+
 					#page {
 					padding: 0;
 					margin: 0;
@@ -179,13 +190,6 @@
 					height: expression(document.documentElement.clientHeight-50);
 					}
 
-					#map {
-					padding: 0;
-					margin: 20px;
-					margin-left: 0;
-					width: 90%;
-					height: 400px;
-					}
 
 					#sidebar {
 					padding: 0;
@@ -411,47 +415,35 @@
 					
 					/* timemap styles */
 					#map {
-					padding: 0;
-					margin: 0;
-					position: absolute;
-					top: 20px;
-					left: 10px;
-					right: 0;
-					bottom: 0;
-					overflow: auto;
-					text-align: center; 
-					
+					position: absolute; top: 0px; left: 0px;
+					width: 100%;
+					height: 350px;
+					margin: 0 auto;
+					z-index: 0;
 					}
+
 					#timeline { 
-					padding: 0;
-					margin: 0;
-					position: absolute;
-					top: 400px;
-					left: 120px;
-					right: 0;
-					bottom: 0;
-					overflow: auto; 
-					text-align: center; float: left;
+					position: absolute; top: 380px; left: 0px;
+					width: 100%;
+					height: 300px;
+					margin: 0 auto;
 					}
-					
+
+					#map-timeline-key {
+					position:relative;
+					padding-left: 20px;
+					float: none;
+					}
+
 					#timeline-zoom {
-					padding: 0;
-					margin: 0;
-					position: absolute;
-					top: 400px;
-					width: 120px;
-					left: 10px;
-					right: 0;
-					bottom: 0;
-					
-					
-					
+					font-family: Arial, Verdana, Helvetica; font-size: 10px; font-weight: bold; color:#666;
+					position: absolute; top: 350px; right: 0px;
 					}
 					
 					
 					#div-main {
 					position:relative;
-					float:center;   
+					float: none;
 					}
 					
 					a.timeline-zoom-a, a.timeline-zoom-a:hover, a.timeline-zoom-a:visited{
@@ -467,4 +459,3 @@
 					}
 					
 
-				
