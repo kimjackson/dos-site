@@ -58,8 +58,6 @@
 					<xsl:sort select="detail[@id=329]" data-type="number"/>
 				</xsl:apply-templates>
 
-				<xsl:call-template name="render_refs"/>
-
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:choose>
@@ -128,16 +126,6 @@
 					recordID : "<xsl:value-of select="id"/>"
 				} );
 			}
-		</script>
-	</xsl:template>
-
-	<xsl:template name="render_refs">
-		<script>
-		<![CDATA[
-			var root = document.getElementById("tei");
-			if (root  &&  window["refs"])
-			highlight(root, refs);
-		]]>
 		</script>
 	</xsl:template>
 

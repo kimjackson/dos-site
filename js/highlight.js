@@ -64,6 +64,14 @@ function traverse(elem, refs, address) {
 		elemNumber = 0,
 		wordOffset = 0;
 
+	// count the words that were in the footnote element,
+	// but got moved into a title attribute in the transform!
+	if ($(elem).is("span.note")) {
+		return $(elem).find("sup a").attr("title")
+				.replace(/^\s+/, "").replace(/\s+$/, "")
+				.split(/\s+/).length;
+	}
+
 	// find refs starting at this elem
 	for (i = 0; i < refs.length; ++i) {
 		// only check refs which are not already current
@@ -511,6 +519,9 @@ YAHOO.util.Event.onDOMReady(function () {
 
 	setupPageControls();
 
+	if ($("#tei").length > 0  &&  window.refs) {
+		highlight($("#tei")[0], refs);
+	}
 });
 
 
