@@ -14,7 +14,7 @@ function saveAndLoad(cValue) {
 	  	}
 		
      	HAPI.PJ.store (_nameTrack, newVals);
-		loadSavedView();
+		initTMap();
   	});
 }
 
