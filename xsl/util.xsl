@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:str="http://exslt.org/strings" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:exsl="http://exslt.org/common"
+                exclude-result-prefixes="exsl"
+                version="1.0">
 
 	<xsl:template name="cleanQuote">
 		<xsl:param name="string"/>
@@ -97,15 +100,15 @@
 		<xsl:choose>
 			<xsl:when test="$size = 'small'">
 				<xsl:value-of select="$file/file_thumb_url"/>
-				<xsl:text>&amp;w=147</xsl:text>
+				<xsl:text>&amp;amp;w=147</xsl:text>
 			</xsl:when>
 			<xsl:when test="$size = 'medium'">
 				<xsl:value-of select="$file/file_thumb_url"/>
-				<xsl:text>&amp;h=200</xsl:text>
+				<xsl:text>&amp;amp;h=200</xsl:text>
 			</xsl:when>
 			<xsl:when test="$size = 'large'">
 				<xsl:value-of select="$file/file_thumb_url"/>
-				<xsl:text>&amp;w=600&amp;h=600</xsl:text>
+				<xsl:text>&amp;amp;w=600&amp;amp;h=600</xsl:text>
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:value-of select="$file/file_fetch_url"/>

@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:str="http://exslt.org/strings"
-                xmlns:exsl="http://exslt.org/common"
-                extension-element-prefixes="exsl"
-                version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 	<xsl:include href="myvariables.xsl"/>
 	<xsl:include href="util.xsl"/>
@@ -20,36 +16,47 @@
 
 		<html>
 			<head>
-				<title>
-					<xsl:value-of select="export/references/reference/title"/>
-				</title>
-				<link href="{$urlbase}style.css" rel="stylesheet" type="text/css" />
-				<link href="{$urlbase}tei.css" rel="stylesheet" type="text/css" />
-				<script>
+				<title><xsl:value-of select="export/references/reference/title"/></title>
+				<link href="{$urlbase}style.css" rel="stylesheet" type="text/css"/>
+				<link href="{$urlbase}tei.css" rel="stylesheet" type="text/css"/>
+				<script type="text/javascript">
 					RelBrowser = {
 						baseURL: "<xsl:value-of select="$urlbase"/>"
 					};
 				</script>
-				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;key={$hapi-key}"></script>
-				<script src="{$urlbase}js/search.js"/>
+				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;amp;key={$hapi-key}" type="text/javascript"/>
+				<script src="{$urlbase}js/search.js" type="text/javascript"/>
+				<script src="/jquery/jquery.js" type="text/javascript"/>
+
 				<xsl:if test="/export/references/reference[reftype/@id=103]  |
 				              /export/references/reference[reftype/@id=151][reverse-pointer[reftype/@id=150]/detail[@id=230 or @id=177]]">
-					<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
-					<script>
+					<script src="http://maps.google.com/maps?file=api&amp;amp;v=2&amp;amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w" type="text/javascript"/>
+					<script type="text/javascript">
 						Timeline_urlPrefix = "<xsl:value-of select="$urlbase"/>timeline/timeline_js/";
 						Timeline_ajax_url = "<xsl:value-of select="$urlbase"/>timeline/timeline_ajax/simile-ajax-api.js";
 						Timeline_parameters = "bundle=true";
 					</script>
-					<script src="{$urlbase}timeline/timeline_js/timeline-api.js" type="text/javascript"></script>
-					<script src="{$urlbase}timemap.js/timemap.js" type="text/javascript"></script>
-					<script src="{$urlbase}timemap.js/kmlparser.js" type="text/javascript"></script>
-					<script src="{$urlbase}timemap.js/manipulation.js" type="text/javascript"></script>
-					<script src="{$urlbase}js/mapping.js"></script>
+					<script src="{$urlbase}timeline/timeline_js/timeline-api.js" type="text/javascript"/>
+					<script src="{$urlbase}timemap.js/timemap.js" type="text/javascript"/>
+					<script src="{$urlbase}timemap.js/kmlparser.js" type="text/javascript"/>
+					<script src="{$urlbase}timemap.js/manipulation.js" type="text/javascript"/>
+					<script src="{$urlbase}js/mapping.js" type="text/javascript"/>
+				</xsl:if>
+
+				<xsl:if test="/export/references/reference/reftype/@id = 98">
+					<script src="http://yui.yahooapis.com/2.7.0/build/yahoo/yahoo-min.js" type="text/javascript"/>
+					<script src="http://yui.yahooapis.com/2.7.0/build/event/event-min.js" type="text/javascript"/>
+					<script src="http://yui.yahooapis.com/2.7.0/build/history/history-min.js" type="text/javascript"/>
+					<script src="{$urlbase}js/highlight.js" type="text/javascript"/>
 				</xsl:if>
 			</head>
 
 
 			<body>
+			<xsl:if test="/export/references/reference/reftype/@id = 98">
+				<iframe id="yui-history-iframe" src="{$urlbase}images/logo.png"/>
+				<input id="yui-history-field" type="hidden"/>
+			</xsl:if>
 			<div id="header"></div>
 			<div id="subheader">
 				<div id="subheader-content">
@@ -98,7 +105,7 @@
 					<div id="right-col">
 						<img src="{$urlbase}images/img-logo.jpg" alt="Dictionary of Sydney" width="198" height="125" class="logo"/>
 						<div id="search-bar">
-							<form method="post" onsubmit="top.search(document.getElementById('search').value); return false;">
+							<form method="post" action="." onsubmit="top.search(document.getElementById('search').value); return false;">
 								<input type="text" name="search" id="search" value="search..." size="20" maxlength="40"/>
 							</form>
 						</div>

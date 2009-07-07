@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+<xsl:stylesheet xmlns="http://www.opengis.net/kml/2.2"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:kml="http://www.opengis.net/kml/2.2"
+                exclude-result-prefixes="kml"
                 version="1.0">
 
 	<xsl:include href="factoid.xsl"/>

@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:str="http://exslt.org/strings" xmlns:regexp="http://exslt.org/regexp" xmlns:xi="http://www.w3.org/2001/XInclude" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xi="http://www.w3.org/2001/XInclude"
+                exclude-result-prefixes="xi"
+                version="1.0">
 
 	<xsl:template name="xmldoc" match="reference[reftype/@id=98]">
-
-		<script src="http://yui.yahooapis.com/2.7.0/build/yahoo/yahoo-debug.js"></script>
-		<script src="http://yui.yahooapis.com/2.7.0/build/event/event-debug.js"></script>
-		<script src="http://yui.yahooapis.com/2.7.0/build/history/history-debug.js"></script>
-
-		<script src="/jquery/jquery.js"/>
-		<script src="{$urlbase}js/highlight.js"/>
-
-		<iframe id="yui-history-iframe" src="{$urlbase}images/logo.png"></iframe>
-		<input id="yui-history-field" type="hidden"></input>
 
 		<div id="content-left-col">
 
@@ -93,7 +86,7 @@
 
 
 	<xsl:template name="setup_refs">
-		<script>
+		<script type="text/javascript">
 			if (! window["refs"]) {
 				window["refs"] = [];
 			}
@@ -103,7 +96,7 @@
 	<xsl:template name="add_ref">
 		<xsl:param name="ref"/>
 		<xsl:param name="hide"/>
-		<script>
+		<script type="text/javascript">
 			if (window["refs"]) {
 				refs.push( {
 					startElems : [ <xsl:value-of select="detail[@id=539]"/> ],

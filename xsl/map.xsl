@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:exsl="http://exslt.org/common"
+                exclude-result-prefixes="exsl"
                 version="1.0">
 
 	<xsl:template match="reference[reftype/@id=103]">
@@ -21,7 +22,7 @@
 			<div id="map" class="full"/>
 			<div id="timeline-zoom"/>
 			<div id="timeline"/>
-			<script>
+			<script type="text/javascript">
 				<xsl:variable name="sources">
 					<!-- kml references -->
 					<xsl:for-each select="pointer[@id=564]">

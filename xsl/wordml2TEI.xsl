@@ -2,7 +2,8 @@
   xmlns:w="http://schemas.microsoft.com/office/word/2003/wordml"
   xmlns:o="urn:schemas-microsoft-com:office:office"
   xmlns:aml ="http://schemas.microsoft.com/aml/2001/core"
-  xmlns:wx="http://schemas.microsoft.com/office/word/2003/auxHint" exclude-result-prefixes="w o wx ">
+  xmlns:wx="http://schemas.microsoft.com/office/word/2003/auxHint"
+  exclude-result-prefixes="w o aml wx">
 <!-- NOTES
   This stylesheet attempts to convert wordML to TEI to the best of its capacities. To facilitate its capacities, in the original word document you should:
   -> Eliminate the footer on the document
