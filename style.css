@@ -284,13 +284,17 @@ img { border: 0 }
 	border-bottom: 1px solid #705454
 }
 
-#browse-connections a { font-weight: bold; color: #FFFFFF !important }
+#browse-connections a {
+	font-weight: bold;
+	padding: 0 0 0 34px;
+	color: #FFFFFF !important
+}
 
 #browse-connections ul { padding: 12px 0 0 0 }
 
 #browse-connections li {
 	height: 31px;
-	padding: 4px 0 0 34px
+	padding: 4px 0 0 0
 }
 
 .browse-annotation   { background: url(images/24x24/icon24-annotation.gif) 1px 0 no-repeat }
@@ -481,6 +485,30 @@ img { border: 0 }
 	background: url(images/bg-content-bullet.jpg) 1px 6px no-repeat;
 	padding: 0 0 0 10px
 }
+
+#browse-type-index, #browse-alpha-index {
+	list-style: none;
+	margin: 0 0 20px 0
+}
+#browse-type-index li, #browse-alpha-index li {
+	float: left;
+	background: url(images/bg-content-bullet.jpg) 1px 6px no-repeat;
+	white-space: nowrap;
+	padding: 0 0 0 10px;
+	margin: 0 10px 0 0
+}
+li.has-entry a {
+	font-weight: bold;
+}
+#entities-alpha .left {
+	float: left;
+	width: 400px
+}
+#entities-alpha .right {
+	float: right;
+	width: 219px
+}
+
 
 .list-artefact     { background: url(images/40x40/icon40-artefact.jpg) 1px 4px no-repeat }
 .list-audio        { background: url(images/40x40/icon40-audio.jpg) 1px 4px no-repeat }

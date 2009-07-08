@@ -121,24 +121,62 @@
 		<xsl:param name="record"/>
 		<xsl:choose>
 			<!-- entity -->
-			<xsl:when test="$record[reftype/@id=151]/detail[@id=523] = 'Artefact'">artifact</xsl:when>
-			<xsl:when test="$record[reftype/@id=151]/detail[@id=523] = 'Building'">building</xsl:when>
-			<xsl:when test="$record[reftype/@id=151]/detail[@id=523] = 'Event'">event</xsl:when>
-			<xsl:when test="$record[reftype/@id=151]/detail[@id=523] = 'Natural feature'">natural</xsl:when>
-			<xsl:when test="$record[reftype/@id=151]/detail[@id=523] = 'Organisation'">organisation</xsl:when>
-			<xsl:when test="$record[reftype/@id=151]/detail[@id=523] = 'Person'">people</xsl:when>
-			<xsl:when test="$record[reftype/@id=151]/detail[@id=523] = 'Place'">place</xsl:when>
-			<xsl:when test="$record[reftype/@id=151]/detail[@id=523] = 'Structure'">structure</xsl:when>
+			<xsl:when test="$record[reftype/@id=151]">
+				<xsl:call-template name="getEntityCodeName">
+					<xsl:with-param name="typeName" select="$record/detail[@id=523]"/>
+				</xsl:call-template>
+			</xsl:when>
 			<!-- media -->
-			<xsl:when test="$record[reftype/@id=74][starts-with(detail[@id=289], 'image')]">picture</xsl:when>
-			<xsl:when test="$record[reftype/@id=74][starts-with(detail[@id=289], 'audio')]">sound</xsl:when>
+			<xsl:when test="$record[reftype/@id=74][starts-with(detail[@id=289], 'image')]">image</xsl:when>
+			<xsl:when test="$record[reftype/@id=74][starts-with(detail[@id=289], 'audio')]">audio</xsl:when>
 			<xsl:when test="$record[reftype/@id=74][starts-with(detail[@id=289], 'video')]">video</xsl:when>
 			<!-- others -->
+			<xsl:when test="$record/reftype/@id = 1">link</xsl:when>
+			<xsl:when test="$record/reftype/@id = 91">role</xsl:when>
 			<xsl:when test="$record/reftype/@id = 98">entry</xsl:when>
 			<xsl:when test="$record/reftype/@id = 99">annotation</xsl:when>
 			<xsl:when test="$record/reftype/@id = 103">map</xsl:when>
-			<xsl:when test="$record/reftype/@id = 91">role</xsl:when>
+			<xsl:when test="$record/reftype/@id = 152">term</xsl:when>
+			<xsl:when test="$record/reftype/@id = 153">contributor</xsl:when>
+			<xsl:when test="$record/reftype/@id = 154">reference</xsl:when>
 		</xsl:choose>
+	</xsl:template>
+
+
+	<xsl:variable name="entityNames">
+		<entity c="artefact"     cp="artefacts"     t="Artefact"        p="Artefacts"/>
+		<entity c="building"     cp="buildings"     t="Building"        p="Buildings"/>
+		<entity c="event"        cp="events"        t="Event"           p="Events"/>
+		<entity c="natural"      cp="natural"       t="Natural feature" p="Natural features"/>
+		<entity c="organisation" cp="organisations" t="Organisation"    p="Organisations"/>
+		<entity c="person"       cp="people"        t="Person"          p="People"/>
+		<entity c="place"        cp="places"        t="Place"           p="Places"/>
+		<entity c="structure"    cp="structures"    t="Structure"       p="Structures"/>
+	</xsl:variable>
+
+
+	<xsl:template name="getEntityCodeName">
+		<xsl:param name="typeName"/>
+		<xsl:value-of select="exsl:node-set($entityNames)/entity[@t=$typeName or @cp=$typeName]/@c"/>
+	</xsl:template>
+
+
+	<xsl:template name="getEntityTypeName">
+		<xsl:param name="codeName"/>
+		<xsl:value-of select="exsl:node-set($entityNames)/entity[@c=$codeName]/@t"/>
+	</xsl:template>
+
+
+	<xsl:template name="getEntityPluralName">
+		<xsl:param name="codeName"/>
+		<xsl:value-of select="exsl:node-set($entityNames)/entity[@c=$codeName or @cp=$codeName]/@p"/>
+	</xsl:template>
+
+
+	<xsl:template name="makeEntityBrowseList">
+		<xsl:for-each select="exsl:node-set($entityNames)/entity">
+			<li class="browse-{@c}"><a href="{@cp}"><xsl:value-of select="@p"/></a></li>
+		</xsl:for-each>
 	</xsl:template>
 
 
@@ -191,14 +229,24 @@
 		<span id="sub-title">
 			<xsl:choose>
 				<xsl:when test="$record/reftype/@id = 151">
+					<!-- entity -->
 					<xsl:call-template name="getEntityTypeList">
 						<xsl:with-param name="entity" select="$record"/>
 					</xsl:call-template>
 				</xsl:when>
 				<xsl:when test="$record/reftype/@id = 98">
+					<!-- entry -->
 					<xsl:call-template name="getEntryContributor">
 						<xsl:with-param name="entry" select="$record"/>
 					</xsl:call-template>
+				</xsl:when>
+				<xsl:when test="$record/reftype/@id = 91">
+					<!-- role -->
+					<xsl:value-of select="$record/detail[@id=591]"/>
+				</xsl:when>
+				<xsl:when test="$record/reftype/@id = 152">
+					<!-- term -->
+					<xsl:text>Subject</xsl:text>
 				</xsl:when>
 			</xsl:choose>
 		</span>
