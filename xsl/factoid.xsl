@@ -34,6 +34,7 @@
 	<xsl:template name="factoidGroup">
 		<xsl:param name="heading"/>
 		<xsl:param name="factoids"/>
+
 		<xsl:if test="$factoids">
 			<div class="entity-information">
 				<div class="entity-information-heading">
@@ -48,7 +49,7 @@
 					<xsl:sort select="detail[@id=178]/day"/>
 					<xsl:sort select="pointer[@id=529]/detail[@id=160]"/>
 
-					<xsl:apply-templates select="."/>
+					<xsl:call-template name="factoid"/>
 
 					<div class="clearfix"></div>
 				</xsl:for-each>
@@ -57,13 +58,13 @@
 	</xsl:template>
 
 
-	<xsl:template match="reverse-pointer[reftype/@id=150]">
+	<xsl:template name="factoid" match="reverse-pointer[reftype/@id=150]">
 
 		<xsl:variable name="roleLink">
 			<xsl:if test="pointer[@id=529]">
 				<xsl:value-of select="pointer[@id=529]/id"/>
 				<xsl:if test="pointer[@id=527]">
-					<xsl:text>#</xsl:text>
+					<xsl:text>#t</xsl:text>
 					<xsl:value-of select="pointer[@id=527]/id"/>
 				</xsl:if>
 			</xsl:if>
@@ -77,7 +78,7 @@
 					<xsl:value-of select="detail[@id=160]"/>
 				</div>
 			</xsl:when>
-			<xsl:when test="detail[@id=526]='Type'">
+			<xsl:when test="detail[@id=526] = 'Type'">
 				<div class="entity-information-col01-02">
 					<a href="{$roleLink}">
 						<xsl:call-template name="getRoleName">
@@ -89,17 +90,17 @@
 			<xsl:otherwise>
 				<div class="entity-information-col01">
 					<xsl:choose>
-						<xsl:when test="detail[@id=526]='Name' or detail[@id=526]='Milestone'">
-							<xsl:call-template name="getRoleName">
-								<xsl:with-param name="factoid" select="."/>
-							</xsl:call-template>
-						</xsl:when>
-						<xsl:otherwise>
+						<xsl:when test="detail[@id=526] = 'Occupation' or detail[@id=526] = 'Position'">
 							<a href="{$roleLink}">
 								<xsl:call-template name="getRoleName">
 									<xsl:with-param name="factoid" select="."/>
 								</xsl:call-template>
 							</a>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:call-template name="getRoleName">
+								<xsl:with-param name="factoid" select="."/>
+							</xsl:call-template>
 						</xsl:otherwise>
 					</xsl:choose>
 				</div>
@@ -122,6 +123,34 @@
 				</div>
 			</xsl:otherwise>
 		</xsl:choose>
+
+		<div class="entity-information-col03">
+			<xsl:call-template name="formatDate">
+				<xsl:with-param name="date" select="detail[@id=177]"/>
+			</xsl:call-template>
+		</div>
+		<xsl:if test="detail[@id=178]/year != detail[@id=177]/year or
+					  detail[@id=178]/month != detail[@id=177]/month or
+					  detail[@id=178]/day != detail[@id=177]/day">
+			<div class="entity-information-col04">
+				<xsl:text> - </xsl:text>
+			</div>
+			<div class="entity-information-col05">
+				<xsl:call-template name="formatDate">
+					<xsl:with-param name="date" select="detail[@id=178]"/>
+				</xsl:call-template>
+			</div>
+		</xsl:if>
+	</xsl:template>
+
+
+	<xsl:template name="roleFactoid" match="reverse-pointer[reftype/@id=150]">
+
+		<div class="entity-information-col01-02">
+			<a href="{pointer[@id=528]/id}">
+				<xsl:value-of select="pointer[@id=528]/detail[@id=160]"/>
+			</a>
+		</div>
 
 		<div class="entity-information-col03">
 			<xsl:call-template name="formatDate">

@@ -6,62 +6,20 @@
 
 	<xsl:template name="role" match="reference[reftype/@id=91]">
 
-		<div class="line-box">
-
 			<!-- dc.description -->
-			<p>
-				<xsl:value-of select="detail[@id=191]"/>
-			</p>
-
-			<!-- dc.type -->
-			<p>
-				<xsl:value-of select="detail[@id=591]"/>
-			</p>
-			<br/>
-			<br/>
-
-			<xsl:if test="detail[@id=591]='Occupation'">
-				<table class="factoids" border="0" cellpadding="2">
-				<xsl:for-each select="reverse-pointer[reftype/@id=150][detail[@id=526]=current()/detail[@id=591]]">
-					<tr>
-						<td>
-							<a href="{pointer[@id=528]/id}">
-								<xsl:value-of select="pointer[@id=528]/detail[@id=160]"/>
-							</a>
-						</td>
-						<td>
-							<xsl:value-of select="pointer[@id=529]/detail[@id=160]"/>
-						</td>
-						<td>
-							<xsl:choose>
-								<xsl:when test="pointer[@id=527]">
-									<a href="{pointer[@id=527]/id}">
-										<xsl:value-of select="pointer[@id=527]/detail[@id=160]"/>
-									</a>
-								</xsl:when>
-								<xsl:when test="detail[@id=179]">
-									<xsl:value-of select="detail[@id=179]"/>
-								</xsl:when>
-							</xsl:choose>
-						</td>
-						<td>
-							<xsl:call-template name="formatDate">
-								<xsl:with-param name="date" select="detail[@id=177]"/>
-							</xsl:call-template>
-						</td>
-						<td>
-							<xsl:if test="detail[@id=178]/year != detail[@id=177]/year or
-										  detail[@id=178]/month != detail[@id=177]/month or
-										  detail[@id=178]/day != detail[@id=177]/day">
-								<xsl:call-template name="formatDate">
-									<xsl:with-param name="date" select="detail[@id=178]"/>
-								</xsl:call-template>
-							</xsl:if>
-						</td>
-					</tr>
-				</xsl:for-each>
-				</table>
+			<xsl:if test="detail[@id=191]">
+				<div class="entity-content">
+					<p>
+						<xsl:value-of select="detail[@id=191]"/>
+					</p>
+				</div>
 			</xsl:if>
+
+
+			<!-- factoids without a target -->
+			<xsl:call-template name="roleFactoidGroup">
+				<xsl:with-param name="factoids" select="reverse-pointer[reftype/@id=150][not(pointer[@id=527])]"/>
+			</xsl:call-template>
 
 
 			<xsl:variable name="targets">
@@ -80,7 +38,8 @@
 			<xsl:variable name="base" select="."/>
 
 			<xsl:for-each select="exsl:node-set($targets)/target[not(text() = preceding-sibling::*/text())]">
-				<xsl:call-template name="role_factoids">
+				<xsl:call-template name="roleFactoidGroup">
+					<xsl:with-param name="id" select="@id"/>
 					<xsl:with-param name="factoids" select="
 						$base/reverse-pointer
 							[reftype/@id=150]
@@ -91,61 +50,50 @@
 				</xsl:call-template>
 			</xsl:for-each>
 
-		</div>
 	</xsl:template>
 
 
-	<xsl:template name="role_factoids">
+	<xsl:template name="roleFactoidGroup">
+		<xsl:param name="id"/>
 		<xsl:param name="factoids"/>
 
-		<div class="role-factoids">
+		<xsl:if test="$factoids">
+			<div class="entity-information">
+				<xsl:if test="$id">
+					<xsl:attribute name="id">t<xsl:value-of select="$id"/></xsl:attribute>
+				</xsl:if>
+				<div class="entity-information-heading">
+					<xsl:choose>
+						<xsl:when test="$factoids[1]/pointer[@id=527]">
+							<xsl:value-of select="$factoids[1]/detail[@id=526]"/>
+							<xsl:text> - </xsl:text>
+							<xsl:value-of select="$factoids[1]/pointer[@id=529]/detail[@id=160]"/>
+							<xsl:text> of </xsl:text>
+							<a href="{$factoids[1]/pointer[@id=527]/id}">
+								<xsl:value-of select="$factoids[1]/pointer[@id=527]/detail[@id=160]"/>
+							</a>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="detail[@id=591]"/>
+							<xsl:text> - </xsl:text>
+							<xsl:value-of select="detail[@id=160]"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</div>
+				<xsl:for-each select="$factoids">
+					<xsl:sort select="detail[@id=177]/year"/>
+					<xsl:sort select="detail[@id=177]/month"/>
+					<xsl:sort select="detail[@id=177]/day"/>
+					<xsl:sort select="detail[@id=178]/year"/>
+					<xsl:sort select="detail[@id=178]/month"/>
+					<xsl:sort select="detail[@id=178]/day"/>
+					<xsl:sort select="pointer[@id=529]/detail[@id=160]"/>
 
-			<table class="factoids" border="0" cellpadding="2">
-			<xsl:for-each select="$factoids">
-				<xsl:sort select="detail[@id=177]/year"/>
-				<xsl:sort select="detail[@id=177]/month"/>
-				<xsl:sort select="detail[@id=177]/day"/>
-				<xsl:sort select="pointer[@id=528]/detail[@id=160]"/>
-				<tr>
-					<td>
-						<xsl:choose>
-							<xsl:when test="$factoids[1]/pointer[@id=527]">
-								<a href="{$factoids[1]/pointer[@id=527]/id}">
-									<xsl:value-of select="$factoids[1]/pointer[@id=527]/detail[@id=160]"/>
-								</a>
-							</xsl:when>
-							<xsl:when test="$factoids[1]/detail[@id=179]">
-								<xsl:value-of select="$factoids[1]/detail[@id=179]"/>
-							</xsl:when>
-						</xsl:choose>
-					</td>
-						<td>
-							<xsl:value-of select="pointer[@id=529]/detail[@id=160]"/>
-						</td>
-					<td>
-						<a href="{pointer[@id=528]/id}">
-							<xsl:value-of select="pointer[@id=528]/detail[@id=160]"/>
-						</a>
-					</td>
-					<td>
-						<xsl:call-template name="formatDate">
-							<xsl:with-param name="date" select="detail[@id=177]"/>
-						</xsl:call-template>
-					</td>
-					<td>
-						<xsl:if test="detail[@id=178]/year != detail[@id=177]/year or
-						              detail[@id=178]/month != detail[@id=177]/month or
-						              detail[@id=178]/day != detail[@id=177]/day">
-							<xsl:call-template name="formatDate">
-								<xsl:with-param name="date" select="detail[@id=178]"/>
-							</xsl:call-template>
-						</xsl:if>
-					</td>
-				</tr>
-			</xsl:for-each>
-			</table>
-		</div>
+					<xsl:call-template name="roleFactoid"/>
 
+					<div class="clearfix"></div>
+				</xsl:for-each>
+			</div>
+		</xsl:if>
 	</xsl:template>
-
 </xsl:stylesheet>
