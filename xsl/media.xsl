@@ -6,9 +6,9 @@
 		<div id="resource">
 
 			<!-- dc.description -->
-			<xsl:if test="detail[@id=303]">
+			<xsl:if test="detail[@id=191]">
 				<p>
-					<xsl:value-of select="detail[@id=303]"/>
+					<xsl:value-of select="detail[@id=191]"/>
 				</p>
 			</xsl:if>
 

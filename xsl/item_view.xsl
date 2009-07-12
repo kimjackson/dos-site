@@ -11,6 +11,7 @@
 	<xsl:include href="entity.xsl"/>
 	<xsl:include href="role.xsl"/>
 	<xsl:include href="map.xsl"/>
+	<xsl:include href="term.xsl"/>
 
 	<xsl:template match="/">
 
@@ -150,8 +151,12 @@
 
 	<xsl:template name="connections">
 		<xsl:call-template name="related_items">
+			<xsl:with-param name="label">Entries</xsl:with-param>
+			<xsl:with-param name="items" select="related[reftype/@id=98]"/>
+		</xsl:call-template>
+		<xsl:call-template name="related_items">
 			<xsl:with-param name="label">Pictures</xsl:with-param>
-			<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=74][starts-with(detail[@id=289], 'image')]"/>
+			<xsl:with-param name="items" select="related[reftype/@id=74][starts-with(detail[@id=289], 'image')]"/>
 		</xsl:call-template>
 		<xsl:call-template name="related_items">
 			<xsl:with-param name="label">Sound</xsl:with-param>

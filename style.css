@@ -546,6 +546,21 @@ li.has-entry a {
 	padding: 0 0 0 10px
 }
 
+#subject-list p {
+	margin: 0 0 20px
+}
+#subject-list h2 {
+	height: 30px;
+	font: 14px Verdana, Geneva, sans-serif;
+	font-weight: bold;
+}
+#subject-list ul { list-style: none; margin: 0 0 14px 0 }
+
+#subject-list li {
+	background: url(images/bg-content-bullet.jpg) 1px 6px no-repeat;
+	padding: 0 0 0 10px
+}
+
 /*BLOCK LAYOUT
 --------------------------------------------------*/
 #block-heading {
