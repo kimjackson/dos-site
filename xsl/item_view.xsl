@@ -6,8 +6,8 @@
 
 	<xsl:include href="factoid.xsl"/>
 	<xsl:include href="media.xsl"/>
-	<xsl:include href="teidoc.xsl"/>
-	<xsl:include href="teidoc_reference.xsl"/>
+	<xsl:include href="entry.xsl"/>
+	<xsl:include href="annotation.xsl"/>
 	<xsl:include href="entity.xsl"/>
 	<xsl:include href="role.xsl"/>
 	<xsl:include href="map.xsl"/>

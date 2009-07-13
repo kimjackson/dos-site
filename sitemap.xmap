@@ -45,7 +45,7 @@
     <map:transform type="xinclude" label="wordml"/>
     <map:transform src="xsl/wordml2TEI.xsl" label="tei"/>
     <map:transform src="xsl/tei_to_html_basic.xsl" label="html"/>
-    <map:transform src="xsl/tei_index.xsl"/>
+    <map:transform src="xsl/entry_index.xsl"/>
     <map:serialize type="html"/>
    </map:match>
 
