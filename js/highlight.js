@@ -20,6 +20,7 @@ if (! window.Node) {
 }
 
 var currentRefs;
+var pageCount;
 
 function highlight(root, refs) {
 	// normalise addresses
@@ -421,15 +422,17 @@ function alignImages() {
 
 function setupPageControls() {
 	$("#previous").click(function () {
-		$("#tei div:has(~ div:visible):last").each(function () {
-			showSection($("#tei div").index(this) + 1);
-		});
+		var currentPage = parseInt(YAHOO.util.History.getCurrentState("page"));
+		if (currentPage > 1) {
+			showSection(String(currentPage - 1));
+		}
 		return false;
 	});
 	$("#next").click(function () {
-		$("#tei div:visible ~ div:first").each(function () {
-			showSection($("#tei div").index(this) + 1);
-		});
+		var currentPage = parseInt(YAHOO.util.History.getCurrentState("page"));
+		if (currentPage < pageCount) {
+			showSection(String(currentPage + 1));
+		}
 		return false;
 	});
 }
@@ -438,12 +441,12 @@ function showSection(i) {
 	if (i === "all") {
 		YAHOO.util.History.navigate("page", "all");
 	} else {
-		YAHOO.util.History.multiNavigate({"page": "" + i, "ref": ""});
+		YAHOO.util.History.multiNavigate({"page": String(i), "ref": ""});
 	}
 }
 
 function highlightAnnotation(id) {
-	YAHOO.util.History.navigate("ref", "" + id);
+	YAHOO.util.History.navigate("ref", String(id));
 }
 
 YAHOO.util.Event.onDOMReady(function () {
@@ -488,6 +491,8 @@ YAHOO.util.Event.onDOMReady(function () {
 			}
 		}
 	}
+
+	pageCount = $("#tei div").length;
 
 	initPage = YAHOO.util.History.getBookmarkedState("page");
 	initAnnotation = YAHOO.util.History.getBookmarkedState("ref");
