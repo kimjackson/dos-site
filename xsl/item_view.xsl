@@ -26,17 +26,18 @@
 					};
 				</script>
 				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;amp;key={$hapi-key}" type="text/javascript"/>
-				<script src="{$urlbase}js/search.js" type="text/javascript"/>
 				<script src="/jquery/jquery.js" type="text/javascript"/>
+				<script src="{$urlbase}js/search.js" type="text/javascript"/>
+				<script src="{$urlbase}js/menu.js" type="text/javascript"/>
 
 				<xsl:if test="/export/references/reference[reftype/@id=103]  |
 				              /export/references/reference[reftype/@id=151][reverse-pointer[reftype/@id=150]/detail[@id=230 or @id=177]]">
-					<script src="http://maps.google.com/maps?file=api&amp;amp;v=2&amp;amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w" type="text/javascript"/>
 					<script type="text/javascript">
 						Timeline_urlPrefix = "<xsl:value-of select="$urlbase"/>timeline/timeline_js/";
 						Timeline_ajax_url = "<xsl:value-of select="$urlbase"/>timeline/timeline_ajax/simile-ajax-api.js";
 						Timeline_parameters = "bundle=true";
 					</script>
+					<script src="http://maps.google.com/maps?file=api&amp;amp;v=2&amp;amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w" type="text/javascript"/>
 					<script src="{$urlbase}timeline/timeline_js/timeline-api.js" type="text/javascript"/>
 					<script src="{$urlbase}timemap.js/timemap.js" type="text/javascript"/>
 					<script src="{$urlbase}timemap.js/kmlparser.js" type="text/javascript"/>
@@ -60,7 +61,7 @@
 			</xsl:if>
 			<div id="header"></div>
 			<div id="subheader">
-				<div id="subheader-content">
+				<div id="breadcrumbs">
 					<a class="browse" href="{$urlbase}"></a>
 					<!--ul id="navigation">
 						<li class="nav-search"><a href="#">search</a></li>
@@ -92,11 +93,9 @@
 					<div id="left-col">
 						<div id="content">
 
-							<div id="heading">
-								<xsl:call-template name="makeTitleDiv">
-									<xsl:with-param name="record" select="export/references/reference[1]"/>
-								</xsl:call-template>
-							</div>
+							<xsl:call-template name="makeTitleDiv">
+								<xsl:with-param name="record" select="export/references/reference[1]"/>
+							</xsl:call-template>
 
 							<xsl:apply-templates select="export/references/reference"/>
 
@@ -107,7 +106,7 @@
 						<img src="{$urlbase}images/img-logo.jpg" alt="Dictionary of Sydney" width="198" height="125" class="logo"/>
 						<div id="search-bar">
 							<form method="post" action="." onsubmit="top.search(document.getElementById('search').value); return false;">
-								<input type="text" name="search" id="search" value="search..." size="20" maxlength="40"/>
+								<input type="text" name="search" id="search" size="20" maxlength="40"/>
 							</form>
 						</div>
 
@@ -196,14 +195,16 @@
 		</xsl:variable>
 
 		<xsl:if test="count($items) > 0">
-			<li class="menu-{$type}">
-				<a class="parent" href="#"><xsl:value-of select="$label"/></a>
+			<div class="menu">
+				<h4 class="menu-{$type}"><xsl:value-of select="$label"/></h4>
+			</div>
+			<div class="submenu">
 				<ul>
 					<xsl:apply-templates select="$items[1]">
 						<xsl:with-param name="matches" select="$items"/>
 					</xsl:apply-templates>
 				</ul>
-			</li>
+			</div>
 		</xsl:if>
 
 	</xsl:template>

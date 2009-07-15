@@ -36,12 +36,10 @@
 	<xsl:template match="reference[reftype/@id=152]" mode="sidebar">
 		<div id="connections">
 			<h3>Connections</h3>
-			<ul id="menu">
-				<xsl:call-template name="related_items">
-					<xsl:with-param name="label">Entries</xsl:with-param>
-					<xsl:with-param name="items" select="related[reftype/@id=98]"/>
-				</xsl:call-template>
-			</ul>
+			<xsl:call-template name="related_items">
+				<xsl:with-param name="label">Entries</xsl:with-param>
+				<xsl:with-param name="items" select="related[reftype/@id=98]"/>
+			</xsl:call-template>
 		</div>
 	</xsl:template>
 

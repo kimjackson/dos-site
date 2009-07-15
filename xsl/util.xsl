@@ -98,17 +98,25 @@
 		<xsl:param name="file"/>
 		<xsl:param name="size"/>
 		<xsl:choose>
+			<xsl:when test="$size = 'thumbnail'">
+				<xsl:value-of select="$file/file_thumb_url"/>
+				<xsl:text>&amp;amp;w=150&amp;amp;h=150</xsl:text>
+			</xsl:when>
 			<xsl:when test="$size = 'small'">
 				<xsl:value-of select="$file/file_thumb_url"/>
-				<xsl:text>&amp;amp;w=147</xsl:text>
+				<xsl:text>&amp;amp;w=150</xsl:text>
 			</xsl:when>
 			<xsl:when test="$size = 'medium'">
 				<xsl:value-of select="$file/file_thumb_url"/>
-				<xsl:text>&amp;amp;h=200</xsl:text>
+				<xsl:text>&amp;amp;h=180</xsl:text>
+			</xsl:when>
+			<xsl:when test="$size = 'wide'">
+				<xsl:value-of select="$file/file_thumb_url"/>
+				<xsl:text>&amp;amp;w=800&amp;amp;h=400</xsl:text>
 			</xsl:when>
 			<xsl:when test="$size = 'large'">
 				<xsl:value-of select="$file/file_thumb_url"/>
-				<xsl:text>&amp;amp;w=600&amp;amp;h=600</xsl:text>
+				<xsl:text>&amp;amp;w=630</xsl:text>
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:value-of select="$file/file_fetch_url"/>
@@ -221,38 +229,38 @@
 				<xsl:with-param name="record" select="$record"/>
 			</xsl:call-template>
 		</xsl:variable>
-		<div id="title">
-			<h1 class="title-{$type}">
+		<div id="heading" class="title-{$type}">
+			<h1>
 				<xsl:value-of select="$record/detail[@id=160]"/>
 			</h1>
+			<span id="sub-title">
+				<xsl:choose>
+					<xsl:when test="$record/reftype/@id = 151">
+						<!-- entity -->
+						<xsl:call-template name="getEntityTypeList">
+							<xsl:with-param name="entity" select="$record"/>
+						</xsl:call-template>
+					</xsl:when>
+					<xsl:when test="$record/reftype/@id = 98">
+						<!-- entry -->
+						<xsl:call-template name="getEntryContributor">
+							<xsl:with-param name="entry" select="$record"/>
+						</xsl:call-template>
+					</xsl:when>
+					<xsl:when test="$record/reftype/@id = 91">
+						<!-- role -->
+						<xsl:value-of select="$record/detail[@id=591]"/>
+					</xsl:when>
+					<xsl:when test="$record/reftype/@id = 152">
+						<!-- term -->
+						<xsl:text>Subject</xsl:text>
+					</xsl:when>
+				</xsl:choose>
+			</span>
+			<span id="extra">
+				<!-- CC icon -->
+			</span>
 		</div>
-		<span id="sub-title">
-			<xsl:choose>
-				<xsl:when test="$record/reftype/@id = 151">
-					<!-- entity -->
-					<xsl:call-template name="getEntityTypeList">
-						<xsl:with-param name="entity" select="$record"/>
-					</xsl:call-template>
-				</xsl:when>
-				<xsl:when test="$record/reftype/@id = 98">
-					<!-- entry -->
-					<xsl:call-template name="getEntryContributor">
-						<xsl:with-param name="entry" select="$record"/>
-					</xsl:call-template>
-				</xsl:when>
-				<xsl:when test="$record/reftype/@id = 91">
-					<!-- role -->
-					<xsl:value-of select="$record/detail[@id=591]"/>
-				</xsl:when>
-				<xsl:when test="$record/reftype/@id = 152">
-					<!-- term -->
-					<xsl:text>Subject</xsl:text>
-				</xsl:when>
-			</xsl:choose>
-		</span>
-		<span id="extra">
-			<!-- CC icon -->
-		</span>
 	</xsl:template>
 
 

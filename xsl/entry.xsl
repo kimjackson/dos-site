@@ -126,16 +126,18 @@
 	<xsl:template match="reference[reftype/@id=98]" mode="sidebar">
 
 		<div id="chapters">
-			<h3>Chapters</h3>
-			<!-- document index generated here -->
+			<div id="chapters-top"/>
+			<div id="chapters-middle">
+				<h3>Chapters</h3>
+				<!-- document index generated here -->
+			</div>
+			<div id="chapters-bottom"/>
 		</div>
 
 		<div id="connections">
 			<h3>Connections</h3>
-			<ul id="menu">
-				<xsl:call-template name="related_entities_by_type"/>
-				<xsl:call-template name="connections"/>
-			</ul>
+			<xsl:call-template name="related_entities_by_type"/>
+			<xsl:call-template name="connections"/>
 		</div>
 
 	</xsl:template>

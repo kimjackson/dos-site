@@ -41,6 +41,7 @@
 			<head>
 				<title>Browse - <xsl:value-of select="$pluralTypeName"/></title>
 				<link href="{$urlbase}style.css" rel="stylesheet" type="text/css" />
+				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;amp;key={$hapi-key}" type="text/javascript"/>
 				<script src="/jquery/jquery.js" type="text/javascript"/>
 				<script src="{$urlbase}js/browse.js" type="text/javascript"/>
 				<script src="{$urlbase}deploy/browse/{$type}.js" type="text/javascript"/>
@@ -49,7 +50,7 @@
 			<body>
 			<div id="header"></div>
 			<div id="subheader">
-				<div id="subheader-content">
+				<div id="breadcrumbs">
 					<a class="browse" href="{$urlbase}"></a>
 					<!--ul id="navigation">
 						<li class="nav-search"><a href="#">search</a></li>
@@ -81,25 +82,22 @@
 					<div id="left-col">
 						<div id="content">
 
-							<div id="heading">
-								<div id="title">
-									<h1 class="title-search">
-										Browse <xsl:value-of select="$pluralTypeName"/>
-									</h1>
-								</div>
+							<div id="heading" class="title-search">
+								<h1>
+									Browse <xsl:value-of select="$pluralTypeName"/>
+								</h1>
 								<span id="sub-title">
 									Sort by
 									<a id="name-sort-link" href="#">Name</a>
 									or
 									<a id="type-sort-link" href="#">Type</a>
 								</span>
-
 							</div>
 
 							<ul id="browse-alpha-index"/>
 							<ul id="browse-type-index"/>
 
-							<div class="list-left-col list-{$type}"/>
+							<div class="list-left-col list-{$typeCodeName}"/>
 							<div class="list-right-col">
 								<div class="list-right-col-browse" id="entities-alpha"/>
 								<div class="list-right-col-browse" id="entities-type"/>
@@ -112,7 +110,7 @@
 						<img src="{$urlbase}images/img-logo.jpg" alt="Dictionary of Sydney" width="198" height="125" class="logo"/>
 						<div id="search-bar">
 							<form method="post" onsubmit="top.search(document.getElementById('search').value); return false;">
-								<input type="text" name="search" id="search" value="search..." size="20" maxlength="40"/>
+								<input type="text" name="search" id="search" size="20" maxlength="40"/>
 							</form>
 						</div>
 

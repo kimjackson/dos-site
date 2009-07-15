@@ -101,7 +101,7 @@
 		<!-- images of this entity -->
 		<xsl:variable name="images_of" select="related[@type='IsInMM'][starts-with(detail[@id=289], 'image')]"/>
 		<xsl:if test="$images_of">
-			<div class="list-left-col list-picture"></div>
+			<div class="list-left-col list-image" title="Pictures"></div>
 			<div class="list-right-col">
 				<div class="list-right-col-content entity-thumbnail">
 					<xsl:for-each select="$images_of">
@@ -114,9 +114,6 @@
 										<xsl:with-param name="size" select="'small'"/>
 									</xsl:call-template>
 								</xsl:attribute>
-								<xsl:if test="position() = last()">
-									<xsl:attribute name="class">entity-thumbnail-no-margin</xsl:attribute>
-								</xsl:if>
 							</img>
 						</a>
 					</xsl:for-each>
@@ -128,7 +125,7 @@
 		<!-- audio of this entity -->
 		<xsl:variable name="audio_of" select="related[@type='IsInMM'][starts-with(detail[@id=289], 'audio')]"/>
 		<xsl:if test="$audio_of">
-			<div class="list-left-col list-sound"></div>
+			<div class="list-left-col list-audio" title="Sound"></div>
 			<div class="list-right-col">
 				<div class="list-right-col-content entity-audio">
 					<xsl:for-each select="$audio_of">
@@ -142,7 +139,7 @@
 		<!-- videos of this entity -->
 		<xsl:variable name="video_of" select="related[@type='IsInMM'][starts-with(detail[@id=289], 'video')]"/>
 		<xsl:if test="$video_of">
-			<div class="list-left-col list-video"></div>
+			<div class="list-left-col list-video" title="Video"></div>
 			<div class="list-right-col">
 				<div class="list-right-col-content"><!-- FIXME -->
 					<xsl:for-each select="$video_of">
@@ -156,7 +153,7 @@
 		<!-- maps of this entity -->
 		<xsl:variable name="maps_of" select="related[@type='IsIn'][reftype/@id=103]"/>
 		<xsl:if test="$maps_of">
-			<div class="list-left-col list-map"></div>
+			<div class="list-left-col list-map" title="Maps"></div>
 			<div class="list-right-col">
 				<div class="list-right-col-content"><!-- FIXME -->
 					<xsl:for-each select="$maps_of">
@@ -173,10 +170,8 @@
 	<xsl:template match="reference[reftype/@id=151]" mode="sidebar">
 		<div id="connections">
 			<h3>Connections</h3>
-			<ul id="menu">
-				<xsl:call-template name="related_entities_by_type"/>
-				<xsl:call-template name="connections"/>
-			</ul>
+			<xsl:call-template name="related_entities_by_type"/>
+			<xsl:call-template name="connections"/>
 		</div>
 	</xsl:template>
 

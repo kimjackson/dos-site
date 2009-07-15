@@ -9,7 +9,7 @@
 	</xsl:template>
 
 
-	<xsl:template match="//div[@id='chapters']">
+	<xsl:template match="//div[@id='chapters-middle']">
 		<xsl:copy>
 			<xsl:copy-of select="@*|node()"/>
 			<ul>

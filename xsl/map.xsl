@@ -86,10 +86,8 @@
 	<xsl:template match="reference[reftype/@id=103]" mode="sidebar">
 		<div id="connections">
 			<h3>Connections</h3>
-			<ul id="menu">
-				<xsl:call-template name="related_entities_by_type"/>
-				<xsl:call-template name="connections"/>
-			</ul>
+			<xsl:call-template name="related_entities_by_type"/>
+			<xsl:call-template name="connections"/>
 		</div>
 	</xsl:template>
 

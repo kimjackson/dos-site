@@ -21,7 +21,7 @@
 			</xsl:if-->
 
 			<xsl:if test="starts-with(detail[@id=289], 'image')">
-				<img>
+				<img class="resource-image">
 					<xsl:attribute name="src">
 						<xsl:call-template name="getFileURL">
 							<xsl:with-param name="file" select="detail[@id=221]"/>
@@ -32,7 +32,7 @@
 
 			</xsl:if>
 
-			<p>
+			<p class="attribution">
 				<xsl:call-template name="makeMediaAttributionStatement">
 					<xsl:with-param name="record" select="."/>
 				</xsl:call-template>
@@ -40,14 +40,14 @@
 
 			<xsl:choose>
 				<xsl:when test="detail[@id=590] = 'CC-Generic'">
-					<p>
+					<p class="license">
 						<a rel="license" href="http://creativecommons.org/licenses/by/2.5/au/">
 							<img alt="Creative Commons License" src="http://i.creativecommons.org/l/by/2.5/au/80x15.png"/>
 						</a>
 					</p>
 				</xsl:when>
 				<xsl:when test="detail[@id=590] = 'CC-SA'">
-					<p>
+					<p class="license">
 						<a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/au/">
 							<img alt="Creative Commons License" src="http://i.creativecommons.org/l/by-sa/2.5/au/80x15.png"/>
 						</a>
@@ -55,7 +55,16 @@
 				</xsl:when>
 			</xsl:choose>
 
-			<p>View large version...</p>
+			<p>
+				<a target="_blank">
+					<xsl:attribute name="href">
+						<xsl:call-template name="getFileURL">
+							<xsl:with-param name="file" select="detail[@id=221]"/>
+						</xsl:call-template>
+					</xsl:attribute>
+					<xsl:text>View full size</xsl:text>
+				</a>
+			</p>
 
 		</div>
 
@@ -65,10 +74,8 @@
 	<xsl:template match="reference[reftype/@id=74]" mode="sidebar">
 		<div id="connections">
 			<h3>Connections</h3>
-			<ul id="menu">
-				<xsl:call-template name="related_entities_by_type"/>
-				<xsl:call-template name="connections"/>
-			</ul>
+			<xsl:call-template name="related_entities_by_type"/>
+			<xsl:call-template name="connections"/>
 		</div>
 	</xsl:template>
 

@@ -1,4 +1,19 @@
 
+$(function () {
+	var searchPrompt = "search...";
+	$("#search").val(searchPrompt)
+		.focus(function () {
+			if (this.value === searchPrompt) {
+				this.value = "";
+			}
+		})
+		.blur(function () {
+			if (this.value === "") {
+				this.value = searchPrompt;
+			}
+		});
+});
+
 var resultsDiv;
 
 function search(query) {
