@@ -456,21 +456,25 @@ YAHOO.util.Event.onDOMReady(function () {
 		$link,
 		$section;
 
+	if ($("#tei").length > 0  &&  window.refs) {
+		highlight($("#tei")[0], refs);
+	}
+
 	function _showSection(i) {
 		if (i) {
 			// note index begins at 1; "all" means show all sections
 			if (i === "all") {
-				$("#tei div").show();
+				$("#tei>div").show();
 				$("#previous").add("#next").hide();
 			} else {
 				i = i - 0;
-				$("#tei div").hide().eq(i - 1).show();
+				$("#tei>div").hide().eq(i - 1).show();
 				if (i === 1) {
 					$("#previous").hide();
 				} else {
 					$("#previous").show();
 				}
-				if (i === $("#tei div").length) {
+				if (i === $("#tei>div").length) {
 					$("#next").hide();
 				} else {
 					$("#next").show();
@@ -483,22 +487,27 @@ YAHOO.util.Event.onDOMReady(function () {
 	function _highlightAnnotation(id) {
 		if (id) {
 			$("#tei a.annotation.highlighted").removeClass("highlighted");
-			$link = $("#tei a[annotation-id=" + id + "]");
-			$link.addClass("highlighted");
-			$section = $link.parent().parent();
-			if (! $section.is(":visible")) {
-				_showSection($("#tei div").index($section[0]) + 1);
-			}
+			$("#tei a[annotation-id=" + id + "]").addClass("highlighted");
 		}
 	}
 
-	pageCount = $("#tei div").length;
+	function _findAnnotationPage(id) {
+		$link = $("#tei a[annotation-id=" + id + "]");
+		$section = $link.parent().parent();
+		return $("#tei>div").index($section[0]) + 1;
+	}
+
+	pageCount = $("#tei>div").length;
 
 	initPage = YAHOO.util.History.getBookmarkedState("page");
 	initAnnotation = YAHOO.util.History.getBookmarkedState("ref");
 
 	if (! initPage) {
-		initPage = "1";
+		if (initAnnotation) {
+			initPage = String(_findAnnotationPage(initAnnotation));
+		} else {
+			initPage = "1";
+		}
 	}
 	if (! initAnnotation) {
 		initAnnotation = "";
@@ -523,10 +532,6 @@ YAHOO.util.Event.onDOMReady(function () {
 	}
 
 	setupPageControls();
-
-	if ($("#tei").length > 0  &&  window.refs) {
-		highlight($("#tei")[0], refs);
-	}
 });
 
 

@@ -9,19 +9,6 @@ span.italics {
 span.bold {
 	font-weight: bold;
 }
-
-/* annotation styles */
-a.annotation {
-	background-color: #ffffc0;
-}
-a.annotation.multiple {
-	background-color: #ffff70;
-}
 a.annotation.highlighted {
-	background-color: #ffbb00;
+	background-color: yellow;
 }
-
-a.annotation.hide {
-	background-color: #ffffff;
-}
-
