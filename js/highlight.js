@@ -463,6 +463,7 @@ YAHOO.util.Event.onDOMReady(function () {
 	function _showSection(i) {
 		if (i) {
 			// note index begins at 1; "all" means show all sections
+			$("#chapters-middle li").removeClass("selected");
 			if (i === "all") {
 				$("#tei>div").show();
 				$("#previous").add("#next").hide();
@@ -479,6 +480,7 @@ YAHOO.util.Event.onDOMReady(function () {
 				} else {
 					$("#next").show();
 				}
+				$("#chapters-middle li:eq(" + (i - 1) + ")").addClass("selected");
 			}
 			alignImages();
 		}

@@ -160,6 +160,9 @@ img { border: 0 }
 	background: url(images/bg-bullet.jpg) 11px 6px no-repeat;
 	padding: 0 0 0 20px
 }
+#chapters li.selected a {
+	color: #ffffff
+}
 
 
 /*INSTRUCTIONS
