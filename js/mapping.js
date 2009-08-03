@@ -133,7 +133,6 @@ function initTMap(mini) {
 				band.getEtherPainter()._unit = interval;
 			};
 			changeScale(0);
-			changeScale(1);
 		}
 		tm.timeline.getBand(0).setCenterVisibleDate(d);
 		tm.timeline.layout();
@@ -160,14 +159,6 @@ function initTMap(mini) {
 			intervalPixels: zoomSteps[initZoomIndex].pixelsPerInterval,
             zoomIndex: initZoomIndex,
             zoomSteps: zoomSteps,
-			}, {
-			overview: true,
-			theme: tl_theme,
-			showEventText: false,
-			intervalUnit: zoomSteps[initZoomIndex].unit,
-			intervalPixels: zoomSteps[initZoomIndex].pixelsPerInterval,
-			trackHeight: 10,
-			trackGap: 0.2
 		} ],
 		dataLoadedFunction: onDataLoaded
 	});

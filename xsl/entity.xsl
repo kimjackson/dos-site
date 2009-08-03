@@ -32,13 +32,25 @@
 
 			<!-- map -->
 			<xsl:if test="reverse-pointer[reftype/@id=150]/detail[@id=230 or @id=177]">
-				<xsl:if test="not(reverse-pointer[reftype/@id=150]/detail[@id=230])">
-					<style>#map { display: none; }</style>
-				</xsl:if>
-				<div id="map" class="entity-map"/>
+				<div id="map">
+					<xsl:attribute name="class">
+						<xsl:text>entity-map</xsl:text>
+						<xsl:if test="not(reverse-pointer[reftype/@id=150]/detail[@id=230])">
+							<xsl:text> hide</xsl:text>
+						</xsl:if>
+					</xsl:attribute>
+				</div>
 				<div class="clearfix"/>
-				<div id="timeline-zoom"/>
-				<div id="timeline"/>
+				<div id="timeline-zoom">
+					<xsl:if test="not(reverse-pointer[reftype/@id=150]/detail[@id=177])">
+						<xsl:attribute name="class">hide</xsl:attribute>
+					</xsl:if>
+				</div>
+				<div id="timeline">
+					<xsl:if test="not(reverse-pointer[reftype/@id=150]/detail[@id=177])">
+						<xsl:attribute name="class">hide</xsl:attribute>
+					</xsl:if>
+				</div>
 				<div class="clearfix"/>
 				<script type="text/javascript">
 					window.mapdata = {

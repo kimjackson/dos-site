@@ -1046,6 +1046,9 @@ img.entity-picture {
 	height: 180px;
 	border: 1px solid #320a0a;
 }
+#map.hide {
+	display: none;
+}
 #map-controls {
 	float: right;
 	width: 100px;
@@ -1072,6 +1075,10 @@ img.entity-picture {
 #timeline-zoom div {
 	cursor: pointer;
 	margin-top: 1px;
+}
+#timeline.hide, #timeline-zoom.hide {
+	position: absolute;
+	visibility: hidden;
 }
 
 #entry-page-controls-top, #entry-page-controls-bottom {
