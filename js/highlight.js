@@ -45,13 +45,6 @@ function highlight(root, refs) {
 
 	currentRefs = [];
 	traverse(root, refs, []);
-
-
-	$("a.annotation").filter(".hide").click(function () {
-		highlightAnnotation(this.getAttribute("annotation-id"));
-		return false;
-	});
-
 }
 
 function traverse(elem, refs, address) {
@@ -202,11 +195,15 @@ function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 	if (! myStartingRefs.length  &&  ! myEndingRefs.length) {
 		ref = refs[currentRefs[0]];
 		a = document.createElement("a");
-		a.className = "annotation" + (currentRefs.length > 1 ? " multiple" : "") + (ref.hide ? " hide" : "");
-		if (! ref.hide) { a.href = "#ref=" + ref.recordID; }
+		a.className = "annotation annotation-id-" + ref.recordID +
+			(currentRefs.length > 1 ? " multiple" : "") +
+			(ref.hide ? " hide" : "");
+		if (! ref.hide) {
+			if (ref["target"]) {
+				a.href = ref.target;
+			}
+		}
 		a.title = ref.title;
-		a.name = "ref" + ref.recordID;
-		a.setAttribute("annotation-id", ref.recordID);
 		a.innerHTML = elem.nodeValue;
 		elem.parentNode.replaceChild(a, elem);
 
@@ -316,11 +313,15 @@ function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 			if (section.refId !== null) {
 				ref = refs[section.refId];
 				a = document.createElement("a");
-				a.className = "annotation" + (currentRefs.length > 1 ? " multiple" : "") + (ref.hide ? " hide" : "");
-				if (! ref.hide) { a.href = "#ref=" + ref.recordID; }
+				a.className = "annotation annotation-id-" + ref.recordID +
+					(currentRefs.length > 1 ? " multiple" : "") +
+					(ref.hide ? " hide" : "");
+				if (! ref.hide) {
+					if (ref["target"]) {
+						a.href = ref.target;
+					}
+				}
 				a.title = ref.title;
-				a.name = "ref" + ref.recordID;
-				a.setAttribute("annotation-id", ref.recordID);
 				a.innerHTML = wordString;
 				newElements.push(a);
 
@@ -363,6 +364,9 @@ function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 	return words.length;
 }
 
+function getAnnotationClassName(elem) {
+	return elem.className.replace(/.*(annotation-id-\S+).*/, "$1");
+}
 
 function alignImages() {
 	var $annotation,
@@ -372,21 +376,27 @@ function alignImages() {
 		imgbottom,
 		delta,
 		textbottom,
-		$img;
+		$img,
+		$imgs,
+		i;
 
 	$("div.annotation-img").each(function () {
-		$annotation = $("#tei a[annotation-id=" + $(this).attr("annotation-id") + "]");
+		$annotation = $("#tei a." + getAnnotationClassName(this));
 		$section = $annotation.parent().parent();
 		if ($section.is(":visible")) {
-			textbottom = $section.offset().top + $section.height();
-
 			$(this).css("margin-top", "0px");
 			$(this).show();
-			textpos = $annotation.offset().top;
 			$img = $(this).find("img");
+			if ($img.width() === 0) {
+				// image is still loading
+				$img.load(alignImages);
+				return false;
+			}
 			imgpos = $img.offset().top;
 			imgbottom = imgpos + $img.outerHeight();
-			delta = textpos - (imgpos);
+			textbottom = $section.offset().top + $section.height();
+			textpos = $annotation.offset().top;
+			delta = textpos - imgpos;
 			if (imgbottom + delta > textbottom) {
 				// image would protrude below the bottom of the text for this section - try to move it up
 				delta -= (imgbottom + delta - textbottom);
@@ -394,7 +404,7 @@ function alignImages() {
 					// we can't apply a -ve margin; see if there are preceding images in this section
 					// that we can nudge up a bit
 					$prev = $(this).prevAll("div").eq(0);
-					while ($prev.length > 0  &&  $section.find("a[annotation-id=" + $prev.attr("annotation-id") + "]").length > 0) {
+					while ($prev.length > 0  &&  $section.find("a." + getAnnotationClassName($prev[0])).length > 0) {
 						m = parseInt($prev.css("margin-top"));
 						if (m > 0) {
 							if (m + delta < 0) {
@@ -489,12 +499,12 @@ YAHOO.util.Event.onDOMReady(function () {
 	function _highlightAnnotation(id) {
 		if (id) {
 			$("#tei a.annotation.highlighted").removeClass("highlighted");
-			$("#tei a[annotation-id=" + id + "]").addClass("highlighted");
+			$("#tei a.annotation-id-" + id).addClass("highlighted");
 		}
 	}
 
 	function _findAnnotationPage(id) {
-		$link = $("#tei a[annotation-id=" + id + "]");
+		$link = $("#tei a.annotation-id-" + id);
 		$section = $link.parent().parent();
 		return $("#tei>div").index($section[0]) + 1;
 	}

@@ -114,7 +114,9 @@
 					<xsl:if test="$hide='true'">
 					hide : true,
 					</xsl:if>
-					href : "../<xsl:value-of select="id"/>/#ref1",
+					<xsl:if test="pointer[@id=199]">
+					target : <xsl:value-of select="pointer[@id=199]/id"/>,
+					</xsl:if>
 					title : "<xsl:call-template name="cleanQuote"><xsl:with-param name="string" select="detail[@id=160]"/></xsl:call-template>",
 					recordID : "<xsl:value-of select="id"/>"
 				} );
