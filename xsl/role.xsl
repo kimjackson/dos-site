@@ -69,7 +69,7 @@
 							<xsl:text> - </xsl:text>
 							<xsl:value-of select="$factoids[1]/pointer[@id=529]/detail[@id=160]"/>
 							<xsl:text> of </xsl:text>
-							<a href="{$factoids[1]/pointer[@id=527]/id}">
+							<a href="{$factoids[1]/pointer[@id=527]/id}" class="preview-{$factoids[1]/pointer[@id=527]/id}">
 								<xsl:value-of select="$factoids[1]/pointer[@id=527]/detail[@id=160]"/>
 							</a>
 						</xsl:when>

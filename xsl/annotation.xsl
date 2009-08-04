@@ -11,7 +11,7 @@
 			</xsl:when>
 			<xsl:otherwise>
 				<li>
-					<a href="{pointer[@id=322]/id}#ref={id}">
+					<a href="{pointer[@id=322]/id}#ref={id}" class="preview-{pointer[@id=322]/id}c{id}">
 						<xsl:value-of select="pointer[@id=322]/title"/>
 					</a>
 				</li>

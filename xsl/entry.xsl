@@ -56,18 +56,29 @@
 				<xsl:choose>
 					<xsl:when test="detail[@id=359]='Annotation Multimedia'">
 						<xsl:if test="pointer[@id=199][reftype/@id=74]">
-							<div class="annotation-img" annotation-id="{id}">
-								<a href="{pointer[@id=199]/id}">
-									<img>
-										<xsl:attribute name="src">
-											<xsl:call-template name="getFileURL">
-												<xsl:with-param name="file" select="pointer[@id=199]/detail[@id=221]"/>
-												<xsl:with-param name="size" select="'small'"/>
-											</xsl:call-template>
-										</xsl:attribute>
-									</img>
-								</a>
-							</div>
+							<xsl:choose>
+								<xsl:when test="starts-with(pointer[@id=199]/detail[@id=289], 'image')">
+									<div class="annotation-img annotation-id-{id}">
+										<a href="../popup/{pointer[@id=199]/id}?width=878&amp;amp;height=566" class="popup preview-{pointer[@id=199]/id}c{id}">
+											<img>
+												<xsl:attribute name="src">
+													<xsl:call-template name="getFileURL">
+														<xsl:with-param name="file" select="pointer[@id=199]/detail[@id=221]"/>
+														<xsl:with-param name="size" select="'small'"/>
+													</xsl:call-template>
+												</xsl:attribute>
+											</img>
+										</a>
+									</div>
+								</xsl:when>
+								<xsl:when test="starts-with(pointer[@id=199]/detail[@id=289], 'audio')">
+									<div class="annotation-img annotation-id-{id}">
+										<a href="../popup/{pointer[@id=199]/id}?width=436" class="popup preview-{pointer[@id=199]/id}c{id}">
+											<img src="{$urlbase}images/img-entity-audio.jpg"/>
+										</a>
+									</div>
+								</xsl:when>
+							</xsl:choose>
 							<xsl:call-template name="add_ref">
 								<xsl:with-param name="ref" select="."/>
 								<xsl:with-param name="hide">true</xsl:with-param>

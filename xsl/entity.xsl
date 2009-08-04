@@ -91,20 +91,22 @@
 			</xsl:variable>
 			<div class="list-left-col list-entry" title="Entry"/>
 			<div class="list-right-col">
-				<div class="list-right-col-heading">
-					<h2>
-						<xsl:value-of select="detail[@id=160]"/>
-					</h2>
-					<span class="contributor">
-						by: <a href="{pointer[@id=538]/id}"><xsl:value-of select="pointer[@id=538]/title"/></a>
-					</span>
-					<span class="copyright"><!-- FIXME --></span>
-				</div>
-				<div class="{$content_class}">
-					<p>
-						<xsl:value-of select="detail[@id=191]"/>
-						<br/><a href="{id}">&gt; more</a>
-					</p>
+				<div class="entity-entry">
+					<div class="list-right-col-heading">
+						<h2>
+							<xsl:value-of select="detail[@id=160]"/>
+						</h2>
+						<span class="contributor">
+							by: <a href="{pointer[@id=538]/id}" class="preview-{pointer[@id=538]/id}"><xsl:value-of select="pointer[@id=538]/title"/></a>
+						</span>
+						<span class="copyright"><!-- FIXME --></span>
+					</div>
+					<div class="{$content_class}">
+						<p>
+							<xsl:value-of select="detail[@id=191]"/>
+							<br/><a href="{id}">&gt; more</a>
+						</p>
+					</div>
 				</div>
 			</div>
 		</xsl:for-each>
@@ -117,17 +119,28 @@
 			<div class="list-right-col">
 				<div class="list-right-col-content entity-thumbnail">
 					<xsl:for-each select="$images_of">
-						<a href="{id}">
-							<img>
-								<xsl:attribute name="alt"/><!-- FIXME -->
-								<xsl:attribute name="src">
-									<xsl:call-template name="getFileURL">
-										<xsl:with-param name="file" select="detail[@id=221]"/>
-										<xsl:with-param name="size" select="'small'"/>
-									</xsl:call-template>
+						<div>
+							<xsl:if test="position() > 3">
+								<xsl:attribute name="class">
+									<xsl:choose>
+										<xsl:when test="position() = 4">no-right-margin</xsl:when>
+										<xsl:when test="position() > 4 and position() mod 4 = 0">top-margin no-right-margin</xsl:when>
+										<xsl:otherwise>top-margin</xsl:otherwise>
+									</xsl:choose>
 								</xsl:attribute>
-							</img>
-						</a>
+							</xsl:if>
+							<a href="../popup/{id}?width=878&amp;amp;height=566" class="popup preview-{id}c{@id}">
+								<img>
+									<xsl:attribute name="alt"/><!-- FIXME -->
+									<xsl:attribute name="src">
+										<xsl:call-template name="getFileURL">
+											<xsl:with-param name="file" select="detail[@id=221]"/>
+											<xsl:with-param name="size" select="'thumbnail'"/>
+										</xsl:call-template>
+									</xsl:attribute>
+								</img>
+							</a>
+						</div>
 					</xsl:for-each>
 				</div>
 			</div>
@@ -139,9 +152,11 @@
 		<xsl:if test="$audio_of">
 			<div class="list-left-col list-audio" title="Sound"></div>
 			<div class="list-right-col">
-				<div class="list-right-col-content entity-audio">
+				<div class="list-right-col-audio">
 					<xsl:for-each select="$audio_of">
-						<a href="{id}"><xsl:value-of select="detail[@id=160]"/></a>
+						<a href="../popup/{id}?width=436" class="popup preview-{id}c{@id}">
+							<img src="{$urlbase}images/img-entity-audio.jpg" alt=""/><!-- FIXME -->
+						</a>
 					</xsl:for-each>
 				</div>
 			</div>
@@ -153,9 +168,11 @@
 		<xsl:if test="$video_of">
 			<div class="list-left-col list-video" title="Video"></div>
 			<div class="list-right-col">
-				<div class="list-right-col-content"><!-- FIXME -->
+				<div class="list-right-col-content entity-thumbnail">
 					<xsl:for-each select="$video_of">
-						<a href="{id}"><xsl:value-of select="detail[@id=160]"/></a>
+						<a href="../popup/{id}?width=503" class="popup preview-{id}c{@id}">
+							<xsl:value-of select="detail[@id=160]"/>
+						</a>
 					</xsl:for-each>
 				</div>
 			</div>
@@ -169,7 +186,9 @@
 			<div class="list-right-col">
 				<div class="list-right-col-content"><!-- FIXME -->
 					<xsl:for-each select="$maps_of">
-						<p><a href="{id}"><xsl:value-of select="detail[@id=160]"/></a></p>
+						<a href="{id}" class="preview-{id}c{@id}">
+							<xsl:value-of select="detail[@id=160]"/>
+						</a>
 					</xsl:for-each>
 				</div>
 			</div>

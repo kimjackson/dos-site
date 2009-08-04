@@ -201,6 +201,9 @@ function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 		if (! ref.hide) {
 			if (ref["target"]) {
 				a.href = ref.target;
+				a.className += " preview-" + ref.target + "c" + ref.recordID;
+			} else {
+				a.className += " preview-" + ref.recordID;
 			}
 		}
 		a.title = ref.title;
@@ -319,6 +322,9 @@ function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 				if (! ref.hide) {
 					if (ref["target"]) {
 						a.href = ref.target;
+						a.className += " preview-" + ref.target + "c" + ref.recordID;
+					} else {
+						a.className += " preview-" + ref.recordID;
 					}
 				}
 				a.title = ref.title;
@@ -469,6 +475,7 @@ YAHOO.util.Event.onDOMReady(function () {
 	if ($("#tei").length > 0  &&  window.refs) {
 		highlight($("#tei")[0], refs);
 	}
+	DOS.ToolTip.addToolTips($("#tei a[class*=preview-]"));
 
 	function _showSection(i) {
 		if (i) {

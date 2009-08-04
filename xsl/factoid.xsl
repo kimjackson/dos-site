@@ -80,7 +80,7 @@
 			</xsl:when>
 			<xsl:when test="detail[@id=526] = 'Type'">
 				<div class="entity-information-col01-02">
-					<a href="{$roleLink}">
+					<a href="{$roleLink}" class="preview-{pointer[@id=529]/id}">
 						<xsl:call-template name="getRoleName">
 							<xsl:with-param name="factoid" select="."/>
 						</xsl:call-template>
@@ -91,7 +91,7 @@
 				<div class="entity-information-col01">
 					<xsl:choose>
 						<xsl:when test="detail[@id=526] = 'Occupation' or detail[@id=526] = 'Position'">
-							<a href="{$roleLink}">
+							<a href="{$roleLink}" class="preview-{pointer[@id=529]/id}">
 								<xsl:call-template name="getRoleName">
 									<xsl:with-param name="factoid" select="."/>
 								</xsl:call-template>
@@ -107,12 +107,12 @@
 				<div class="entity-information-col02">
 					<xsl:choose>
 						<xsl:when test="@id=527 and pointer[@id=528]">
-							<a href="{pointer[@id=528]/id}">
+							<a href="{pointer[@id=528]/id}" class="preview-{pointer[@id=528]/id}">
 								<xsl:value-of select="pointer[@id=528]/detail[@id=160]"/>
 							</a>
 						</xsl:when>
 						<xsl:when test="@id=528 and pointer[@id=527]">
-							<a href="{pointer[@id=527]/id}">
+							<a href="{pointer[@id=527]/id}" class="preview-{pointer[@id=527]/id}">
 								<xsl:value-of select="pointer[@id=527]/detail[@id=160]"/>
 							</a>
 						</xsl:when>
@@ -147,7 +147,7 @@
 	<xsl:template name="roleFactoid" match="reverse-pointer[reftype/@id=150]">
 
 		<div class="entity-information-col01-02">
-			<a href="{pointer[@id=528]/id}">
+			<a href="{pointer[@id=528]/id}" class="preview-{pointer[@id=528]/id}">
 				<xsl:value-of select="pointer[@id=528]/detail[@id=160]"/>
 			</a>
 		</div>
