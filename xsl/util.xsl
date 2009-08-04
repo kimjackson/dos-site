@@ -100,11 +100,11 @@
 		<xsl:choose>
 			<xsl:when test="$size = 'thumbnail'">
 				<xsl:value-of select="$file/file_thumb_url"/>
-				<xsl:text>&amp;amp;w=150&amp;amp;h=150</xsl:text>
+				<xsl:text>&amp;amp;w=148&amp;amp;h=148</xsl:text>
 			</xsl:when>
 			<xsl:when test="$size = 'small'">
 				<xsl:value-of select="$file/file_thumb_url"/>
-				<xsl:text>&amp;amp;w=150</xsl:text>
+				<xsl:text>&amp;amp;w=148</xsl:text>
 			</xsl:when>
 			<xsl:when test="$size = 'medium'">
 				<xsl:value-of select="$file/file_thumb_url"/>
@@ -116,7 +116,7 @@
 			</xsl:when>
 			<xsl:when test="$size = 'large'">
 				<xsl:value-of select="$file/file_thumb_url"/>
-				<xsl:text>&amp;amp;w=630</xsl:text>
+				<xsl:text>&amp;amp;w=698</xsl:text>
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:value-of select="$file/file_fetch_url"/>
