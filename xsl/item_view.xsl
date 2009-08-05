@@ -289,5 +289,30 @@
 		</xsl:choose>
 	</xsl:template>
 
+	<xsl:template match="related[reftype/@id=1]">
+		<!-- external links: link to external link, new window, no preview -->
+		<xsl:param name="matches"/>
+		<xsl:choose>
+			<xsl:when test="$matches">
+				<xsl:apply-templates select="$matches">
+					<xsl:sort select="detail[@id=160]"/>
+				</xsl:apply-templates>
+			</xsl:when>
+			<xsl:otherwise>
+				<li>
+					<a href="{detail[@id=198]}" target="_blank">
+						<xsl:choose>
+							<xsl:when test="detail[@id=160]">
+								<xsl:value-of select="detail[@id=160]"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="title"/>
+							</xsl:otherwise>
+						</xsl:choose>
+					</a>
+				</li>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
 
 </xsl:stylesheet>
