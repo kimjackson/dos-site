@@ -39,12 +39,12 @@
   <map:pipeline>
 
    <map:match pattern="xml0/*">
-    <map:generate src="http://dos-sandbox.heuristscholar.org/heurist/php/xmlexport.php?q=ids:{1}&amp;w=all&amp;rev=yes&amp;related_details=160,169,174,177,178,191,199,202,291,223,221,230,289,323,324,325,326,327,328,329,330,526,529,569&amp;depth=0"/>
+    <map:generate src="http://dos.heuristscholar.org/heurist/php/xmlexport.php?q=ids:{1}&amp;w=all&amp;rev=yes&amp;related_details=160,169,174,177,178,191,199,202,291,223,221,230,289,323,324,325,326,327,328,329,330,526,529,569&amp;depth=0"/>
     <map:serialize type="xml"/>
    </map:match>
 
    <map:match pattern="xml1/*">
-    <map:generate src="http://dos-sandbox.heuristscholar.org/heurist/php/xmlexport.php?q=ids:{1}&amp;w=all&amp;rev=yes&amp;related_details=160,169,174,177,178,191,291,223,221,230,289,323,324,325,326,327,328,329,330,508,523,526,529,569&amp;depth=1"/>
+    <map:generate src="http://dos.heuristscholar.org/heurist/php/xmlexport.php?q=ids:{1}&amp;w=all&amp;rev=yes&amp;related_details=160,169,174,177,178,191,291,223,221,230,289,323,324,325,326,327,328,329,330,508,523,526,529,569&amp;depth=1"/>
     <map:serialize type="xml"/>
    </map:match>
 
@@ -94,12 +94,12 @@
    </map:match>
 
    <map:match pattern="kml/full/*">
-    <map:generate src="http://dos-sandbox.heuristscholar.org/heurist/mapper/googleearth.kml.php?multilevel=false&amp;w=all&amp;q=linkto:{1}+type:150"/>
+    <map:generate src="http://dos.heuristscholar.org/heurist/mapper/googleearth.kml.php?multilevel=false&amp;w=all&amp;q=linkto:{1}+type:150"/>
     <map:serialize type="xml"/>
    </map:match>
 
    <map:match pattern="kml/summary/*">
-    <map:generate src="http://dos-sandbox.heuristscholar.org/heurist/mapper/googleearth.kml.php?multilevel=false&amp;w=all&amp;q=linkto:{1}+type:150+f:526=TimePlace"/>
+    <map:generate src="http://dos.heuristscholar.org/heurist/mapper/googleearth.kml.php?multilevel=false&amp;w=all&amp;q=linkto:{1}+type:150+f:526=TimePlace"/>
     <map:serialize type="xml"/>
    </map:match>
 
@@ -115,14 +115,14 @@
    <map:match pattern="kml/summary/rename/*">
     <map:aggregate element="data">
 	 <map:part src="cocoon:/kml/summary/{1}"/>
-	 <map:part src="cocoon:/item/{1}?cocoon-view=raw"/>
+	 <map:part src="cocoon:/xml1/{1}"/>
     </map:aggregate>
     <map:transform src="xsl/kml_rename.xsl"/>
     <map:serialize type="xml"/>
    </map:match>
 
    <map:match pattern="kmlfile/*">
-    <map:generate src="http://dos-sandbox.heuristscholar.org/heurist/php/kml.php?id={1}"/>
+    <map:generate src="http://dos.heuristscholar.org/heurist/php/kml.php?id={1}"/>
     <map:serialize type="xml"/>
    </map:match>
 
