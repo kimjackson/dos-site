@@ -19,15 +19,18 @@
 
 			<!-- default image: dos.main_image -->
 			<xsl:if test="pointer[@id=508]">
-				<img class="entity-picture">
-					<xsl:attribute name="alt"/><!-- FIXME -->
-					<xsl:attribute name="src">
-						<xsl:call-template name="getFileURL">
-							<xsl:with-param name="file" select="pointer[@id=508][1]/detail[@id=221]"/>
-							<xsl:with-param name="size" select="'medium'"/>
-						</xsl:call-template>
-					</xsl:attribute>
-				</img>
+				<xsl:variable name="main_img" select="pointer[@id=508][1]"/>
+				<a class="popup preview-{$main_img/id}" href="../popup/{$main_img/id}?width=878&amp;amp;height=566">
+					<img class="entity-picture">
+						<xsl:attribute name="alt"/><!-- FIXME -->
+						<xsl:attribute name="src">
+							<xsl:call-template name="getFileURL">
+								<xsl:with-param name="file" select="$main_img/detail[@id=221]"/>
+								<xsl:with-param name="size" select="'medium'"/>
+							</xsl:call-template>
+						</xsl:attribute>
+					</img>
+				</a>
 			</xsl:if>
 
 			<!-- map -->
