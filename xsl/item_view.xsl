@@ -113,8 +113,9 @@
 							<img src="{$urlbase}images/img-logo.jpg" alt="Dictionary of Sydney" width="198" height="125" class="logo"/>
 						</a>
 						<div id="search-bar">
-							<form method="post" action="." onsubmit="top.search(document.getElementById('search').value); return false;">
+							<form method="post" action=".">
 								<input type="text" name="search" id="search" size="20" maxlength="40"/>
+								<div id="search-submit"/>
 							</form>
 						</div>
 

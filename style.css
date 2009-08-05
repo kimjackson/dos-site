@@ -128,13 +128,18 @@ img { border: 0 }
 	font: 9px Verdana, Geneva, sans-serif;
 	background: none;
 	border: 0px;
-	position: relative; left: 36px; top: 17px
+	position: relative; left: 19px; top: 17px
 }
 
 #search-bar {
 	width: 198px; height: 45px;
 	background: url(images/bg-search-bar.jpg);
 	position: relative; left: 20px; top: -20px
+}
+#search-submit {
+	width: 24px; height: 25px;
+	position: relative; left: 165px; top: -4px;
+	cursor: pointer
 }
 
 
