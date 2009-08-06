@@ -162,42 +162,42 @@
 
 
 	<xsl:template name="connections">
-		<xsl:call-template name="related_items">
+		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Entries</xsl:with-param>
 			<xsl:with-param name="items" select="related[reftype/@id=98]"/>
 		</xsl:call-template>
-		<xsl:call-template name="related_items">
+		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Pictures</xsl:with-param>
 			<xsl:with-param name="items" select="related[reftype/@id=74][starts-with(detail[@id=289], 'image')]"/>
 		</xsl:call-template>
-		<xsl:call-template name="related_items">
+		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Sound</xsl:with-param>
 			<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=74][starts-with(detail[@id=289], 'audio')]"/>
 		</xsl:call-template>
-		<xsl:call-template name="related_items">
+		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Video</xsl:with-param>
 			<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=74][starts-with(detail[@id=289], 'video')]"/>
 		</xsl:call-template>
-		<xsl:call-template name="related_items">
+		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Maps</xsl:with-param>
 			<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=103]"/>
 		</xsl:call-template>
-		<xsl:call-template name="related_items">
+		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Subjects</xsl:with-param>
 			<xsl:with-param name="items" select="related[reftype/@id=152]"/>
 		</xsl:call-template>
-		<xsl:call-template name="related_items">
+		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Mentioned in</xsl:with-param>
 			<xsl:with-param name="items" select="reverse-pointer[@id=199][reftype/@id=99]"/>
 		</xsl:call-template>
-		<xsl:call-template name="related_items">
+		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">External links</xsl:with-param>
 			<xsl:with-param name="items" select="related[@type='hasExternalLink'][reftype/@id=1]"/>
 		</xsl:call-template>
 	</xsl:template>
 
 
-	<xsl:template name="related_items">
+	<xsl:template name="relatedItems">
 		<xsl:param name="label"/>
 		<xsl:param name="items"/>
 
@@ -223,96 +223,87 @@
 	</xsl:template>
 
 
-
 	<xsl:template match="related | pointer | reverse-pointer">
 		<xsl:param name="matches"/>
-		<!-- trickiness!
-		     First off, this template will catch a single related (/ pointer / reverse-pointer) record,
-		     with the full list as a parameter ("matches").  This gives the template a chance to sort the records
-		     and call itself with those sorted records
+		<!-- This template is to be called in the context of just one record,
+		     with the whole list in the "matches" variable.  This gives the template
+		     a chance to sort the list itself, while still allowing the magic of the
+		     match parameter: the single apply-templates in the relatedItems template
+		     above might call this template, or another, such as the one below,
+		     depending on the items in question.
 		-->
-		<xsl:choose>
-			<xsl:when test="$matches">
-				<xsl:apply-templates select="$matches">
-					<xsl:sort select="detail[@id=160]"/>
-				</xsl:apply-templates>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:variable name="class">
-					<xsl:if test="reftype/@id=74">
-						<xsl:text>popup </xsl:text>
-					</xsl:if>
-					<xsl:text>preview-</xsl:text>
-					<xsl:value-of select="id"/>
-					<xsl:if test="local-name() = 'related'">
-						<xsl:text>c</xsl:text>
-						<xsl:value-of select="@id"/>
-					</xsl:if>
-				</xsl:variable>
+		<xsl:for-each select="$matches">
+			<xsl:sort select="detail[@id=160]"/>
 
-				<xsl:variable name="href">
+			<xsl:variable name="class">
+				<xsl:if test="reftype/@id=74">
+					<xsl:text>popup </xsl:text>
+				</xsl:if>
+				<xsl:text>preview-</xsl:text>
+				<xsl:value-of select="id"/>
+				<xsl:if test="local-name() = 'related'">
+					<xsl:text>c</xsl:text>
+					<xsl:value-of select="@id"/>
+				</xsl:if>
+			</xsl:variable>
+
+			<xsl:variable name="href">
+				<xsl:choose>
+					<xsl:when test="reftype/@id=74 and starts-with(detail[@id=289], 'image')">
+						<xsl:text>../popup/</xsl:text>
+						<xsl:value-of select="id"/>
+						<xsl:text>?width=878&amp;amp;height=566</xsl:text>
+					</xsl:when>
+					<xsl:when test="reftype/@id=74 and starts-with(detail[@id=289], 'audio')">
+						<xsl:text>../popup/</xsl:text>
+						<xsl:value-of select="id"/>
+						<xsl:text>?height=436</xsl:text>
+					</xsl:when>
+					<xsl:when test="reftype/@id=74 and starts-with(detail[@id=289], 'video')">
+						<xsl:text>../popup/</xsl:text>
+						<xsl:value-of select="id"/>
+						<xsl:text>?height=503</xsl:text>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="id"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+
+			<li>
+				<a href="{$href}" class="{$class}">
 					<xsl:choose>
-						<xsl:when test="reftype/@id=74 and starts-with(detail[@id=289], 'image')">
-							<xsl:text>../popup/</xsl:text>
-							<xsl:value-of select="id"/>
-							<xsl:text>?width=878&amp;amp;height=566</xsl:text>
-						</xsl:when>
-						<xsl:when test="reftype/@id=74 and starts-with(detail[@id=289], 'audio')">
-							<xsl:text>../popup/</xsl:text>
-							<xsl:value-of select="id"/>
-							<xsl:text>?height=436</xsl:text>
-						</xsl:when>
-						<xsl:when test="reftype/@id=74 and starts-with(detail[@id=289], 'video')">
-							<xsl:text>../popup/</xsl:text>
-							<xsl:value-of select="id"/>
-							<xsl:text>?height=503</xsl:text>
+						<xsl:when test="detail[@id=160]">
+							<xsl:value-of select="detail[@id=160]"/>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:value-of select="id"/>
+							<xsl:value-of select="title"/>
 						</xsl:otherwise>
 					</xsl:choose>
-				</xsl:variable>
-
-				<li>
-					<a href="{$href}" class="{$class}">
-						<xsl:choose>
-							<xsl:when test="detail[@id=160]">
-								<xsl:value-of select="detail[@id=160]"/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of select="title"/>
-							</xsl:otherwise>
-						</xsl:choose>
-					</a>
-				</li>
-			</xsl:otherwise>
-		</xsl:choose>
+				</a>
+			</li>
+		</xsl:for-each>
 	</xsl:template>
+
 
 	<xsl:template match="related[reftype/@id=1]">
 		<!-- external links: link to external link, new window, no preview -->
 		<xsl:param name="matches"/>
-		<xsl:choose>
-			<xsl:when test="$matches">
-				<xsl:apply-templates select="$matches">
-					<xsl:sort select="detail[@id=160]"/>
-				</xsl:apply-templates>
-			</xsl:when>
-			<xsl:otherwise>
-				<li>
-					<a href="{detail[@id=198]}" target="_blank">
-						<xsl:choose>
-							<xsl:when test="detail[@id=160]">
-								<xsl:value-of select="detail[@id=160]"/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of select="title"/>
-							</xsl:otherwise>
-						</xsl:choose>
-					</a>
-				</li>
-			</xsl:otherwise>
-		</xsl:choose>
+		<xsl:for-each select="$matches">
+			<xsl:sort select="detail[@id=160]"/>
+			<li>
+				<a href="{detail[@id=198]}" target="_blank">
+					<xsl:choose>
+						<xsl:when test="detail[@id=160]">
+							<xsl:value-of select="detail[@id=160]"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="title"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</a>
+			</li>
+		</xsl:for-each>
 	</xsl:template>
 
 </xsl:stylesheet>

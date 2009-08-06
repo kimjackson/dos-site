@@ -204,43 +204,43 @@
 	<xsl:template match="reference[reftype/@id=151]" mode="sidebar">
 		<div id="connections">
 			<h3>Connections</h3>
-			<xsl:call-template name="related_entities_by_type"/>
+			<xsl:call-template name="relatedEntitiesByType"/>
 			<xsl:call-template name="connections"/>
 		</div>
 	</xsl:template>
 
 
-	<xsl:template name="related_entities_by_type">
+	<xsl:template name="relatedEntitiesByType">
 
-		<xsl:call-template name="related_items">
+		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">People</xsl:with-param>
 			<xsl:with-param name="items" select="related[reftype/@id=151][detail[@id=523] = 'Person']"/>
 		</xsl:call-template>
-		<xsl:call-template name="related_items">
+		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Artefacts</xsl:with-param>
 			<xsl:with-param name="items" select="related[reftype/@id=151][detail[@id=523] = 'Artefact']"/>
 		</xsl:call-template>
-		<xsl:call-template name="related_items">
+		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Buildings</xsl:with-param>
 			<xsl:with-param name="items" select="related[reftype/@id=151][detail[@id=523] = 'Building']"/>
 		</xsl:call-template>
-		<xsl:call-template name="related_items">
+		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Events</xsl:with-param>
 			<xsl:with-param name="items" select="related[reftype/@id=151][detail[@id=523] = 'Event']"/>
 		</xsl:call-template>
-		<xsl:call-template name="related_items">
+		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Natural features</xsl:with-param>
 			<xsl:with-param name="items" select="related[reftype/@id=151][detail[@id=523] = 'Natural feature']"/>
 		</xsl:call-template>
-		<xsl:call-template name="related_items">
+		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Organisations</xsl:with-param>
 			<xsl:with-param name="items" select="related[reftype/@id=151][detail[@id=523] = 'Organisation']"/>
 		</xsl:call-template>
-		<xsl:call-template name="related_items">
+		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Places</xsl:with-param>
 			<xsl:with-param name="items" select="related[reftype/@id=151][detail[@id=523] = 'Place']"/>
 		</xsl:call-template>
-		<xsl:call-template name="related_items">
+		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Structures</xsl:with-param>
 			<xsl:with-param name="items" select="related[reftype/@id=151][detail[@id=523] = 'Structure']"/>
 		</xsl:call-template>

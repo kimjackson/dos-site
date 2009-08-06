@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xi="http://www.w3.org/2001/XInclude"
-                exclude-result-prefixes="xi"
+                xmlns:str="http://exslt.org/strings"
+                exclude-result-prefixes="xi str"
                 version="1.0">
 
 	<xsl:template name="xmldoc" match="reference[reftype/@id=98]">
@@ -37,66 +38,59 @@
 
 	<xsl:template match="reverse-pointer[@id=322][reftype/@id=99]">
 		<xsl:param name="matches"/>
-		<xsl:choose>
-			<xsl:when test="$matches">
 
-				<xsl:call-template name="setup_refs"/>
+		<xsl:call-template name="setupRefs"/>
 
-				<xsl:apply-templates select="$matches">
-					<!-- somewhat cumbersome way of sorting based on annotation position: -->
-					<xsl:sort select="substring-before(detail[@id=539], ',')" data-type="number"/>
-					<!--xsl:sort select="substring-before(substring-after(detail[@id=539], ','), ',')" data-type="number"/-->
-					<xsl:sort select="substring-after(detail[@id=539], ',')" data-type="text"/>
-					<!--xsl:sort data-type="text" select="regexp:replace(detail[@id=539], '(,|^)(\d)(?!\d)', 'g', '$10$2')"/-->
-					<xsl:sort select="detail[@id=329]" data-type="number"/>
-				</xsl:apply-templates>
+		<xsl:for-each select="$matches">
+			<xsl:sort select="str:split(detail[@id=539], ',')[1]" data-type="number"/>
+			<xsl:sort select="str:split(detail[@id=539], ',')[2]" data-type="number"/>
+			<xsl:sort select="str:split(detail[@id=539], ',')[3]" data-type="number"/>
+			<xsl:sort select="str:split(detail[@id=539], ',')[4]" data-type="number"/>
+			<xsl:sort select="detail[@id=329]" data-type="number"/>
 
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:choose>
-					<xsl:when test="detail[@id=359]='Annotation Multimedia'">
-						<xsl:if test="pointer[@id=199][reftype/@id=74]">
-							<xsl:choose>
-								<xsl:when test="starts-with(pointer[@id=199]/detail[@id=289], 'image')">
-									<div class="annotation-img annotation-id-{id}">
-										<a href="../popup/{pointer[@id=199]/id}?width=878&amp;amp;height=566" class="popup preview-{pointer[@id=199]/id}c{id}">
-											<img>
-												<xsl:attribute name="src">
-													<xsl:call-template name="getFileURL">
-														<xsl:with-param name="file" select="pointer[@id=199]/detail[@id=221]"/>
-														<xsl:with-param name="size" select="'small'"/>
-													</xsl:call-template>
-												</xsl:attribute>
-											</img>
-										</a>
-									</div>
-								</xsl:when>
-								<xsl:when test="starts-with(pointer[@id=199]/detail[@id=289], 'audio')">
-									<div class="annotation-img annotation-id-{id}">
-										<a href="../popup/{pointer[@id=199]/id}?width=436" class="popup preview-{pointer[@id=199]/id}c{id}">
-											<img src="{$urlbase}images/img-entity-audio.jpg"/>
-										</a>
-									</div>
-								</xsl:when>
-							</xsl:choose>
-							<xsl:call-template name="add_ref">
-								<xsl:with-param name="ref" select="."/>
-								<xsl:with-param name="hide">true</xsl:with-param>
-							</xsl:call-template>
-						</xsl:if>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:call-template name="add_ref">
+			<xsl:choose>
+				<xsl:when test="detail[@id=359]='Annotation Multimedia'">
+					<xsl:if test="pointer[@id=199][reftype/@id=74]">
+						<xsl:choose>
+							<xsl:when test="starts-with(pointer[@id=199]/detail[@id=289], 'image')">
+								<div class="annotation-img annotation-id-{id}">
+									<a href="../popup/{pointer[@id=199]/id}?width=878&amp;amp;height=566" class="popup preview-{pointer[@id=199]/id}c{id}">
+										<img>
+											<xsl:attribute name="src">
+												<xsl:call-template name="getFileURL">
+													<xsl:with-param name="file" select="pointer[@id=199]/detail[@id=221]"/>
+													<xsl:with-param name="size" select="'small'"/>
+												</xsl:call-template>
+											</xsl:attribute>
+										</img>
+									</a>
+								</div>
+							</xsl:when>
+							<xsl:when test="starts-with(pointer[@id=199]/detail[@id=289], 'audio')">
+								<div class="annotation-img annotation-id-{id}">
+									<a href="../popup/{pointer[@id=199]/id}?width=436" class="popup preview-{pointer[@id=199]/id}c{id}">
+										<img src="{$urlbase}images/img-entity-audio.jpg"/>
+									</a>
+								</div>
+							</xsl:when>
+						</xsl:choose>
+						<xsl:call-template name="addRef">
 							<xsl:with-param name="ref" select="."/>
+							<xsl:with-param name="hide">true</xsl:with-param>
 						</xsl:call-template>
-					</xsl:otherwise>
-				</xsl:choose>
-			</xsl:otherwise>
-		</xsl:choose>
+					</xsl:if>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:call-template name="addRef">
+						<xsl:with-param name="ref" select="."/>
+					</xsl:call-template>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:for-each>
 	</xsl:template>
 
 
-	<xsl:template name="setup_refs">
+	<xsl:template name="setupRefs">
 		<script type="text/javascript">
 			if (! window["refs"]) {
 				window["refs"] = [];
@@ -104,7 +98,7 @@
 		</script>
 	</xsl:template>
 
-	<xsl:template name="add_ref">
+	<xsl:template name="addRef">
 		<xsl:param name="ref"/>
 		<xsl:param name="hide"/>
 		<script type="text/javascript">
@@ -149,7 +143,7 @@
 
 		<div id="connections">
 			<h3>Connections</h3>
-			<xsl:call-template name="related_entities_by_type"/>
+			<xsl:call-template name="relatedEntitiesByType"/>
 			<xsl:call-template name="connections"/>
 		</div>
 
