@@ -51,8 +51,8 @@
 						<xsl:for-each select="exsl:node-set($sources)/source">
 						{
 							title: "<xsl:value-of select="title"/>",
-							data: {
-								type: "kml",
+							type: "kml",
+							options: {
 								url: "<xsl:value-of select="url"/>"
 							}
 						}<xsl:if test="position() != last()">,</xsl:if>
@@ -72,10 +72,6 @@
 						</xsl:for-each>
 					]
 				};
-
-				$(function() {
-					initTMap();
-				});
 			</script>
 
 		</div>

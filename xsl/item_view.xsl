@@ -46,7 +46,7 @@
 					<script src="http://maps.google.com/maps?file=api&amp;amp;v=2&amp;amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w" type="text/javascript"/>
 					<script src="{$urlbase}timeline/timeline_js/timeline-api.js" type="text/javascript"/>
 					<script src="{$urlbase}timemap.js/timemap.js" type="text/javascript"/>
-					<script src="{$urlbase}timemap.js/kmlparser.js" type="text/javascript"/>
+					<script src="{$urlbase}timemap.js/loaders/kml.js" type="text/javascript"/>
 					<script src="{$urlbase}timemap.js/manipulation.js" type="text/javascript"/>
 					<script src="{$urlbase}js/mapping.js" type="text/javascript"/>
 				</xsl:if>

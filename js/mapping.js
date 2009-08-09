@@ -101,18 +101,6 @@ function initTMap(mini) {
 	//tl_theme.mouseWheel = "zoom";
 	tl_theme.autoWidth = true;
 
-	// modify preset timemap themes
-	var opts = { eventIconPath: RelBrowser.baseURL + "timemap.js/images/" };
-	TimeMapDataset.themes = {
-		'red': TimeMapDataset.redTheme(opts),
-		'blue': TimeMapDataset.blueTheme(opts),
-		'green': TimeMapDataset.greenTheme(opts),
-		'ltblue': TimeMapDataset.ltblueTheme(opts),
-		'orange': TimeMapDataset.orangeTheme(opts),
-		'yellow': TimeMapDataset.yellowTheme(opts),
-		'purple': TimeMapDataset.purpleTheme(opts)
-	};
-
 	var onDataLoaded = function(tm) {
 		// find centre date, choose scale to show entire dataset
 		var d = new Date();
@@ -150,7 +138,8 @@ function initTMap(mini) {
 			showMapTypeCtrl: false,
 			mapTypes: mapTypes,
 			mapType: mapTypes.length > 3 ? mapTypes[3] : mapTypes[0],
-			theme: TimeMapDataset.themes.blue
+			theme: TimeMap.themes.blue({ eventIconPath: RelBrowser.baseURL + "timemap.js/images/" }),
+			openInfoWindow: mini ? (function() { return false; }) : null
 		},
 		bandInfo: [ {
 			theme: tl_theme,
@@ -226,3 +215,12 @@ function findScale(start, end, scales, timelineWidth) {
 	return i;
 }
 
+$(function () {
+	var mini = window.mapdata.mini || false;
+	var $img = $("img.entity-picture");
+	if ($img.length > 0  &&  $img.width() === 0) {
+		$img.load(function () { initTMap(mini); });
+	} else {
+		initTMap(mini);
+	}
+});

@@ -1085,6 +1085,11 @@ img.entity-picture {
 	position: absolute;
 	visibility: hidden;
 }
+#timeline.entity-timeline .timeline-event-icon,
+#timeline.entity-timeline .timeline-event-label,
+#timeline.entity-timeline .timeline-event-tape {
+	cursor: default;
+}
 
 #entry-page-controls-top, #entry-page-controls-bottom {
 	text-align: right;

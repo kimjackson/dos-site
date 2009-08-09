@@ -50,29 +50,25 @@
 					</xsl:if>
 				</div>
 				<div id="timeline">
-					<xsl:if test="not(reverse-pointer[reftype/@id=150]/detail[@id=177])">
-						<xsl:attribute name="class">hide</xsl:attribute>
-					</xsl:if>
+					<xsl:attribute name="class">
+						<xsl:text>entity-timeline</xsl:text>
+						<xsl:if test="not(reverse-pointer[reftype/@id=150]/detail[@id=177])">
+							<xsl:text> hide</xsl:text>
+						</xsl:if>
+					</xsl:attribute>
 				</div>
 				<div class="clearfix"/>
 				<script type="text/javascript">
 					window.mapdata = {
+						mini: true,
 						timemap: [ {
-							data: {
-								type: "kml",
+							type: "kml",
+							options: {
 								url: "../kml/full/rename/<xsl:value-of select="id"/>"
 								//url: "<xsl:value-of select="$urlbase"/>kml/full/<xsl:value-of select="id"/>.kml"
 							}
 						} ]
 					};
-					$(function () {
-						var $img = $("img.entity-picture");
-						if ($img.length > 0) {
-							$img.load(function () { initTMap(true); });
-						} else {
-							initTMap(true);
-						}
-					});
 				</script>
 			</xsl:if>
 
