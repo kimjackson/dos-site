@@ -2,6 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 	<xsl:template name="media" match="reference[reftype/@id=74]">
+		
 		<table>
 			<tr>
 				<td align="center">
@@ -58,6 +59,11 @@
 								</xsl:with-param>
 							</xsl:call-template>
 						<br/>
+					</xsl:if>
+					<xsl:if test="not (detail[@id=223] or detail[@id=221]) and url">					
+						<div  id = "img-external">
+							<img src ="{url}"></img>
+						</div>
 					</xsl:if>
 					<xsl:variable name="ftype">
 						<xsl:call-template name="get-file-extension">
