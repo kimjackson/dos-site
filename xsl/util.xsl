@@ -46,41 +46,18 @@
 	</xsl:template>
 
 
-	<!--xsl:template name="icon">
-		<xsl:param name="record"/>
-		<xsl:param name="size"/>
-
-		<xsl:variable name="name">
-			<xsl:choose>
-				<xsl:when test="$record[reftype/@id=151][starts-with(detail[@id=523], 'Person')]">people</xsl:when>
-				<xsl:when test="$record[reftype/@id=74][starts-with(detail[@id=289], 'image')]">video</xsl:when>
-				<xsl:when test="$record[reftype/@id=74][starts-with(detail[@id=289], 'audio')]">video</xsl:when>
-				<xsl:when test="$record[reftype/@id=74][starts-with(detail[@id=289], 'video')]">video</xsl:when>
-				<xsl:otherwise>people</xsl:otherwise>
-			</xsl:choose>
-		</xsl:variable>
-
-		<xsl:variable name="pixels">
-			<xsl:choose>
-				<xsl:when test="$size = 'small'">16</xsl:when>
-				<xsl:when test="$size = 'medium'">32</xsl:when>
-				<xsl:when test="$size = 'big'">64</xsl:when>
-			</xsl:choose>
-		</xsl:variable>
-
-		<img src="{$urlbase}images/{$name}-{$pixels}.jpg"/>
-	</xsl:template-->
-
-
-	<!-- static, pre-generated files -->
-	<!--xsl:template name="getFileURL">
+	<xsl:template name="getFileURL">
 		<xsl:param name="file"/>
 		<xsl:param name="size"/>
+		<!-- static, pre-generated files -->
+		<!--
 		<xsl:variable name="dir">
 			<xsl:choose>
-				<xsl:when test="$size = 'small'">100</xsl:when>
-				<xsl:when test="$size = 'medium'">300</xsl:when>
-				<xsl:when test="$size = 'full'">full</xsl:when>
+				<xsl:when test="$size = 'thumbnail'">thumbnail</xsl:when>
+				<xsl:when test="$size = 'small'">small</xsl:when>
+				<xsl:when test="$size = 'medium'">medium</xsl:when>
+				<xsl:when test="$size = 'wide'">wide</xsl:when>
+				<xsl:when test="$size = 'large'">large</xsl:when>
 				<xsl:otherwise>full</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
@@ -90,13 +67,8 @@
 		<xsl:value-of select="$dir"/>
 		<xsl:text>/</xsl:text>
 		<xsl:value-of select="$file/file_id"/>
-
-	</xsl:template-->
-
-	<!-- live from Heurist -->
-	<xsl:template name="getFileURL">
-		<xsl:param name="file"/>
-		<xsl:param name="size"/>
+		-->
+		<!-- live from Heurist -->
 		<xsl:choose>
 			<xsl:when test="$size = 'thumbnail'">
 				<xsl:value-of select="$file/file_thumb_url"/>

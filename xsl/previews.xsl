@@ -10,10 +10,10 @@
 			</xsl:call-template>
 		</xsl:for-each>
 		<!-- related records -->
-		<xsl:for-each select="$root/reverse-pointer[reftype/@id=52]">
+		<xsl:for-each select="$root/related">
 			<xsl:call-template name="previewStub">
-				<xsl:with-param name="record" select="current()[@id=199]/pointer[@id=202] | current()[@id=202]/pointer[@id=199]"/>
-				<xsl:with-param name="context" select="id"/>
+				<xsl:with-param name="record" select="."/>
+				<xsl:with-param name="context" select="@id"/>
 			</xsl:call-template>
 		</xsl:for-each>
 

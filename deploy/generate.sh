@@ -4,16 +4,20 @@ echo "select file_id, file_nonce from files;" | mysql -s -u readonly -pmitnick h
 # generate resized images
 echo "select file_nonce from files where file_mimetype like 'image%';" | mysql -s -u readonly -pmitnick heuristdb-dos | \
 while read nonce; do
-	if [[ ! -e files/thumbnail/$nonce ]] \
-	|| [[ ! -e files/small/$nonce ]] \
-	|| [[ ! -e files/medium/$nonce ]] \
-	|| [[ ! -e files/wide/$nonce ]] \
-	|| [[ ! -e files/large/$nonce ]]; then
-		wget -O files/thumbnail/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&w=150\&h=150;
-		wget -O files/small/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&w=150;
+	if [[ ! -e files/thumbnail/$nonce ]]; then
+		wget -O files/thumbnail/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&w=148\&h=148;
+	fi
+	if [[ ! -e files/small/$nonce ]]; then
+		wget -O files/small/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&w=148;
+	fi
+	if [[ ! -e files/medium/$nonce ]]; then
 		wget -O files/medium/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&h=180;
+	fi
+	if [[ ! -e files/wide/$nonce ]]; then
 		wget -O files/wide/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&maxw=800\&maxh=400;
-		wget -O files/large/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&maxw=630;
+	fi
+	if [[ ! -e files/large/$nonce ]]; then
+		wget -O files/large/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&maxw=698;
 	fi
 done
 
