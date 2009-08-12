@@ -26,7 +26,7 @@
 
  <map:resources>
   <map:resource name="preview">
-   <map:generate src="cocoon:/xml0/{id}"/>
+   <map:generate src="cocoon:/xml1/{id}"/>
    <map:transform src="xsl/preview-standalone.xsl">
     <map:parameter name="context" value="{context}"/>
    </map:transform>
@@ -38,13 +38,15 @@
  <map:pipelines>
   <map:pipeline>
 
-   <map:match pattern="xml0/*">
-    <map:generate src="http://dos.heuristscholar.org/heurist/php/xmlexport.php?q=ids:{1}&amp;w=all&amp;rev=yes&amp;related_details=160,169,174,177,178,191,199,202,291,223,221,230,289,323,324,325,326,327,328,329,330,526,529,569&amp;depth=0"/>
+   <map:match pattern="xml1/*">
+    <map:generate src="http://dos.heuristscholar.org/heurist/php/hml.php?q=ids:{1}&amp;depth=1"/>
+    <map:transform src="xsl/heurist_legacy_xml.xsl"/>
     <map:serialize type="xml"/>
    </map:match>
 
-   <map:match pattern="xml1/*">
-    <map:generate src="http://dos.heuristscholar.org/heurist/php/xmlexport.php?q=ids:{1}&amp;w=all&amp;rev=yes&amp;related_details=160,169,174,177,178,191,291,223,221,230,289,323,324,325,326,327,328,329,330,508,523,526,529,569&amp;depth=1"/>
+   <map:match pattern="xml2/*">
+    <map:generate src="http://dos.heuristscholar.org/heurist/php/hml.php?q=ids:{1}&amp;depth=2"/>
+    <map:transform src="xsl/heurist_legacy_xml.xsl"/>
     <map:serialize type="xml"/>
    </map:match>
 
@@ -65,7 +67,7 @@
    </map:match>
 
    <map:match pattern="item/*">
-    <map:generate src="cocoon:/xml1/{1}" label="xmlexport"/>
+    <map:generate src="cocoon:/xml2/{1}" label="xmlexport"/>
     <map:transform src="xsl/item_view.xsl" label="transformed"/>
     <map:transform type="xinclude" label="wordml"/>
     <map:transform src="xsl/wordml2TEI.xsl" label="tei"/>
@@ -88,7 +90,7 @@
    </map:match>
 
    <map:match pattern="popup/*">
-    <map:generate src="cocoon:/xml0/{1}"/>
+    <map:generate src="cocoon:/xml1/{1}"/>
     <map:transform src="xsl/popup.xsl"/>
     <map:serialize type="html"/>
    </map:match>
@@ -106,7 +108,7 @@
    <map:match pattern="kml/full/rename/*">
     <map:aggregate element="data">
 	 <map:part src="cocoon:/kml/full/{1}"/>
-	 <map:part src="cocoon:/xml1/{1}"/>
+	 <map:part src="cocoon:/xml2/{1}"/>
     </map:aggregate>
     <map:transform src="xsl/kml_rename.xsl"/>
     <map:serialize type="xml"/>
@@ -115,7 +117,7 @@
    <map:match pattern="kml/summary/rename/*">
     <map:aggregate element="data">
 	 <map:part src="cocoon:/kml/summary/{1}"/>
-	 <map:part src="cocoon:/xml1/{1}"/>
+	 <map:part src="cocoon:/xml2/{1}"/>
     </map:aggregate>
     <map:transform src="xsl/kml_rename.xsl"/>
     <map:serialize type="xml"/>
