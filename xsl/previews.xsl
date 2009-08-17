@@ -71,13 +71,13 @@
 			</xsl:call-template>
 		</xsl:for-each>
 		<!-- role pages: source -->
-		<xsl:for-each select="$root/reverse-pointer[reftype/@id=150][@id=529]">
+		<xsl:for-each select="$root/reverse-pointer[reftype/@id=150][@id=529][pointer/@id=528]">
 			<xsl:call-template name="previewStub">
 				<xsl:with-param name="record" select="current()/pointer[@id=528]"/>
 			</xsl:call-template>
 		</xsl:for-each>
 		<!-- role pages: target -->
-		<xsl:for-each select="$root/reverse-pointer[reftype/@id=150][@id=529]">
+		<xsl:for-each select="$root/reverse-pointer[reftype/@id=150][@id=529][pointer/@id=527]">
 			<xsl:call-template name="previewStub">
 				<xsl:with-param name="record" select="current()/pointer[@id=527]"/>
 			</xsl:call-template>

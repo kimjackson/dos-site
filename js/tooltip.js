@@ -31,7 +31,6 @@ $(document).ready(function () {
 	// load preview contents
 	$("#previews div").each(function () {
 		$(this).load(this.id.replace(/^preview-(.*)$/, "../preview/$1"));
-		// previews/$1
 	});
 
 	DOS.ToolTip.addToolTips($("a[class*=preview-]:not(.annotation)"));

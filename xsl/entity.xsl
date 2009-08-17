@@ -95,9 +95,11 @@
 						<h2>
 							<xsl:value-of select="detail[@id=160]"/>
 						</h2>
-						<span class="contributor">
-							by: <a href="{pointer[@id=538]/id}" class="preview-{pointer[@id=538]/id}"><xsl:value-of select="pointer[@id=538]/title"/></a>
-						</span>
+						<xsl:if test="pointer[@id=538]">
+							<span class="contributor">
+								by: <a href="{pointer[@id=538]/id}" class="preview-{pointer[@id=538]/id}"><xsl:value-of select="pointer[@id=538]/title"/></a>
+							</span>
+						</xsl:if>
 						<span class="copyright"><!-- FIXME --></span>
 					</div>
 					<div class="{$content_class}">
