@@ -525,7 +525,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		if (initAnnotation) {
 			initPage = String(_findAnnotationPage(initAnnotation));
 		} else {
-			initPage = "1";
+			initPage = "all";
 		}
 	}
 	if (! initAnnotation) {
