@@ -1,3 +1,9 @@
+# make sure we go direct to the server!
+unset http_proxy
+
+PIPELINE=http://heuristscholar.org/cocoon/relbrowser-kj
+
+
 # copy files
 echo "select file_id, file_nonce from files;" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id nonce; do cp /var/www/htdocs/uploaded-heurist-files/dos/$id files/full/$nonce; done
 
@@ -22,12 +28,15 @@ while read nonce; do
 done
 
 # generate pages for all appropriate records
-echo "select rec_id from records where rec_type in (153,151,103,74,91,152,98);" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O item/$id http://heuristscholar.org/cocoon/relbrowser-kj/item/$id; done
+echo "select rec_id from records where rec_type in (153,151,103,74,91,152,98);" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O item/$id $PIPELINE/item/$id; done
+
+# generate popups for all multimedia records
+echo "select rec_id from records where rec_type = 74;" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O popup/$id $PIPELINE/popup/$id; done
 
 # generate KML for all entities
-echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type = 526 and a.rd_val = 'TimePlace' and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O kml/summary/$id.kml http://heuristscholar.org/cocoon/relbrowser-kj/kml/summary/rename/$id; done
+echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type = 526 and a.rd_val = 'TimePlace' and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O kml/summary/$id.kml $PIPELINE/kml/summary/rename/$id; done
 
-echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type in (177,178,230) and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O kml/full/$id.kml http://heuristscholar.org/cocoon/relbrowser-kj/kml/full/rename/$id; done
+echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type in (177,178,230) and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O kml/full/$id.kml $PIPELINE/kml/full/rename/$id; done
 
 # generate browsing data
 php entities-json.php Artefact > browse/artefacts.js
@@ -43,3 +52,9 @@ php entities-json.php Entry > browse/entries.js
 php entities-json.php Map > browse/maps.js
 php entities-json.php Term > browse/subjects.js
 php entities-json.php Role > browse/roles.js
+
+# generate pages quietly and track progress at 1 minute intervals
+#rm progress
+#while [ 1 ]; do ls -1 item/ | wc -l >> progress; sleep 60; done &
+#echo "select rec_id from records where rec_type in (153,151,103,74,91,152,98);" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O item/$id $PIPELINE/item/$id 2>/dev/null; done &
+

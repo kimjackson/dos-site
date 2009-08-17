@@ -49,6 +49,7 @@
 	<xsl:template name="getFileURL">
 		<xsl:param name="file"/>
 		<xsl:param name="size"/>
+		<xsl:param name="fq"/>
 		<!-- static, pre-generated files -->
 		<!--
 		<xsl:variable name="dir">
@@ -62,7 +63,14 @@
 			</xsl:choose>
 		</xsl:variable>
 
-		<xsl:value-of select="$urlbase"/>
+		<xsl:choose>
+			<xsl:when test="$fq">
+				<xsl:value-of select="$fullurlbase"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$urlbase"/>
+			</xsl:otherwise>
+		</xsl:choose>
 		<xsl:text>files/</xsl:text>
 		<xsl:value-of select="$dir"/>
 		<xsl:text>/</xsl:text>
