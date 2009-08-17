@@ -51,7 +51,6 @@
 		<xsl:param name="size"/>
 		<xsl:param name="fq"/>
 		<!-- static, pre-generated files -->
-		<!--
 		<xsl:variable name="dir">
 			<xsl:choose>
 				<xsl:when test="$size = 'thumbnail'">thumbnail</xsl:when>
@@ -75,8 +74,8 @@
 		<xsl:value-of select="$dir"/>
 		<xsl:text>/</xsl:text>
 		<xsl:value-of select="$file/file_id"/>
-		-->
 		<!-- live from Heurist -->
+		<!--
 		<xsl:choose>
 			<xsl:when test="$size = 'thumbnail'">
 				<xsl:value-of select="$file/file_thumb_url"/>
@@ -102,6 +101,7 @@
 				<xsl:value-of select="$file/file_fetch_url"/>
 			</xsl:otherwise>
 		</xsl:choose>
+		-->
 	</xsl:template>
 
 
