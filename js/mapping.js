@@ -129,6 +129,24 @@ function initTMap(mini) {
 		renderTimelineZoom();
 	};
 
+	var openInfoWindowHandler = function () {
+		// grab the preview content
+		var html = $("#preview-" + this.dataset.opts.preview + " .balloon-middle").html();
+		// scroll timeline if necessary
+		if (this.placemark && !this.visible && this.event) {
+			var topband = this.dataset.timemap.timeline.getBand(0);
+			topband.setCenterVisibleDate(this.event.getStart());
+		}
+		// open window
+		if (this.getType() == "marker") {
+			this.placemark.openInfoWindowHtml(html);
+		} else {
+			this.map.openInfoWindowHtml(this.getInfoPoint(), html);
+		}
+		// custom functions will need to set this as well
+		this.selected = true;
+	};
+
 	window.tmap = TimeMap.init({
 		mapId: "map", // Id of map div element (required)
 		timelineId: "timeline", // Id of timeline div element (required)
@@ -139,7 +157,7 @@ function initTMap(mini) {
 			mapTypes: mapTypes,
 			mapType: mapTypes.length > 3 ? mapTypes[3] : mapTypes[0],
 			theme: TimeMap.themes.blue({ eventIconPath: RelBrowser.baseURL + "timemap.js/images/" }),
-			openInfoWindow: mini ? (function() { return false; }) : null
+			openInfoWindow: mini ? function() { return false; } : openInfoWindowHandler
 		},
 		bandInfo: [ {
 			theme: tl_theme,

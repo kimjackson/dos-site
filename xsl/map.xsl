@@ -42,6 +42,7 @@
 							<title><xsl:value-of select="detail[@id=160]"/></title>
 							<!--url><xsl:value-of select="$urlbase"/>kml/summary/<xsl:value-of select="id"/>.kml</url-->
 							<url>../kml/summary/rename/<xsl:value-of select="id"/></url>
+							<preview><xsl:value-of select="id"/>c<xsl:value-of select="@id"/></preview>
 						</source>
 					</xsl:for-each>
 				</xsl:variable>
@@ -53,7 +54,8 @@
 							title: "<xsl:value-of select="title"/>",
 							type: "kml",
 							options: {
-								url: "<xsl:value-of select="url"/>"
+								url: "<xsl:value-of select="url"/>",
+								preview: "<xsl:value-of select="preview"/>",
 							}
 						}<xsl:if test="position() != last()">,</xsl:if>
 						</xsl:for-each>
