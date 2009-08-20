@@ -9,16 +9,12 @@
 		<div>
 
 			<!-- dc.description -->
-			<xsl:if test="detail[@id=303]">
-				<p>
-					<xsl:value-of select="detail[@id=303]"/>
+			<xsl:if test="detail[@id=191]">
+				<p class="map-description">
+					<xsl:value-of select="detail[@id=191]"/>
 				</p>
 			</xsl:if>
 
-			<div id="map-controls">
-				<div id="map-types"/>
-				<div id="map-key"/>
-			</div>
 			<div id="map" class="full"/>
 			<div id="timeline-zoom"/>
 			<div id="timeline"/>
@@ -47,7 +43,7 @@
 					</xsl:for-each>
 				</xsl:variable>
 
-				window.mapdata = {
+				RelBrowser.Mapping.mapdata = {
 					timemap: [
 						<xsl:for-each select="exsl:node-set($sources)/source">
 						{

@@ -1042,30 +1042,19 @@ img.entity-picture {
 #map {
 	margin-bottom: 8px;
 	overflow: hidden;
+	border: 1px solid #320a0a;
 }
 #map.full {
-	width: 600px;
 	height: 400px;
 }
 #map.entity-map {
 	height: 180px;
-	border: 1px solid #320a0a;
 }
 #map.hide {
 	display: none;
 }
-#map-controls {
-	float: right;
-	width: 100px;
-}
-#map-types div {
-	margin-top: 5px;
-}
-.map-type.selected {
-	background-color: yellow;
-}
-#map-key {
-	margin-top: 50px;
+.map-description {
+	margin-bottom: 20px;
 }
 
 #timeline {

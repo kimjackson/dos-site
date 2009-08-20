@@ -59,7 +59,7 @@
 				</div>
 				<div class="clearfix"/>
 				<script type="text/javascript">
-					window.mapdata = {
+					RelBrowser.Mapping.mapdata = {
 						mini: true,
 						timemap: [ {
 							type: "kml",
