@@ -192,7 +192,12 @@ RelBrowser.Mapping = {
 		openInfoWindowHandler = function () {
 			var html, topband;
 			// grab the preview content
-			html = $("#preview-" + this.dataset.opts.preview + " .balloon-middle").html();
+			if (this.dataset.opts.preview) {
+				html = $("#preview-" + this.dataset.opts.preview + " .balloon-middle").html();
+			}
+			if (! html) {
+				html = this.dataset.getTitle();
+			}
 			// scroll timeline if necessary
 			if (this.placemark && !this.visible && this.event) {
 				topband = this.dataset.timemap.timeline.getBand(0);

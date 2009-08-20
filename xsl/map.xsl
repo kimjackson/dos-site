@@ -50,8 +50,10 @@
 							title: "<xsl:value-of select="title"/>",
 							type: "kml",
 							options: {
-								url: "<xsl:value-of select="url"/>",
+								<xsl:if test="preview">
 								preview: "<xsl:value-of select="preview"/>",
+								</xsl:if>
+								url: "<xsl:value-of select="url"/>"
 							}
 						}<xsl:if test="position() != last()">,</xsl:if>
 						</xsl:for-each>
