@@ -5,19 +5,34 @@
 		
 		<div id="artwork" class="artwork">
 		
-		<xsl:call-template name="images"/>
+		<xsl:choose>
+			<xsl:when test="not (detail[@id=224]) and url">					
+				<div  id = "img-external">
+					<img src ="{url}"></img>
+				</div>
+			</xsl:when>
+			<xsl:when test="detail[@id=224]">
+				<img src="{detail[@id=224]/file_fetch_url}" vspace="10" hspace="10" align="center"/>
+				</xsl:when>
+			 
+			
+			<xsl:otherwise>[no images found]</xsl:otherwise>
+		</xsl:choose>
+			
+		<p><xsl:call-template name="collection"/></p>
+		
+		<p><xsl:call-template name="artist"/></p>
+		
 		
 		<p><xsl:call-template name="medium"/></p>
 		
-		<p><b>width:</b> <xsl:call-template name="width-cm"/> cm<br/>
-		<b>height:</b> <xsl:call-template name="height-cm"/> cm<br/>
-		<b>width:</b> <xsl:call-template name="width-inches"/> inches<br/>
-		<b>height:</b> <xsl:call-template name="height-inches"/> inches</p>
+		
 			
 			<p><xsl:call-template name="description"/></p>
 			 
 			 
-			 
+			<p><xsl:call-template name="dimensions"/></p>
+			
 			<p>
 			<b>quality:</b> <xsl:call-template name="quality"/><br/>
 			<b>condition:</b> <xsl:call-template name="condition"/>
@@ -29,12 +44,18 @@
 		</div>
 	</xsl:template>
 	
-	<xsl:template name="images" match="detail[@id=224]">	
-			<a href="{detail/file_fetch_url}" target="_top">
-				<img src="{detail/file_thumb_url}&amp;w=400" border="1"/>
-			</a>
+	<xsl:template name="collection" match="pointer[@id=397]">
+		<!-- pointer to collection record -->
+		<xsl:value-of select="pointer[@id=397]/title"/>
+		<br/>
+		<xsl:value-of select="pointer[@id=397]/detail[@id=201]"/>
+		<!-- citation protocol -->
 	</xsl:template>
-	
+
+	<xsl:template name="artist" match="pointer[@id=580]">
+		<!-- pointer to artist record -->
+		<xsl:value-of select="pointer[@id=580]/title"/>
+	</xsl:template>
 	
 	<xsl:template name="description" match="detail[@id=303]">
 			<xsl:call-template name="paragraphise">
@@ -56,21 +77,15 @@
 		<xsl:value-of select="detail[@id=578]"/>
 	</xsl:template>
 	
-	<xsl:template name="width-cm" match="detail[@id=594]">
-		<xsl:value-of select="detail[@id=594]"/>
+	<xsl:template name="dimensions">
+		<xsl:if test="detail[@id=594]">
+		<xsl:value-of select="detail[@id=594]"/> cm <i>by </i> <xsl:value-of select="detail[@id=595]"/> cm
+		</xsl:if>
+		<br/>
+		
+		<xsl:if test="detail[@id=597]">
+		<xsl:value-of select="detail[@id=597]"/> inches <i>by</i> <xsl:value-of select="detail[@id=595]"/> inches
+		</xsl:if>
+	
 	</xsl:template>
-	
-	<xsl:template name="width-inches" match="detail[@id=596]">
-		<xsl:value-of select="detail[@id=596]"/>
-	</xsl:template>
-	
-	<xsl:template name="height-inches" match="detail[@id=597]">
-		<xsl:value-of select="detail[@id=597]"/>
-	</xsl:template>
-	
-	<xsl:template name="height-cm" match="detail[@id=595]">
-		<xsl:value-of select="detail[@id=595]"/>
-	</xsl:template>
-	
-	
 </xsl:stylesheet>
