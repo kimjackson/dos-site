@@ -175,7 +175,6 @@ img { border: 0 }
 #instructions {
 	width: 181px;
 	font: 9px/12px Verdana, Geneva, sans-serif;
-	text-align: justify;
 	padding: 0 16px 0 27px
 }
 
@@ -482,10 +481,6 @@ li.has-entry a {
 .list-term         { background: url(images/40x40/icon40-term.jpg) 0px 4px no-repeat }
 .list-video        { background: url(images/40x40/icon40-video.jpg) 0px 4px no-repeat }
 
-#resource {
-	text-align: justify
-}
-
 #resource img.resource-image {
 	border: 1px solid #320a0a;
 	margin: 0px 0px 17px 0px
@@ -567,7 +562,6 @@ li.has-entry a {
 
 #form-left-col {
 	width: 369px;
-	text-align: justify;
 	float: left
 }
 
@@ -918,8 +912,8 @@ img.entity-picture {
 	border: 1px solid #2f0103
 }
 
-.balloon-content p {
-	text-align: justify
+.map-balloon {
+	max-width: 300px;
 }
 
 .video-container {
@@ -962,10 +956,6 @@ img.entity-picture {
 	float: left;
 	margin: 0 15px 0 0;
 	border: 1px solid #2f0103
-}
-
-.video-content p {
-	text-align: justify
 }
 
 .fallback {

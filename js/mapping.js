@@ -146,8 +146,38 @@ RelBrowser.Mapping = {
 	},
 
 
+	openInfoWindowHandler: function () {
+		var $preview, content;
+
+		content = $(this).data("info");
+		if (! content) {
+			// grab the preview content
+			if (this.dataset.opts.preview) {
+				$preview = $("#preview-" + this.dataset.opts.preview + " .balloon-middle").clone();
+				$preview.removeClass("balloon-middle").addClass("map-balloon");
+				$(".balloon-content .clearfix", $preview).before(
+					"<p><a href='" + this.dataset.opts.target + "'>more &raquo;</a></p>"
+				);
+				content = $preview.get(0);
+			} else {
+				content = this.dataset.getTitle();
+			}
+			$(this).data("info", content);
+		}
+
+		// open window
+		if (this.getType() == "marker") {
+			this.placemark.openInfoWindow(content);
+		} else {
+			this.map.openInfoWindow(this.getInfoPoint(), content);
+		}
+		// custom functions will need to set this as well
+		this.selected = true;
+	},
+
+
 	initTMap: function (mini) {
-		var tl_theme, onDataLoaded, openInfoWindowHandler, M = RelBrowser.Mapping;
+		var tl_theme, onDataLoaded, M = RelBrowser.Mapping;
 
 		SimileAjax.History.enabled = false;
 
@@ -189,30 +219,6 @@ RelBrowser.Mapping = {
 			M.renderTimelineZoom();
 		};
 
-		openInfoWindowHandler = function () {
-			var html, topband;
-			// grab the preview content
-			if (this.dataset.opts.preview) {
-				html = $("#preview-" + this.dataset.opts.preview + " .balloon-middle").html();
-			}
-			if (! html) {
-				html = this.dataset.getTitle();
-			}
-			// scroll timeline if necessary
-			if (this.placemark && !this.visible && this.event) {
-				topband = this.dataset.timemap.timeline.getBand(0);
-				topband.setCenterVisibleDate(this.event.getStart());
-			}
-			// open window
-			if (this.getType() == "marker") {
-				this.placemark.openInfoWindowHtml(html);
-			} else {
-				this.map.openInfoWindowHtml(this.getInfoPoint(), html);
-			}
-			// custom functions will need to set this as well
-			this.selected = true;
-		};
-
 		M.tmap = TimeMap.init({
 			mapId: "map", // Id of map div element (required)
 			timelineId: "timeline", // Id of timeline div element (required)
@@ -222,7 +228,7 @@ RelBrowser.Mapping = {
 				showMapTypeCtrl: false,
 				mapType: M.customMapTypes[0] || G_NORMAL_MAP,
 				theme: TimeMap.themes.blue({ eventIconPath: RelBrowser.baseURL + "timemap.js/images/" }),
-				openInfoWindow: mini ? function () { return false; } : openInfoWindowHandler
+				openInfoWindow: mini ? function () { return false; } : RelBrowser.Mapping.openInfoWindowHandler
 			},
 			bandInfo: [ {
 				theme: tl_theme,

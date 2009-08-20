@@ -105,7 +105,7 @@
 					<div class="{$content_class}">
 						<p>
 							<xsl:value-of select="detail[@id=191]"/>
-							<br/><a href="{id}">&gt; more</a>
+							<br/><a href="{id}">more &#187;</a>
 						</p>
 					</div>
 				</div>
