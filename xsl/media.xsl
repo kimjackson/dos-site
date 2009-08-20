@@ -55,17 +55,6 @@
 				</xsl:when>
 			</xsl:choose>
 
-			<p>
-				<a target="_blank">
-					<xsl:attribute name="href">
-						<xsl:call-template name="getFileURL">
-							<xsl:with-param name="file" select="detail[@id=221]"/>
-						</xsl:call-template>
-					</xsl:attribute>
-					<xsl:text>View full size</xsl:text>
-				</a>
-			</p>
-
 		</div>
 
 	</xsl:template>
