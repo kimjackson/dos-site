@@ -267,9 +267,11 @@
 			</a>
 		</xsl:if>
 		<xsl:if test="$record/detail[@id=368]">
-			<xsl:text>: </xsl:text>
+			<xsl:text> </xsl:text>
 			<span class="contributor-id">
+				<xsl:text>[</xsl:text>
 				<xsl:value-of select="$record/detail[@id=368]"/>
+				<xsl:text>]</xsl:text>
 			</span>
 		</xsl:if>
 		<xsl:if test="$record/detail[@id=290]">
