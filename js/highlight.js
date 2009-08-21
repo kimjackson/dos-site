@@ -206,7 +206,6 @@ function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 				a.className += " preview-" + ref.recordID;
 			}
 		}
-		a.title = ref.title;
 		a.innerHTML = elem.nodeValue;
 		elem.parentNode.replaceChild(a, elem);
 
@@ -327,7 +326,6 @@ function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 						a.className += " preview-" + ref.recordID;
 					}
 				}
-				a.title = ref.title;
 				a.innerHTML = wordString;
 				newElements.push(a);
 
@@ -506,7 +504,7 @@ YAHOO.util.Event.onDOMReady(function () {
 	function _highlightAnnotation(id) {
 		if (id) {
 			$("#tei a.annotation.highlighted").removeClass("highlighted");
-			$("#tei a.annotation-id-" + id).addClass("highlighted");
+			$("#tei a.annotation-id-" + id).not(".hide").addClass("highlighted");
 		}
 	}
 

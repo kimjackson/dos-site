@@ -21,8 +21,8 @@
 			</div>
 
 			<div id="pagination">
-				<a id="previous" href="#">&lt; Previous</a>
-				<a id="next" href="#">Next &gt;</a>
+				<a id="previous" href="#">&#171; previous</a>
+				<a id="next" href="#">next &#187;</a>
 			</div>
 		</div>
 
