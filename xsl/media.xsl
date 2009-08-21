@@ -38,22 +38,13 @@
 				</xsl:call-template>
 			</p>
 
-			<xsl:choose>
-				<xsl:when test="detail[@id=590] = 'CC-Generic'">
-					<p class="license">
-						<a rel="license" href="http://creativecommons.org/licenses/by/2.5/au/">
-							<img alt="Creative Commons License" src="http://i.creativecommons.org/l/by/2.5/au/80x15.png"/>
-						</a>
-					</p>
-				</xsl:when>
-				<xsl:when test="detail[@id=590] = 'CC-SA'">
-					<p class="license">
-						<a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/au/">
-							<img alt="Creative Commons License" src="http://i.creativecommons.org/l/by-sa/2.5/au/80x15.png"/>
-						</a>
-					</p>
-				</xsl:when>
-			</xsl:choose>
+			<xsl:if test="detail[@id=590]">
+				<p class="license">
+					<xsl:call-template name="makeLicenseIcon">
+						<xsl:with-param name="record" select="."/>
+					</xsl:call-template>
+				</p>
+			</xsl:if>
 
 		</div>
 

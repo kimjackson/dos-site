@@ -240,7 +240,11 @@
 				</xsl:choose>
 			</span>
 			<span id="extra">
-				<!-- CC icon -->
+				<xsl:if test="$record/reftype/@id = 98">
+					<xsl:call-template name="makeLicenseIcon">
+						<xsl:with-param name="record" select="$record"/>
+					</xsl:call-template>
+				</xsl:if>
 			</span>
 		</div>
 	</xsl:template>
@@ -282,6 +286,23 @@
 			<xsl:value-of select="$record/detail[@id=290]"/>
 			<xsl:text>)</xsl:text>
 		</xsl:if>
+	</xsl:template>
+
+
+	<xsl:template name="makeLicenseIcon">
+		<xsl:param name="record"/>
+		<xsl:choose>
+			<xsl:when test="$record/detail[@id=590] = 'CC-Generic'">
+				<a rel="license" target="_blank" href="http://creativecommons.org/licenses/by/2.5/au/">
+					<img alt="Creative Commons License" src="http://i.creativecommons.org/l/by/2.5/au/80x15.png"/>
+				</a>
+			</xsl:when>
+			<xsl:when test="$record/detail[@id=590] = 'CC-SA'">
+				<a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-sa/2.5/au/">
+					<img alt="Creative Commons License" src="http://i.creativecommons.org/l/by-sa/2.5/au/80x15.png"/>
+				</a>
+			</xsl:when>
+		</xsl:choose>
 	</xsl:template>
 
 
