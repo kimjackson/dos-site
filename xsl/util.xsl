@@ -192,7 +192,9 @@
 		<xsl:choose>
 			<xsl:when test="$entry/pointer[@id=538]">
 				<xsl:text>by </xsl:text>
-				<xsl:value-of select="$entry/pointer[@id=538]/detail[@id=160]"/>
+				<a href="{$entry/pointer[@id=538]/id}" class="preview-{$entry/pointer[@id=538]/id}">
+					<xsl:value-of select="$entry/pointer[@id=538]/detail[@id=160]"/>
+				</a>
 				<xsl:if test="$entry/detail[@id=166]">
 					<xsl:text>, </xsl:text>
 					<xsl:value-of select="$entry/detail[@id=166]/year"/>
