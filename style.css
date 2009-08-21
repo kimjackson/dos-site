@@ -395,16 +395,14 @@ img { border: 0 }
 }
 
 .list-right-col-heading h2 {
-	width: 369px;
 	font: 12px Verdana, Geneva, sans-serif;
-	font-weight: bold;
-	float: left
+	font-weight: bold
 }
 
 .list-right-col-heading h2 a { color: #002bff }
 
-.list-right-col-heading .contributor { width: 200px; position: relative; left: -369px; top: 15px; float: left }
-.list-right-col-heading .copyright { width: 60px; text-align: right; float: left }
+.list-right-col-heading .contributor { float: left }
+.list-right-col-heading .copyright { float: right }
 
 .list-right-col-content {
 	width: 100%

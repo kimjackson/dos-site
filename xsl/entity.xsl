@@ -100,7 +100,11 @@
 								by: <a href="{pointer[@id=538]/id}" class="preview-{pointer[@id=538]/id}"><xsl:value-of select="pointer[@id=538]/title"/></a>
 							</span>
 						</xsl:if>
-						<span class="copyright"><!-- FIXME --></span>
+						<span class="copyright">
+							<xsl:call-template name="makeLicenseIcon">
+								<xsl:with-param name="record" select="."/>
+							</xsl:call-template>
+						</span>
 					</div>
 					<div class="{$content_class}">
 						<p>
