@@ -12,6 +12,7 @@
 	<xsl:include href="role.xsl"/>
 	<xsl:include href="map.xsl"/>
 	<xsl:include href="term.xsl"/>
+	<xsl:include href="contributor.xsl"/>
 	<xsl:include href="previews.xsl"/>
 
 	<xsl:template match="/">

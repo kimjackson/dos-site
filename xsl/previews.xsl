@@ -40,6 +40,13 @@
 			</xsl:call-template>
 		</xsl:for-each>
 
+		<!-- inverse contributor pointers -->
+		<xsl:for-each select="$root/reverse-pointer[@id=538]">
+			<xsl:call-template name="previewStub">
+				<xsl:with-param name="record" select="."/>
+			</xsl:call-template>
+		</xsl:for-each>
+
 		<!-- records related through factoids -->
 
 		<!-- source-factoids with targets -->

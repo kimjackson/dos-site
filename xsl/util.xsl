@@ -263,6 +263,10 @@
 						<!-- term -->
 						<xsl:text>Subject</xsl:text>
 					</xsl:when>
+					<xsl:when test="$record/reftype/@id = 153">
+						<!-- contributor -->
+						<xsl:text>Contributor</xsl:text>
+					</xsl:when>
 				</xsl:choose>
 			</span>
 			<span id="extra">
