@@ -15,7 +15,11 @@
 				<h2>Broader subjects</h2>
 				<ul class="subject-list">
 					<xsl:for-each select="related[@type='HasBroaderTerm']">
-						<li><a href="{id}"><xsl:value-of select="detail[@id=160]"/></a></li>
+						<li>
+							<a href="{id}" class="preview-{id}c{@id}">
+								<xsl:value-of select="detail[@id=160]"/>
+							</a>
+						</li>
 					</xsl:for-each>
 				</ul>
 			</xsl:if>
@@ -24,7 +28,11 @@
 				<h2>Narrower subjects</h2>
 				<ul class="subject-list">
 					<xsl:for-each select="related[@type='HasNarrowerTerm']">
-						<li><a href="{id}"><xsl:value-of select="detail[@id=160]"/></a></li>
+						<li>
+							<a href="{id}" class="preview-{id}c{@id}">
+								<xsl:value-of select="detail[@id=160]"/>
+							</a>
+						</li>
 					</xsl:for-each>
 				</ul>
 			</xsl:if>

@@ -116,7 +116,7 @@
 
 						<!-- sidebar -->
 						<div id="browse-connections">
-							<h3>Connections</h3>
+							<h3>Browse</h3>
 							<ul id="menu">
 								<xsl:call-template name="makeEntityBrowseList"/>
 								<li class="browse-entry"><a href="entries">Entries</a></li>

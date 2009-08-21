@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:exsl="http://exslt.org/common"
-                exclude-result-prefixes="exsl"
+                xmlns:str="http://exslt.org/strings"
+                exclude-result-prefixes="exsl str"
                 version="1.0">
 
 	<xsl:template name="cleanQuote">
@@ -18,6 +19,31 @@
 				<xsl:value-of select="$string"/>
 			</xsl:otherwise>
 		</xsl:choose>
+	</xsl:template>
+
+
+	<xsl:template name="linkify">
+		<xsl:param name="string"/>
+		<xsl:for-each select="str:split($string,' ')">
+			<xsl:choose>
+				<xsl:when test="starts-with(., 'http://')">
+					<a href="{.}" target="_blank">
+						<xsl:value-of select="."/>
+					</a>
+				</xsl:when>
+				<xsl:when test="starts-with(., 'www')">
+					<a href="http://{.}" target="_blank">
+						<xsl:value-of select="."/>
+					</a>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="."/>
+				</xsl:otherwise>
+			</xsl:choose>
+			<xsl:if test="position() != last()">
+				<xsl:text> </xsl:text>
+			</xsl:if>
+		</xsl:for-each>
 	</xsl:template>
 
 
@@ -252,38 +278,41 @@
 
 	<xsl:template name="makeMediaAttributionStatement">
 		<xsl:param name="record"/>
+		<xsl:variable name="contributor" select="$record/pointer[@id=538]"/>
 		<xsl:if test="$record/detail[@id=365]">
 			<xsl:text>By </xsl:text>
 			<xsl:value-of select="$record/detail[@id=365]"/>
 			<xsl:text>. </xsl:text>
 		</xsl:if>
-		<xsl:if test="$record/pointer[@id=538]">
+		<xsl:if test="$contributor">
 			<xsl:choose>
-				<xsl:when test="$record/pointer[@id=538]/detail[@id=569]">
-					<xsl:value-of select="$record/pointer[@id=538]/detail[@id=569]"/>
+				<xsl:when test="$contributor/detail[@id=569]">
+					<xsl:value-of select="$contributor/detail[@id=569]"/>
 					<xsl:text> </xsl:text>
 				</xsl:when>
 				<xsl:otherwise>
-					<!-- default attribution phrase? -->
+					<!-- default attribution phrase -->
 					<xsl:text>Contributed by </xsl:text>
 				</xsl:otherwise>
 			</xsl:choose>
-			<a href="{$record/pointer[@id=538]/id}">
-				<xsl:value-of select="$record/pointer[@id=538]/detail[@id=160]"/>
+			<a href="{$contributor/id}" class="preview-{$contributor/id}">
+				<xsl:value-of select="$contributor/detail[@id=160]"/>
 			</a>
 		</xsl:if>
 		<xsl:if test="$record/detail[@id=368]">
 			<xsl:text> </xsl:text>
-			<span class="contributor-id">
-				<xsl:text>[</xsl:text>
-				<xsl:value-of select="$record/detail[@id=368]"/>
-				<xsl:text>]</xsl:text>
-			</span>
+			<xsl:text>[</xsl:text>
+			<xsl:call-template name="linkify">
+				<xsl:with-param name="string" select="$record/detail[@id=368]"/>
+			</xsl:call-template>
+			<xsl:text>]</xsl:text>
 		</xsl:if>
 		<xsl:if test="$record/detail[@id=290]">
 			<xsl:text> </xsl:text>
 			<xsl:text>(</xsl:text>
-			<xsl:value-of select="$record/detail[@id=290]"/>
+			<xsl:call-template name="linkify">
+				<xsl:with-param name="string" select="$record/detail[@id=290]"/>
+			</xsl:call-template>
 			<xsl:text>)</xsl:text>
 		</xsl:if>
 	</xsl:template>

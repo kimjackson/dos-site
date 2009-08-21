@@ -118,7 +118,7 @@
 		<div class="clearfix"/>
 
 		<!-- images of this entity -->
-		<xsl:variable name="images_of" select="related[@type='IsInMM'][starts-with(detail[@id=289], 'image')][id != current()/pointer[@id=508]/id]"/>
+		<xsl:variable name="images_of" select="related[@type='IsInMM'][starts-with(detail[@id=289], 'image')][not(id = current()/pointer[@id=508]/id)]"/>
 		<xsl:if test="$images_of">
 			<div class="list-left-col list-image" title="Pictures"></div>
 			<div class="list-right-col">
