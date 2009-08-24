@@ -67,15 +67,11 @@ RelBrowser.Mapping = {
 				.change(function () {
 					that._setOpacity(this.checked ? 0.7 : 1);
 				});
-			$span = $("<span> Transparent</span>")
-				.click(function () {
-					$cb.attr("checked", ! $cb.attr("checked"));
-					$cb.change();
-				});
-			$div = $("<div/>").append($cb).append($span);
+			$label = $("<label/>").append($cb).append(" Transparent");
+			$div = $("<div/>").append($label);
 			$div.appendTo($container);
 			this._setCheckboxStyle($cb);
-			this._setTransparencyDivStyle($div);
+			this._setLabelStyle($label);
 			this._setContainerStyle($container);
 			$container.appendTo(map.getContainer());
 			return $container.get(0);
@@ -97,7 +93,7 @@ RelBrowser.Mapping = {
 			$cb.css("vertical-align", "middle");
 		};
 
-		CustomMapTypeControl.prototype._setTransparencyDivStyle = function ($div) {
+		CustomMapTypeControl.prototype._setLabelStyle = function ($div) {
 			$div.css("font-size", "11px");
 			$div.css("cursor", "pointer");
 		};
