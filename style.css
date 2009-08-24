@@ -1070,6 +1070,9 @@ img.entity-picture {
 #timeline.entity-timeline .timeline-event-tape {
 	cursor: default;
 }
+#timeline .timeline-band-0 .timeline-ether-bg {
+	background-color: #e6deda;
+}
 
 #entry-page-controls-top, #entry-page-controls-bottom {
 	text-align: right;
