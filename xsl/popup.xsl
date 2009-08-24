@@ -52,7 +52,7 @@
 						</xsl:call-template>
 					</p>
 					<p>
-						<a href="{id}">View full record</a>
+						<a href="{id}">full record &#187;</a>
 					</p>
 					<div class="clearfix"></div>
 				</div>

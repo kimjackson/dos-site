@@ -31,6 +31,8 @@
 				</script>
 				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;amp;key={$hapi-key}" type="text/javascript"/>
 				<script src="/jquery/jquery.js" type="text/javascript"/>
+				<script src="{$urlbase}js/cookies.js" type="text/javascript"/>
+				<script src="{$urlbase}js/fontsize.js" type="text/javascript"/>
 				<script src="{$urlbase}js/search.js" type="text/javascript"/>
 				<script src="{$urlbase}js/menu.js" type="text/javascript"/>
 				<script src="{$urlbase}js/tooltip.js" type="text/javascript"/>
@@ -140,7 +142,11 @@
 						<li><a href="#">FAQ</a></li>
 						<li><a href="#">Browse</a></li>
 						<li><a href="#">Contact</a></li>
-						<li><a href="#">Font - +</a></li>
+						<li>
+							<a href="#" class="increasefont" title="Increase font size">Font +</a>
+							<xsl:text> </xsl:text>
+							<a href="#" class="decreasefont" title="Decrease font size">-</a>
+						</li>
 					</ul>
 					<ul id="footer-right-col">
 						<li class="no-bullet"><a href="#">Print</a></li>
