@@ -82,9 +82,13 @@
 	</xsl:template>
 
 	<xsl:template match="detail/geo">
-		<xsl:value-of select="type"/>
+		<xsl:if test="type='point'">p</xsl:if>
+		<xsl:if test="type ='bounds'">r</xsl:if>
+		<xsl:if test="type ='circle'">c</xsl:if>
+		<xsl:if test="type ='polygon'">pl</xsl:if>
+		<xsl:if test="type ='path'">l</xsl:if>
 	</xsl:template>
-
+	
 	<xsl:template match="detail/file">
 		<file_id><xsl:value-of select="nonce"/></file_id>
 		<file_orig_name><xsl:value-of select="origName"/></file_orig_name>
