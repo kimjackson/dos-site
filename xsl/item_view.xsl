@@ -21,7 +21,6 @@
 			<head>
 				<title><xsl:value-of select="export/references/reference/title"/></title>
 				<link href="{$urlbase}style.css" rel="stylesheet" type="text/css"/>
-				<link href="{$urlbase}tei.css" rel="stylesheet" type="text/css"/>
 				<link href="{$urlbase}thickbox.css" rel="stylesheet" type="text/css" media="screen"/>
 				<script type="text/javascript">
 					RelBrowser = {

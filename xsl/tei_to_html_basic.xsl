@@ -83,11 +83,23 @@
 	</xsl:template>
 	<xsl:template match="TEI//table/row">
 		<tr>
-			<xsl:apply-templates/>
+			<xsl:choose>
+				<xsl:when test="position() = 1">
+					<xsl:apply-templates mode="first"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:apply-templates/>
+				</xsl:otherwise>
+			</xsl:choose>
 		</tr>
 	</xsl:template>
+	<xsl:template match="TEI//table/row/cell" mode="first">
+		<th>
+			<xsl:apply-templates/>
+		</th>
+	</xsl:template>
 	<xsl:template match="TEI//table/row/cell">
-		<td class="teidoc">
+		<td>
 			<xsl:apply-templates/>
 		</td>
 	</xsl:template>

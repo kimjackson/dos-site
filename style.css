@@ -1093,8 +1093,40 @@ img.entity-picture {
 	visibility: hidden;
 }
 
+/* TEI styles */
+
 .DoSAuthor {
 	display: none;
+}
+p.DoSBlockquote {
+	padding: 0 50px;
+}
+span.italics {
+	font-style: italic;
+}
+span.bold {
+	font-weight: bold;
+}
+#content-left-col p.DoSTablecharttitle {
+	font-weight: bold;
+	font-style: italic;
+	margin-bottom: 0;
+}
+#tei th, #tei td {
+	text-align: left;
+	padding-right: 10px;
+}
+p.DoSTablechartsource {
+	font-size: 9px;
+}
+a.annotation.hide {
+	cursor: auto;
+}
+#content a.annotation.hide:hover {
+	text-decoration: none;
+}
+a.annotation.highlighted {
+	background-color: yellow;
 }
 
 
