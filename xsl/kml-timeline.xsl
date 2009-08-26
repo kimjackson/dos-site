@@ -148,7 +148,7 @@ xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 		<!-- Historical event 51 -->
 	<xsl:if test="reftype/@id = 51 or reftype/@id = 122 or reftype/@id = 57">
 			<xsl:for-each select="detail[@id=230]">
-				<xsl:value-of select="."/><xsl:if test="position() != last()">,</xsl:if>				
+				<xsl:value-of select="normalize-space(.)"/><xsl:if test="position() != last()">,</xsl:if>
 			</xsl:for-each>
 		</xsl:if>
 		<!-- KML maps 103-->
