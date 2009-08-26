@@ -18,6 +18,9 @@ function _set (n) {
 		n = _maxSize;
 	}
 
+	if ($("body").hasClass(_classNameBase + n)) {
+		return;
+	}
 	matches = $("body").attr("class").match(/fontSize-?\d+/g);
 	if (matches) {
 		for (i = 0; i < matches.length; ++i) {

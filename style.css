@@ -884,12 +884,10 @@ img.entity-picture {
 .balloon-flash { padding: 16px 0 5px 2px }
 
 .balloon-heading {
-	height: 34px;
-	padding: 20px 0 0 52px;
+	padding: 20px 0 20px 52px;
 }
 
 .balloon-heading h2 {
-	height: 14px;
 	font: 12px Verdana, Geneva, sans-serif;
 	font-weight: bold;
 	color: #320a0a;
@@ -909,6 +907,10 @@ img.entity-picture {
 	float: left;
 	margin: 0 15px 0 0;
 	border: 1px solid #2f0103
+}
+
+.balloon-content a:hover {
+	text-decoration: underline
 }
 
 .map-balloon {
@@ -955,6 +957,10 @@ img.entity-picture {
 	float: left;
 	margin: 0 15px 0 0;
 	border: 1px solid #2f0103
+}
+
+.video-content a:hover {
+	text-decoration: underline
 }
 
 .fallback {

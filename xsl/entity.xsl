@@ -57,7 +57,6 @@
 						</xsl:if>
 					</xsl:attribute>
 				</div>
-				<div class="clearfix"/>
 				<script type="text/javascript">
 					RelBrowser.Mapping.mapdata = {
 						mini: true,
@@ -71,6 +70,8 @@
 					};
 				</script>
 			</xsl:if>
+
+			<div class="clearfix"/>
 
 			<!-- factoids -->
 			<xsl:if test="reverse-pointer[reftype/@id=150]">
