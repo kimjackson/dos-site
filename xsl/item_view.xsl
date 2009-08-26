@@ -38,6 +38,7 @@
 				<script src="{$urlbase}js/tooltip.js" type="text/javascript"/>
 				<script src="{$urlbase}js/thickbox.js" type="text/javascript"/>
 				<script src="{$urlbase}js/swfobject.js" type="text/javascript"/>
+				<script src="{$urlbase}js/media.js" type="text/javascript"/>
 
 				<xsl:if test="/export/references/reference[reftype/@id=103]  |
 				              /export/references/reference[reftype/@id=151][reverse-pointer[reftype/@id=150]/detail[@id=230 or @id=177]]">

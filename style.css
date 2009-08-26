@@ -484,6 +484,9 @@ li.has-entry a {
 	border: 1px solid #320a0a;
 	margin: 0px 0px 17px 0px
 }
+#resource #media {
+	margin: 0px 0px 17px 0px
+}
 
 #resource ul { list-style: none; margin: 0 0 20px 0 }
 

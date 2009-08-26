@@ -29,7 +29,28 @@
 						</xsl:call-template>
 					</xsl:attribute>
 				</img>
+			</xsl:if>
 
+			<xsl:if test="starts-with(detail[@id=289], 'audio')">
+				<div id="media"></div>
+				<script type="text/javascript">
+					DOS.Media.playAudio(
+						"<xsl:call-template name="getFileURL">
+							<xsl:with-param name="file" select="detail[@id=221]"/>
+						</xsl:call-template>"
+					);
+				</script>
+			</xsl:if>
+
+			<xsl:if test="starts-with(detail[@id=289], 'video')">
+				<div id="media"></div>
+				<script type="text/javascript">
+					DOS.Media.playVideo(
+						"<xsl:call-template name="getFileURL">
+							<xsl:with-param name="file" select="detail[@id=221]"/>
+						</xsl:call-template>"
+					);
+				</script>
 			</xsl:if>
 
 			<p class="attribution">

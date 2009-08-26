@@ -75,31 +75,11 @@
 					<div class="balloon-flash">
 						<div id="media"></div>
 						<script type="text/javascript">
-							(function () {
-								var params0 = {};
-								params0.play = "true";
-								params0.loop = "true";
-								params0.menu = "false";
-								params0.quality = "high";
-								params0.scale = "showall";
-								params0.salign = "t";
-								params0.bgcolor = "#FFFFFF";
-								params0.devicefont = "false";
-								params0.seamlesstabbing = "true";
-								params0.swliveconnect = "false";
-								params0.allowfullscreen = "false";
-								params0.allowscriptaccess = "sameDomain";
-								params0.allownetworking = "all";
-								var attributes0 = {};
-								attributes0.id = "media";
-								attributes0.name = "player";
-								attributes0.align = "middle";
-								var flashvars0 = {externalVideo:
-									"<xsl:call-template name="getFileURL">
-										<xsl:with-param name="file" select="detail[@id=221]"/>
-									</xsl:call-template>"};
-								swfobject.embedSWF("<xsl:value-of select="$urlbase"/>swf/audio-player.swf", "media", "358", "87", "8.0", false, flashvars0, params0, attributes0);
-							})();
+							DOS.Media.playAudio(
+								"<xsl:call-template name="getFileURL">
+									<xsl:with-param name="file" select="detail[@id=221]"/>
+								</xsl:call-template>"
+							);
 						</script>
 					</div>
 					<xsl:if test="detail[@id=191]">
@@ -136,31 +116,11 @@
 					<div class="balloon-flash">
 						<div id="media"></div>
 						<script type="text/javascript">
-							(function () {
-								var params0 = {};
-								params0.play = "true";
-								params0.loop = "true";
-								params0.menu = "false";
-								params0.quality = "high";
-								params0.scale = "showall";
-								params0.salign = "t";
-								params0.bgcolor = "#FFFFFF";
-								params0.devicefont = "false";
-								params0.seamlesstabbing = "true";
-								params0.swliveconnect = "false";
-								params0.allowfullscreen = "false";
-								params0.allowscriptaccess = "sameDomain";
-								params0.allownetworking = "all";
-								var attributes0 = {};
-								attributes0.id = "media";
-								attributes0.name = "player";
-								attributes0.align = "middle";
-								var flashvars0 = {externalVideo:
-									"<xsl:call-template name="getFileURL">
-										<xsl:with-param name="file" select="detail[@id=221]"/>
-									</xsl:call-template>"};
-								swfobject.embedSWF("<xsl:value-of select="$urlbase"/>swf/video-player.swf", "media", "424", "346", "8.0", false, flashvars0, params0, attributes0);
-							})();
+							DOS.Media.playVideo(
+								"<xsl:call-template name="getFileURL">
+									<xsl:with-param name="file" select="detail[@id=221]"/>
+								</xsl:call-template>"
+							);
 						</script>
 					</div>
 					<xsl:if test="detail[@id=191]">
