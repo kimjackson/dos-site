@@ -81,14 +81,17 @@
 		<xsl:apply-templates select="@*|node()"/>
 	</xsl:template>
 
-	<xsl:template match="detail/geo">
-		<xsl:if test="type='point'">p</xsl:if>
-		<xsl:if test="type ='bounds'">r</xsl:if>
-		<xsl:if test="type ='circle'">c</xsl:if>
-		<xsl:if test="type ='polygon'">pl</xsl:if>
-		<xsl:if test="type ='path'">l</xsl:if>
+	<xsl:template match="detail[geo]">
+		<xsl:copy>
+			<xsl:apply-templates select="@*"/>
+			<xsl:if test="geo/type='point'">p</xsl:if>
+			<xsl:if test="geo/type ='bounds'">r</xsl:if>
+			<xsl:if test="geo/type ='circle'">c</xsl:if>
+			<xsl:if test="geo/type ='polygon'">pl</xsl:if>
+			<xsl:if test="geo/type ='path'">l</xsl:if>
+		</xsl:copy>
 	</xsl:template>
-	
+
 	<xsl:template match="detail/file">
 		<file_id><xsl:value-of select="nonce"/></file_id>
 		<file_orig_name><xsl:value-of select="origName"/></file_orig_name>
