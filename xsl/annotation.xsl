@@ -7,7 +7,7 @@
 			<xsl:sort select="pointer[@id=322]/detail[@id=160]"/>
 			<li>
 				<a href="{pointer[@id=322]/id}#ref={id}" class="preview-{pointer[@id=322]/id}c{id}">
-					<xsl:value-of select="pointer[@id=322]/title"/>
+					<xsl:value-of select="pointer[@id=322]/detail[@id=160]"/>
 				</a>
 			</li>
 		</xsl:for-each>

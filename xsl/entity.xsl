@@ -89,7 +89,7 @@
 					<xsl:otherwise>list-right-col-content margin</xsl:otherwise>
 				</xsl:choose>
 			</xsl:variable>
-			<div class="list-left-col list-entry" title="Entry"/>
+			<div class="list-left-col list-entry" title="Entries"/>
 			<div class="list-right-col">
 				<div class="entity-entry">
 					<div class="list-right-col-heading">
@@ -98,7 +98,7 @@
 						</h2>
 						<xsl:if test="pointer[@id=538]">
 							<span class="contributor">
-								by: <a href="{pointer[@id=538]/id}" class="preview-{pointer[@id=538]/id}"><xsl:value-of select="pointer[@id=538]/title"/></a>
+								by: <a href="{pointer[@id=538]/id}" class="preview-{pointer[@id=538]/id}"><xsl:value-of select="pointer[@id=538]/detail[@id=160]"/></a>
 							</span>
 						</xsl:if>
 						<span class="copyright">

@@ -20,7 +20,7 @@
 		<html>
 			<head>
 				<xsl:call-template name="makeMetaTags"/>
-				<title><xsl:value-of select="export/references/reference/title"/></title>
+				<title><xsl:value-of select="export/references/reference/detail[@id=160]"/></title>
 				<link href="{$urlbase}style.css" rel="stylesheet" type="text/css"/>
 				<link href="{$urlbase}thickbox.css" rel="stylesheet" type="text/css" media="screen"/>
 				<script type="text/javascript">
