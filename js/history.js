@@ -64,6 +64,10 @@ RelBrowser.History = {
 			type: $("meta[name=class]").attr("content")
 		};
 
+		if (! current.id) {
+			return;
+		}
+
 		if (entries.length > 0) {
 			latest = entries[entries.length - 1];
 			if (latest  &&

@@ -41,38 +41,28 @@
 			<head>
 				<title>Browse - <xsl:value-of select="$pluralTypeName"/></title>
 				<link href="{$urlbase}style.css" rel="stylesheet" type="text/css" />
+				<script type="text/javascript">
+					RelBrowser = {
+						baseURL: "<xsl:value-of select="$urlbase"/>"
+					};
+				</script>
 				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;amp;key={$hapi-key}" type="text/javascript"/>
 				<script src="/jquery/jquery.js" type="text/javascript"/>
+				<script src="{$urlbase}js/cookies.js" type="text/javascript"/>
+				<script src="{$urlbase}js/fontsize.js" type="text/javascript"/>
+				<script src="{$urlbase}js/history.js" type="text/javascript"/>
+				<script src="{$urlbase}js/search.js" type="text/javascript"/>
+				<script src="{$urlbase}js/tooltip.js" type="text/javascript"/>
 				<script src="{$urlbase}js/browse.js" type="text/javascript"/>
-				<script src="{$urlbase}deploy/browse/{$type}.js" type="text/javascript"/>
+				<script src="{$urlbase}browse/{$type}.js" type="text/javascript"/>
 			</head>
 
 			<body>
 			<div id="header"></div>
 			<div id="subheader">
-				<div id="breadcrumbs">
+				<div id="navigation">
 					<a class="browse" href="{$urlbase}"></a>
-					<!--ul id="navigation">
-						<li class="nav-search"><a href="#">search</a></li>
-						<li class="nav-entry"><a href="#">entry</a></li>
-						<li class="nav-contributor"><a href="#">contributor</a></li>
-						<li class="nav-building"><a href="#">building</a></li>
-						<li class="nav-artifact"><a href="#">artifact</a></li>
-						<li class="nav-entry2"><a href="#">entry2</a></li>
-						<li class="nav-video"><a href="#">video</a></li>
-						<li class="nav-term"><a href="#">term</a></li>
-						<li class="nav-structure"><a href="#">structure</a></li>
-						<li class="nav-sound"><a href="#">sound</a></li>
-						<li class="nav-role"><a href="#">role</a></li>
-						<li class="nav-reference"><a href="#">reference</a></li>
-						<li class="nav-place"><a href="#">place</a></li>
-						<li class="nav-people"><a href="#">people</a></li>
-						<li class="nav-map"><a href="#">map</a></li>
-						<li class="nav-organisation"><a href="#">organisation</a></li>
-						<li class="nav-image"><a href="#">image</a></li>
-						<li class="nav-natural"><a href="#">natural</a></li>
-						<li class="nav-link"><a href="#">link</a></li>
-					</ul-->
+					<div id="breadcrumbs"/>
 				</div>
 			</div>
 
@@ -109,8 +99,9 @@
 					<div id="right-col">
 						<img src="{$urlbase}images/img-logo.jpg" alt="Dictionary of Sydney" width="198" height="125" class="logo"/>
 						<div id="search-bar">
-							<form method="post" onsubmit="top.search(document.getElementById('search').value); return false;">
+							<form method="post" action=".">
 								<input type="text" name="search" id="search" size="20" maxlength="40"/>
+								<div id="search-submit"/>
 							</form>
 						</div>
 
@@ -144,7 +135,11 @@
 						<li><a href="#">FAQ</a></li>
 						<li><a href="#">Browse</a></li>
 						<li><a href="#">Contact</a></li>
-						<li><a href="#">Font - +</a></li>
+						<li>
+							<a href="#" class="increasefont" title="Increase font size">Font +</a>
+							<xsl:text> </xsl:text>
+							<a href="#" class="decreasefont" title="Decrease font size">-</a>
+						</li>
 					</ul>
 					<ul id="footer-right-col">
 						<li class="no-bullet"><a href="#">Print</a></li>
