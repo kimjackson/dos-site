@@ -30,9 +30,8 @@ img { border: 0 }
 	background: url(images/bg-subheader.jpg) top repeat-x
 }
 
-#breadcrumbs {
+#navigation {
 	width: 980px; height: 30px;
-	background: url(images/bg-breadcrumbs.jpg) center top no-repeat;
 	margin: 0 auto
 }
 
@@ -96,6 +95,38 @@ img { border: 0 }
 
 #footer-left-col { float: left }
 #footer-right-col { float: right }
+
+
+/*BREADCRUMBS
+--------------------------------------------------*/
+#breadcrumbs {
+	position: relative;
+	left: 50px;
+}
+.breadcrumb {
+	float: left;
+	margin: 7px 8px 0 0;
+}
+.nav-artefact     { background: url(images/16x16/icon16-artefact.gif) no-repeat }
+.nav-audio        { background: url(images/16x16/icon16-audio.gif) no-repeat }
+.nav-building     { background: url(images/16x16/icon16-building.gif) no-repeat }
+.nav-contributor  { background: url(images/16x16/icon16-contributor.gif) no-repeat }
+.nav-entry        { background: url(images/16x16/icon16-entry.gif) no-repeat }
+.nav-image        { background: url(images/16x16/icon16-image.gif) no-repeat }
+.nav-link         { background: url(images/16x16/icon16-link.gif) no-repeat }
+.nav-map          { background: url(images/16x16/icon16-map.gif) no-repeat }
+.nav-natural      { background: url(images/16x16/icon16-natural.gif) no-repeat }
+.nav-organisation { background: url(images/16x16/icon16-organisation.gif) no-repeat }
+.nav-person       { background: url(images/16x16/icon16-person.gif) no-repeat }
+.nav-place        { background: url(images/16x16/icon16-place.gif) no-repeat }
+.nav-reference    { background: url(images/16x16/icon16-reference.gif) no-repeat }
+.nav-role         { background: url(images/16x16/icon16-role.gif) no-repeat }
+.nav-search       { background: url(images/16x16/icon16-search.gif) no-repeat }
+.nav-structure    { background: url(images/16x16/icon16-structure.gif) no-repeat }
+.nav-term         { background: url(images/16x16/icon16-term.gif) no-repeat }
+.nav-video        { background: url(images/16x16/icon16-video.gif) no-repeat }
+
+
 
 
 /*SIDE BAR (Right Column)

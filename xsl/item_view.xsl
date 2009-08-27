@@ -19,6 +19,7 @@
 
 		<html>
 			<head>
+				<xsl:call-template name="makeMetaTags"/>
 				<title><xsl:value-of select="export/references/reference/title"/></title>
 				<link href="{$urlbase}style.css" rel="stylesheet" type="text/css"/>
 				<link href="{$urlbase}thickbox.css" rel="stylesheet" type="text/css" media="screen"/>
@@ -32,6 +33,7 @@
 				<script src="/jquery/jquery.js" type="text/javascript"/>
 				<script src="{$urlbase}js/cookies.js" type="text/javascript"/>
 				<script src="{$urlbase}js/fontsize.js" type="text/javascript"/>
+				<script src="{$urlbase}js/history.js" type="text/javascript"/>
 				<script src="{$urlbase}js/search.js" type="text/javascript"/>
 				<script src="{$urlbase}js/menu.js" type="text/javascript"/>
 				<script src="{$urlbase}js/tooltip.js" type="text/javascript"/>
@@ -70,29 +72,9 @@
 			</xsl:if>
 			<div id="header"></div>
 			<div id="subheader">
-				<div id="breadcrumbs">
+				<div id="navigation">
 					<a class="browse" href="{$urlbase}"></a>
-					<!--ul id="navigation">
-						<li class="nav-search"><a href="#">search</a></li>
-						<li class="nav-entry"><a href="#">entry</a></li>
-						<li class="nav-contributor"><a href="#">contributor</a></li>
-						<li class="nav-building"><a href="#">building</a></li>
-						<li class="nav-artifact"><a href="#">artifact</a></li>
-						<li class="nav-entry2"><a href="#">entry2</a></li>
-						<li class="nav-video"><a href="#">video</a></li>
-						<li class="nav-term"><a href="#">term</a></li>
-						<li class="nav-structure"><a href="#">structure</a></li>
-						<li class="nav-sound"><a href="#">sound</a></li>
-						<li class="nav-role"><a href="#">role</a></li>
-						<li class="nav-reference"><a href="#">reference</a></li>
-						<li class="nav-place"><a href="#">place</a></li>
-						<li class="nav-people"><a href="#">people</a></li>
-						<li class="nav-map"><a href="#">map</a></li>
-						<li class="nav-organisation"><a href="#">organisation</a></li>
-						<li class="nav-image"><a href="#">image</a></li>
-						<li class="nav-natural"><a href="#">natural</a></li>
-						<li class="nav-link"><a href="#">link</a></li>
-					</ul-->
+					<div id="breadcrumbs"/>
 				</div>
 			</div>
 

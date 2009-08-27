@@ -280,6 +280,32 @@
 	</xsl:template>
 
 
+	<xsl:template name="makeMetaIDTag">
+		<meta name="id">
+			<xsl:attribute name="content">
+				<xsl:value-of select="/export/references/reference/id"/>
+			</xsl:attribute>
+		</meta>
+	</xsl:template>
+
+
+	<xsl:template name="makeMetaClassTag">
+		<meta name="class">
+			<xsl:attribute name="content">
+				<xsl:call-template name="getRecordTypeClassName">
+					<xsl:with-param name="record" select="/export/references/reference"/>
+				</xsl:call-template>
+			</xsl:attribute>
+		</meta>
+	</xsl:template>
+
+
+	<xsl:template name="makeMetaTags">
+		<xsl:call-template name="makeMetaIDTag"/>
+		<xsl:call-template name="makeMetaClassTag"/>
+	</xsl:template>
+
+
 	<xsl:template name="makeMediaAttributionStatement">
 		<xsl:param name="record"/>
 		<xsl:variable name="contributor" select="$record/pointer[@id=538]"/>

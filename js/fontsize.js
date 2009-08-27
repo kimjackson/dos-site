@@ -8,7 +8,7 @@ var _minSize = -1;
 var _maxSize = 3;
 var _defaultSize = 0;
 
-function _set (n) {
+var _set = function (n) {
 	var matches, i;
 
 	if (n < _minSize) {
@@ -39,7 +39,7 @@ function _set (n) {
 		RelBrowser.Mapping.tmap.timeline) {
 		RelBrowser.Mapping.tmap.timeline.layout();
 	}
-	writePersistentCookie(_cookieName, n, 'days', 5);
+	writePersistentCookie(_cookieName, n, "days", 5);
 };
 
 
