@@ -24,10 +24,9 @@
 					<xsl:for-each select="pointer[@id=564]">
 						<source>
 							<title><xsl:value-of select="detail[@id=160]"/></title>
-							<!--url><xsl:call-template name="getFileURL">
+							<url><xsl:call-template name="getFileURL">
 									<xsl:with-param name="file" select="detail[@id=221]"/>
-								</xsl:call-template></url-->
-							<url>../kmlfile/<xsl:value-of select="id"/></url>
+								</xsl:call-template></url>
 						</source>
 					</xsl:for-each>
 					<!-- related entities that have a TimePlace factoid -->
@@ -36,8 +35,7 @@
 					                                             [detail[@id=526]='TimePlace']]">
 						<source>
 							<title><xsl:value-of select="detail[@id=160]"/></title>
-							<!--url><xsl:value-of select="$urlbase"/>kml/summary/<xsl:value-of select="id"/>.kml</url-->
-							<url>../kml/summary/rename/<xsl:value-of select="id"/></url>
+							<url><xsl:value-of select="$urlbase"/>kml/summary/<xsl:value-of select="id"/>.kml</url>
 							<target><xsl:value-of select="id"/></target>
 							<preview><xsl:value-of select="id"/>c<xsl:value-of select="@id"/></preview>
 						</source>
