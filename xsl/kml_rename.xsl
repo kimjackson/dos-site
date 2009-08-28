@@ -6,6 +6,7 @@
                 version="1.0">
 
 	<xsl:include href="factoid.xsl"/>
+	<xsl:include href="myvariables.xsl"/>
 	<xsl:include href="util.xsl"/>
 
 	<xsl:variable name="record" select="/data/export/references/reference"/>

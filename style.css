@@ -108,11 +108,13 @@ img { border: 0 }
 	float: left;
 	margin: 7px 8px 0 0;
 }
+.nav-annotation   { background: url(images/16x16/icon16-annotation.gif) no-repeat }
 .nav-artefact     { background: url(images/16x16/icon16-artefact.gif) no-repeat }
 .nav-audio        { background: url(images/16x16/icon16-audio.gif) no-repeat }
 .nav-building     { background: url(images/16x16/icon16-building.gif) no-repeat }
 .nav-contributor  { background: url(images/16x16/icon16-contributor.gif) no-repeat }
 .nav-entry        { background: url(images/16x16/icon16-entry.gif) no-repeat }
+.nav-event        { background: url(images/16x16/icon16-event.gif) no-repeat }
 .nav-image        { background: url(images/16x16/icon16-image.gif) no-repeat }
 .nav-link         { background: url(images/16x16/icon16-link.gif) no-repeat }
 .nav-map          { background: url(images/16x16/icon16-map.gif) no-repeat }

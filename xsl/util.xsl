@@ -300,9 +300,24 @@
 	</xsl:template>
 
 
+	<xsl:template name="makeMetaImageTag">
+		<meta name="ZOOMIMAGE">
+			<xsl:attribute name="content">
+				<xsl:value-of select="$urlbase"/>
+				<xsl:text>images/40x40/icon40-</xsl:text>
+				<xsl:call-template name="getRecordTypeClassName">
+					<xsl:with-param name="record" select="/export/references/reference"/>
+				</xsl:call-template>
+				<xsl:text>.jpg</xsl:text>
+			</xsl:attribute>
+		</meta>
+	</xsl:template>
+
+
 	<xsl:template name="makeMetaTags">
 		<xsl:call-template name="makeMetaIDTag"/>
 		<xsl:call-template name="makeMetaClassTag"/>
+		<xsl:call-template name="makeMetaImageTag"/>
 	</xsl:template>
 
 
