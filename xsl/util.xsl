@@ -189,7 +189,7 @@
 
 	<xsl:template name="makeEntityBrowseList">
 		<xsl:for-each select="exsl:node-set($entityNames)/entity">
-			<li class="browse-{@c}"><a href="{@cp}"><xsl:value-of select="@p"/></a></li>
+			<li class="browse-{@c}"><a href="../browse/{@cp}"><xsl:value-of select="@p"/></a></li>
 		</xsl:for-each>
 	</xsl:template>
 

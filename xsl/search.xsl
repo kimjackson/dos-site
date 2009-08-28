@@ -5,56 +5,24 @@
 	<xsl:include href="util.xsl"/>
 	<xsl:include href="factoid.xsl"/>
 
-	<xsl:param name="type"/>
-
 	<xsl:template match="/">
-
-		<xsl:variable name="pluralTypeName">
-			<xsl:choose>
-				<xsl:when test="$type = 'entries'">Entries</xsl:when>
-				<xsl:when test="$type = 'maps'">Maps</xsl:when>
-				<xsl:when test="$type = 'subjects'">Subjects</xsl:when>
-				<xsl:when test="$type = 'roles'">Roles</xsl:when>
-				<xsl:otherwise>
-					<xsl:call-template name="getEntityPluralName">
-						<xsl:with-param name="codeName" select="$type"/>
-					</xsl:call-template>
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:variable>
-
-		<xsl:variable name="typeCodeName">
-			<xsl:choose>
-				<xsl:when test="$type = 'entries'">entry</xsl:when>
-				<xsl:when test="$type = 'maps'">map</xsl:when>
-				<xsl:when test="$type = 'subjects'">term</xsl:when>
-				<xsl:when test="$type = 'roles'">role</xsl:when>
-				<xsl:otherwise>
-					<xsl:call-template name="getEntityCodeName">
-						<xsl:with-param name="typeName" select="$type"/>
-					</xsl:call-template>
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:variable>
 
 		<html>
 			<head>
-				<title>Browse - <xsl:value-of select="$pluralTypeName"/></title>
+				<title>Search</title>
 				<link href="{$urlbase}style.css" rel="stylesheet" type="text/css" />
+				<link href="{$urlbase}search.css" rel="stylesheet" type="text/css" />
 				<script type="text/javascript">
 					RelBrowser = {
 						baseURL: "<xsl:value-of select="$urlbase"/>"
 					};
 				</script>
-				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;amp;key={$hapi-key}" type="text/javascript"/>
 				<script src="/jquery/jquery.js" type="text/javascript"/>
 				<script src="{$urlbase}js/cookies.js" type="text/javascript"/>
 				<script src="{$urlbase}js/fontsize.js" type="text/javascript"/>
 				<script src="{$urlbase}js/history.js" type="text/javascript"/>
 				<script src="{$urlbase}js/search.js" type="text/javascript"/>
 				<script src="{$urlbase}js/tooltip.js" type="text/javascript"/>
-				<script src="{$urlbase}js/browse.js" type="text/javascript"/>
-				<script src="{$urlbase}browse/{$type}.js" type="text/javascript"/>
 			</head>
 
 			<body>
@@ -73,23 +41,15 @@
 						<div id="content">
 
 							<div id="heading" class="title-search">
-								<h1>Browse <xsl:value-of select="$pluralTypeName"/></h1>
-								<span id="sub-title">
-									<xsl:text>Sort by </xsl:text>
-									<a id="name-sort-link" href="#">Name</a>
-									 <xsl:text> or </xsl:text>
-									<a id="type-sort-link" href="#">Type</a>
-								</span>
+								<h1>Search</h1>
 							</div>
 
-							<ul id="browse-alpha-index"/>
-							<ul id="browse-type-index"/>
-
-							<div class="list-left-col list-{$typeCodeName}"/>
-							<div class="list-right-col">
-								<div class="list-right-col-browse" id="entities-alpha"/>
-								<div class="list-right-col-browse" id="entities-type"/>
-							</div>
+							<xsl:comment>ZOOM_SHOW_HEADING</xsl:comment>
+							<xsl:comment>ZOOM_SHOW_SUMMARY</xsl:comment>
+							<xsl:comment>ZOOM_SHOW_SUGGESTION</xsl:comment>
+							<xsl:comment>ZOOM_SHOW_RECOMMENDED</xsl:comment>
+							<xsl:comment>ZOOM_SHOW_RESULTS</xsl:comment>
+							<xsl:comment>ZOOM_SHOW_PAGENUMBERS</xsl:comment>
 
 						</div>
 					</div>
@@ -97,8 +57,8 @@
 					<div id="right-col">
 						<img src="{$urlbase}images/img-logo.jpg" alt="Dictionary of Sydney" width="198" height="125" class="logo"/>
 						<div id="search-bar">
-							<form method="post" action=".">
-								<input type="text" name="search" id="search" size="20" maxlength="40"/>
+							<form method="get" action="{$urlbase}search/search.cgi">
+								<input type="text" name="zoom_query" id="search" size="20" maxlength="40"/>
 								<div id="search-submit"/>
 							</form>
 						</div>
