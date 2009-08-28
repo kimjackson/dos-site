@@ -7,17 +7,21 @@
 
 	<xsl:template name="xmldoc" match="reference[reftype/@id=98]">
 
+		<xsl:variable name="file" select="detail[@id=231 or @id=221]"/>
+
 		<div id="content-left-col">
 
 			<div id="tei">
-				<xi:include>
-					<xsl:attribute name="href">
-						<xsl:call-template name="getFileURL">
-							<xsl:with-param name="file" select="detail[@id=231 or @id=221]"/>
-							<xsl:with-param name="fq" select="1"/>
-						</xsl:call-template>
-					</xsl:attribute>
-				</xi:include>
+				<xsl:if test="$file">
+					<xi:include>
+						<xsl:attribute name="href">
+							<xsl:call-template name="getFileURL">
+								<xsl:with-param name="file" select="$file"/>
+								<xsl:with-param name="fq" select="1"/>
+							</xsl:call-template>
+						</xsl:attribute>
+					</xi:include>
+				</xsl:if>
 			</div>
 
 			<div id="pagination">
