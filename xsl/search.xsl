@@ -44,8 +44,8 @@
 								<h1>Search</h1>
 							</div>
 
-							<xsl:comment>ZOOM_SHOW_HEADING</xsl:comment>
 							<xsl:comment>ZOOM_SHOW_SUMMARY</xsl:comment>
+							<xsl:comment>ZOOM_SHOW_HEADING</xsl:comment>
 							<xsl:comment>ZOOM_SHOW_SUGGESTION</xsl:comment>
 							<xsl:comment>ZOOM_SHOW_RECOMMENDED</xsl:comment>
 							<xsl:comment>ZOOM_SHOW_RESULTS</xsl:comment>

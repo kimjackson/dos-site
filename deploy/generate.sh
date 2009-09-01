@@ -1,7 +1,7 @@
 # make sure we go direct to the server!
 unset http_proxy
 
-PIPELINE=http://heuristscholar.org/cocoon/relbrowser-kj
+PIPELINE=http://heuristscholar.org/cocoon/dos-static-2009-09-01
 
 
 # copy files
