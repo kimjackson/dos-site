@@ -2,7 +2,7 @@ if (! window.DOS) { DOS = {}; }
 
 DOS.Media = {
 
-	play: function (file, player, width, height) {
+	embed: function (swf, width, height, elemID, file) {
 		var flashvars, params, attributes;
 
 		flashvars = {
@@ -27,24 +27,25 @@ DOS.Media = {
 		};
 
 		attributes = {
-			id: "media",
+			id: elemID,
 			name: "player",
 			align: "middle"
 		};
 
-		swfobject.embedSWF(player, "media", width, height, "8", null, flashvars, params, attributes);
+		swfobject.embedSWF(swf, elemID, width, height, "8", null, flashvars, params, attributes);
 	},
 
-	playAudio: function (file) {
-		DOS.Media.play(file, RelBrowser.baseURL+"swf/audio-player.swf", "358", "87");
+	playAudio: function (elemID, file) {
+		DOS.Media.embed(RelBrowser.baseURL+"swf/audio-player.swf", "358", "87", elemID, file);
 	},
 
-	playVideo: function (file) {
-		DOS.Media.play(file, RelBrowser.baseURL+"swf/video-player.swf", "424", "346");
+	playVideo: function (elemID, file) {
+		DOS.Media.embed(RelBrowser.baseURL+"swf/video-player.swf", "424", "346", elemID, file);
 	},
 
-	embedBrowser: function () {
-		DOS.Media.play(null, RelBrowser.baseURL+"swf/dosMenu.swf", "700", "320");
+	embedBrowser: function (elemID) {
+		DOS.Media.embed(RelBrowser.baseURL+"swf/dosMenu.swf", "700", "320", elemID, null);
 	}
+
 
 };

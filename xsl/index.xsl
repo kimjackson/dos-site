@@ -48,9 +48,9 @@
 						<div id="content">
 
 							<div id="home-heading">
-								<div id="media"/>
+								<div id="browser"/>
 								<script type="text/javascript">
-									$(function () { DOS.Media.embedBrowser(); });
+									$(function () { DOS.Media.embedBrowser("browser"); });
 								</script>
 								<h1>Welcome to the Dictionary of Sydney</h1>
 							</div>

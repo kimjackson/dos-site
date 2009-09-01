@@ -35,6 +35,7 @@
 				<div id="media"></div>
 				<script type="text/javascript">
 					DOS.Media.playAudio(
+						"media",
 						"<xsl:call-template name="getFileURL">
 							<xsl:with-param name="file" select="detail[@id=221]"/>
 						</xsl:call-template>"
@@ -46,6 +47,7 @@
 				<div id="media"></div>
 				<script type="text/javascript">
 					DOS.Media.playVideo(
+						"media",
 						"<xsl:call-template name="getFileURL">
 							<xsl:with-param name="file" select="detail[@id=221]"/>
 						</xsl:call-template>"
