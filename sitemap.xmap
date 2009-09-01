@@ -27,7 +27,7 @@
  <map:resources>
   <map:resource name="preview">
    <map:generate src="cocoon:/xml1/{id}"/>
-   <map:transform src="xsl/preview-standalone.xsl">
+   <map:transform src="xsl/preview_standalone.xsl">
     <map:parameter name="context" value="{context}"/>
    </map:transform>
    <map:serialize type="html"/>
@@ -78,15 +78,15 @@
 
    <map:match pattern="preview/*c*">
     <map:call resource="preview">
-	 <map:parameter name="id" value="{1}"/>
-	 <map:parameter name="context" value="{2}"/>
-	</map:call>
+     <map:parameter name="id" value="{1}"/>
+     <map:parameter name="context" value="{2}"/>
+    </map:call>
    </map:match>
 
    <map:match pattern="preview/*">
     <map:call resource="preview">
-	 <map:parameter name="id" value="{1}"/>
-	</map:call>
+     <map:parameter name="id" value="{1}"/>
+    </map:call>
    </map:match>
 
    <map:match pattern="popup/*">
@@ -107,8 +107,8 @@
 
    <map:match pattern="kml/full/rename/*">
     <map:aggregate element="data">
-	 <map:part src="cocoon:/kml/full/{1}"/>
-	 <map:part src="cocoon:/xml2/{1}"/>
+     <map:part src="cocoon:/kml/full/{1}"/>
+     <map:part src="cocoon:/xml2/{1}"/>
     </map:aggregate>
     <map:transform src="xsl/kml_rename.xsl"/>
     <map:serialize type="xml"/>
@@ -116,8 +116,8 @@
 
    <map:match pattern="kml/summary/rename/*">
     <map:aggregate element="data">
-	 <map:part src="cocoon:/kml/summary/{1}"/>
-	 <map:part src="cocoon:/xml2/{1}"/>
+     <map:part src="cocoon:/kml/summary/{1}"/>
+     <map:part src="cocoon:/xml2/{1}"/>
     </map:aggregate>
     <map:transform src="xsl/kml_rename.xsl"/>
     <map:serialize type="xml"/>
