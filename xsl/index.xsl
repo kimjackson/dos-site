@@ -66,9 +66,6 @@
 										</xsl:attribute>
 									</img>
 								</a>
-								<h2>Featured article</h2>
-								<p><xsl:value-of select="data/export[1]/references/reference/detail[@id=191]"/></p>
-								<p><a href="item/{$target1}">more &#187;</a></p>
 							</div>
 
 							<div class="teaser">
@@ -82,9 +79,6 @@
 										</xsl:attribute>
 									</img>
 								</a>
-								<h2>Sydney suburbs</h2>
-								<p><xsl:value-of select="data/export[3]/references/reference/detail[@id=191]"/></p>
-								<p><a href="item/{$target2}">more &#187;</a></p>
 							</div>
 
 							<div class="teaser">
@@ -98,9 +92,6 @@
 										</xsl:attribute>
 									</img>
 								</a>
-								<h2>Sydney people</h2>
-								<p><xsl:value-of select="data/export[5]/references/reference/detail[@id=191]"/></p>
-								<p><a href="item/{$target3}">more &#187;</a></p>
 							</div>
 
 							<div class="teaser teaser-end">
@@ -114,7 +105,28 @@
 										</xsl:attribute>
 									</img>
 								</a>
-								<h2>Find out more about .&#160;.&#160;.</h2>
+							</div>
+
+							<div class="teaser">
+								<h2>Featured article</h2>
+								<p><xsl:value-of select="data/export[1]/references/reference/detail[@id=191]"/></p>
+								<p><a href="item/{$target1}">more &#187;</a></p>
+							</div>
+
+							<div class="teaser">
+								<h2>Sydney suburbs</h2>
+								<p><xsl:value-of select="data/export[3]/references/reference/detail[@id=191]"/></p>
+								<p><a href="item/{$target2}">more &#187;</a></p>
+							</div>
+
+							<div class="teaser">
+								<h2>Sydney people</h2>
+								<p><xsl:value-of select="data/export[5]/references/reference/detail[@id=191]"/></p>
+								<p><a href="item/{$target3}">more &#187;</a></p>
+							</div>
+
+							<div class="teaser teaser-end">
+								<h2>Sydney cultures</h2>
 								<p><xsl:value-of select="data/export[7]/references/reference/detail[@id=191]"/></p>
 								<p><a href="item/{$target4}">more &#187;</a></p>
 							</div>
