@@ -16,8 +16,16 @@
 			</xsl:if>
 
 			<div id="map" class="full"/>
-			<div id="timeline-zoom"/>
-			<div id="timeline"/>
+			<div id="timeline-zoom">
+				<xsl:if test="not(related/reverse-pointer[reftype/@id=150]/detail[@id=177])">
+					<xsl:attribute name="class">hide</xsl:attribute>
+				</xsl:if>
+			</div>
+			<div id="timeline">
+				<xsl:if test="not(related/reverse-pointer[reftype/@id=150]/detail[@id=177])">
+					<xsl:attribute name="class">hide</xsl:attribute>
+				</xsl:if>
+			</div>
 			<script type="text/javascript">
 				<xsl:variable name="sources">
 					<!-- kml references -->
