@@ -58,7 +58,7 @@
 						<img src="{$urlbase}images/img-logo.jpg" alt="Dictionary of Sydney" width="198" height="125" class="logo"/>
 						<div id="search-bar">
 							<form method="get" action="{$urlbase}search/search.cgi">
-								<input type="text" name="zoom_query" id="search" size="20" maxlength="40"/>
+								<input type="text" name="zoom_query" id="search" size="20"/>
 								<div id="search-submit"/>
 							</form>
 						</div>
@@ -68,10 +68,10 @@
 							<h3>Browse</h3>
 							<ul id="menu">
 								<xsl:call-template name="makeEntityBrowseList"/>
-								<li class="browse-entry"><a href="entries">Entries</a></li>
-								<li class="browse-map"><a href="maps">Maps</a></li>
-								<li class="browse-term"><a href="subjects">Subjects</a></li>
-								<li class="browse-role"><a href="roles">Roles</a></li>
+								<li class="browse-entry"><a href="../browse/entries">Entries</a></li>
+								<li class="browse-map"><a href="../browse/maps">Maps</a></li>
+								<li class="browse-term"><a href="../browse/subjects">Subjects</a></li>
+								<li class="browse-role"><a href="../browse/roles">Roles</a></li>
 							</ul>
 						</div>
 

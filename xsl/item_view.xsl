@@ -99,7 +99,7 @@
 						</a>
 						<div id="search-bar">
 							<form method="post" action=".">
-								<input type="text" name="search" id="search" size="20" maxlength="40"/>
+								<input type="text" name="search" id="search" size="20"/>
 								<div id="search-submit"/>
 							</form>
 						</div>
