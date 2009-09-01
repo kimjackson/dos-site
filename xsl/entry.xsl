@@ -17,7 +17,6 @@
 						<xsl:attribute name="href">
 							<xsl:call-template name="getFileURL">
 								<xsl:with-param name="file" select="$file"/>
-								<xsl:with-param name="fq" select="1"/>
 							</xsl:call-template>
 						</xsl:attribute>
 					</xi:include>

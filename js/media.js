@@ -41,6 +41,10 @@ DOS.Media = {
 
 	playVideo: function (file) {
 		DOS.Media.play(file, RelBrowser.baseURL+"swf/video-player.swf", "424", "346");
+	},
+
+	embedBrowser: function () {
+		DOS.Media.play(null, RelBrowser.baseURL+"swf/dosMenu.swf", "700", "320");
 	}
 
 };

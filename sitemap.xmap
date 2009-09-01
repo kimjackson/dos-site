@@ -38,14 +38,12 @@
  <map:pipelines>
   <map:pipeline>
 
-   <map:match pattern="xml1/*">
-    <map:generate src="http://dos.heuristscholar.org/heurist/php/hml.php?q=ids:{1}&amp;depth=1"/>
-    <map:transform src="xsl/heurist_legacy_xml.xsl"/>
-    <map:serialize type="xml"/>
+   <map:match pattern="config.xml">
+    <map:redirect-to uri="http://heuristscholar.org/relbrowser-kj/config.xml"/>
    </map:match>
 
-   <map:match pattern="xml2/*">
-    <map:generate src="http://dos.heuristscholar.org/heurist/php/hml.php?q=ids:{1}&amp;depth=2"/>
+   <map:match pattern="xml*/*">
+    <map:generate src="http://dos.heuristscholar.org/heurist/php/hml.php?q=ids:{2}&amp;depth={1}"/>
     <map:transform src="xsl/heurist_legacy_xml.xsl"/>
     <map:serialize type="xml"/>
    </map:match>
@@ -139,6 +137,32 @@
    <map:match pattern="search">
     <map:generate src="empty.xml"/>		<!-- dummy source for our "transform" -->
     <map:transform src="xsl/search.xsl"/>
+    <map:serialize type="html"/>
+   </map:match>
+
+   <map:match pattern="">
+    <map:generate src="empty.xml"/>		<!-- dummy source for our "transform" -->
+    <map:transform src="xsl/index.xsl"/>
+    <map:serialize type="html"/>
+   </map:match>
+
+   <map:match pattern="index/*,*,*,*,*,*,*,*,*,*,*,*">
+    <map:aggregate element="data">
+     <map:part src="cocoon:/xml0/{2}"/>
+     <map:part src="cocoon:/xml0/{3}"/>
+     <map:part src="cocoon:/xml0/{5}"/>
+     <map:part src="cocoon:/xml0/{6}"/>
+     <map:part src="cocoon:/xml0/{8}"/>
+     <map:part src="cocoon:/xml0/{9}"/>
+     <map:part src="cocoon:/xml0/{11}"/>
+     <map:part src="cocoon:/xml0/{12}"/>
+    </map:aggregate>
+    <map:transform src="xsl/index.xsl">
+     <map:parameter name="target1" value="{1}"/>
+     <map:parameter name="target2" value="{4}"/>
+     <map:parameter name="target3" value="{7}"/>
+     <map:parameter name="target4" value="{10}"/>
+    </map:transform>
     <map:serialize type="html"/>
    </map:match>
 

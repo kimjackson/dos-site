@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<icon>
+		<id>Artefacts</id>
+		<pageUrl><![CDATA[browse/artefacts?]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>Buildings</id>
+		<pageUrl><![CDATA[browse/buildings?]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>Entries</id>
+		<pageUrl><![CDATA[browse/entries?]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>Events</id>
+		<pageUrl><![CDATA[browse/events?]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>Maps</id>
+		<pageUrl><![CDATA[browse/maps?]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>Natural features</id>
+		<pageUrl><![CDATA[browse/natural?]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>Organisations</id>
+		<pageUrl><![CDATA[browse/organisations?]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>People</id>
+		<pageUrl><![CDATA[browse/peoples?]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>Places</id>
+		<pageUrl><![CDATA[browse/places?]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>Roles</id>
+		<pageUrl><![CDATA[browse/roles?]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>Structures</id>
+		<pageUrl><![CDATA[browse/structures?]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>Subjects</id>
+		<pageUrl><![CDATA[browse/subjects?]]></pageUrl>
+	</icon>
+</config>

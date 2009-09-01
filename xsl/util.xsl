@@ -75,7 +75,6 @@
 	<xsl:template name="getFileURL">
 		<xsl:param name="file"/>
 		<xsl:param name="size"/>
-		<xsl:param name="fq"/>
 		<!-- static, pre-generated files -->
 		<!--
 		<xsl:variable name="dir">
@@ -89,14 +88,7 @@
 			</xsl:choose>
 		</xsl:variable>
 
-		<xsl:choose>
-			<xsl:when test="$fq">
-				<xsl:value-of select="$fullurlbase"/>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:value-of select="$urlbase"/>
-			</xsl:otherwise>
-		</xsl:choose>
+		<xsl:value-of select="$fullurlbase"/>
 		<xsl:text>files/</xsl:text>
 		<xsl:value-of select="$dir"/>
 		<xsl:text>/</xsl:text>
@@ -188,8 +180,9 @@
 
 
 	<xsl:template name="makeEntityBrowseList">
+		<xsl:param name="base" select="'../'"/>
 		<xsl:for-each select="exsl:node-set($entityNames)/entity">
-			<li class="browse-{@c}"><a href="../browse/{@cp}"><xsl:value-of select="@p"/></a></li>
+			<li class="browse-{@c}"><a href="{$base}browse/{@cp}"><xsl:value-of select="@p"/></a></li>
 		</xsl:for-each>
 	</xsl:template>
 
