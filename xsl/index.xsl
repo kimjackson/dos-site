@@ -135,7 +135,9 @@
 					</div>
 
 					<div id="right-col">
-						<img src="{$urlbase}images/img-logo.jpg" alt="Dictionary of Sydney" width="198" height="125" class="logo"/>
+						<a href="{$urlbase}" title="Dictionary of Sydney Home">
+							<img src="{$urlbase}images/img-logo.jpg" alt="Dictionary of Sydney" width="198" height="125" class="logo"/>
+						</a>
 						<div id="search-bar">
 							<form method="get" action="{$urlbase}search/search.cgi">
 								<input type="text" name="zoom_query" id="search" size="20"/>
