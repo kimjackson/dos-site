@@ -233,6 +233,7 @@ RelBrowser.Mapping = {
 				intervalPixels: M.timeZoomSteps[M.initTimeZoomIndex].pixelsPerInterval,
 				zoomIndex: M.initTimeZoomIndex,
 				zoomSteps: M.timeZoomSteps,
+				width: "100%"
 			} ],
 			dataLoadedFunction: onDataLoaded
 		});
