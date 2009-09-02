@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	xmlns:str="http://exslt.org/strings" version="1.0"
-	xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
-
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:str="http://exslt.org/strings" version="1.0" xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 	<xsl:param name="id"/>
 	<xsl:param name="related_reftype_filter"/>
 	<xsl:include href="myvariables.xsl"/>
@@ -61,9 +58,9 @@
 				        var elts = document.getElementById("footnotes-inner");
 						var notes = record.getDetail(HDetailManager.getDetailTypeById(303));
 
-						elts.innerHTML = "&lt;p&gt;" + record.getTitle() + "&lt;/p&gt;";
+						elts.innerHTML = "&lt;p>" + record.getTitle() + "&lt;/p>";
 						if (notes) {
-							elts.innerHTML += "&lt;p&gt;" + notes + "&lt;/p&gt;";
+							elts.innerHTML += "&lt;p>" + notes + "&lt;/p>";
 						}
 
 						var val = record.getDetail(HDetailManager.getDetailTypeById(199));
@@ -79,32 +76,24 @@
 
 						if (val.getRecordType().getID() == 74) {
 							var img=val.getDetail(HDetailManager.getDetailTypeById(221)). getThumbnailURL();
-							elts.innerHTML += "&lt;br&gt;&lt;a href=\""+itemPath+val.getID()+"\"&gt;&lt;img src=\"" + img+ "\"/&gt;&lt;/a&gt;";
+							elts.innerHTML += "&lt;br>&lt;a href=\""+itemPath+val.getID()+"\">&lt;img src=\"" + img+ "\"/>&lt;/a>";
 						}
 						else {
-						   elts.innerHTML += "&lt;br&gt;&lt;br&gt;&lt;span style=\"padding-right:5px; vertical-align:top\"&gt;&lt;a href=\""+itemPath+val.getID()+"\"&gt;"+val.getTitle()+"&lt;/a&gt;&lt;/span&gt;"+"&lt;img src=\"" + imgpath+val.getRecordType().getID() +".gif\"/&gt;";
+						   elts.innerHTML += "&lt;br>&lt;br>&lt;span style=\"padding-right:5px; vertical-align:top\">&lt;a href=\""+itemPath+val.getID()+"\">"+val.getTitle()+"&lt;/a>&lt;/span>"+"&lt;img src=\"" + imgpath+val.getRecordType().getID() +".gif\"/>";
 						}
 				   }
 				   
-				  
-
-</script>
-
-				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;key={$hapi-key}"></script>
-				
+				  </script>
+				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;key={$hapi-key}"/>
 				<script>
 					if (!HCurrentUser.isLoggedIn()) {
 						window.location = 'http://<xsl:value-of select="$instance_prefix"/>heuristscholar.org/heurist/php/login-vanilla.php?logo=http://heuristscholar.org<xsl:value-of select="$urlbase"/>/images/logo.png&amp;home=http://heuristscholar.org<xsl:value-of select="$urlbase"/>';
-					}
-				</script>
+					}</script>
 				<script src="{$urlbase}/js/search.js"/>
-				
 				<script>
 					top.HEURIST = {};
-					top.HEURIST.fireEvent = function(e, e){};
-				</script>
-				<script src="http://{$instance_prefix}heuristscholar.org/heurist/php/js/heurist-obj-user.php"></script>
-				
+					top.HEURIST.fireEvent = function(e, e){};</script>
+				<script src="http://{$instance_prefix}heuristscholar.org/heurist/php/js/heurist-obj-user.php"/>
 				<!-- Time Map rendering -->
 				<xsl:if test="export/references/reference/reftype[@id=103 or @id=51 or @id=165 or @id=122 or @id=57]">
 					<script>
@@ -122,12 +111,9 @@
 						<script>
 							var maptrackCrumbNumber = <xsl:value-of select="$maptrackCrumbNumber"/>;
 							var crumbThemes = [];
-							var _nameTrack ='bcrumb' + '<xsl:value-of select="$bcrumbNameTrack"/>'; //global name for the PJ object
-							<xsl:for-each select="exsl:node-set($mapCrumbThemes)/theme">
-								crumbThemes.push({colour:'<xsl:value-of select="exsl:node-set($timeMapThemes)/theme[@name=current()]/colour"/>' , icon : '<xsl:value-of select="exsl:node-set($timeMapThemes)/theme[@name=current()]/icon"/>'});
-							</xsl:for-each>
-						</script>
-						<script src="{$urlbase}/js/track.js"/>
+							var _nameTrack ='bcrumb' + '<xsl:value-of select="$bcrumbNameTrack"/>'; //global name for the PJ object<xsl:for-each select="exsl:node-set($mapCrumbThemes)/theme">
+								crumbThemes.push({colour:'<xsl:value-of select="exsl:node-set($timeMapThemes)/theme[@name=current()]/colour"/>' , icon : '<xsl:value-of select="exsl:node-set($timeMapThemes)/theme[@name=current()]/icon"/>'});</xsl:for-each></script>
+						<script src="{$urlbase}/js/track.js"></script>
 					</xsl:if>
 				</xsl:if>
 			</head>
@@ -148,28 +134,33 @@
 						</span>
 					</h2 -->
 					<div id="logo">
-						<a href="{$cocoonbase}/item/{$home-id}" style="font-size: 30px;"><xsl:value-of select="$site-title"/></a>
+						<a href="{$cocoonbase}/item/{$home-id}" style="font-size: 30px;">
+							<xsl:value-of select="$site-title"/>
+						</a>
 					</div>
 					<div id="pagetopcolour" class="colourcelltwo" style="overflow:visible;">
-						<div style="padding-left:20px ">	
+						<div style="padding-left:20px ">
 							<table>
 								<tr>
-								<xsl:if test="export/references/reference/reftype/@id = 98">
-						    
-									<xsl:if test=" $id != $home-id">					
-										<td style="font-size: 85%;padding-right:10px; "><a  href='#' onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=700,height=500'); return false;" title="add Annotation"><img src='{$urlbase}/images/152.gif' align="absmiddle"/></a> Add Annotation</td>
-									</xsl:if>									
-									</xsl:if>														
-								<td style="font-size: 85%;padding-right:10px;"><a  href='#' onclick="window.open('{$urlbase}/addrelationship.html?typeId=52&amp;source={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=700,height=500'); return false;" title="add Relationship"><img src='{$urlbase}/images/52.gif'  align="absmiddle"/></a> Relationship</td>
+									<xsl:if test="export/references/reference/reftype/@id = 98">
+										<xsl:if test=" $id != $home-id">
+											<td style="font-size: 85%;padding-right:10px; "><a href="#" onclick="window.open('{$urlbase}/edit-annotation.html?refid={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=700,height=500'); return false;" title="add Annotation">
+													<img src="{$urlbase}/images/152.gif" align="absmiddle"/>
+												</a> Add Annotation</td>
+										</xsl:if>
+									</xsl:if>
+									<td style="font-size: 85%;padding-right:10px;"><a href="#" onclick="window.open('{$urlbase}/addrelationship.html?typeId=52&amp;source={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=700,height=500'); return false;" title="add Relationship">
+											<img src="{$urlbase}/images/52.gif" align="absmiddle"/>
+										</a> Relationship</td>
 								</tr>
 							</table>
 						</div>
 					</div>
 					<div id="sidebartopcolour" class="colourcelltwo">
-					<table width="100%">
-					<tr>
-					<td id="login">
-						<script type="text/javascript">
+						<table width="100%">
+							<tr>
+								<td id="login">
+									<script type="text/javascript">
 
 							var a = document.createElement("a");
 							a.href ='http://<xsl:value-of select="$instance_prefix"/>heuristscholar.org/heurist/php/login-vanilla.php?logo=http://heuristscholar.org/{$urlbase}/img/logo.png&amp;home=http://heuristscholar.org/{$urlbase}';
@@ -183,10 +174,12 @@
 								a.appendChild(document.createTextNode("Log in"));
 							}
 
-							document.getElementById("login").appendChild(a);
-
-						</script>
-						</td><td id="heurist-link"><a href="http://{$instance_prefix}heuristscholar.org/heurist/">Heurist</a></td></tr>
+							document.getElementById("login").appendChild(a);</script>
+								</td>
+								<td id="heurist-link">
+									<a href="http://{$instance_prefix}heuristscholar.org/heurist/">Heurist</a>
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -556,14 +549,12 @@
 					</td>
 				</tr>
 			</xsl:if>
-
 			<xsl:if test="detail[@id=222 or @id=223 or @id=224]">
 				<tr>
 					<td style="padding-right: 10px;">Images</td>
 					<td>
 						<!-- 222 = Logo image,  223 = Thumbnail,  224 = Images -->
-						<xsl:for-each select="detail[@id=222 or @id=223 or @id=224]">
-							<a href="{file_fetch_url}">
+						<xsl:for-each select="detail[@id=222 or @id=223 or @id=224]"><a href="{file_fetch_url}">
 								<img src="{file_thumb_url}" border="0"/>
 							</a> &#160;&#160; </xsl:for-each>
 					</td>
@@ -571,7 +562,6 @@
 			</xsl:if>
 		</table>
 	</xsl:template>
-
 	<xsl:template name="paragraphise">
 		<xsl:param name="text"/>
 		<xsl:for-each select="str:split($text, '&#xa;&#xa;')">
@@ -580,7 +570,6 @@
 			</p>
 		</xsl:for-each>
 	</xsl:template>
-	
 	<xsl:template name="minimise_text">
 		<xsl:param name="sstring"/>
 		<xsl:choose>
