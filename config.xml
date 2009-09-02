@@ -37,7 +37,7 @@
 
 	<icon>
 		<id>People</id>
-		<pageUrl><![CDATA[browse/peoples?]]></pageUrl>
+		<pageUrl><![CDATA[browse/people?]]></pageUrl>
 	</icon>
 
 	<icon>
