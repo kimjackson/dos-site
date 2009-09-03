@@ -6,25 +6,13 @@
 		<div id="artwork" class="artwork">
 
 		<xsl:choose>
-			<xsl:when test="not (detail[@id=224]) and (detail[@id=603])">
+			<xsl:when test="not (detail[@id=224]) and url">
 				<div  id = "img-external">
-					<img src ="{detail[@id=603]}"></img>
-				</div>
-			</xsl:when>
-
-			<xsl:when test="not (detail[@id=224]) and not (detail[@id=603]) and (detail[@id=604])">
-				<div  id = "img-external">
-					<a href="{url}"><img src ="{detail[@id=604]}" border="0"  vspace="10" hspace="10" align="center"/></a>
-				</div>
-			</xsl:when>
-
-			<xsl:when test="not (detail[@id=224]) and not (detail[@id=603]) and not (detail[@id=604]) and url">
-				<div  id = "img-external">
-					<a href="{url}"><img src ="{url}" border="0"  vspace="10" hspace="10" align="center"/></a>
+					<img src ="{url}"></img>
 				</div>
 			</xsl:when>
 			<xsl:when test="detail[@id=224]">
-				<a href="{url}"><img src="{detail[@id=224]/file_fetch_url}" border="0"  vspace="10" hspace="10" align="center"/></a>
+				<img src="{detail[@id=224]/file_fetch_url}" vspace="10" hspace="10" align="center"/>
 				</xsl:when>
 
 
@@ -71,8 +59,6 @@
 		<br/>
 		<xsl:value-of select="pointer[@id=397]/detail[@id=201]"/>
 		<!-- citation protocol -->
-		<br/>
-		catlogue/picture number: <xsl:value-of select="detail[@id=190]"/>
 	</xsl:template>
 
 	<xsl:template name="artist" match="pointer[@id=580]">
