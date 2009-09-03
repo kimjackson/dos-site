@@ -126,7 +126,7 @@
 					#artwork {
 						text-align: center; /* for IE */
 						margin: 0 auto; /* for the rest */
-						width: 400px;
+						width: 100%;
 					}
 
 					#page {
