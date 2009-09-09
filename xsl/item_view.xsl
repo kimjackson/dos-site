@@ -218,15 +218,6 @@
 						</xsl:when>
 						<xsl:otherwise>
 							<div id="page-inner" style="width: 100%; height: 370px; margin-right: auto; margin-left: auto">
-								<h1>
-									<!-- <xsl:value-of select="export/references/reference[1]/title"/> -->
-									<span style="padding-right:5px; vertical-align:top">
-										<a href="#" onclick="window.open('{$urlbase}/edit.html?id={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false; " title="Edit main record">
-											<img src="{$hbase}/img/edit-pencil.gif" style="vertical-align: top;"/>
-										</a>
-									</span>
-									<xsl:value-of select="export/references/reference[1]/title"/>
-								</h1>
 								<!-- full version of record -->
 								<xsl:apply-templates select="export/references/reference"/>
 							</div>
@@ -308,6 +299,14 @@
 		<xsl:param name="reftype_id"/>
 		<xsl:param name="reltype"/>
 		<xsl:param name="items"/>
+		
+		<!-- tr>
+			<td>
+				debug: top of list of related stuff
+				.......
+			</td>
+		</tr -->
+		
 		<xsl:if test="count($items) &gt; 0">
 			<xsl:if test="$reftype_id != 150  or  ../reftype/@id = 103">
 				<tr>
@@ -328,7 +327,6 @@
 					<td>
 						<!-- (<xsl:value-of select="$items[1]"/>) -->
 						<table width="100%">
-							<!-- p>id: <xsl:value-of select="$currentid"/> - [<xsl:value-of select="id"/>] - </p -->
 							<xsl:apply-templates select="$items[1]">
 								<xsl:with-param name="matches" select="$items"/>
 							</xsl:apply-templates>
@@ -338,6 +336,7 @@
 			</xsl:if>
 		</xsl:if>
 	</xsl:template>
+	
 	<xsl:template name="related_items">
 		<xsl:param name="reftype_id"/>
 		<xsl:param name="reftype_label"/>
@@ -397,6 +396,8 @@
 								<xsl:with-param name="themeToUse" select="$relatedTheme"/>
 							</xsl:call-template>
 						</xsl:if>
+						<!-- end -->
+						
 						<xsl:if test=" ../reftype/@id=51">
 							<xsl:choose>
 								<xsl:when test="@id = 276">
@@ -414,14 +415,22 @@
 								</xsl:otherwise>
 							</xsl:choose>
 						</xsl:if>
-						<xsl:if test="detail[@id = 222 or @id=223 or @id=224]">
+						<xsl:if test="detail[@id = 222 or @id=223 or @id=224 or @id=606]">
 							<xsl:if test="detail/file_thumb_url">
 								<a href="{$cocoonbase}/item/{id}">
 									<img src="{detail/file_thumb_url}"/>
 								</a>
 								<br/>
 							</xsl:if>
+							
+							<xsl:if test="detail[@id=606]">
+								<a href="{$cocoonbase}/item/{id}">
+									<img width="180" src="{detail[@id=606]}"/>
+								</a>
+								<br/>
+							</xsl:if>
 						</xsl:if>
+						
 						<a href="{$urlbase}/edit.html?id={id}" onclick="window.open(this.href,'','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="edit">
 							<img src="{$hbase}/img/edit-pencil.gif"/>
 						</a>
@@ -452,6 +461,7 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
+	
 	<!-- fall-back template for any reference types that aren't already handled -->
 	<xsl:template match="reference">
 		<xsl:if test="detail[@id=221]">
@@ -526,7 +536,7 @@
 				</tr>
 			</xsl:for-each>
 			<tr>
-				<td style="padding-right: 10px;">
+				<td style="padding-right: 10px;"> .....
 					<xsl:value-of select="pointer[@id=264]/@name"/>
 				</td>
 				<td>
