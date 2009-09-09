@@ -67,12 +67,12 @@
 
 	<xsl:template name="collection" match="pointer[@id=397]">
 		<!-- pointer to collection record -->
-		<xsl:value-of select="pointer[@id=397]/title"/>
+		<a href="{$cocoonbase}/item/{id}"><xsl:value-of select="title"/></a>
 		<br/>
-		<xsl:value-of select="pointer[@id=397]/detail[@id=201]"/>
+		<p><small><em>permission to publish images from this collection on this website <xsl:value-of select="detail[@id=201]"/>
 		<!-- citation protocol -->
-		<br/>
-		catlogue/picture number: <xsl:value-of select="detail[@id=190]"/>
+		
+		</em></small></p>
 	</xsl:template>
 
 	<xsl:template name="artist" match="pointer[@id=580]">
