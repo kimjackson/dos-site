@@ -99,8 +99,8 @@
 					<script>
 						var urlbase = '<xsl:value-of select="$urlbase"/>';
 						var enableMapTrack  = <xsl:value-of select="$enableMapTrack"/>;
-						Timeline_urlPrefix = "http://heuristscholar.org/simile/timeline/timeline_js/";
-						Timeline_ajax_url = "http://heuristscholar.org/simile/timeline/timeline_ajax/simile-ajax-api.js";
+						Timeline_urlPrefix = "http://heuristscholar.org/simile/timeline/current/timeline_js/";
+						Timeline_ajax_url = "http://heuristscholar.org/simile/timeline/current/timeline_ajax/simile-ajax-api.js";
 						Timeline_parameters = "bundle=true";</script>
 					<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w"></script>
 					<script src="{$urlbase}/timeline/timeline_js/timeline-api.js" type="text/javascript"></script>
