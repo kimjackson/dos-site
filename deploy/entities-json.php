@@ -145,7 +145,7 @@ $orderedSubtypes = array();
 
 $query = "select rec_id,
                  title.rd_val,
-                 group_concat(factoid_src_ptr.rd_val)
+                 factoid_src_ptr.rd_val
             from records,
                  rec_details type,
                  rec_details title,
@@ -168,13 +168,15 @@ $query = "select rec_id,
              and entity_type.rd_val = '$type'
              and entity_title.rd_rec_id = factoid_src_ptr.rd_val
              and entity_title.rd_type = 160
-        group by rec_id
         order by title.rd_val, if (entity_title.rd_val like 'the %', substr(entity_title.rd_val, 5), replace(entity_title.rd_val, '\'', ''))";
 		// order by sub-type title then entity title
 $res = mysql_query($query);
 while ($row = mysql_fetch_row($res)) {
-	$subtypes[$row[0]] = array($row[1], split(",", $row[2]));
-	array_push($orderedSubtypes, $row[0]);
+	if (! @$subtypes[$row[0]]) {
+		$subtypes[$row[0]] = array($row[1], array());
+		array_push($orderedSubtypes, $row[0]);
+	}
+	array_push($subtypes[$row[0]][1], $row[2]);
 }
 
 // FIXME
