@@ -61,7 +61,7 @@ function traverse(elem, refs, address) {
 	// count the words that were in the footnote element,
 	// but got moved into a title attribute in the transform!
 	if ($(elem).is("span.note")) {
-		return $(elem).find("sup a").attr("title")
+		return $(elem).find("a").attr("title")
 				.replace(/^\s+/, "").replace(/\s+$/, "")
 				.split(/\s+/).length;
 	}
