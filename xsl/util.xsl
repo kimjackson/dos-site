@@ -206,14 +206,41 @@
 	</xsl:template>
 
 
-	<xsl:template name="getEntryContributor">
+	<xsl:template name="makeAuthorList">
+		<xsl:param name="authors"/>
+		<xsl:param name="link"/>
+		<xsl:for-each select="$authors">
+			<xsl:choose>
+				<xsl:when test="position() = last()">
+					<xsl:text> and </xsl:text>
+				</xsl:when>
+				<xsl:when test="position() > 1">
+					<xsl:text>, </xsl:text>
+				</xsl:when>
+			</xsl:choose>
+			<xsl:choose>
+				<xsl:when test="$link = 'true'">
+					<a href="{id}" class="preview-{id}">
+						<xsl:value-of select="detail[@id=160]"/>
+					</a>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="detail[@id=160]"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:for-each>
+	</xsl:template>
+
+
+	<xsl:template name="makeEntryByline">
 		<xsl:param name="entry"/>
 		<xsl:choose>
 			<xsl:when test="$entry/pointer[@id=538]">
 				<xsl:text>by </xsl:text>
-				<a href="{$entry/pointer[@id=538]/id}" class="preview-{$entry/pointer[@id=538]/id}">
-					<xsl:value-of select="$entry/pointer[@id=538]/detail[@id=160]"/>
-				</a>
+				<xsl:call-template name="makeAuthorList">
+					<xsl:with-param name="authors" select="$entry/pointer[@id=538]"/>
+					<xsl:with-param name="link" select="'true'"/>
+				</xsl:call-template>
 				<xsl:if test="$entry/detail[@id=166]">
 					<xsl:text>, </xsl:text>
 					<xsl:value-of select="$entry/detail[@id=166]/year"/>
@@ -244,7 +271,7 @@
 					</xsl:when>
 					<xsl:when test="$record/reftype/@id = 98">
 						<!-- entry -->
-						<xsl:call-template name="getEntryContributor">
+						<xsl:call-template name="makeEntryByline">
 							<xsl:with-param name="entry" select="$record"/>
 						</xsl:call-template>
 					</xsl:when>

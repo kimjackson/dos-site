@@ -98,7 +98,10 @@
 						</h2>
 						<xsl:if test="pointer[@id=538]">
 							<span class="contributor">
-								by: <a href="{pointer[@id=538]/id}" class="preview-{pointer[@id=538]/id}"><xsl:value-of select="pointer[@id=538]/detail[@id=160]"/></a>
+								<xsl:text>by </xsl:text>
+								<xsl:call-template name="makeAuthorList">
+									<xsl:with-param name="authors" select="pointer[@id=538]"/>
+								</xsl:call-template>
 							</span>
 						</xsl:if>
 						<span class="copyright">
