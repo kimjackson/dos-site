@@ -25,7 +25,8 @@
 				<link href="{$urlbase}thickbox.css" rel="stylesheet" type="text/css" media="screen"/>
 				<script type="text/javascript">
 					RelBrowser = {
-						baseURL: "<xsl:value-of select="$urlbase"/>"
+						baseURL: "<xsl:value-of select="$urlbase"/>",
+						pipelineBaseURL: "../"
 					};
 					var tb_pathToImage = RelBrowser.baseURL + "images/loadingAnimation.gif";
 				</script>

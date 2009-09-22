@@ -43,7 +43,8 @@
 				<link href="{$urlbase}style.css" rel="stylesheet" type="text/css" />
 				<script type="text/javascript">
 					RelBrowser = {
-						baseURL: "<xsl:value-of select="$urlbase"/>"
+						baseURL: "<xsl:value-of select="$urlbase"/>",
+						pipelineBaseURL: "../"
 					};
 				</script>
 				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;amp;key={$hapi-key}" type="text/javascript"/>

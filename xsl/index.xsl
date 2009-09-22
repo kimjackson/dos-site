@@ -19,7 +19,8 @@
 				<link href="{$urlbase}search.css" rel="stylesheet" type="text/css" />
 				<script type="text/javascript">
 					RelBrowser = {
-						baseURL: "<xsl:value-of select="$urlbase"/>"
+						baseURL: "<xsl:value-of select="$urlbase"/>",
+						pipelineBaseURL: ""
 					};
 				</script>
 				<script src="/jquery/jquery.js" type="text/javascript"/>

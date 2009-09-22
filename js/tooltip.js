@@ -30,7 +30,7 @@ DOS.ToolTip = {
 $(document).ready(function () {
 	// load preview contents
 	$("#previews div").each(function () {
-		$(this).load(this.id.replace(/^preview-(.*)$/, "../preview/$1"));
+		$(this).load(this.id.replace(/^preview-(.*)$/, RelBrowser.pipelineBaseURL + "preview/$1"));
 	});
 
 	DOS.ToolTip.addToolTips($("a[class*=preview-]:not(.annotation)"));
