@@ -72,7 +72,7 @@
 					<div id="left-col">
 						<div id="content">
 
-							<div id="heading" class="title-search">
+							<div id="heading" class="title-{$typeCodeName}">
 								<h1>Browse <xsl:value-of select="$pluralTypeName"/></h1>
 								<span id="sub-title">
 									<xsl:text>Sort by </xsl:text>
@@ -85,11 +85,8 @@
 							<ul id="browse-alpha-index"/>
 							<ul id="browse-type-index"/>
 
-							<div class="list-left-col list-{$typeCodeName}"/>
-							<div class="list-right-col">
-								<div class="list-right-col-browse" id="entities-alpha"/>
-								<div class="list-right-col-browse" id="entities-type"/>
-							</div>
+							<div class="list-right-col-browse" id="entities-alpha"/>
+							<div class="list-right-col-browse" id="entities-type"/>
 
 						</div>
 					</div>

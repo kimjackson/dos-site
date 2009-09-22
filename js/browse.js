@@ -58,7 +58,9 @@ DOS.Browse = {
 			type = DOS.Browse.orderedSubtypes[i];
 			subtype = DOS.Browse.subtypes[type];
 
-			$("#browse-type-index").append("<li><a href='#"+type+"'>"+subtype[0]+"</a></li>");
+			if (DOS.Browse.orderedSubtypes.length > 1) {
+				$("#browse-type-index").append("<li><a href='#"+type+"'>"+subtype[0]+"</a></li>");
+			}
 
 			$("#entities-type").append("<h2 id='"+type+"'>"+subtype[0]+"</h2>");
 			entityIDs = subtype[1];
