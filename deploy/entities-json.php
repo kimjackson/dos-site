@@ -86,6 +86,17 @@ if ($type == "Entry") {
 	        group by type.rd_rec_id
 	        order by if (title.rd_val like 'the %', substr(title.rd_val, 5), replace(title.rd_val, '\'', ''))";
 
+} else if ($type == "Contributor") {
+	$query = "select rec_id,
+	                 rec_title,
+	                 rd_val
+	            from records,
+	                 rec_details
+	           where rec_type = 153
+	             and rd_rec_id = rec_id
+	             and rd_type = 568
+	        order by if (rec_title like 'the %', substr(rec_title, 5), replace(rec_title, '\'', ''))";
+
 } else {
 	$query = "select type.rd_rec_id,
 	                 title.rd_val,
@@ -143,33 +154,46 @@ while ($row = mysql_fetch_row($res)) {
 $subtypes = array();
 $orderedSubtypes = array();
 
-$query = "select rec_id,
-                 title.rd_val,
-                 factoid_src_ptr.rd_val
-            from records,
-                 rec_details type,
-                 rec_details title,
-                 rec_details factoid_role_ptr,
-                 rec_details factoid_src_ptr,
-                 rec_details entity_type,
-                 rec_details entity_title
-           where rec_type = 91
-             and type.rd_rec_id = rec_id
-             and type.rd_type = 591
-             and type.rd_val = 'Type'
-             and title.rd_rec_id = rec_id
-             and title.rd_type = 160
-             and factoid_role_ptr.rd_val = type.rd_rec_id
-             and factoid_role_ptr.rd_type = 529
-             and factoid_src_ptr.rd_rec_id = factoid_role_ptr.rd_rec_id
-             and factoid_src_ptr.rd_type = 528
-             and entity_type.rd_rec_id = factoid_src_ptr.rd_val
-             and entity_type.rd_type = 523
-             and entity_type.rd_val = '$type'
-             and entity_title.rd_rec_id = factoid_src_ptr.rd_val
-             and entity_title.rd_type = 160
-        order by title.rd_val, if (entity_title.rd_val like 'the %', substr(entity_title.rd_val, 5), replace(entity_title.rd_val, '\'', ''))";
+if ($type == "Contributor") {
+	$query = "select rd_val,
+	                 concat(upper(substring(rd_val, 1, 1)), substring(rd_val from 2)),
+	                 rec_id
+	            from records,
+	                 rec_details
+	           where rec_type = 153
+	             and rd_rec_id = rec_id
+	             and rd_type = 568
+	        order by rd_val, if (rec_title like 'the %', substr(rec_title, 5), replace(rec_title, '\'', ''))";
+} else {
+	$query = "select rec_id,
+	                 title.rd_val,
+	                 factoid_src_ptr.rd_val
+	            from records,
+	                 rec_details type,
+	                 rec_details title,
+	                 rec_details factoid_role_ptr,
+	                 rec_details factoid_src_ptr,
+	                 rec_details entity_type,
+	                 rec_details entity_title
+	           where rec_type = 91
+	             and type.rd_rec_id = rec_id
+	             and type.rd_type = 591
+	             and type.rd_val = 'Type'
+	             and title.rd_rec_id = rec_id
+	             and title.rd_type = 160
+	             and factoid_role_ptr.rd_val = type.rd_rec_id
+	             and factoid_role_ptr.rd_type = 529
+	             and factoid_src_ptr.rd_rec_id = factoid_role_ptr.rd_rec_id
+	             and factoid_src_ptr.rd_type = 528
+	             and entity_type.rd_rec_id = factoid_src_ptr.rd_val
+	             and entity_type.rd_type = 523
+	             and entity_type.rd_val = '$type'
+	             and entity_title.rd_rec_id = factoid_src_ptr.rd_val
+	             and entity_title.rd_type = 160
+	        order by title.rd_val, if (entity_title.rd_val like 'the %', substr(entity_title.rd_val, 5), replace(entity_title.rd_val, '\'', ''))";
 		// order by sub-type title then entity title
+}
+
 $res = mysql_query($query);
 while ($row = mysql_fetch_row($res)) {
 	if (! @$subtypes[$row[0]]) {

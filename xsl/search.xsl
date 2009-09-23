@@ -4,6 +4,7 @@
 	<xsl:include href="myvariables.xsl"/>
 	<xsl:include href="util.xsl"/>
 	<xsl:include href="factoid.xsl"/>
+	<xsl:include href="browse.xsl"/>
 
 	<xsl:template match="/">
 
@@ -65,16 +66,7 @@
 						</div>
 
 						<!-- sidebar -->
-						<div id="browse-connections">
-							<h3>Browse</h3>
-							<ul id="menu">
-								<xsl:call-template name="makeEntityBrowseList"/>
-								<li class="browse-entry"><a href="../browse/entries">Entries</a></li>
-								<li class="browse-map"><a href="../browse/maps">Maps</a></li>
-								<li class="browse-term"><a href="../browse/subjects">Subjects</a></li>
-								<li class="browse-role"><a href="../browse/roles">Roles</a></li>
-							</ul>
-						</div>
+						<xsl:call-template name="makeBrowseMenu"/>
 
 					</div>
 

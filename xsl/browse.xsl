@@ -15,6 +15,7 @@
 				<xsl:when test="$type = 'maps'">Maps</xsl:when>
 				<xsl:when test="$type = 'subjects'">Subjects</xsl:when>
 				<xsl:when test="$type = 'roles'">Roles</xsl:when>
+				<xsl:when test="$type = 'contributors'">Contributors</xsl:when>
 				<xsl:otherwise>
 					<xsl:call-template name="getEntityPluralName">
 						<xsl:with-param name="codeName" select="$type"/>
@@ -29,6 +30,7 @@
 				<xsl:when test="$type = 'maps'">map</xsl:when>
 				<xsl:when test="$type = 'subjects'">term</xsl:when>
 				<xsl:when test="$type = 'roles'">role</xsl:when>
+				<xsl:when test="$type = 'contributors'">contributor</xsl:when>
 				<xsl:otherwise>
 					<xsl:call-template name="getEntityCodeName">
 						<xsl:with-param name="typeName" select="$type"/>
@@ -104,16 +106,7 @@
 						</div>
 
 						<!-- sidebar -->
-						<div id="browse-connections">
-							<h3>Browse</h3>
-							<ul id="menu">
-								<xsl:call-template name="makeEntityBrowseList"/>
-								<li class="browse-entry"><a href="entries">Entries</a></li>
-								<li class="browse-map"><a href="maps">Maps</a></li>
-								<li class="browse-term"><a href="subjects">Subjects</a></li>
-								<li class="browse-role"><a href="roles">Roles</a></li>
-							</ul>
-						</div>
+						<xsl:call-template name="makeBrowseMenu"/>
 
 					</div>
 
@@ -154,5 +147,21 @@
 	</xsl:template>
 
 
+	<xsl:template name="makeBrowseMenu">
+		<xsl:param name="base" select="'../'"/>
+		<div id="browse-connections">
+			<h3>Browse</h3>
+			<ul id="menu">
+				<xsl:call-template name="makeEntityBrowseList">
+					<xsl:with-param name="base" select="$base"/>
+				</xsl:call-template>
+				<li class="browse-entry"><a href="{$base}browse/entries">Entries</a></li>
+				<li class="browse-map"><a href="{$base}browse/maps">Maps</a></li>
+				<li class="browse-term"><a href="{$base}browse/subjects">Subjects</a></li>
+				<li class="browse-role"><a href="{$base}browse/roles">Roles</a></li>
+				<li class="browse-contributor"><a href="{$base}browse/contributors">Contributors</a></li>
+			</ul>
+		</div>
+	</xsl:template>
 
 </xsl:stylesheet>

@@ -69,6 +69,7 @@ php entities-json.php Entry > browse/entries.js
 php entities-json.php Map > browse/maps.js
 php entities-json.php Term > browse/subjects.js
 php entities-json.php Role > browse/roles.js
+php entities-json.php Contributor > browse/contributors.js
 
 wget --no-cache -O browse/artefacts $PIPELINE/browse/artefacts
 wget --no-cache -O browse/buildings $PIPELINE/browse/buildings
