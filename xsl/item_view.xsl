@@ -74,7 +74,6 @@
 			<div id="header"></div>
 			<div id="subheader">
 				<div id="navigation">
-					<a class="browse" href="{$urlbase}"></a>
 					<div id="breadcrumbs"/>
 				</div>
 			</div>
