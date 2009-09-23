@@ -75,12 +75,7 @@
 
 							<div id="heading" class="title-{$typeCodeName}">
 								<h1>Browse <xsl:value-of select="$pluralTypeName"/></h1>
-								<span id="sub-title">
-									<xsl:text>Sort by </xsl:text>
-									<a id="name-sort-link" href="#">Name</a>
-									 <xsl:text> or </xsl:text>
-									<a id="type-sort-link" href="#">Type</a>
-								</span>
+								<span id="sub-title"/>
 							</div>
 
 							<ul id="browse-alpha-index"/>
@@ -88,6 +83,12 @@
 
 							<div class="list-right-col-browse" id="entities-alpha"/>
 							<div class="list-right-col-browse" id="entities-type"/>
+							<div class="list-right-col-browse" id="entities-content">
+								<h2><xsl:value-of select="$pluralTypeName"/> with associated Entries</h2>
+								<ul id="entities-with-entries"/>
+								<h2>Other <xsl:value-of select="$pluralTypeName"/> in the Dictionary</h2>
+								<ul id="entities-without-entries"/>
+							</div>
 
 						</div>
 					</div>

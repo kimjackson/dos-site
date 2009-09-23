@@ -484,13 +484,17 @@ img { border: 0 }
 li.has-entry a {
 	font-weight: bold;
 }
-#entities-alpha .left {
+#entities-alpha .left, #entities-content .left {
 	float: left;
 	width: 400px
 }
-#entities-alpha .right {
+#entities-alpha .right, #entities-content .right {
 	float: right;
 	width: 219px
+}
+
+li.shade {
+	background-color: #eeeeee
 }
 
 
