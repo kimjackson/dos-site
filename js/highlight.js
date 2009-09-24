@@ -139,6 +139,9 @@ function checkAddress(currLoc, addr) {
 function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 	var parentElem = elem.parentNode,
 		text = elem.nodeValue,
+		matches,
+		leadingSpace,
+		trailingSpace,
 		words,
 		i,
 		j,
@@ -148,6 +151,7 @@ function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 		myEndingRefs = [],
 		ref,
 		a,
+		newElement,
 		newElements = [],
 		startPositions = [],
 		endPositions = [],
@@ -167,7 +171,10 @@ function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 		remove;
 
 
-	text = text.replace(/^\s+/, "").replace(/\s+$/, "");
+	matches = text.match(/^(\s*)(.*?)(\s*)$/);
+	leadingSpace = (matches[1].length > 0) ? matches[1] : null;
+	trailingSpace = (matches[3].length > 0) ? matches[3] : null;
+	text = matches[2];
 	words = text.split(/\s+/);
 
 	// filter just the applicable refs from startingRefs and endingRefs
@@ -246,7 +253,14 @@ function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 		startPositions = startPositions.sort(sortfunc);
 		endPositions = endPositions.sort(sortfunc);
 
-		section = { "startWord": 1, "endWord": null, "refId": null, "refCount": 0, "refNums": [] };
+		section = {
+			startWord: 1,
+			endWord: null,
+			refId: null,
+			refCount: 0,
+			refNums: [],
+			starting: true
+		};
 		for (w = 1; w <= words.length; ++w) {
 			startPos = null;
 			// push any refs that start at this pos onto the stack
@@ -263,7 +277,14 @@ function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 					// wrap up the current section and start a new one
 					section.endWord = w - 1;
 					sections.push(section);
-					section = { "startWord": w, "endWord": null, "refId": startPos.refId, "refCount": refStack.length, "refNums": [], "starting": startPos.starting || false };
+					section = {
+						startWord: w,
+						endWord: null,
+						refId: startPos.refId,
+						refCount: refStack.length,
+						refNums: [],
+						starting: startPos.starting || false
+					};
 				}
 			}
 
@@ -293,7 +314,13 @@ function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 						// this is the last word => no more sections
 						section = null;
 					} else {
-						section = { "startWord": w + 1, "endWord": null, "refId": (refStack.length > 0 ? refStack[0] : null), "refCount": refStack.length, "refNums": [] };
+						section = {
+							startWord: w + 1,
+							endWord: null,
+							refId: (refStack.length > 0 ? refStack[0] : null),
+							refCount: refStack.length,
+							refNums: []
+						};
 					}
 				}
 			}
@@ -333,6 +360,26 @@ function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 				newElements.push(document.createTextNode(wordString));
 			}
 
+		}
+
+		// restore leading space
+		if (leadingSpace !== null) {
+			newElement = newElements[0];
+			if (newElements.nodeType === Node.TEXT_NODE) {
+				newElements.nodeValue = leadingSpace + newElements.nodeValue;
+			} else {
+				newElements.unshift(document.createTextNode(leadingSpace));
+			}
+		}
+
+		// restore trailing space
+		if (trailingSpace !== null) {
+			newElement = newElements[newElements.length - 1];
+			if (newElement.nodeType === Node.TEXT_NODE) {
+				newElements.nodeValue = newElements.nodeValue + trailingSpace;
+			} else {
+				newElements.push(document.createTextNode(trailingSpace));
+			}
 		}
 
 		// replace elem with newElements
