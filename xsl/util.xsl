@@ -210,14 +210,16 @@
 		<xsl:param name="authors"/>
 		<xsl:param name="link"/>
 		<xsl:for-each select="$authors">
-			<xsl:choose>
-				<xsl:when test="position() = last()">
-					<xsl:text> and </xsl:text>
-				</xsl:when>
-				<xsl:when test="position() > 1">
-					<xsl:text>, </xsl:text>
-				</xsl:when>
-			</xsl:choose>
+			<xsl:if test="position() > 1">
+				<xsl:choose>
+					<xsl:when test="position() = last()">
+						<xsl:text> and </xsl:text>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:text>, </xsl:text>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:if>
 			<xsl:choose>
 				<xsl:when test="$link = 'true'">
 					<a href="{id}" class="preview-{id}">
