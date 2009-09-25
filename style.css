@@ -129,6 +129,9 @@ img { border: 0 }
 .nav-term         { background: url(images/16x16/icon16-term.gif) no-repeat }
 .nav-video        { background: url(images/16x16/icon16-video.gif) no-repeat }
 
+.breadcrumb .search-term {
+	display: none;
+}
 
 
 

@@ -12,15 +12,11 @@ var _encode = function (entries) {
 		if (s !== "") {
 			s += "|";
 		}
-		if (entries[i].url) {
-			s += entries[i].url;
-		}
-		if (entries[i].id) {
-			s += "," + entries[i].id;
-		}
-		if (entries[i].type) {
-			s += "," + entries[i].type;
-		}
+		s += [
+			entries[i].url || "",
+			entries[i].id || "",
+			entries[i].type || ""
+		].join(",");
 	}
 	return s;
 };
@@ -65,7 +61,14 @@ RelBrowser.History = {
 		};
 
 		if (! current.id) {
-			return;
+			// maybe this is a search page?
+			matches = location.search.match(/zoom_query=([^&]*)/);
+			if (matches  && matches[1]) {
+				current.id = matches[1];
+				current.type = "search";
+			} else {
+				return;
+			}
 		}
 
 		if (entries.length > 0) {
@@ -92,25 +95,29 @@ RelBrowser.History = {
 	},
 
 	show: function (elem) {
-		// this needs to happen before DOS.ToolTip.addToolTips()
+		// this needs to happen before DOS.ToolTip.addPreviewToolTips()
 		// in order for previews to be loaded
-		var entries, i, e;
+		var entries, i, e, className;
 
 		entries = RelBrowser.History.get();
 		for (i = 0; i < entries.length; ++i) {
 			e = entries[i];
+			className = e.type === "search" ? "search-tooltip" : "preview-" + e.id;
 			$(elem).append(
 				"<div class='breadcrumb nav-" + e.type + "'>" +
-					"<a href='" + e.url + "' class='preview-" + e.id + "'>" +
+					"<a href='" + e.url + "' class='" + className + "'>" +
 						"<img src='" + RelBrowser.baseURL + "images/16x16-clear.gif'/>" +
+						(e.type === "search" ? "<div class='search-term'>" + e.id + "</div>" : "") +
 					"</a>" +
 				"</div>"
 			);
 
-			if ($("#previews #preview-" + entries[i].id).length < 1) {
-				$("#previews").append(
-					"<div class='preview' id='preview-" + e.id + "'/>"
-				);
+			if (e.type !== "search") {
+				if ($("#previews #preview-" + entries[i].id).length < 1) {
+					$("#previews").append(
+						"<div class='preview' id='preview-" + e.id + "'/>"
+					);
+				}
 			}
 		}
 		$(elem).append("<div class='clearfix'/>");

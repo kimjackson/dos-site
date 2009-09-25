@@ -55,9 +55,9 @@
 				<script src="{$urlbase}js/fontsize.js" type="text/javascript"/>
 				<script src="{$urlbase}js/history.js" type="text/javascript"/>
 				<script src="{$urlbase}js/search.js" type="text/javascript"/>
-				<script src="{$urlbase}js/tooltip.js" type="text/javascript"/>
 				<script src="{$urlbase}js/browse.js" type="text/javascript"/>
 				<script src="{$urlbase}browse/{$type}.js" type="text/javascript"/>
+				<script src="{$urlbase}js/tooltip.js" type="text/javascript"/>
 			</head>
 
 			<body>

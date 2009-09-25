@@ -47,9 +47,9 @@ DOS.Browse = {
 
 			className = entity[2] ? " class='has-entry'" : "";
 			if (entity[1]) {
-				$ul.append("<li"+className+"><div class='left'><a href='../item/"+id+"'>"+entity[0]+"</a></div><div class='right'>"+getSubtypes(entity[1])+"</div><div class='clearfix'/></li>");
+				$ul.append("<li"+className+"><div class='left'><a class='preview-"+id+"' href='../item/"+id+"'>"+entity[0]+"</a></div><div class='right'>"+getSubtypes(entity[1])+"</div><div class='clearfix'/></li>");
 			} else {
-				$ul.append("<li"+className+"><a href='../item/"+id+"'>"+entity[0]+"</a></li>");
+				$ul.append("<li"+className+"><a class='preview-"+id+"' href='../item/"+id+"'>"+entity[0]+"</a></li>");
 			}
 		}
 		$("#browse-alpha-index").append("<div class='clearfix'/>");
@@ -71,7 +71,7 @@ DOS.Browse = {
 				entity = DOS.Browse.entities[id];
 				if (entity) {
 					className = entity[2] ? " class='has-entry'" : "";
-					$ul.append("<li"+className+"><a href='../item/"+id+"'>"+entity[0]+"</a></li>");
+					$ul.append("<li"+className+"><a class='preview-"+id+"' href='../item/"+id+"'>"+entity[0]+"</a></li>");
 				}
 			}
 		}
@@ -86,9 +86,9 @@ DOS.Browse = {
 			$ul = entity[2] ? $("#entities-with-entries") : $("#entities-without-entries");
 
 			if (entity[1]) {
-				$ul.append("<li"+className+"><div class='left'><a href='../item/"+id+"'>"+entity[0]+"</a></div><div class='right'>"+getSubtypes(entity[1])+"</div><div class='clearfix'/></li>");
+				$ul.append("<li"+className+"><div class='left'><a class='preview-"+id+"' href='../item/"+id+"'>"+entity[0]+"</a></div><div class='right'>"+getSubtypes(entity[1])+"</div><div class='clearfix'/></li>");
 			} else {
-				$ul.append("<li"+className+"><a href='../item/"+id+"'>"+entity[0]+"</a></li>");
+				$ul.append("<li"+className+"><a class='preview-"+id+"' href='../item/"+id+"'>"+entity[0]+"</a></li>");
 			}
 		}
 

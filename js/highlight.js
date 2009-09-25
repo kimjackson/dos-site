@@ -520,7 +520,7 @@ YAHOO.util.Event.onDOMReady(function () {
 	if ($("#tei").length > 0  &&  window.refs) {
 		highlight($("#tei")[0], refs);
 	}
-	DOS.ToolTip.addToolTips($("#tei a[class*=preview-]"));
+	DOS.ToolTip.addPreviewToolTips($("#tei a[class*=preview-]"));
 
 	function _showSection(i) {
 		if (i) {
