@@ -3,7 +3,7 @@ if (! window.DOS) { DOS = {}; }
 DOS.Browse = {
 
 	render: function() {
-		var id, entity, type, heading, newheading, entityIDs, i, $index, $ul, className, entries, types;
+		var id, entity, title, href, type, heading, newheading, entityIDs, i, $index, $ul, className, entries, types;
 
 		var getSubtypes = function(ids) {
 			var i, s = "";
@@ -23,6 +23,18 @@ DOS.Browse = {
 			}
 		};
 
+		var getHref = function(id, title) {
+			if (DOS.Browse.pathBase) {
+				if (DOS.Browse.pathBase === "map") {
+					return "../map/" + id;
+				} else {
+					return "../" + DOS.Browse.pathBase + "/" + title.toLowerCase().replace(/ /g, "_");
+				}
+			} else {
+				return "../item/" + id;
+			}
+		};
+
 		DOS.Browse.sortByContent();
 
 		heading = null;
@@ -31,8 +43,10 @@ DOS.Browse = {
 		for (i = 0; i < DOS.Browse.orderedEntities.length; ++i) {
 			id = DOS.Browse.orderedEntities[i];
 			entity = DOS.Browse.entities[id];
+			title = entity[0];
+			href = getHref(id, title);
 
-			newheading = getSortingLetter(entity[0]);
+			newheading = getSortingLetter(title);
 			if (newheading < "0") {
 				newheading = "Symbols";
 			} else if (newheading < "A") {
@@ -47,9 +61,9 @@ DOS.Browse = {
 
 			className = entity[2] ? " class='has-entry'" : "";
 			if (entity[1]) {
-				$ul.append("<li"+className+"><div class='left'><a class='preview-"+id+"' href='../item/"+id+"'>"+entity[0]+"</a></div><div class='right'>"+getSubtypes(entity[1])+"</div><div class='clearfix'/></li>");
+				$ul.append("<li"+className+"><div class='left'><a class='preview-"+id+"' href='"+href+"'>"+title+"</a></div><div class='right'>"+getSubtypes(entity[1])+"</div><div class='clearfix'/></li>");
 			} else {
-				$ul.append("<li"+className+"><a class='preview-"+id+"' href='../item/"+id+"'>"+entity[0]+"</a></li>");
+				$ul.append("<li"+className+"><a class='preview-"+id+"' href='"+href+"'>"+title+"</a></li>");
 			}
 		}
 		$("#browse-alpha-index").append("<div class='clearfix'/>");
@@ -69,9 +83,11 @@ DOS.Browse = {
 			for (j = 0; j < entityIDs.length; ++j) {
 				id = entityIDs[j];
 				entity = DOS.Browse.entities[id];
+				title = entity[0];
+				href = getHref(id, title);
 				if (entity) {
 					className = entity[2] ? " class='has-entry'" : "";
-					$ul.append("<li"+className+"><a class='preview-"+id+"' href='../item/"+id+"'>"+entity[0]+"</a></li>");
+					$ul.append("<li"+className+"><a class='preview-"+id+"' href='"+href+"'>"+title+"</a></li>");
 				}
 			}
 		}
@@ -81,14 +97,16 @@ DOS.Browse = {
 		for (i = 0; i < DOS.Browse.orderedEntities.length; ++i) {
 			id = DOS.Browse.orderedEntities[i];
 			entity = DOS.Browse.entities[id];
+			title = entity[0];
+			href = getHref(id, title);
 
 			className = entity[2] ? " class='has-entry'" : "";
 			$ul = entity[2] ? $("#entities-with-entries") : $("#entities-without-entries");
 
 			if (entity[1]) {
-				$ul.append("<li"+className+"><div class='left'><a class='preview-"+id+"' href='../item/"+id+"'>"+entity[0]+"</a></div><div class='right'>"+getSubtypes(entity[1])+"</div><div class='clearfix'/></li>");
+				$ul.append("<li"+className+"><div class='left'><a class='preview-"+id+"' href='"+href+"'>"+title+"</a></div><div class='right'>"+getSubtypes(entity[1])+"</div><div class='clearfix'/></li>");
 			} else {
-				$ul.append("<li"+className+"><a class='preview-"+id+"' href='../item/"+id+"'>"+entity[0]+"</a></li>");
+				$ul.append("<li"+className+"><a class='preview-"+id+"' href='"+href+"'>"+title+"</a></li>");
 			}
 		}
 

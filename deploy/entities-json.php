@@ -6,11 +6,12 @@ mysql_connection_db_select("`heuristdb-dos`");
 
 
 if ($argc < 2) {
-	print "Usage: php " . $argv[0] . " <type>\n";
+	print "Usage: php " . $argv[0] . " <type> [<typePath>]\n";
 	exit(1);
 }
 
 $type = $argv[1];
+$typePath = @$argv[2];
 
 
 $entities = array();
@@ -212,6 +213,7 @@ if ($type == "Role") {
 
 print "if (! window.DOS) { DOS = {}; }\n";
 print "if (! DOS.Browse) { DOS.Browse = {}; }\n";
+if ($typePath) { print "DOS.Browse.pathBase = " . json_format($typePath) . ";\n"; }
 print "DOS.Browse.entities = " . json_format($entities) . ";\n";
 print "DOS.Browse.orderedEntities = " . json_format($orderedEntities) . ";\n";
 print "DOS.Browse.subtypes = " . json_format($subtypes) . ";\n";

@@ -32,10 +32,14 @@ while read nonce; do
 	fi
 done
 
+# generate URL map
+php urlmap.php > xsl/urlmap.xml
+wget --no-cache -O xsl/urlmap.xsl $PIPELINE/urlmap-xsl
+
 # generate pages, previews for all appropriate records
 echo "select rec_id from records left join rec_details on rd_rec_id = rec_id and rd_type = 591 where rec_type in (153,151,103,74,91,152,98) and if (rec_type = 91, rd_val in ('Occupation', 'Type'), 1);" | mysql -s -u readonly -pmitnick heuristdb-dos | \
 while read id; do
-	wget --no-cache -O item/$id $PIPELINE/item/$id;
+	wget --no-cache -O item/$id $PIPELINE/item-urlmapped/$id;
 	wget --no-cache -O preview/$id $PIPELINE/preview/$id;
 done
 
@@ -48,7 +52,7 @@ while read id; do
 done
 
 # generate popups for all multimedia records
-echo "select rec_id from records where rec_type = 74;" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O popup/$id $PIPELINE/popup/$id; done
+echo "select rec_id from records where rec_type = 74;" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O popup/$id $PIPELINE/popup-urlmapped/$id; done
 
 # generate KML for all entities
 echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type = 526 and a.rd_val = 'TimePlace' and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O kml/summary/$id.kml $PIPELINE/kml/summary/rename/$id; done
@@ -56,20 +60,20 @@ echo "select distinct b.rd_val from rec_details a left join rec_details b on a.r
 echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type in (177,178,230) and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O kml/full/$id.kml $PIPELINE/kml/full/rename/$id; done
 
 # generate browsing data
-php entities-json.php Artefact > browse/artefacts.js
-php entities-json.php Building > browse/buildings.js
-php entities-json.php Event > browse/events.js
-php entities-json.php "Natural feature" > browse/natural.js
-php entities-json.php Organisation > browse/organisations.js
-php entities-json.php Person > browse/people.js
-php entities-json.php Place > browse/places.js
-php entities-json.php Structure > browse/structures.js
+php entities-json.php Artefact artefact > browse/artefacts.js
+php entities-json.php Building building > browse/buildings.js
+php entities-json.php Event event > browse/events.js
+php entities-json.php "Natural feature" natural_feature > browse/natural.js
+php entities-json.php Organisation organisation > browse/organisations.js
+php entities-json.php Person person > browse/people.js
+php entities-json.php Place place > browse/places.js
+php entities-json.php Structure structure > browse/structures.js
 
-php entities-json.php Entry > browse/entries.js
-php entities-json.php Map > browse/maps.js
-php entities-json.php Term > browse/subjects.js
-php entities-json.php Role > browse/roles.js
-php entities-json.php Contributor > browse/contributors.js
+php entities-json.php Entry entry > browse/entries.js
+php entities-json.php Map map > browse/maps.js
+php entities-json.php Term subject > browse/subjects.js
+php entities-json.php Role role > browse/roles.js
+php entities-json.php Contributor contributor > browse/contributors.js
 
 wget --no-cache -O browse/artefacts $PIPELINE/browse/artefacts
 wget --no-cache -O browse/buildings $PIPELINE/browse/buildings
@@ -89,5 +93,5 @@ wget --no-cache -O search/search_template.html $PIPELINE/search
 # generate pages quietly and track progress at 1 minute intervals
 #rm progress
 #while [ 1 ]; do ls -1 item/ | wc -l >> progress; sleep 60; done &
-#echo "select rec_id from records left join rec_details on rd_rec_id = rec_id and rd_type = 591 where rec_type in (153,151,103,74,91,152,98) and if (rec_type = 91, rd_val in ('Occupation', 'Type'), 1);" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O item/$id $PIPELINE/item/$id 2>/dev/null; done &
+#echo "select rec_id from records left join rec_details on rd_rec_id = rec_id and rd_type = 591 where rec_type in (153,151,103,74,91,152,98) and if (rec_type = 91, rd_val in ('Occupation', 'Type'), 1);" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O item/$id $PIPELINE/item-urlmapped/$id 2>/dev/null; done &
 

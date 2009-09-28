@@ -1,0 +1,54 @@
+http://dictionaryofsydney.org/
+
+                              entry/[title]
+
+                              artefact/[title]
+                              building/[title]
+                              event/[title]
+                              natural_feature/[title]
+                              organisation/[title]
+                              person/[title]
+                              place/[title]
+                              structure/[title]
+
+                              contributor/[title]
+
+                              role/[title]
+
+                              subject/[title]
+
+                              image/[id]
+                              audio/[id]
+                              video/[id]
+                              map/[id]
+
+                              browse/artefacts
+                              browse/buildings
+                              browse/events
+                              browse/natural
+                              browse/organisations
+                              browse/people
+                              browse/places
+                              browse/structures
+
+                              preview/[id]
+
+                              popup/[id]
+
+                              kml/
+                                  full/[id].kml
+                                  summary/[id].kml
+
+                              tiles/[name]/
+
+                              files/
+                                    full/[hash]
+                                    large/[hash]
+                                    wide/[hash]
+                                    medium/[hash]
+                                    small/[hash]
+                                    thumbnail/[hash]
+
+                              js/
+                              swf/
+
