@@ -5,6 +5,8 @@
                 exclude-result-prefixes="xi str"
                 version="1.0">
 
+	<xsl:include href="urlmap.xsl"/>
+
 	<xsl:template name="xmldoc" match="reference[reftype/@id=98]">
 
 		<xsl:variable name="file" select="detail[@id=231 or @id=221]"/>
@@ -58,7 +60,7 @@
 						<xsl:choose>
 							<xsl:when test="starts-with(pointer[@id=199]/detail[@id=289], 'image')">
 								<div class="annotation-img annotation-id-{id}">
-									<a href="../popup/{pointer[@id=199]/id}?width=878&amp;amp;height=566" class="popup preview-{pointer[@id=199]/id}c{id}">
+									<a href="../popup/{pointer[@id=199]/id}?width=878&amp;amp;height=578" class="popup preview-{pointer[@id=199]/id}c{id}">
 										<img>
 											<xsl:attribute name="src">
 												<xsl:call-template name="getFileURL">
@@ -79,7 +81,7 @@
 							</xsl:when>
 							<xsl:when test="starts-with(pointer[@id=199]/detail[@id=289], 'video')">
 								<div class="annotation-img annotation-id-{id}">
-									<a href="../popup/{pointer[@id=199]/id}?width=503&amp;amp;height=566" class="popup preview-{pointer[@id=199]/id}c{id}">
+									<a href="../popup/{pointer[@id=199]/id}?width=503&amp;amp;height=578" class="popup preview-{pointer[@id=199]/id}c{id}">
 										<img src="{$urlbase}images/img-entity-audio.jpg"/>
 									</a>
 								</div>
@@ -131,9 +133,9 @@
 					hide : true,
 					</xsl:if>
 					<xsl:if test="pointer[@id=199]">
-					target : <xsl:value-of select="pointer[@id=199]/id"/>,
+					targetID : <xsl:value-of select="pointer[@id=199]/id"/>,
+					href : "../<xsl:call-template name="getPath"><xsl:with-param name="id" select="pointer[@id=199]/id"/></xsl:call-template>",
 					</xsl:if>
-					title : "<xsl:call-template name="cleanQuote"><xsl:with-param name="string" select="detail[@id=160]"/></xsl:call-template>",
 					recordID : "<xsl:value-of select="id"/>"
 				} );
 			}

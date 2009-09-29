@@ -1,7 +1,7 @@
 # make sure we go direct to the server!
 unset http_proxy
 
-PIPELINE=http://heuristscholar.org/cocoon/relbrowser-kj
+PIPELINE=http://heuristscholar.org/cocoon/dos-static-2009-09-28
 
 
 # copy files
@@ -33,8 +33,8 @@ while read nonce; do
 done
 
 # generate URL map
-php urlmap.php > xsl/urlmap.xml
-wget --no-cache -O xsl/urlmap.xsl $PIPELINE/urlmap-xsl
+php urlmap.php > ../xsl/urlmap.xml
+wget --no-cache -O ../xsl/urlmap.xsl $PIPELINE/urlmap-xsl
 
 # generate pages, previews for all appropriate records
 echo "select rec_id from records left join rec_details on rd_rec_id = rec_id and rd_type = 591 where rec_type in (153,151,103,74,91,152,98) and if (rec_type = 91, rd_val in ('Occupation', 'Type'), 1);" | mysql -s -u readonly -pmitnick heuristdb-dos | \

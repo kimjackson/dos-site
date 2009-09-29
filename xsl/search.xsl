@@ -2,8 +2,6 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 	<xsl:include href="myvariables.xsl"/>
-	<xsl:include href="util.xsl"/>
-	<xsl:include href="factoid.xsl"/>
 	<xsl:include href="browse.xsl"/>
 
 	<xsl:template match="/">

@@ -30,7 +30,6 @@
 					};
 					var tb_pathToImage = RelBrowser.baseURL + "images/loadingAnimation.gif";
 				</script>
-				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;amp;key={$hapi-key}" type="text/javascript"/>
 				<script src="/jquery/jquery.js" type="text/javascript"/>
 				<script src="{$urlbase}js/cookies.js" type="text/javascript"/>
 				<script src="{$urlbase}js/fontsize.js" type="text/javascript"/>
@@ -98,8 +97,8 @@
 							<img src="{$urlbase}images/img-logo.jpg" alt="Dictionary of Sydney" width="198" height="125" class="logo"/>
 						</a>
 						<div id="search-bar">
-							<form method="post" action=".">
-								<input type="text" name="search" id="search" size="20"/>
+							<form method="get" action="{$urlbase}search/search.cgi">
+								<input type="text" name="zoom_query" id="search" size="20"/>
 								<div id="search-submit"/>
 							</form>
 						</div>
@@ -241,7 +240,7 @@
 					<xsl:when test="reftype/@id=74 and starts-with(detail[@id=289], 'image')">
 						<xsl:text>../popup/</xsl:text>
 						<xsl:value-of select="id"/>
-						<xsl:text>?width=878&amp;amp;height=566</xsl:text>
+						<xsl:text>?width=878&amp;amp;height=578</xsl:text>
 					</xsl:when>
 					<xsl:when test="reftype/@id=74 and starts-with(detail[@id=289], 'audio')">
 						<xsl:text>../popup/</xsl:text>
