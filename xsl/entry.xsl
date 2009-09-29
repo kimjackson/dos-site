@@ -5,6 +5,8 @@
                 exclude-result-prefixes="xi str"
                 version="1.0">
 
+	<xsl:include href="urlmap.xsl"/>
+
 	<xsl:template name="xmldoc" match="reference[reftype/@id=98]">
 
 		<xsl:variable name="file" select="detail[@id=231 or @id=221]"/>
@@ -131,9 +133,9 @@
 					hide : true,
 					</xsl:if>
 					<xsl:if test="pointer[@id=199]">
-					target : <xsl:value-of select="pointer[@id=199]/id"/>,
+					targetID : <xsl:value-of select="pointer[@id=199]/id"/>,
+					href : "../<xsl:call-template name="getPath"><xsl:with-param name="id" select="pointer[@id=199]/id"/></xsl:call-template>",
 					</xsl:if>
-					title : "<xsl:call-template name="cleanQuote"><xsl:with-param name="string" select="detail[@id=160]"/></xsl:call-template>",
 					recordID : "<xsl:value-of select="id"/>"
 				} );
 			}

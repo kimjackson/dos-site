@@ -167,14 +167,14 @@
    </map:match>
 
    <map:match pattern="urlmap-xsl">
-	<map:generate src="xsl/urlmap-precursor.xsl"/>
+	<map:generate src="xsl/urlmap_precursor.xsl"/>
     <map:transform type="xinclude"/>
 	<map:serialize type="xml"/>
    </map:match>
 
    <map:match pattern="*-urlmapped/*">
     <map:generate src="cocoon:/{1}/{2}"/>
-	<map:transform src="xsl/urlmap.xsl"/>
+	<map:transform src="xsl/rewrite_urls.xsl"/>
     <map:serialize type="html"/>
    </map:match>
 

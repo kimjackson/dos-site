@@ -206,9 +206,9 @@ function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 			(currentRefs.length > 1 ? " multiple" : "") +
 			(ref.hide ? " hide" : "");
 		if (! ref.hide) {
-			if (ref["target"]) {
-				a.href = ref.target;
-				a.className += " preview-" + ref.target + "c" + ref.recordID;
+			if (ref["targetID"]) {
+				a.href = ref.href;
+				a.className += " preview-" + ref.targetID + "c" + ref.recordID;
 			} else {
 				a.className += " preview-" + ref.recordID;
 			}
@@ -346,9 +346,9 @@ function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 					(currentRefs.length > 1 ? " multiple" : "") +
 					(ref.hide ? " hide" : "");
 				if (! ref.hide) {
-					if (ref["target"]) {
-						a.href = ref.target;
-						a.className += " preview-" + ref.target + "c" + ref.recordID;
+					if (ref["targetID"]) {
+						a.href = ref.href;
+						a.className += " preview-" + ref.targetID + "c" + ref.recordID;
 					} else {
 						a.className += " preview-" + ref.recordID;
 					}
