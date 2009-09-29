@@ -3,6 +3,12 @@ unset http_proxy
 
 PIPELINE=http://heuristscholar.org/cocoon/relbrowser-kj
 
+REPO=repo
+
+# create directories
+mkdir item preview popup browse search kml kml/full kml/summary files files/thumbnail files/small files/medium files/wide files/large files/full
+cp -prd $REPO/js $REPO/images $REPO/swf $REPO/*.css .
+
 
 # copy files
 echo "select file_id, file_nonce from files;" | mysql -s -u readonly -pmitnick heuristdb-dos | \
@@ -33,8 +39,13 @@ while read nonce; do
 done
 
 # generate URL map
-php urlmap.php > xsl/urlmap.xml
-wget --no-cache -O xsl/urlmap.xsl $PIPELINE/urlmap-xsl
+php $REPO/deploy/urlmap.php > $REPO/xsl/urlmap.xml
+wget --no-cache -O $REPO/xsl/urlmap.xsl $PIPELINE/urlmap-xsl
+
+# create symbolic links
+php $REPO/deploy/urlmap.php links > make_links.sh
+. make_links.sh
+rm make_links.sh
 
 # generate pages, previews for all appropriate records
 echo "select rec_id from records left join rec_details on rd_rec_id = rec_id and rd_type = 591 where rec_type in (153,151,103,74,91,152,98) and if (rec_type = 91, rd_val in ('Occupation', 'Type'), 1);" | mysql -s -u readonly -pmitnick heuristdb-dos | \
@@ -60,20 +71,20 @@ echo "select distinct b.rd_val from rec_details a left join rec_details b on a.r
 echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type in (177,178,230) and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O kml/full/$id.kml $PIPELINE/kml/full/rename/$id; done
 
 # generate browsing data
-php entities-json.php Artefact artefact > browse/artefacts.js
-php entities-json.php Building building > browse/buildings.js
-php entities-json.php Event event > browse/events.js
-php entities-json.php "Natural feature" natural_feature > browse/natural.js
-php entities-json.php Organisation organisation > browse/organisations.js
-php entities-json.php Person person > browse/people.js
-php entities-json.php Place place > browse/places.js
-php entities-json.php Structure structure > browse/structures.js
+php $REPO/deploy/entities-json.php Artefact artefact > browse/artefacts.js
+php $REPO/deploy/entities-json.php Building building > browse/buildings.js
+php $REPO/deploy/entities-json.php Event event > browse/events.js
+php $REPO/deploy/entities-json.php "Natural feature" natural_feature > browse/natural.js
+php $REPO/deploy/entities-json.php Organisation organisation > browse/organisations.js
+php $REPO/deploy/entities-json.php Person person > browse/people.js
+php $REPO/deploy/entities-json.php Place place > browse/places.js
+php $REPO/deploy/entities-json.php Structure structure > browse/structures.js
 
-php entities-json.php Entry entry > browse/entries.js
-php entities-json.php Map map > browse/maps.js
-php entities-json.php Term subject > browse/subjects.js
-php entities-json.php Role role > browse/roles.js
-php entities-json.php Contributor contributor > browse/contributors.js
+php $REPO/deploy/entities-json.php Entry entry > browse/entries.js
+php $REPO/deploy/entities-json.php Map map > browse/maps.js
+php $REPO/deploy/entities-json.php Term subject > browse/subjects.js
+php $REPO/deploy/entities-json.php Role role > browse/roles.js
+php $REPO/deploy/entities-json.php Contributor contributor > browse/contributors.js
 
 wget --no-cache -O browse/artefacts $PIPELINE/browse/artefacts
 wget --no-cache -O browse/buildings $PIPELINE/browse/buildings

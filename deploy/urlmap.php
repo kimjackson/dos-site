@@ -8,9 +8,15 @@ require_once('/var/www/htdocs/heurist/php/modules/loading.php');
 
 mysql_connection_db_select('`heuristdb-dos`');
 
+$links = (@$argv[1] === 'links');
+
 $path_to_id = array();
 
-echo "<map>\n";
+if ($links) {
+	echo "mkdir contributor entry role subject map image audio video artefact building event natural_feature organisation person place structure\n";
+} else {
+	echo "<map>\n";
+}
 
 // contributors, entities, roles, terms, entries
 $res = mysql_query('select rec_id from records where rec_type in (153,151,91,152,98) and ! rec_temporary');
@@ -24,7 +30,7 @@ while ($row = mysql_fetch_row($res)) {
 	}
 	$path_to_id[$path] = $id;
 
-	echo "<record><id>$id</id><path>$path</path></record>\n";
+	printMapping($id, $path);
 }
 
 // media
@@ -38,7 +44,7 @@ while ($row = mysql_fetch_row($res)) {
 	$id = $row[0];
 	$path = $row[1] . '/' . $id;
 	// we use IDs so no need to check for collisions
-	echo "<record><id>$id</id><path>$path</path></record>\n";
+	printMapping($id, $path);
 }
 
 $res = mysql_query('select rec_id from records where rec_type = 103');
@@ -46,15 +52,19 @@ while ($row = mysql_fetch_row($res)) {
 	$id = $row[0];
 	$path = 'map/' . $id;
 	// we use IDs so no need to check for collisions
-	echo "<record><id>$id</id><path>$path</path></record>\n";
+	printMapping($id, $path);
 }
-echo "</map>\n";
+
+if (! $links) echo "</map>\n";
 
 
 
 function getTitle($record) {
+	global $links;
+	$search = array(' ', '/', '&');
+	$replace = array('_', '_', ($links ? '&' : '&amp;'));
 	foreach ($record['details'][160] as $detailID => $value) {
-		return str_replace('&', '&amp;', (str_replace(' ', '_', mb_strtolower($value, 'UTF-8'))));
+		return str_replace($search, $replace, mb_strtolower($value, 'UTF-8'));
 	}
 }
 
@@ -84,3 +94,11 @@ function getRecordType($record) {
 	}
 }
 
+function printMapping($id, $path) {
+	global $links;
+	if ($links) {
+		echo "ln -s ../item/$id \"$path\"\n";
+	} else {
+		echo "<record><id>$id</id><path>$path</path></record>\n";
+	}
+}
