@@ -85,9 +85,9 @@
 							<div class="list-right-col-browse" id="entities-alpha"/>
 							<div class="list-right-col-browse" id="entities-type"/>
 							<div class="list-right-col-browse" id="entities-content">
-								<h2><xsl:value-of select="$pluralTypeName"/> with associated Entries</h2>
+								<h2><xsl:value-of select="$pluralTypeName"/> with an Entry about them</h2>
 								<ul id="entities-with-entries"/>
-								<h2>Other <xsl:value-of select="$pluralTypeName"/> in the Dictionary</h2>
+								<h2>Other <xsl:value-of select="$pluralTypeName"/> mentioned in the Dictionary</h2>
 								<ul id="entities-without-entries"/>
 							</div>
 
