@@ -42,6 +42,10 @@
     <map:redirect-to uri="http://heuristscholar.org/relbrowser-kj/config.xml"/>
    </map:match>
 
+   <map:match pattern="index/config.xml">
+    <map:redirect-to uri="http://heuristscholar.org/relbrowser-kj/config.xml"/>
+   </map:match>
+
    <map:match pattern="xml*/*">
     <map:generate src="http://dos.heuristscholar.org/heurist/php/hml.php?q=ids:{2}&amp;depth={1}"/>
     <map:transform src="xsl/heurist_legacy_xml.xsl"/>
