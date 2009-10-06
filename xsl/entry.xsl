@@ -82,7 +82,14 @@
 							<xsl:when test="starts-with(pointer[@id=199]/detail[@id=289], 'video')">
 								<div class="annotation-img annotation-id-{id}">
 									<a href="../popup/{pointer[@id=199]/id}?width=503&amp;amp;height=566" class="popup preview-{pointer[@id=199]/id}c{id}">
-										<img src="{$urlbase}images/img-entity-audio.jpg"/>
+										<img>
+											<xsl:attribute name="src">
+												<xsl:call-template name="getFileURL">
+													<xsl:with-param name="file" select="pointer[@id=199]/detail[@id=223]"/>
+													<xsl:with-param name="size" select="'small'"/>
+												</xsl:call-template>
+											</xsl:attribute>
+										</img>
 									</a>
 								</div>
 							</xsl:when>

@@ -2,12 +2,8 @@ if (! window.DOS) { DOS = {}; }
 
 DOS.Media = {
 
-	embed: function (swf, width, height, elemID, file) {
-		var flashvars, params, attributes;
-
-		flashvars = {
-			externalVideo: file
-		};
+	embed: function (swf, width, height, elemID, flashvars) {
+		var params, attributes;
 
 		params = {
 			play: "true",
@@ -16,7 +12,7 @@ DOS.Media = {
 			quality: "high",
 			scale: "showall",
 			salign: "t",
-			bgcolor: "#FFFFFF",
+			bgcolor: "#000000",
 			wmode: "opaque",
 			devicefont: "false",
 			seamlesstabbing: "true",
@@ -32,15 +28,35 @@ DOS.Media = {
 			align: "middle"
 		};
 
-		swfobject.embedSWF(swf, elemID, width, height, "8", null, flashvars, params, attributes);
+		swfobject.embedSWF(swf, elemID, width, height, "8", "swf/expressInstall.swf", flashvars, params, attributes);
 	},
 
 	playAudio: function (elemID, file) {
-		DOS.Media.embed(RelBrowser.baseURL+"swf/audio-player.swf", "358", "87", elemID, file);
+		var flashvars = {
+			src: file,
+			length: 100,
+			title: ""
+		};
+		DOS.Media.embed(RelBrowser.baseURL+"swf/audio-player.swf", "358", "87", elemID, flashvars);
 	},
 
-	playVideo: function (elemID, file) {
-		DOS.Media.embed(RelBrowser.baseURL+"swf/video-player.swf", "424", "346", elemID, file);
+	playVideo: function (elemID, file, image) {
+		var flashvars = {
+			videoPath: file,
+			autoStart: true,
+			autoHide: true,
+			autoHideTime: 3,
+			hideLogo: true,
+			volAudio: 100,
+			disableMiddleButton: false
+		};
+
+		if (image) {
+			flashvars.imagePath = image;
+			flashvars.autoStart = false;
+		}
+
+		DOS.Media.embed(RelBrowser.baseURL+"swf/video-player.swf", "424", "346", elemID, flashvars);
 	},
 
 	embedBrowser: function (elemID) {

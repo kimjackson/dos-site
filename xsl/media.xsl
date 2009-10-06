@@ -50,6 +50,9 @@
 						"media",
 						"<xsl:call-template name="getFileURL">
 							<xsl:with-param name="file" select="detail[@id=221]"/>
+						</xsl:call-template>",
+						"<xsl:call-template name="getFileURL">
+							<xsl:with-param name="file" select="detail[@id=223]"/>
 						</xsl:call-template>"
 					);
 				</script>
