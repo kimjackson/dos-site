@@ -136,6 +136,8 @@
 			<xsl:when test="$record[reftype/@id=74][starts-with(detail[@id=289], 'image')]">image</xsl:when>
 			<xsl:when test="$record[reftype/@id=74][starts-with(detail[@id=289], 'audio')]">audio</xsl:when>
 			<xsl:when test="$record[reftype/@id=74][starts-with(detail[@id=289], 'video')]">video</xsl:when>
+			<!-- hi-res images -->
+			<xsl:when test="$record[reftype/@id=168][detail[@id=618] = 'image']">image</xsl:when>
 			<!-- others -->
 			<xsl:when test="$record/reftype/@id = 1">link</xsl:when>
 			<xsl:when test="$record/reftype/@id = 91">role</xsl:when>

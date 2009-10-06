@@ -1085,6 +1085,9 @@ img.entity-picture {
 	overflow: hidden;
 	border: 1px solid #320a0a;
 }
+#map.image {
+	height: 512px;
+}
 #map.full {
 	height: 400px;
 }
