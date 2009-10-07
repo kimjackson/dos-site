@@ -20,10 +20,12 @@
 
 		<html>
 			<head>
-				<xsl:call-template name="makeMetaTags"/>
 				<title><xsl:value-of select="export/references/reference/detail[@id=160]"/></title>
-				<link href="{$urlbase}style.css" rel="stylesheet" type="text/css"/>
-				<link href="{$urlbase}thickbox.css" rel="stylesheet" type="text/css" media="screen"/>
+				<xsl:call-template name="makeMetaTags"/>
+				<link rel="icon" href="{$urlbase}images/favicon.ico" type="image/x-icon"/>
+				<link rel="shortcut icon" href="{$urlbase}images/favicon.ico" type="image/x-icon"/>
+				<link rel="stylesheet" href="{$urlbase}style.css" type="text/css"/>
+				<link rel="stylesheet" href="{$urlbase}thickbox.css" type="text/css" media="screen"/>
 				<script type="text/javascript">
 					RelBrowser = {
 						baseURL: "<xsl:value-of select="$urlbase"/>",

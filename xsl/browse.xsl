@@ -42,7 +42,9 @@
 		<html>
 			<head>
 				<title>Browse - <xsl:value-of select="$pluralTypeName"/></title>
-				<link href="{$urlbase}style.css" rel="stylesheet" type="text/css" />
+				<link rel="icon" href="{$urlbase}images/favicon.ico" type="image/x-icon"/>
+				<link rel="shortcut icon" href="{$urlbase}images/favicon.ico" type="image/x-icon"/>
+				<link rel="stylesheet" href="{$urlbase}style.css" type="text/css"/>
 				<script type="text/javascript">
 					RelBrowser = {
 						baseURL: "<xsl:value-of select="$urlbase"/>",
