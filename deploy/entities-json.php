@@ -155,9 +155,36 @@ while ($row = mysql_fetch_row($res)) {
 $subtypes = array();
 $orderedSubtypes = array();
 
-if ($type == "Contributor") {
+if ($type == "Entry") {
+	$query = "select if (entity_type.rd_val is null, 'Thematic', entity_type.rd_val),
+	                 if (entity_type.rd_val is null, 'Thematic Entries',
+	                     concat(
+	                            'Entries about ',
+	                            if (entity_type.rd_val = 'Person', 'People', concat(entity_type.rd_val, 's'))
+	                     )
+	                 ),
+	                 entry.rec_id,
+	                 entry.rec_title
+	            from records entry
+	       left join rec_details rel_ptr_1
+	                          on rel_ptr_1.rd_val = entry.rec_id
+	                         and rel_ptr_1.rd_type = 202
+	       left join rec_details rel_type
+	                          on rel_type.rd_rec_id = rel_ptr_1.rd_rec_id
+	                         and rel_type.rd_type = 200
+	                         and rel_type.rd_val = 'isAbout'
+	       left join rec_details rel_ptr_2
+	                          on rel_ptr_2.rd_rec_id = rel_type.rd_rec_id
+	                         and rel_ptr_2.rd_type = 199
+	       left join rec_details entity_type
+	                          on entity_type.rd_rec_id = rel_ptr_2.rd_val
+	                         and entity_type.rd_type = 523
+	           where rec_type = 98
+	        order by entity_type.rd_val,
+	                 if (rec_title like 'the %', substr(rec_title, 5), replace(rec_title, '\'', ''))";
+} else if ($type == "Contributor") {
 	$query = "select rd_val,
-	                 concat(upper(substring(rd_val, 1, 1)), substring(rd_val from 2)),
+	                 if (rd_val = 'public', 'Other', concat(upper(substring(rd_val, 1, 1)), substring(rd_val from 2))),
 	                 rec_id
 	            from records,
 	                 rec_details

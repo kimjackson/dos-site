@@ -500,6 +500,10 @@ li.shade {
 	background-color: #eeeeee
 }
 
+a.selected {
+	font-weight: bold
+}
+
 
 .list-artefact     { background: url(images/40x40/icon40-artefact.jpg) 0px 4px no-repeat }
 .list-audio        { background: url(images/40x40/icon40-audio.jpg) 0px 4px no-repeat }

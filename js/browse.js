@@ -3,7 +3,7 @@ if (! window.DOS) { DOS = {}; }
 DOS.Browse = {
 
 	render: function() {
-		var id, entity, title, href, type, heading, newheading, entityIDs, i, $index, $ul, className, entries, types;
+		var id, entity, title, href, type, heading, newheading, entityIDs, i, $index, $ul, className, entries, types, shadeRows;
 
 		var getSubtypes = function(ids) {
 			var i, s = "";
@@ -38,6 +38,7 @@ DOS.Browse = {
 		DOS.Browse.sortByContent();
 
 		heading = null;
+		shadeRows = false;
 
 		// alphabetic list
 		for (i = 0; i < DOS.Browse.orderedEntities.length; ++i) {
@@ -62,6 +63,7 @@ DOS.Browse = {
 			className = entity[2] ? " class='has-entry'" : "";
 			if (entity[1]) {
 				$ul.append("<li"+className+"><div class='left'><a class='preview-"+id+"' href='"+href+"'>"+title+"</a></div><div class='right'>"+getSubtypes(entity[1])+"</div><div class='clearfix'/></li>");
+				shadeRows = true;
 			} else {
 				$ul.append("<li"+className+"><a class='preview-"+id+"' href='"+href+"'>"+title+"</a></li>");
 			}
@@ -105,12 +107,13 @@ DOS.Browse = {
 
 			if (entity[1]) {
 				$ul.append("<li"+className+"><div class='left'><a class='preview-"+id+"' href='"+href+"'>"+title+"</a></div><div class='right'>"+getSubtypes(entity[1])+"</div><div class='clearfix'/></li>");
+				shadeRows = true;
 			} else {
 				$ul.append("<li"+className+"><a class='preview-"+id+"' href='"+href+"'>"+title+"</a></li>");
 			}
 		}
 
-		if (DOS.Browse.orderedSubtypes.length > 0) {
+		if (shadeRows) {
 			// alternate row shading
 			$("#entities-alpha ul, #entities-content ul").each(function () {
 				$(this).find("li:odd").addClass("shade"); }
@@ -119,15 +122,6 @@ DOS.Browse = {
 
 		entries = $("#entities-with-entries li").length > 0;
 		types = DOS.Browse.orderedSubtypes.length > 0;
-
-		if (! entries) {
-			$("#entities-content").empty();
-			if (types) {
-				DOS.Browse.sortByType();
-			} else {
-				DOS.Browse.sortByName();
-			}
-		}
 
 		if (entries && types) {
 			// Sort by Content, Name or Type
@@ -148,21 +142,37 @@ DOS.Browse = {
 		$('#name-sort-link').click(DOS.Browse.sortByName);
 		$('#content-sort-link').click(DOS.Browse.sortByContent);
 
+		DOS.Browse.sortByContent();
+		if (! entries) {
+			$("#entities-content").empty();
+			if (types  &&  DOS.Browse.orderedSubtypes[0] != "Thematic") {
+				DOS.Browse.sortByType();
+			} else {
+				DOS.Browse.sortByName();
+			}
+		}
+
 	},
 
 	sortByName: function() {
+		$('#type-sort-link, #content-sort-link').removeClass('selected');
+		$('#name-sort-link').addClass('selected');
 		$("#entities-type, #browse-type-index, #entities-content").hide();
 		$("#entities-alpha, #browse-alpha-index").show();
 		return false;
 	},
 
 	sortByType: function() {
+		$('#name-sort-link, #content-sort-link').removeClass('selected');
+		$('#type-sort-link').addClass('selected');
 		$("#entities-alpha, #browse-alpha-index, #entities-content").hide();
 		$("#entities-type, #browse-type-index").show();
 		return false;
 	},
 
 	sortByContent: function() {
+		$('#name-sort-link, #type-sort-link').removeClass('selected');
+		$('#content-sort-link').addClass('selected');
 		$("#entities-alpha, #browse-alpha-index, #entities-type, #browse-type-index").hide();
 		$("#entities-content").show();
 		return false;
