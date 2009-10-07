@@ -3,6 +3,7 @@
 
 	<xsl:template name="getPath">
 		<xsl:param name="id"/>
+		<xsl:text>item/</xsl:text>
 		<xsl:value-of select="$id"/>
 	</xsl:template>
 

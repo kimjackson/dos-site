@@ -21,7 +21,8 @@
 	</xsl:template>
 
 
-	<xsl:template match="reference[reftype/@id=74][starts-with(detail[@id=289], 'image')]">
+	<xsl:template match="reference[reftype/@id=74][starts-with(detail[@id=289], 'image')] |
+	                     reference[reftype/@id=168][detail[@id=618] = 'image']">
 		<xsl:param name="type"/>
 
 		<div class="picbox-container">
@@ -52,6 +53,9 @@
 						</xsl:call-template>
 					</p>
 					<p>
+						<xsl:if test="reftype/@id = 168">
+							<xsl:text>This is a high-resolution image - to view in more detail, go to the </xsl:text>
+						</xsl:if>
 						<a href="{id}">full record &#187;</a>
 					</p>
 					<div class="clearfix"></div>

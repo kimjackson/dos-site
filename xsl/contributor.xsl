@@ -3,6 +3,20 @@
 
 	<xsl:template name="contributor" match="reference[reftype/@id=153]">
 
+		<xsl:variable name="entries" select="
+			reverse-pointer[@id=538][reftype/@id=98]
+		"/>
+		<xsl:variable name="images" select="
+			reverse-pointer[@id=538][reftype/@id=74][starts-with(detail[@id=289], 'image')] |
+			reverse-pointer[@id=538][reftype/@id=168][detail[@id=618] = 'image']
+		"/>
+		<xsl:variable name="audio" select="
+			reverse-pointer[@id=538][reftype/@id=74][starts-with(detail[@id=289], 'audio')]
+		"/>
+		<xsl:variable name="video" select="
+			reverse-pointer[@id=538][reftype/@id=74][starts-with(detail[@id=289], 'video')]
+		"/>
+
 		<div id="subject-list">
 			<!-- contributor.link -->
 			<xsl:variable name="link" select="detail[@id=256]"/>
@@ -21,12 +35,12 @@
 				</p>
 			</xsl:if>
 
-			<xsl:if test="reverse-pointer[@id=538][reftype/@id=98]">
+			<xsl:if test="$entries">
 				<div class="list-left-col list-entry" title="Entries"></div>
 				<div class="list-right-col">
 					<div class="list-right-col-browse">
 						<ul>
-							<xsl:for-each select="reverse-pointer[@id=538][reftype/@id=98]">
+							<xsl:for-each select="$entries">
 								<xsl:sort select="detail[@id=160]"/>
 								<li>
 									<a href="{id}" class="preview-{id}">
@@ -40,12 +54,12 @@
 				<div class="clearfix"/>
 			</xsl:if>
 
-			<xsl:if test="reverse-pointer[@id=538][reftype/@id=74][starts-with(detail[@id=289], 'image')]">
+			<xsl:if test="$images">
 				<div class="list-left-col list-image" title="Pictures"></div>
 				<div class="list-right-col">
 					<div class="list-right-col-browse">
 						<ul>
-							<xsl:for-each select="reverse-pointer[@id=538][reftype/@id=74][starts-with(detail[@id=289], 'image')]">
+							<xsl:for-each select="$images">
 								<xsl:sort select="detail[@id=160]"/>
 								<li>
 									<a href="{id}" class="preview-{id}">
@@ -59,12 +73,12 @@
 				<div class="clearfix"/>
 			</xsl:if>
 
-			<xsl:if test="reverse-pointer[@id=538][reftype/@id=74][starts-with(detail[@id=289], 'audio')]">
+			<xsl:if test="$audio">
 				<div class="list-left-col list-audio" title="Sound"></div>
 				<div class="list-right-col">
 					<div class="list-right-col-browse">
 						<ul>
-							<xsl:for-each select="reverse-pointer[@id=538][reftype/@id=74][starts-with(detail[@id=289], 'audio')]">
+							<xsl:for-each select="$audio">
 								<xsl:sort select="detail[@id=160]"/>
 								<li>
 									<a href="{id}" class="preview-{id}">
@@ -78,12 +92,12 @@
 				<div class="clearfix"/>
 			</xsl:if>
 
-			<xsl:if test="reverse-pointer[@id=538][reftype/@id=74][starts-with(detail[@id=289], 'video')]">
+			<xsl:if test="$video">
 				<div class="list-left-col list-video" title="Video"></div>
 				<div class="list-right-col">
 					<div class="list-right-col-browse">
 						<ul>
-							<xsl:for-each select="reverse-pointer[@id=538][reftype/@id=74][starts-with(detail[@id=289], 'video')]">
+							<xsl:for-each select="$video">
 								<xsl:sort select="detail[@id=160]"/>
 								<li>
 									<a href="{id}" class="preview-{id}">

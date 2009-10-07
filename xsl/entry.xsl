@@ -56,9 +56,9 @@
 
 			<xsl:choose>
 				<xsl:when test="detail[@id=359]='Annotation Multimedia'">
-					<xsl:if test="pointer[@id=199][reftype/@id=74]">
+					<xsl:if test="pointer[@id=199][reftype/@id=74 or reftype/@id=168]">
 						<xsl:choose>
-							<xsl:when test="starts-with(pointer[@id=199]/detail[@id=289], 'image')">
+							<xsl:when test="starts-with(pointer[@id=199]/detail[@id=289], 'image') or pointer[@id=199]/detail[@id=618] = 'image'">
 								<div class="annotation-img annotation-id-{id}">
 									<a href="../popup/{pointer[@id=199]/id}?width=878&amp;amp;height=566" class="popup preview-{pointer[@id=199]/id}c{id}">
 										<img>

@@ -28,8 +28,8 @@ RelBrowser.GMapImage = {
 				minResolution: 0,
 				errorMessage: "Data not available"
 			});
-			RelBrowser.GMapImage.map = new GMap2(document.getElementById("map"), { mapTypes: [pic_customMap] });
-			RelBrowser.GMapImage.map.addControl(new GLargeMapControl());
+			RelBrowser.GMapImage.map = new GMap2(document.getElementById("map"), { backgroundColor: "#000000", mapTypes: [pic_customMap] });
+			RelBrowser.GMapImage.map.addControl(new GLargeMapControl3D());
 			RelBrowser.GMapImage.map.addControl(new GOverviewMapControl());
 			RelBrowser.GMapImage.map.enableDoubleClickZoom();
 			RelBrowser.GMapImage.map.enableContinuousZoom();

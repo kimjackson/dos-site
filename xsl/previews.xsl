@@ -144,6 +144,10 @@
 				[reftype/@id=151]
 					/pointer[@id=508]
 						/detail[@id=221]
+			|
+			$record
+				[reftype/@id=168]
+					/detail[@id=221]
 		"/>
 
 		<xsl:choose>
