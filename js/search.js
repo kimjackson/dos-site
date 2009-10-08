@@ -98,7 +98,14 @@ DOS.Search = {
 
 $(function () {
 	$("#search-bar form").submit(DOS.Search.search);
-	$("#search-submit").click(DOS.Search.search);
+
+	$("#search-submit")
+		.click(DOS.Search.search)
+		.hover(function () {
+			$("#search-bar").addClass("active");
+		}, function () {
+			$("#search-bar").removeClass("active");
+		});
 
 	$("#search").val(DOS.Search.searchPrompt)
 		.focus(function () {
