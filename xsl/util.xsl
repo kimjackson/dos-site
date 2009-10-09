@@ -324,24 +324,9 @@
 	</xsl:template>
 
 
-	<xsl:template name="makeMetaImageTag">
-		<meta name="ZOOMIMAGE">
-			<xsl:attribute name="content">
-				<xsl:value-of select="$urlbase"/>
-				<xsl:text>images/40x40/icon40-</xsl:text>
-				<xsl:call-template name="getRecordTypeClassName">
-					<xsl:with-param name="record" select="/export/references/reference"/>
-				</xsl:call-template>
-				<xsl:text>.jpg</xsl:text>
-			</xsl:attribute>
-		</meta>
-	</xsl:template>
-
-
 	<xsl:template name="makeMetaTags">
 		<xsl:call-template name="makeMetaIDTag"/>
 		<xsl:call-template name="makeMetaClassTag"/>
-		<xsl:call-template name="makeMetaImageTag"/>
 	</xsl:template>
 
 
@@ -401,6 +386,24 @@
 				</a>
 			</xsl:when>
 		</xsl:choose>
+	</xsl:template>
+
+
+	<xsl:template name="makeBrowseMenu">
+		<xsl:param name="base" select="'../'"/>
+		<div id="browse-connections">
+			<h3>Browse</h3>
+			<ul id="menu">
+				<xsl:call-template name="makeEntityBrowseList">
+					<xsl:with-param name="base" select="$base"/>
+				</xsl:call-template>
+				<li class="browse-entry"><a href="{$base}browse/entries">Entries</a></li>
+				<li class="browse-map"><a href="{$base}browse/maps">Maps</a></li>
+				<li class="browse-term"><a href="{$base}browse/subjects">Subjects</a></li>
+				<li class="browse-role"><a href="{$base}browse/roles">Roles</a></li>
+				<li class="browse-contributor"><a href="{$base}browse/contributors">Contributors</a></li>
+			</ul>
+		</div>
 	</xsl:template>
 
 
