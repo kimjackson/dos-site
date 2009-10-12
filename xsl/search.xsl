@@ -29,6 +29,11 @@
 			<h1>Search</h1>
 		</div>
 
+		<form method="get" action=".">
+			<input type="text" name="zoom_query" size="40"/>
+			<input type="submit" value="search"/>
+		</form>
+
 		<xsl:comment>ZOOM_SHOW_SUMMARY</xsl:comment>
 		<xsl:comment>ZOOM_SHOW_HEADING</xsl:comment>
 		<xsl:comment>ZOOM_SHOW_SUGGESTION</xsl:comment>
