@@ -3,7 +3,6 @@
 
 	<xsl:template name="framework">
 		<xsl:param name="title"/>
-		<xsl:param name="css"/>
 
 		<html>
 			<head>
@@ -115,12 +114,10 @@
 				<div id="footer-content">
 					<ul id="footer-left-col">
 						<li class="no-bullet"><a href="#">Home</a></li>
-						<li><a href="#">About</a></li>
-						<li><a href="#">Copyright</a></li>
-						<li><a href="#">RSS</a></li>
-						<li><a href="#">FAQ</a></li>
-						<li><a href="#">Browse</a></li>
-						<li><a href="#">Contact</a></li>
+						<li><a href="{$urlbase}about.html">About</a></li>
+						<li><a href="{$urlbase}copyright.html">Copyright</a></li>
+						<li><a href="{$urlbase}faq.html">FAQ</a></li>
+						<li><a href="{$urlbase}contact.html">Contact</a></li>
 						<li>
 							<a href="#" class="increasefont" title="Increase font size">Font +</a>
 							<xsl:text> </xsl:text>
@@ -128,9 +125,17 @@
 						</li>
 					</ul>
 					<ul id="footer-right-col">
-						<li class="no-bullet"><a href="#">Print</a></li>
-						<li><a href="#">Contribute</a></li>
-						<li><a href="#">Share</a></li>
+						<li class="no-bullet"><a href="{$urlbase}contribute.html">Contribute</a></li>
+						<!-- AddThis Button BEGIN -->
+						<li><a href="http://www.addthis.com/bookmark.php?v=250&amp;pub=xa-4ad2828856394955" class="addthis_button">Share</a></li>
+						<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=xa-4ad2828856394955"></script>
+						<script>
+							var addthis_config = {
+								services_exclude: 'myaol'
+							}
+						</script>
+						<!-- AddThis Button END -->
+
 					</ul>
 				</div>
 			</div>
