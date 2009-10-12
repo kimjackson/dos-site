@@ -20,7 +20,7 @@
 			<!-- default image: dos.main_image -->
 			<xsl:if test="pointer[@id=508]">
 				<xsl:variable name="main_img" select="pointer[@id=508][1]"/>
-				<a class="popup preview-{$main_img/id}" href="../popup/{$main_img/id}?width=878&amp;amp;height=566">
+				<a class="popup preview-{$main_img/id}" href="../popup/{$main_img/id}?width=878&amp;amp;height=578">
 					<img class="entity-picture">
 						<xsl:attribute name="alt"/><!-- FIXME -->
 						<xsl:attribute name="src">
@@ -138,7 +138,7 @@
 									</xsl:choose>
 								</xsl:attribute>
 							</xsl:if>
-							<a href="../popup/{id}?width=878&amp;amp;height=566" class="popup preview-{id}c{@id}">
+							<a href="../popup/{id}?width=878&amp;amp;height=578" class="popup preview-{id}c{@id}">
 								<img>
 									<xsl:attribute name="alt"/><!-- FIXME -->
 									<xsl:attribute name="src">

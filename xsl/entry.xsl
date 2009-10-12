@@ -60,7 +60,7 @@
 						<xsl:choose>
 							<xsl:when test="starts-with(pointer[@id=199]/detail[@id=289], 'image') or pointer[@id=199]/detail[@id=618] = 'image'">
 								<div class="annotation-img annotation-id-{id}">
-									<a href="../popup/{pointer[@id=199]/id}?width=878&amp;amp;height=566" class="popup preview-{pointer[@id=199]/id}c{id}">
+									<a href="../popup/{pointer[@id=199]/id}?width=878&amp;amp;height=578" class="popup preview-{pointer[@id=199]/id}c{id}">
 										<img>
 											<xsl:attribute name="src">
 												<xsl:call-template name="getFileURL">
@@ -81,7 +81,7 @@
 							</xsl:when>
 							<xsl:when test="starts-with(pointer[@id=199]/detail[@id=289], 'video')">
 								<div class="annotation-img annotation-id-{id}">
-									<a href="../popup/{pointer[@id=199]/id}?width=503&amp;amp;height=566" class="popup preview-{pointer[@id=199]/id}c{id}">
+									<a href="../popup/{pointer[@id=199]/id}?width=503&amp;amp;height=578" class="popup preview-{pointer[@id=199]/id}c{id}">
 										<img>
 											<xsl:attribute name="src">
 												<xsl:call-template name="getFileURL">

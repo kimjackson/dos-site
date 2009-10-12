@@ -136,7 +136,7 @@
 					<xsl:when test="reftype/@id=74 and starts-with(detail[@id=289], 'image')">
 						<xsl:text>../popup/</xsl:text>
 						<xsl:value-of select="id"/>
-						<xsl:text>?width=878&amp;amp;height=566</xsl:text>
+						<xsl:text>?width=878&amp;amp;height=578</xsl:text>
 					</xsl:when>
 					<xsl:when test="reftype/@id=74 and starts-with(detail[@id=289], 'audio')">
 						<xsl:text>../popup/</xsl:text>
