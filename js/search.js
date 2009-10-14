@@ -16,7 +16,7 @@ $(function () {
 		}, function () {
 			$("#search-bar").removeClass("active");
 		});
-});
+
 
 	$("#search").val(DOS.Search.searchPrompt)
 		.focus(function () {
