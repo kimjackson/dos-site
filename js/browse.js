@@ -28,7 +28,12 @@ DOS.Browse = {
 				if (DOS.Browse.pathBase === "map") {
 					return "../map/" + id;
 				} else {
-					return "../" + DOS.Browse.pathBase + "/" + title.toLowerCase().replace(/ /g, "_");
+					return "../" + DOS.Browse.pathBase + "/" + escape(
+						title.toLowerCase()
+							.replace(/ /g, "_")
+							.replace(/,/g, "")
+							.replace(/'/g, "")
+					);
 				}
 			} else {
 				return "../item/" + id;
