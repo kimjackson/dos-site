@@ -127,7 +127,7 @@
 					<ul id="footer-right-col">
 						<li class="no-bullet"><a href="{$urlbase}contribute.html">Contribute</a></li>
 						<!-- AddThis Button BEGIN -->
-						<li><a href="http://www.addthis.com/bookmark.php?v=250&amp;pub=xa-4ad2828856394955" class="addthis_button">Share</a></li>
+						<li><a href="http://www.addthis.com/bookmark.php?v=250&amp;amp;pub=xa-4ad2828856394955" class="addthis_button">Share</a></li>
 						<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=xa-4ad2828856394955"></script>
 						<script>
 							var addthis_config = {

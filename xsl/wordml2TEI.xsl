@@ -145,6 +145,8 @@
     <!-- don't do anything -->
   </xsl:template>
 
+  <xsl:template match="w:proofErr"/>
+
   <!-- Convert <w:p> paragraphs to <p> paragraphs -->
   <xsl:template match="w:p">
     <p>
