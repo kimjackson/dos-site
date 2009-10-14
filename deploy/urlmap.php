@@ -13,6 +13,7 @@ $links = (@$argv[1] === 'links');
 $path_to_id = array();
 
 if ($links) {
+	echo "rm -rf contributor entry role subject map image audio video artefact building event natural_feature organisation person place structure\n";
 	echo "mkdir contributor entry role subject map image audio video artefact building event natural_feature organisation person place structure\n";
 } else {
 	echo "<map>\n";
@@ -61,8 +62,8 @@ if (! $links) echo "</map>\n";
 
 function getTitle($record) {
 	global $links;
-	$search = array(' ', '/', '&');
-	$replace = array('_', '_', ($links ? '&' : '&amp;'));
+	$search = array(',', '\'', ' ', '/', '&');
+	$replace = array('', '', '_', '_', ($links ? '&' : '&amp;'));
 	foreach ($record['details'][160] as $detailID => $value) {
 		return str_replace($search, $replace, mb_strtolower($value, 'UTF-8'));
 	}
