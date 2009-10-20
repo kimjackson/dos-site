@@ -81,13 +81,13 @@
 					</xsl:choose>
 				</div>
 				<xsl:for-each select="$factoids">
+					<xsl:sort select="pointer[@id=528]/detail[@id=160]"/>
 					<xsl:sort select="detail[@id=177]/year"/>
 					<xsl:sort select="detail[@id=177]/month"/>
 					<xsl:sort select="detail[@id=177]/day"/>
 					<xsl:sort select="detail[@id=178]/year"/>
 					<xsl:sort select="detail[@id=178]/month"/>
 					<xsl:sort select="detail[@id=178]/day"/>
-					<xsl:sort select="pointer[@id=529]/detail[@id=160]"/>
 
 					<xsl:call-template name="roleFactoid"/>
 
