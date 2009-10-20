@@ -22,6 +22,7 @@ if ($type == "Entry") {
 	                 rec_title
 	            from records
 	           where rec_type = 98
+	             and rec_id != 2674
 	        order by if (rec_title like 'the %', substr(rec_title, 5), replace(rec_title, '\'', ''))";
 
 } else if ($type == "Map") {
