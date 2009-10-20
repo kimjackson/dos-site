@@ -45,7 +45,11 @@
 		<div id="connections">
 			<h3>Connections</h3>
 			<xsl:call-template name="relatedEntitiesByType"/>
-			<xsl:call-template name="connections"/>
+			<xsl:call-template name="connections">
+				<xsl:with-param name="omit">
+					<section>Subjects</section>
+				</xsl:with-param>
+			</xsl:call-template>
 		</div>
 	</xsl:template>
 
