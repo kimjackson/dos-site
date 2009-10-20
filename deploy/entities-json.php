@@ -234,7 +234,6 @@ while ($row = mysql_fetch_row($res)) {
 // FIXME
 if ($type == "Role") {
 	$subtypes["Occupation"] = array("Occupation", $orderedEntities);
-	array_push($orderedSubtypes, "Occupation");
 }
 
 
