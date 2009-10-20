@@ -261,11 +261,17 @@ RelBrowser.Mapping = {
 		for (i = 0; i < M.mapdata.layers.length; ++i) {
 			(function (layer) {
 				var newLayer, newMapType;
-				newLayer = new GTileLayer(new GCopyrightCollection(""),layer.min_zoom, layer.max_zoom);
-				// tileToQuadKey only for "virtual earth" maps!
-				newLayer.getTileUrl = function (a,b) {
-					return layer.url + M.tileToQuadKey(a.x,a.y,b) + (layer.mime_type == "image/png" ? ".png" : ".gif");
-				};
+				newLayer = new GTileLayer(new GCopyrightCollection(""), layer.min_zoom, layer.max_zoom);
+				if (layer.type === "virtual earth") {
+					newLayer.getTileUrl = function (a,b) {
+						return layer.url + M.tileToQuadKey(a.x,a.y,b) + (layer.mime_type == "image/png" ? ".png" : ".gif");
+					};
+				} else if (layer.type === "maptiler") {
+					newLayer.getTileUrl = function (a,b) {
+						var y = (1 << b) - a.y - 1;
+						return layer.url + b + "/" + a.x + "/" + y + (layer.mime_type == "image/png" ? ".png" : ".gif");
+					};
+				}
 				newLayer.getCopyright = function (a,b) { return layer.copyright; };
 				newLayer.isPng = function () { return layer.mime_type == "image/png"; };
 				newLayer.getOpacity = function () { return this.opacity; };
