@@ -110,11 +110,11 @@
 			</xsl:when>
 			<xsl:when test="$size = 'wide'">
 				<xsl:value-of select="$file/file_thumb_url"/>
-				<xsl:text>&amp;amp;w=800&amp;amp;h=400</xsl:text>
+				<xsl:text>&amp;amp;maxw=800&amp;amp;maxh=400</xsl:text>
 			</xsl:when>
 			<xsl:when test="$size = 'large'">
 				<xsl:value-of select="$file/file_thumb_url"/>
-				<xsl:text>&amp;amp;w=698</xsl:text>
+				<xsl:text>&amp;amp;maxw=698</xsl:text>
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:value-of select="$file/file_fetch_url"/>
@@ -356,9 +356,18 @@
 		<xsl:if test="$record/detail[@id=368]">
 			<xsl:text> </xsl:text>
 			<xsl:text>[</xsl:text>
-			<xsl:call-template name="linkify">
-				<xsl:with-param name="string" select="$record/detail[@id=368]"/>
-			</xsl:call-template>
+			<xsl:choose>
+				<xsl:when test="$contributor/detail[@id=339]">
+					<a href="{$contributor/detail[@id=339]}{$record/detail[@id=368]}">
+						<xsl:value-of select="$record/detail[@id=368]"/>
+					</a>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:call-template name="linkify">
+						<xsl:with-param name="string" select="$record/detail[@id=368]"/>
+					</xsl:call-template>
+				</xsl:otherwise>
+			</xsl:choose>
 			<xsl:text>]</xsl:text>
 		</xsl:if>
 		<xsl:if test="$record/detail[@id=290]">

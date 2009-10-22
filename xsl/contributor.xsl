@@ -18,20 +18,27 @@
 		"/>
 
 		<div id="subject-list">
-			<!-- contributor.link -->
-			<xsl:variable name="link" select="detail[@id=256]"/>
-			<xsl:if test="$link">
-				<p>
-					<xsl:call-template name="linkify">
-						<xsl:with-param name="string" select="$link"/>
-					</xsl:call-template>
-				</p>
-			</xsl:if>
-
 			<!-- dc.description -->
 			<xsl:if test="detail[@id=191]">
 				<p>
 					<xsl:value-of select="detail[@id=191]"/>
+				</p>
+			</xsl:if>
+
+			<!-- contributor.link -->
+			<xsl:variable name="link" select="detail[@id=256]"/>
+			<xsl:if test="$link">
+				<p>
+					<xsl:text>Click </xsl:text>
+					<a>
+						<xsl:attribute name="href">
+							<xsl:call-template name="linkify">
+								<xsl:with-param name="string" select="$link"/>
+							</xsl:call-template>
+						</xsl:attribute>
+						<xsl:text>here</xsl:text>
+					</a>
+					<xsl:text> to visit this contributor.</xsl:text>
 				</p>
 			</xsl:if>
 
