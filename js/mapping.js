@@ -173,7 +173,7 @@ RelBrowser.Mapping = {
 
 
 	initTMap: function (mini) {
-		var tl_theme, onDataLoaded, M = RelBrowser.Mapping;
+		var tl_theme, matches, coords, points, i, lnglat, bounds = null, onDataLoaded, M = RelBrowser.Mapping;
 
 		SimileAjax.History.enabled = false;
 
@@ -184,6 +184,27 @@ RelBrowser.Mapping = {
 		// modify timeline theme
 		tl_theme = Timeline.ClassicTheme.create();
 		tl_theme.autoWidth = true;
+
+		// set map center and zoom to show provided focus area
+		if (M.mapdata.focus) {
+			matches = M.mapdata.focus.match(/^POLYGON\(\((.*)\)\)$/)
+			if (matches) {
+				coords = matches[1].split(",");
+				points = [];
+				for (i = 0; i < coords.length; ++i) {
+					lnglat = coords[i].split(" ");
+					if (lnglat.length === 2) {
+						points.push(new GLatLng(lnglat[1], lnglat[0]));
+					}
+				}
+				if (points.length > 0) {
+					bounds = new GLatLngBounds(points[0], points[0]);
+					for (i = 1; i < points.length; ++i) {
+						bounds.extend(points[i]);
+					}
+				}
+			}
+		}
 
 		onDataLoaded = function (tm) {
 			// find centre date, choose scale to show entire dataset
@@ -213,6 +234,10 @@ RelBrowser.Mapping = {
 
 			// finally, draw the zoom control
 			M.renderTimelineZoom();
+
+			if (bounds) {
+				tm.map.setCenter(bounds.getCenter(), tm.map.getBoundsZoomLevel(bounds));
+			}
 		};
 
 		M.tmap = TimeMap.init({
@@ -222,6 +247,7 @@ RelBrowser.Mapping = {
 			options: {
 				showMapCtrl: false,
 				showMapTypeCtrl: false,
+				centerMapOnItems: bounds ? false : true,
 				mapType: M.customMapTypes[0] || G_NORMAL_MAP,
 				theme: TimeMap.themes.blue({ eventIconPath: RelBrowser.baseURL + "timemap.js/images/" }),
 				openInfoWindow: mini ? function () { return false; } : RelBrowser.Mapping.openInfoWindowHandler

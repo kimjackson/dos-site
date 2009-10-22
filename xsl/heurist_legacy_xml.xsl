@@ -81,10 +81,6 @@
 		<xsl:apply-templates select="@*|node()"/>
 	</xsl:template>
 
-	<xsl:template match="detail/geo">
-		<xsl:value-of select="type"/>
-	</xsl:template>
-
 	<xsl:template match="detail/file">
 		<file_id><xsl:value-of select="nonce"/></file_id>
 		<file_orig_name><xsl:value-of select="origName"/></file_orig_name>

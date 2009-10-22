@@ -53,6 +53,9 @@
 				</xsl:variable>
 
 				RelBrowser.Mapping.mapdata = {
+					<xsl:if test="detail[@id=230]">
+					focus: "<xsl:value-of select="detail[@id=230]/geo/wkt"/>",
+					</xsl:if>
 					timemap: [
 						<xsl:for-each select="exsl:node-set($sources)/source">
 						{
