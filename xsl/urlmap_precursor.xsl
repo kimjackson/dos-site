@@ -5,8 +5,6 @@
                 exclude-result-prefixes="exsl xi"
                 version="1.0">
 
-	<xsl:include href="myvariables.xsl"/>
-
 	<xsl:variable name="urlmap">
 		<xi:include href="urlmap.xml"/>
 	</xsl:variable>
