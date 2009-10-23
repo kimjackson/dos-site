@@ -7,7 +7,7 @@ REPO=repo
 
 # create directories
 mkdir item preview popup browse search kml kml/full kml/summary files files/thumbnail files/small files/medium files/wide files/large files/full $REPO/hml
-cp -prd $REPO/js $REPO/images $REPO/swf $REPO/*.css .
+cp -prd $REPO/js $REPO/images $REPO/swf $REPO/*.css $REPO/config.xml .
 
 
 # copy files
