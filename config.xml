@@ -2,61 +2,61 @@
 <config>
 	<icon>
 		<id>Artefacts</id>
-		<pageUrl><![CDATA[browse/artefacts?]]></pageUrl>
+		<pageUrl><![CDATA[browse/artefacts]]></pageUrl>
 	</icon>
 
 	<icon>
 		<id>Buildings</id>
-		<pageUrl><![CDATA[browse/buildings?]]></pageUrl>
+		<pageUrl><![CDATA[browse/buildings]]></pageUrl>
 	</icon>
 
 	<icon>
 		<id>Entries</id>
-		<pageUrl><![CDATA[browse/entries?]]></pageUrl>
+		<pageUrl><![CDATA[browse/entries]]></pageUrl>
 	</icon>
 
 	<icon>
 		<id>Events</id>
-		<pageUrl><![CDATA[browse/events?]]></pageUrl>
+		<pageUrl><![CDATA[browse/events]]></pageUrl>
 	</icon>
 
 	<icon>
 		<id>Maps</id>
-		<pageUrl><![CDATA[browse/maps?]]></pageUrl>
+		<pageUrl><![CDATA[browse/maps]]></pageUrl>
 	</icon>
 
 	<icon>
 		<id>Natural features</id>
-		<pageUrl><![CDATA[browse/natural?]]></pageUrl>
+		<pageUrl><![CDATA[browse/natural]]></pageUrl>
 	</icon>
 
 	<icon>
 		<id>Organisations</id>
-		<pageUrl><![CDATA[browse/organisations?]]></pageUrl>
+		<pageUrl><![CDATA[browse/organisations]]></pageUrl>
 	</icon>
 
 	<icon>
 		<id>People</id>
-		<pageUrl><![CDATA[browse/people?]]></pageUrl>
+		<pageUrl><![CDATA[browse/people]]></pageUrl>
 	</icon>
 
 	<icon>
 		<id>Places</id>
-		<pageUrl><![CDATA[browse/places?]]></pageUrl>
+		<pageUrl><![CDATA[browse/places]]></pageUrl>
 	</icon>
 
 	<icon>
 		<id>Roles</id>
-		<pageUrl><![CDATA[browse/roles?]]></pageUrl>
+		<pageUrl><![CDATA[browse/roles]]></pageUrl>
 	</icon>
 
 	<icon>
 		<id>Structures</id>
-		<pageUrl><![CDATA[browse/structures?]]></pageUrl>
+		<pageUrl><![CDATA[browse/structures]]></pageUrl>
 	</icon>
 
 	<icon>
 		<id>Subjects</id>
-		<pageUrl><![CDATA[browse/subjects?]]></pageUrl>
+		<pageUrl><![CDATA[browse/subjects]]></pageUrl>
 	</icon>
 </config>
