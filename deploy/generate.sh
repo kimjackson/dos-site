@@ -6,7 +6,7 @@ PIPELINE=http://heuristscholar.org/cocoon/relbrowser-kj
 REPO=repo
 
 # create directories
-mkdir item preview popup browse search kml kml/full kml/summary files files/thumbnail files/small files/medium files/wide files/large files/full
+mkdir item preview popup browse search kml kml/full kml/summary files files/thumbnail files/small files/medium files/wide files/large files/full $REPO/hml
 cp -prd $REPO/js $REPO/images $REPO/swf $REPO/*.css .
 
 
@@ -47,25 +47,53 @@ php $REPO/deploy/urlmap.php links > make_links.sh
 . make_links.sh
 rm make_links.sh
 
+# generate XML for all required items
+. $REPO/deploy/hml.sh
+
 # generate pages, previews for all appropriate records
 # 2674 is the Heuristos landing page
 # 2675 is a link to Heuristos
+cd item
 echo "select rec_id from records left join rec_details on rd_rec_id = rec_id and rd_type = 591 where rec_type in (153,151,103,74,91,152,98) and if (rec_type = 91, rd_val in ('Occupation', 'Type'), 1) and rec_id not in (2674,2675);" | mysql -s -u readonly -pmitnick heuristdb-dos | \
 while read id; do
-	wget --no-cache -O item/$id $PIPELINE/item-urlmapped/$id;
-	wget --no-cache -O preview/$id $PIPELINE/preview/$id;
-done
+	if [[ ! -e $id ]]; then
+		echo $PIPELINE/item-urlmapped/$id;
+	fi
+done | \
+wget --no-cache -i -
+cd ..
+
+cd preview
+echo "select rec_id from records left join rec_details on rd_rec_id = rec_id and rd_type = 591 where rec_type in (153,151,103,74,91,152,98) and if (rec_type = 91, rd_val in ('Occupation', 'Type'), 1) and rec_id not in (2674,2675);" | mysql -s -u readonly -pmitnick heuristdb-dos | \
+while read id; do
+	if [[ ! -e $id ]]; then
+		echo $PIPELINE/preview/$id;
+	fi
+done | \
+wget --no-cache -i -
+cd ..
 
 # generate previews for all records in all necessary contexts
+cd preview
 grep -r 'preview-[0-9]' item | perl -pe 's/.*preview-(\d+(c\d+)?).*/\1/' | sort | uniq | \
 while read id; do
-	if [[ ! -e preview/$id ]]; then
-		wget --no-cache -O preview/$id $PIPELINE/preview/$id;
+	if [[ ! -e $id ]]; then
+		echo $PIPELINE/preview/$id;
 	fi
-done
+done | \
+wget --no-cache -i -
+cd ..
 
 # generate popups for all multimedia records
-echo "select rec_id from records where rec_type = 74;" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O popup/$id $PIPELINE/popup-urlmapped/$id; done
+cd popup
+echo "select rec_id from records where rec_type = 74;" | mysql -s -u readonly -pmitnick heuristdb-dos | \
+while read id; do
+	if [[ ! -e $id ]]; then
+		echo $PIPELINE/popup-urlmapped/$id;
+	fi
+done | \
+wget --no-cache -i -
+cd ..
 
 # generate KML for all entities
 echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type = 526 and a.rd_val = 'TimePlace' and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O kml/summary/$id.kml $PIPELINE/kml/summary/rename/$id; done
