@@ -7,6 +7,9 @@ DOS.Search = {
 };
 
 $(function () {
+
+	var matches, query;
+
 	$("#search-submit")
 		.click(function () {
 			$("#search-bar form").submit();
@@ -17,8 +20,10 @@ $(function () {
 			$("#search-bar").removeClass("active");
 		});
 
+	matches = location.search.match(/zoom_query=([^&]+)/);
+	query = matches ? unescape(matches[1]).replace(/\+/g, " ") : null;
 
-	$("#search").val(DOS.Search.searchPrompt)
+	$("#search, #bigsearch").val(query ? query : DOS.Search.searchPrompt)
 		.focus(function () {
 			if (this.value === DOS.Search.searchPrompt) {
 				this.value = "";

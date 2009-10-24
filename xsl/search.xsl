@@ -29,10 +29,12 @@
 			<h1>Search</h1>
 		</div>
 
-		<form method="get" action=".">
-			<input type="text" name="zoom_query" size="40"/>
-			<input type="submit" value="search"/>
-		</form>
+		<div id="searchbox">
+			<form method="get" action="search.cgi">
+				<input id="bigsearch" type="text" name="zoom_query" size="40"/>
+				<input type="submit" value="search"/>
+			</form>
+		</div>
 
 		<xsl:comment>ZOOM_SHOW_SUMMARY</xsl:comment>
 		<xsl:comment>ZOOM_SHOW_HEADING</xsl:comment>
