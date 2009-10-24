@@ -181,6 +181,7 @@ if ($type == "Entry") {
 	                          on entity_type.rd_rec_id = rel_ptr_2.rd_val
 	                         and entity_type.rd_type = 523
 	           where rec_type = 98
+	             and rec_id != 2674
 	        order by entity_type.rd_val,
 	                 if (rec_title like 'the %', substr(rec_title, 5), replace(rec_title, '\'', ''))";
 } else if ($type == "Contributor") {

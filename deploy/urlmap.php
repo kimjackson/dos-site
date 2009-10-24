@@ -20,7 +20,7 @@ if ($links) {
 }
 
 // contributors, entities, roles, terms, entries
-$res = mysql_query('select rec_id from records where rec_type in (153,151,91,152,98) and ! rec_temporary');
+$res = mysql_query('select rec_id from records left join rec_details on rd_rec_id = rec_id and rd_type = 591 where rec_type in (153,151,91,152,98) and if (rec_type = 91, rd_val in ("Occupation", "Type"), 1) and ! rec_temporary and rec_id not in (2674,2675)');
 while ($row = mysql_fetch_row($res)) {
 	$record = loadRecord($row[0], false, true);
 	$id = $record['rec_id'];
@@ -40,10 +40,24 @@ $res = mysql_query('select rec_id, if (rd_val like "image/%", "image", if (rd_va
                      where rec_type = 74
                        and rd_rec_id = rec_id
                        and rd_type = 289
-                       and (rd_val like "image/%" or rd_val like "audio/" or rd_val like "video/%")');
+                       and (rd_val like "image/%" or rd_val like "audio/%" or rd_val like "video/%")');
 while ($row = mysql_fetch_row($res)) {
 	$id = $row[0];
 	$path = $row[1] . '/' . $id;
+	// we use IDs so no need to check for collisions
+	printMapping($id, $path);
+}
+
+// hi-res images
+$res = mysql_query('select rec_id
+                      from records, rec_details
+                     where rec_type = 168
+                       and rd_rec_id = rec_id
+                       and rd_type = 618
+                       and rd_val = "image"');
+while ($row = mysql_fetch_row($res)) {
+	$id = $row[0];
+	$path = 'image/' . $id;
 	// we use IDs so no need to check for collisions
 	printMapping($id, $path);
 }
