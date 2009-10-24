@@ -183,6 +183,13 @@ img { border: 0 }
 	cursor: pointer
 }
 
+#searchbox {
+	padding-bottom: 20px
+}
+#bigsearch {
+	margin-right: 10px
+}
+
 
 /*CHAPTERS
 --------------------------------------------------*/
