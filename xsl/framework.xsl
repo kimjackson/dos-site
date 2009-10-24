@@ -113,7 +113,7 @@
 			<div id="footer">
 				<div id="footer-content">
 					<ul id="footer-left-col">
-						<li class="no-bullet"><a href="#">Home</a></li>
+						<li class="no-bullet"><a href="{$urlbase}">Home</a></li>
 						<li><a href="{$urlbase}about.html">About</a></li>
 						<li><a href="{$urlbase}copyright.html">Copyright</a></li>
 						<li><a href="{$urlbase}faq.html">FAQ</a></li>

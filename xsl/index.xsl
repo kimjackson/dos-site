@@ -28,7 +28,7 @@
 			<script type="text/javascript">
 				$(function () { DOS.Media.embedBrowser("browser"); });
 			</script>
-			<h1>Welcome to the Dictionary of Sydney</h1>
+			<h1>The Dictionary of Sydney - Sydney's history online and connected</h1>
 		</div>
 
 		<div class="teaser">

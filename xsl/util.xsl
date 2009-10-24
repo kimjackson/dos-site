@@ -358,7 +358,7 @@
 			<xsl:text>[</xsl:text>
 			<xsl:choose>
 				<xsl:when test="$contributor/detail[@id=339]">
-					<a href="{$contributor/detail[@id=339]}{$record/detail[@id=368]}">
+					<a href="{$contributor/detail[@id=339]}{$record/detail[@id=368]}" target="_blank">
 						<xsl:value-of select="$record/detail[@id=368]"/>
 					</a>
 				</xsl:when>
