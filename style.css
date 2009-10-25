@@ -1186,6 +1186,9 @@ a.annotation.hide {
 a.annotation.highlighted {
 	background-color: yellow;
 }
+#content a.footnote:hover {
+	text-decoration: none;
+}
 
 
 /* Alternative font sizes */
