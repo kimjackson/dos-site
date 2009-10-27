@@ -70,6 +70,11 @@
 			<span id="sub-title"/>
 		</div>
 
+		<div id="loading">
+			<p>Loading data</p>
+			<img src="{$urlbase}images/loadingAnimation.gif"/>
+		</div>
+
 		<ul id="browse-alpha-index"/>
 		<ul id="browse-type-index"/>
 

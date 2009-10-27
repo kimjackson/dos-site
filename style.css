@@ -506,12 +506,20 @@ li.has-entry a {
 	width: 219px
 }
 
+#entities-content h2 {
+	display: none
+}
+
 li.shade {
 	background-color: #eeeeee
 }
 
 a.selected {
 	font-weight: bold
+}
+
+#loading {
+	text-align: center
 }
 
 

@@ -1,58 +1,66 @@
 if (! window.DOS) { DOS = {}; }
 
-DOS.Browse = {
+DOS.Browse = (function () {
 
-	render: function() {
-		var id, entity, title, href, type, heading, newheading, entityIDs, i, $index, $ul, className, entries, types, shadeRows;
+	var _chunkSize = 50;
+	var _sortBy = null;
 
-		var getSubtypes = function(ids) {
-			var i, s = "";
-			for (i = 0; i < ids.length; ++i) {
-				if (i > 0) {
-					s+= ", ";
-				}
-				s += DOS.Browse.subtypes[ids[i]][0];
+	function _getSubtypes (ids) {
+		var i, s = "";
+		for (i = 0; i < ids.length; ++i) {
+			if (i > 0) {
+				s+= ", ";
 			}
-			return s;
-		};
+			s += DOS.Browse.subtypes[ids[i]][0];
+		}
+		return s;
+	}
 
-		var getSortingLetter = function(name) {
-			var matches = name.match(/^('|the )?(.)/i);
-			if (matches  &&  matches[2]) {
-				return matches[2].toUpperCase();
-			}
-		};
+	function _getSortingLetter (name) {
+		var matches = name.match(/^('|the )?(.)/i);
+		if (matches  &&  matches[2]) {
+			return matches[2].toUpperCase();
+		}
+	}
 
-		var getHref = function(id, title) {
-			if (DOS.Browse.pathBase) {
-				if (DOS.Browse.pathBase === "map") {
-					return "../map/" + id;
-				} else {
-					return "../" + DOS.Browse.pathBase + "/" + escape(
-						title.toLowerCase()
-							.replace(/ /g, "_")
-							.replace(/,/g, "")
-							.replace(/'/g, "")
-					);
-				}
+	function _getHref (id, title) {
+		if (DOS.Browse.pathBase) {
+			if (DOS.Browse.pathBase === "map") {
+				return "../map/" + id;
 			} else {
-				return "../item/" + id;
+				return "../" + DOS.Browse.pathBase + "/" + escape(
+					title.toLowerCase()
+						.replace(/ /g, "_")
+						.replace(/,/g, "")
+						.replace(/'/g, "")
+				);
 			}
-		};
+		} else {
+			return "../item/" + id;
+		}
+	}
 
-		DOS.Browse.sortByContent();
+return {
 
-		heading = null;
+	// alphabetic list
+	renderAlphaList: function(offset, heading, $ul) {
+		var id, entity, title, href, newheading, limit, i, className, shadeRows;
+
 		shadeRows = false;
 
-		// alphabetic list
-		for (i = 0; i < DOS.Browse.orderedEntities.length; ++i) {
+		if (! offset) {
+			offset = 0;
+		}
+
+		limit = Math.min(offset + _chunkSize, DOS.Browse.orderedEntities.length);
+
+		for (i = offset; i < limit; ++i) {
 			id = DOS.Browse.orderedEntities[i];
 			entity = DOS.Browse.entities[id];
 			title = entity[0];
-			href = getHref(id, title);
+			href = _getHref(id, title);
 
-			newheading = getSortingLetter(title);
+			newheading = _getSortingLetter(title);
 			if (newheading < "0") {
 				newheading = "Symbols";
 			} else if (newheading < "A") {
@@ -67,63 +75,147 @@ DOS.Browse = {
 
 			className = entity[2] ? " class='has-entry'" : "";
 			if (entity[1]) {
-				$ul.append("<li"+className+"><div class='left'><a class='preview-"+id+"' href='"+href+"'>"+title+"</a></div><div class='right'>"+getSubtypes(entity[1])+"</div><div class='clearfix'/></li>");
+				$ul.append("<li"+className+"><div class='left'><a class='preview-"+id+"' href='"+href+"'>"+title+"</a></div><div class='right'>"+_getSubtypes(entity[1])+"</div><div class='clearfix'/></li>");
 				shadeRows = true;
 			} else {
 				$ul.append("<li"+className+"><a class='preview-"+id+"' href='"+href+"'>"+title+"</a></li>");
 			}
 		}
-		$("#browse-alpha-index").append("<div class='clearfix'/>");
 
-		// list by sub-type
-		for (i = 0; i < DOS.Browse.orderedSubtypes.length; ++i) {
-			type = DOS.Browse.orderedSubtypes[i];
-			subtype = DOS.Browse.subtypes[type];
 
-			if (DOS.Browse.orderedSubtypes.length > 1) {
-				$("#browse-type-index").append("<li><a href='#"+type+"'>"+subtype[0]+"</a></li>");
+		if (limit === DOS.Browse.orderedEntities.length) {
+			$("#browse-alpha-index").append("<div class='clearfix'/>");
+			if (! _sortBy) {
+				$("#loading").remove();
+				_sortBy = "alpha";
+				DOS.Browse.sortByName();
 			}
+			if (shadeRows) {
+				// alternate row shading
+				$("#entities-alpha ul").each(function () {
+					$(this).find("li:odd").addClass("shade"); }
+				);
+			}
+			DOS.Browse.renderSortbyLinks();
+		}
+		else {
+			setTimeout(function () {
+				DOS.Browse.renderAlphaList(limit, heading, $ul);
+			}, 0);
+		}
+	},
 
-			$("#entities-type").append("<h2 id='"+type+"'>"+subtype[0]+"</h2>");
-			entityIDs = subtype[1];
-			$ul = $("<ul/>").appendTo("#entities-type");
-			for (j = 0; j < entityIDs.length; ++j) {
-				id = entityIDs[j];
-				entity = DOS.Browse.entities[id];
-				title = entity[0];
-				href = getHref(id, title);
-				if (entity) {
-					className = entity[2] ? " class='has-entry'" : "";
-					$ul.append("<li"+className+"><a class='preview-"+id+"' href='"+href+"'>"+title+"</a></li>");
-				}
+	// list by sub-type
+	renderSubTypeList: function(i) {
+		var id, entity, title, href, type, subtype, entityIDs, $ul, className;
+
+		if (! i) {
+			i = 0;
+		}
+
+		if (! DOS.Browse.orderedSubtypes.length) {
+			DOS.Browse.renderAlphaList();
+			return;
+		}
+
+		type = DOS.Browse.orderedSubtypes[i];
+		subtype = DOS.Browse.subtypes[type];
+
+		if (DOS.Browse.orderedSubtypes.length > 1) {
+			$("#browse-type-index").append("<li><a href='#"+type+"'>"+subtype[0]+"</a></li>");
+		}
+
+		$("#entities-type").append("<h2 id='"+type+"'>"+subtype[0]+"</h2>");
+		entityIDs = subtype[1];
+		$ul = $("<ul/>").appendTo("#entities-type");
+		for (j = 0; j < entityIDs.length; ++j) {
+			id = entityIDs[j];
+			entity = DOS.Browse.entities[id];
+			title = entity[0];
+			href = _getHref(id, title);
+			if (entity) {
+				className = entity[2] ? " class='has-entry'" : "";
+				$ul.append("<li"+className+"><a class='preview-"+id+"' href='"+href+"'>"+title+"</a></li>");
 			}
 		}
-		$("#browse-type-index").append("<div class='clearfix'/>");
 
-		// split into entities with entries and those without
-		for (i = 0; i < DOS.Browse.orderedEntities.length; ++i) {
+		if (i + 1 === DOS.Browse.orderedSubtypes.length) {
+			$("#browse-type-index").append("<div class='clearfix'/>");
+
+			if (! _sortBy) {
+				if (DOS.Browse.orderedSubtypes[0] != "Thematic") {
+					$("#loading").remove();
+					_sortBy = "subtype";
+					DOS.Browse.sortByType();
+				}
+			}
+			DOS.Browse.renderAlphaList();
+		}
+		else {
+			setTimeout(function () {
+				DOS.Browse.renderSubTypeList(i + 1);
+			}, 0);
+		}
+	},
+
+
+	// split into entities with entries and those without
+	renderContentList: function(offset) {
+		var id, entity, title, href, limit, i, $ul, className, shadeRows;
+
+		shadeRows = false;
+
+		if (! offset) {
+			offset = 0;
+		}
+
+		limit = Math.min(offset + _chunkSize, DOS.Browse.orderedEntities.length);
+
+		for (i = offset; i < limit; ++i) {
 			id = DOS.Browse.orderedEntities[i];
 			entity = DOS.Browse.entities[id];
 			title = entity[0];
-			href = getHref(id, title);
+			href = _getHref(id, title);
 
 			className = entity[2] ? " class='has-entry'" : "";
 			$ul = entity[2] ? $("#entities-with-entries") : $("#entities-without-entries");
 
 			if (entity[1]) {
-				$ul.append("<li"+className+"><div class='left'><a class='preview-"+id+"' href='"+href+"'>"+title+"</a></div><div class='right'>"+getSubtypes(entity[1])+"</div><div class='clearfix'/></li>");
+				$ul.append("<li"+className+"><div class='left'><a class='preview-"+id+"' href='"+href+"'>"+title+"</a></div><div class='right'>"+_getSubtypes(entity[1])+"</div><div class='clearfix'/></li>");
 				shadeRows = true;
 			} else {
 				$ul.append("<li"+className+"><a class='preview-"+id+"' href='"+href+"'>"+title+"</a></li>");
 			}
 		}
 
-		if (shadeRows) {
-			// alternate row shading
-			$("#entities-alpha ul, #entities-content ul").each(function () {
-				$(this).find("li:odd").addClass("shade"); }
-			);
+		if (limit === DOS.Browse.orderedEntities.length) {
+			if ($("#entities-with-entries li").length > 0) {
+				$("#entities-content h2").show();
+				$("#loading").remove();
+				_sortBy = "content";
+				DOS.Browse.sortByContent();
+			} else {
+				$("#entities-content").empty();
+			}
+
+			if (shadeRows) {
+				// alternate row shading
+				$("#entities-content ul").each(function () {
+					$(this).find("li:odd").addClass("shade"); }
+				);
+			}
+			DOS.Browse.renderSubTypeList();
 		}
+		else {
+			setTimeout(function () {
+				DOS.Browse.renderContentList(limit);
+			}, 0);
+		}
+	},
+
+
+	renderSortbyLinks: function() {
+		var entries, types;
 
 		entries = $("#entities-with-entries li").length > 0;
 		types = DOS.Browse.orderedSubtypes.length > 0;
@@ -143,20 +235,22 @@ DOS.Browse = {
 			               .append(" or <a id='type-sort-link' href='#'>Type</a>");
 		}
 
+		if (_sortBy === "content") {
+			$('#content-sort-link').addClass('selected');
+		} else if (_sortBy === "subtype") {
+			$('#type-sort-link').addClass('selected');
+		} else {
+			$('#name-sort-link').addClass('selected');
+		}
+
 		$('#type-sort-link').click(DOS.Browse.sortByType);
 		$('#name-sort-link').click(DOS.Browse.sortByName);
 		$('#content-sort-link').click(DOS.Browse.sortByContent);
+	},
 
-		DOS.Browse.sortByContent();
-		if (! entries) {
-			$("#entities-content").empty();
-			if (types  &&  DOS.Browse.orderedSubtypes[0] != "Thematic") {
-				DOS.Browse.sortByType();
-			} else {
-				DOS.Browse.sortByName();
-			}
-		}
-
+	render: function() {
+		$("#entities-alpha, #browse-alpha-index, #entities-type, #browse-type-index, #entities-content").hide();
+		DOS.Browse.renderContentList();
 	},
 
 	sortByName: function() {
@@ -182,7 +276,8 @@ DOS.Browse = {
 		$("#entities-content").show();
 		return false;
 	}
+}
 
-};
+})();
 
 $(DOS.Browse.render);
