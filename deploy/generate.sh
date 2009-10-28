@@ -11,7 +11,7 @@ cp -prd $REPO/js $REPO/images $REPO/swf $REPO/*.css $REPO/config.xml .
 
 
 # copy files
-echo "select file_id, file_nonce from files;" | mysql -s -u readonly -pmitnick heuristdb-dos | \
+echo "select distinct file_id, file_nonce from rec_details, files where file_id = rd_file_id;" | mysql -s -u readonly -pmitnick heuristdb-dos | \
 while read id nonce; do
 	if [[ ! -e files/full/$nonce ]]; then
 		cp /var/www/htdocs/uploaded-heurist-files/dos/$id files/full/$nonce;
@@ -19,7 +19,7 @@ while read id nonce; do
 done
 
 # generate resized images
-echo "select file_nonce from files where file_mimetype like 'image%';" | mysql -s -u readonly -pmitnick heuristdb-dos | \
+echo "select distinct file_nonce from rec_details, files where file_id = rd_file_id and file_mimetype like 'image%';" | mysql -s -u readonly -pmitnick heuristdb-dos | \
 while read nonce; do
 	if [[ ! -e files/thumbnail/$nonce ]]; then
 		wget -O files/thumbnail/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&w=148\&h=148;
