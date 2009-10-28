@@ -30,7 +30,7 @@
 			<xsl:if test="$link">
 				<p>
 					<xsl:text>Click </xsl:text>
-					<a>
+					<a target="_blank">
 						<xsl:attribute name="href">
 							<xsl:call-template name="linkify">
 								<xsl:with-param name="string" select="$link"/>
