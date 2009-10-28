@@ -39,8 +39,9 @@
 					<script src="http://maps.google.com/maps?file=api&amp;amp;v=2&amp;amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w" type="text/javascript"/>
 				</xsl:if>
 
-				<xsl:if test="/export/references/reference[reftype/@id=103]  |
-				              /export/references/reference[reftype/@id=151][reverse-pointer[reftype/@id=150]/detail[@id=230 or @id=177]]">
+				<xsl:if test="/export/references/reference[
+				                  reftype/@id=103  or
+				                  reftype/@id=151  and  reverse-pointer[reftype/@id=150]/detail[@id=230 or @id=177]]">
 					<script type="text/javascript">
 						var Timeline_urlPrefix = RelBrowser.baseURL + "timeline/timeline_js/";
 						var Timeline_ajax_url = RelBrowser.baseURL + "timeline/timeline_ajax/simile-ajax-api.js";
@@ -127,8 +128,8 @@
 					<ul id="footer-right-col">
 						<li class="no-bullet"><a href="{$urlbase}contribute.html">Contribute</a></li>
 						<!-- AddThis Button BEGIN -->
-						<li><a href="http://www.addthis.com/bookmark.php?v=250&amp;amp;pub=xa-4ad2828856394955" class="addthis_button">Share</a></li>
-						<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=xa-4ad2828856394955"></script>
+						<li><a href="http://www.addthis.com/bookmark.php?v=250&amp;amp;pub=dictionaryofsydney" class="addthis_button">Share</a></li>
+						<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=dictionaryofsydney"></script>
 						<script>
 							var addthis_config = {
 								services_exclude: 'myaol'
