@@ -128,6 +128,9 @@
 			<div class="list-right-col">
 				<div class="list-right-col-content entity-thumbnail">
 					<xsl:for-each select="$images_of">
+						<xsl:if test="position() > 4 and position() mod 4 = 1">
+							<div class="clearfix"/>
+						</xsl:if>
 						<div>
 							<xsl:if test="position() > 3">
 								<xsl:attribute name="class">
