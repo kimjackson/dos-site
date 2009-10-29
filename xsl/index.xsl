@@ -82,7 +82,7 @@
 				</img>
 			</a>
 		</div>
-		<div class="clearfix">
+		<div class="clearfix"/>
 
 		<div class="teaser">
 			<h2>Featured article</h2>
@@ -103,7 +103,7 @@
 			<h2>Sydney cultures</h2>
 			<p><xsl:value-of select="data/export[7]/references/reference/detail[@id=191]"/></p>
 		</div>
-		<div class="clearfix">
+		<div class="clearfix"/>
 
 		<div class="teaser">
 			<a href="item/{$target1}">more &#187;</a>
@@ -117,7 +117,7 @@
 		<div class="teaser teaser-end">
 			<a href="item/{$target4}">more &#187;</a>
 		</div>
-		<div class="clearfix">
+		<div class="clearfix"/>
 
 	</xsl:template>
 
