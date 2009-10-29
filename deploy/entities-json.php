@@ -186,7 +186,7 @@ if ($type == "Entry") {
 	                 if (rec_title like 'the %', substr(rec_title, 5), replace(rec_title, '\'', ''))";
 } else if ($type == "Contributor") {
 	$query = "select rd_val,
-	                 if (rd_val = 'public', 'Other', concat(upper(substring(rd_val, 1, 1)), substring(rd_val from 2))),
+	                 if (rd_val = 'author', 'Authors', if (rd_val = 'institution', 'Institutions and Collections', 'Other')),
 	                 rec_id
 	            from records,
 	                 rec_details

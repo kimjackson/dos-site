@@ -27,10 +27,16 @@
 	</xsl:template>
 
 	<xsl:template name="extraCSS">
-		<link rel="stylesheet" href="{$urlbase}thickbox.css" type="text/css" media="screen"/>
+		<link rel="stylesheet" href="{$urlbase}boxy.css" type="text/css" media="screen"/>
+		<xsl:comment><![CDATA[[if IE]>]]>
+			&lt;link rel="stylesheet" href="<xsl:value-of select="$urlbase"/>boxy-ie.css" type="text/css" media="screen"/&gt;
+		<![CDATA[<![endif]]]></xsl:comment>
 	</xsl:template>
 
-	<xsl:template name="extraScripts"/>
+	<xsl:template name="extraScripts">
+		<script src="{$urlbase}js/jquery.boxy.js" type="text/javascript"/>
+		<script src="{$urlbase}js/popups.js" type="text/javascript"/>
+	</xsl:template>
 
 	<xsl:template name="content">
 		<xsl:call-template name="makeTitleDiv">
@@ -144,31 +150,8 @@
 				</xsl:if>
 			</xsl:variable>
 
-			<xsl:variable name="href">
-				<xsl:choose>
-					<xsl:when test="reftype/@id=74 and starts-with(detail[@id=289], 'image')">
-						<xsl:text>../popup/</xsl:text>
-						<xsl:value-of select="id"/>
-						<xsl:text>?width=878&amp;amp;height=578</xsl:text>
-					</xsl:when>
-					<xsl:when test="reftype/@id=74 and starts-with(detail[@id=289], 'audio')">
-						<xsl:text>../popup/</xsl:text>
-						<xsl:value-of select="id"/>
-						<xsl:text>?height=436</xsl:text>
-					</xsl:when>
-					<xsl:when test="reftype/@id=74 and starts-with(detail[@id=289], 'video')">
-						<xsl:text>../popup/</xsl:text>
-						<xsl:value-of select="id"/>
-						<xsl:text>?height=503</xsl:text>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:value-of select="id"/>
-					</xsl:otherwise>
-				</xsl:choose>
-			</xsl:variable>
-
 			<li>
-				<a href="{$href}" class="{$class}">
+				<a href="{id}" class="{$class}">
 					<xsl:choose>
 						<xsl:when test="detail[@id=160]">
 							<xsl:value-of select="detail[@id=160]"/>

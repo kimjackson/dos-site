@@ -20,7 +20,7 @@
 			<!-- default image: dos.main_image -->
 			<xsl:if test="pointer[@id=508]">
 				<xsl:variable name="main_img" select="pointer[@id=508][1]"/>
-				<a class="popup preview-{$main_img/id}" href="../popup/{$main_img/id}?width=878&amp;amp;height=578">
+				<a class="popup preview-{$main_img/id}" href="{$main_img/id}">
 					<img class="entity-picture">
 						<xsl:attribute name="alt"/><!-- FIXME -->
 						<xsl:attribute name="src">
@@ -138,7 +138,7 @@
 									</xsl:choose>
 								</xsl:attribute>
 							</xsl:if>
-							<a href="../popup/{id}?width=878&amp;amp;height=578" class="popup preview-{id}c{@id}">
+							<a href="{id}" class="popup preview-{id}c{@id}">
 								<img>
 									<xsl:attribute name="alt"/><!-- FIXME -->
 									<xsl:attribute name="src">
@@ -163,7 +163,7 @@
 			<div class="list-right-col">
 				<div class="list-right-col-audio">
 					<xsl:for-each select="$audio_of">
-						<a href="../popup/{id}?width=436" class="popup preview-{id}c{@id}">
+						<a href="{id}" class="popup preview-{id}c{@id}">
 							<img src="{$urlbase}images/img-entity-audio.jpg" alt=""/><!-- FIXME -->
 						</a>
 					</xsl:for-each>
@@ -179,7 +179,7 @@
 			<div class="list-right-col">
 				<div class="list-right-col-content entity-thumbnail">
 					<xsl:for-each select="$video_of">
-						<a href="../popup/{id}?width=503" class="popup preview-{id}c{@id}">
+						<a href="{id}" class="popup preview-{id}c{@id}">
 							<xsl:value-of select="detail[@id=160]"/>
 						</a>
 					</xsl:for-each>

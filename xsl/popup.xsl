@@ -21,13 +21,18 @@
 	</xsl:template>
 
 
-	<xsl:template match="reference[reftype/@id=74][starts-with(detail[@id=289], 'image')] |
+	<xsl:template match="reference[reftype/@id=74] |
 	                     reference[reftype/@id=168][detail[@id=618] = 'image']">
 		<xsl:param name="type"/>
 
 		<div class="picbox-container">
-			<div class="picbox-top"/>
-			<div class="picbox-middle">
+
+			<div class="picbox-close">
+				<a href="#" onclick="Boxy.get(this).hide(); return false;">[close]</a>
+			</div>
+			<div class="clearfix"/>
+
+			<xsl:if test="starts-with(detail[@id=289], 'image') or reftype/@id = 168">
 				<div class="picbox-image">
 					<img>
 						<xsl:attribute name="src">
@@ -38,114 +43,58 @@
 						</xsl:attribute>
 					</img>
 				</div>
-				<div class="picbox-heading balloon-{$type}">
-					<h2><xsl:value-of select="detail[@id=160]"/></h2>
-				</div>
-				<div class="picbox-content">
-					<xsl:if test="detail[@id=191]">
-						<p>
-							<xsl:value-of select="detail[@id=191]"/>
-						</p>
-					</xsl:if>
-					<p class="attribution">
-						<xsl:call-template name="makeMediaAttributionStatement">
-							<xsl:with-param name="record" select="."/>
-						</xsl:call-template>
-					</p>
-					<p>
-						<xsl:if test="reftype/@id = 168">
-							<xsl:text>This is a high-resolution image - to view in more detail, go to the </xsl:text>
-						</xsl:if>
-						<a href="{id}">full record &#187;</a>
-					</p>
-					<div class="clearfix"></div>
-				</div>
+			</xsl:if>
+
+			<div class="picbox-heading balloon-{$type}">
+				<h2><xsl:value-of select="detail[@id=160]"/></h2>
 			</div>
-			<div class="picbox-bottom"/>
-		</div>
-	</xsl:template>
 
+			<div class="picbox-content">
 
-	<xsl:template match="reference[reftype/@id=74][starts-with(detail[@id=289], 'audio')]">
-		<xsl:param name="type"/>
+				<xsl:if test="starts-with(detail[@id=289], 'audio') or starts-with(detail[@id=289], 'video')">
 
-		<div class="balloon-container">
-			<div class="balloon-top"/>
-			<div class="balloon-middle">
-				<div class="balloon-heading balloon-{$type}">
-					<h2><xsl:value-of select="detail[@id=160]"/></h2>
-				</div>
-				<div class="balloon-content">
-					<div class="balloon-flash">
-						<div id="media"></div>
-						<script type="text/javascript">
-							DOS.Media.playAudio(
-								"media",
-								"<xsl:call-template name="getFileURL">
-									<xsl:with-param name="file" select="detail[@id=221]"/>
-								</xsl:call-template>"
-							);
-						</script>
+					<xsl:variable name="elem">
+						<xsl:choose>
+							<xsl:when test="starts-with(detail[@id=289], 'audio')">
+								<xsl:text>audio</xsl:text>
+							</xsl:when>
+							<xsl:when test="starts-with(detail[@id=289], 'video')">
+								<xsl:text>video</xsl:text>
+							</xsl:when>
+						</xsl:choose>
+					</xsl:variable>
+
+					<div class="picbox-flash">
+						<div id="{$elem}">
+							<a>
+								<xsl:attribute name="href">
+									<xsl:call-template name="getFileURL">
+										<xsl:with-param name="file" select="detail[@id=221]"/>
+									</xsl:call-template>
+								</xsl:attribute>
+							</a>
+						</div>
 					</div>
-					<xsl:if test="detail[@id=191]">
-						<p>
-							<xsl:value-of select="detail[@id=191]"/>
-						</p>
-					</xsl:if>
-					<p class="attribution">
-						<xsl:call-template name="makeMediaAttributionStatement">
-							<xsl:with-param name="record" select="."/>
-						</xsl:call-template>
-					</p>
+				</xsl:if>
+
+				<xsl:if test="detail[@id=191]">
 					<p>
-						<a href="{id}">full record &#187;</a>
+						<xsl:value-of select="detail[@id=191]"/>
 					</p>
-					<div class="clearfix"></div>
-				</div>
-			</div>
-			<div class="balloon-bottom"/>
-		</div>
-	</xsl:template>
-
-
-	<xsl:template match="reference[reftype/@id=74][starts-with(detail[@id=289], 'video')]">
-		<xsl:param name="type"/>
-
-		<div class="video-container">
-			<div class="video-top"/>
-			<div class="video-middle">
-				<div class="video-heading balloon-{$type}">
-					<h2><xsl:value-of select="detail[@id=160]"/></h2>
-				</div>
-				<div class="video-content">
-					<div class="balloon-flash">
-						<div id="media"></div>
-						<script type="text/javascript">
-							DOS.Media.playVideo(
-								"media",
-								"<xsl:call-template name="getFileURL">
-									<xsl:with-param name="file" select="detail[@id=221]"/>
-								</xsl:call-template>"
-							);
-						</script>
-					</div>
-					<xsl:if test="detail[@id=191]">
-						<p>
-							<xsl:value-of select="detail[@id=191]"/>
-						</p>
+				</xsl:if>
+				<p class="attribution">
+					<xsl:call-template name="makeMediaAttributionStatement">
+						<xsl:with-param name="record" select="."/>
+					</xsl:call-template>
+				</p>
+				<p>
+					<xsl:if test="reftype/@id = 168">
+						<xsl:text>This is a high-resolution image - to view in more detail, go to the </xsl:text>
 					</xsl:if>
-					<p class="attribution">
-						<xsl:call-template name="makeMediaAttributionStatement">
-							<xsl:with-param name="record" select="."/>
-						</xsl:call-template>
-					</p>
-					<p>
-						<a href="{id}">full record &#187;</a>
-					</p>
-					<div class="clearfix"></div>
-				</div>
+					<a href="{id}">full record &#187;</a>
+				</p>
+				<div class="clearfix"></div>
 			</div>
-			<div class="video-bottom"/>
 		</div>
 	</xsl:template>
 

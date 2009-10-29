@@ -954,8 +954,6 @@ img.entity-picture {
 }
 .balloon-bottom { height: 25px; background: url(images/bg-balloon-bottom.png) no-repeat }
 
-.balloon-flash { padding: 16px 0 5px 2px }
-
 .balloon-heading {
 	padding: 20px 0 20px 52px;
 }
@@ -964,15 +962,6 @@ img.entity-picture {
 	font: 12px Verdana, Geneva, sans-serif;
 	font-weight: bold;
 	color: #320a0a;
-}
-
-.balloon-contribute-by {
-	height: 15px
-}
-.balloon-year {
-	width: 50px; height: 15px;
-	text-align: right;
-	position: relative; left: 253px; top: -15px
 }
 
 .balloon-content {}
@@ -988,52 +977,6 @@ img.entity-picture {
 
 .map-balloon {
 	max-width: 300px;
-}
-
-.video-container {
-	width: 503px;
-	font: 12px Verdana, Geneva, sans-serif;
-}
-
-.video-top { height: 25px; background: url(images/bg-video-top.png) no-repeat }
-.video-middle {
-	background: url(images/bg-video-middle.png);
-	padding: 0 40px 15px 36px
-}
-.video-bottom { height: 25px; background: url(images/bg-video-bottom.png) no-repeat }
-
-.video-flash { padding: 16px 0 5px 2px }
-
-.video-heading {
-	height: 34px;
-	padding: 20px 0 0 52px;
-}
-
-.video-heading h2 {
-	height: 14px;
-	font: 12px Verdana, Geneva, sans-serif;
-	font-weight: bold;
-	color: #320a0a;
-}
-
-.video-contribute-by {
-	height: 15px
-}
-.video-year {
-	width: 50px; height: 15px;
-	text-align: right;
-	position: relative; left: 253px; top: -15px
-}
-
-.video-content {}
-.video-content img.thumbnail {
-	float: left;
-	margin: 0 15px 0 0;
-	border: 1px solid #2f0103
-}
-
-.video-content a:hover {
-	text-decoration: underline
 }
 
 .fallback {
@@ -1068,18 +1011,19 @@ img.entity-picture {
 
 
 .picbox-container {
-	width: 874px;
 	font: 12px Verdana, Geneva, sans-serif;
 }
 
-.picbox-top { height: 25px; background: url(images/bg-picbox-top.png) no-repeat }
-.picbox-middle {
-	background: url(images/bg-picbox-middle.png) 1px;
-	padding: 0 38px 0 38px
+.picbox-close {
+	float: right;
+	padding-bottom: 5px;
+	font-weight: bold
 }
-.picbox-bottom { height: 25px; background: url(images/bg-picbox-bottom.png) no-repeat }
+.picbox-close a {
+	color: #000000
+}
 
-.picbox-image { padding: 5px 0 5px 0 }
+.picbox-image { text-align: center; padding: 5px 0 5px 0 }
 
 .picbox-image img { border: 1px solid #705454 }
 
@@ -1098,14 +1042,23 @@ img.entity-picture {
 .picbox-contribute-by {
 	height: 15px
 }
-.picbox-year {
-	width: 50px; height: 15px;
-	text-align: right;
-	position: relative; left: 685px; top: -15px
-}
 
+.picbox-content p {
+	padding: 5px 0;
+}
 .picbox-content a:hover {
 	text-decoration: underline
+}
+
+.picbox-flash { padding: 16px 0 5px 2px }
+
+#audio {
+	width: 358px;
+	height: 87px;
+}
+#video {
+	width: 424px;
+	height: 346px;
 }
 
 

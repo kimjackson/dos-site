@@ -28,7 +28,6 @@
 				<script src="{$urlbase}js/menu.js" type="text/javascript"/>
 				<xsl:call-template name="extraScripts"/>
 				<script src="{$urlbase}js/tooltip.js" type="text/javascript"/>
-				<script src="{$urlbase}js/thickbox.js" type="text/javascript"/>
 				<script src="{$urlbase}js/swfobject.js" type="text/javascript"/>
 				<script src="{$urlbase}js/media.js" type="text/javascript"/>
 
