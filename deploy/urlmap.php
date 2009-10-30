@@ -78,12 +78,20 @@ function getTitle($record) {
 	global $links;
 	$search = array(',', '\'', ' ', '/', '&');
 	$replace = array('', '', '_', '_', ($links ? '&' : '&amp;'));
+	if (! $record['details'][160]) {
+		var_dump($record);
+		exit;
+	}
 	foreach ($record['details'][160] as $detailID => $value) {
 		return str_replace($search, $replace, mb_strtolower($value, 'UTF-8'));
 	}
 }
 
 function getEntityType($record) {
+	if (! $record['details'][523]) {
+		var_dump($record);
+		exit;
+	}
 	foreach ($record['details'][523] as $detailID => $value) {
 		return str_replace(' ', '_', strtolower($value));
 	}
