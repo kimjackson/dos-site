@@ -149,6 +149,13 @@ RelBrowser.Mapping = {
 		if (! content) {
 			// grab the preview content
 			if (this.dataset.opts.preview) {
+				if ($("#preview-" + this.dataset.opts.preview + " .balloon-middle").length < 1) {
+					$("#preview-" + this.dataset.opts.preview).load(
+						RelBrowser.pipelineBaseURL + "preview/" + this.dataset.opts.preview,
+						this.openInfoWindowHandler
+					);
+					return;
+				}
 				$preview = $("#preview-" + this.dataset.opts.preview + " .balloon-middle").clone();
 				$preview.removeClass("balloon-middle").addClass("map-balloon");
 				$(".balloon-content .clearfix", $preview).before(
