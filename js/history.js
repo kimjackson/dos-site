@@ -13,7 +13,7 @@ var _encode = function (entries) {
 			s += "|";
 		}
 		s += [
-			entries[i].url || "",
+			escape(entries[i].url) || "",
 			entries[i].id || "",
 			entries[i].type || ""
 		].join(",");
@@ -33,7 +33,7 @@ var _decode = function (s) {
 	for (i = 0; i < entries.length; ++i) {
 		fields = entries[i].split(",");
 		entries[i] = {
-			url: fields[0],
+			url: unescape(fields[0]),
 			id: fields[1],
 			type: fields[2]
 		};

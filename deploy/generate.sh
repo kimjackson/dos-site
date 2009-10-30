@@ -7,7 +7,8 @@ REPO=repo
 
 # create directories
 mkdir item preview popup browse search kml kml/full kml/summary files files/thumbnail files/small files/medium files/wide files/large files/full $REPO/hml
-cp -prd $REPO/js $REPO/images $REPO/swf $REPO/*.css $REPO/config.xml .
+cp -prd $REPO/js $REPO/images $REPO/swf $REPO/*.css $REPO/config.xml $REPO/contact.php .
+cp -pd $REPO/timemap.js $REPO/timeline $REPO/recaptcha .
 
 
 # copy files
@@ -61,12 +62,31 @@ ALL_ITEMS_QUERY="select rec_id
                     and if (rec_type = 91, rt.rd_val in ('Occupation', 'Type'), 1)
                     and if (rec_type = 168, ilt.rd_val = 'image', 1)
                     and rec_id not in (2674,2675);"
+NOT_ENTIRES_QUERY="select rec_id
+                   from records
+              left join rec_details rt on rt.rd_rec_id = rec_id and rt.rd_type = 591
+              left join rec_details ilt on ilt.rd_rec_id = rec_id and ilt.rd_type = 618
+                  where rec_type in (153,151,103,74,91,152,168)
+                    and if (rec_type = 91, rt.rd_val in ('Occupation', 'Type'), 1)
+                    and if (rec_type = 168, ilt.rd_val = 'image', 1)
+                    and rec_id not in (2674,2675);"
+ALL_ENTRIES_QUERY="select rec_id
+                   from records
+                  where rec_type = 98
+                    and rec_id not in (2674,2675);"
 
 cd item
-echo $ALL_ITEMS_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos | \
+echo $NOT_ENTIRES_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos | \
 while read id; do
-	if [[ ! -e $id ]]; then
+	if [[ -e ../$REPO/hml/$id.xml  &&  ! -e $id ]]; then
 		echo $PIPELINE/item-urlmapped/$id;
+	fi
+done | \
+wget --no-cache -i -
+echo $ALL_ENTRIES_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos | \
+while read id; do
+	if [[ -e ../$REPO/hml/$id.xml  &&  ! -e $id ]]; then
+		echo $PIPELINE/item-entry-urlmapped/$id;
 	fi
 done | \
 wget --no-cache -i -
@@ -149,6 +169,12 @@ wget --no-cache -O browse/subjects $PIPELINE/browse/subjects
 wget --no-cache -O browse/roles $PIPELINE/browse/roles
 
 wget --no-cache -O search/search_template.html $PIPELINE/search
+
+wget --no-cache -O about.html $PIPELINE/about
+wget --no-cache -O contact.html $PIPELINE/contact
+wget --no-cache -O contribute.html $PIPELINE/contribute
+wget --no-cache -O copyright.html $PIPELINE/copyright
+wget --no-cache -O faq.html $PIPELINE/faq
 
 # generate pages quietly and track progress at 1 minute intervals
 #rm progress
