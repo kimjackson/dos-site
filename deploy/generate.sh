@@ -1,7 +1,7 @@
 # make sure we go direct to the server!
 unset http_proxy
 
-PIPELINE=http://heuristscholar.org/cocoon/relbrowser-kj
+PIPELINE=http://localhost:8888/dos-static-2009-10-29
 
 REPO=repo
 

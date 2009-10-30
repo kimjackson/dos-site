@@ -50,7 +50,7 @@ DOS.ToolTip = {
 			} else {
 				$that = $(this);
 				$that.data("loading", true);
-				$preview.load(RelBrowser.pipelineBaseURL + myClass.replace(/-/, "/"), function () {
+				$preview.load(RelBrowser.baseURL + myClass.replace(/-/, "/"), function () {
 					if ($that.data("loading")) {
 						$that.removeData("loading");
 						DOS.ToolTip.showToolTip(e, $preview);
@@ -85,7 +85,7 @@ $(document).ready(function () {
 	if ($previews.length <= DOS.ToolTip.preloadLimit) {
 		// load preview contents
 		$previews.each(function () {
-			$(this).load(this.id.replace(/^preview-(.*)$/, RelBrowser.pipelineBaseURL + "preview/$1"));
+			$(this).load(this.id.replace(/^preview-(.*)$/, RelBrowser.baseURL + "preview/$1"));
 		});
 	}
 

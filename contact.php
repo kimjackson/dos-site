@@ -16,7 +16,7 @@ $resp = recaptcha_check_answer($recaptcha_private_key,
                                $_POST["recaptcha_challenge_field"],
                                $_POST["recaptcha_response_field"]);
 if (! $resp->is_valid) {
-	header('Location: /cocoon/relbrowser-kj/' . $mode . '?error=' . $resp->error .
+	header('Location: ' . $mode . '.html?error=' . $resp->error .
 		'&name=' . urlencode($name) .
 		'&email=' . urlencode($email) .
 		'&phone=' . urlencode($phone) .
@@ -62,5 +62,5 @@ $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
 $headers .= 'From: noreply@dictionaryofsydney.org';
 
 
-mail('kim.jackson@gmail.com', $subject, $email, $headers);
-header('Location: /cocoon/relbrowser-kj/' . $mode . '?success=1');
+mail('info@dictionaryofsydney.org', $subject, $email, $headers);
+header('Location: ' . $mode . '.html?success=1');
