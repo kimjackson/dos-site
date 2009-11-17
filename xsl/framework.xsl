@@ -17,7 +17,6 @@
 						baseURL: "<xsl:value-of select="$urlbase"/>",
 						pipelineBaseURL: "../"
 					};
-					var tb_pathToImage = RelBrowser.baseURL + "images/loadingAnimation.gif";
 				</script>
 				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;amp;key={$hapi-key}" type="text/javascript"/>
 				<script src="{$urlbase}jquery/jquery.js" type="text/javascript"/>
@@ -143,6 +142,17 @@
 			<div id="previews">
 				<xsl:call-template name="previewStubs"/>
 			</div>
+
+			<script type="text/javascript">
+				var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+				document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+			</script>
+			<script type="text/javascript">
+				try {
+					var pageTracker = _gat._getTracker("UA-11403264-1");
+					pageTracker._trackPageview();
+				} catch(err) {}
+			</script>
 
 			</body>
 		</html>
