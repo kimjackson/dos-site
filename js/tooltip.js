@@ -37,7 +37,7 @@ DOS.ToolTip = {
 	},
 
 	addPreviewToolTips: function ($elems) {
-		$elems.hover(function (e) {
+		$elems.live("mouseover", function (e) {
 			var myClass, $preview, $that;
 			myClass = $(this).attr("class").replace(/.*(preview-\S+).*/, "$1");
 			$preview = $("#"+myClass);
@@ -50,14 +50,14 @@ DOS.ToolTip = {
 			} else {
 				$that = $(this);
 				$that.data("loading", true);
-				$preview.load(RelBrowser.baseURL + myClass.replace(/-/, "/"), function () {
+				$preview.load(RelBrowser.pipelineBaseURL + myClass.replace(/-/, "/"), function () {
 					if ($that.data("loading")) {
 						$that.removeData("loading");
 						DOS.ToolTip.showToolTip(e, $preview);
 					}
 				});
 			}
-		}, function () {
+		}).live("mouseout", function () {
 			$(this).removeData("loading");
 			var myClass = $(this).attr("class").replace(/.*(preview-\S+).*/, "$1");
 			$("#"+myClass).hide();
@@ -85,7 +85,7 @@ $(document).ready(function () {
 	if ($previews.length <= DOS.ToolTip.preloadLimit) {
 		// load preview contents
 		$previews.each(function () {
-			$(this).load(this.id.replace(/^preview-(.*)$/, RelBrowser.baseURL + "preview/$1"));
+			$(this).load(this.id.replace(/^preview-(.*)$/, RelBrowser.pipelineBaseURL + "preview/$1"));
 		});
 	}
 

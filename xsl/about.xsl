@@ -5,8 +5,8 @@
 	<xsl:include href="util.xsl"/>
 	<xsl:include href="factoid.xsl"/>
 
-	<xsl:variable name="urlbase"/>
-	<xsl:variable name="fullurlbase"/>
+	<xsl:variable name="urlbase">./</xsl:variable>
+	<xsl:variable name="fullurlbase">./</xsl:variable>
 
 	<xsl:template match="/">
 		<xsl:call-template name="framework">

@@ -167,6 +167,7 @@ wget --no-cache -O browse/entries $PIPELINE/browse/entries
 wget --no-cache -O browse/maps $PIPELINE/browse/maps
 wget --no-cache -O browse/subjects $PIPELINE/browse/subjects
 wget --no-cache -O browse/roles $PIPELINE/browse/roles
+wget --no-cache -O browse/contributors $PIPELINE/browse/contributors
 
 wget --no-cache -O search/search_template.html $PIPELINE/search
 

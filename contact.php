@@ -57,7 +57,7 @@ $email = '
 	</html>
 ';
 
-$subject = 'DoS website ' . ($mode == 'contact' ? 'message' : 'contribution');
+$subject = 'DoS main website ' . ($mode == 'contact' ? 'Contact' : 'Contribute');
 $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
 $headers .= 'From: noreply@dictionaryofsydney.org';
 

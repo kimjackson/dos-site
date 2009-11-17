@@ -5,13 +5,12 @@
 	<xsl:include href="util.xsl"/>
 	<xsl:include href="factoid.xsl"/>
 
-	<xsl:variable name="urlbase"/>
-	<xsl:variable name="fullurlbase"/>
+	<xsl:variable name="urlbase">./</xsl:variable>
+	<xsl:variable name="fullurlbase">./</xsl:variable>
 
 	<xsl:param name="target1"/>
 	<xsl:param name="target2"/>
 	<xsl:param name="target3"/>
-	<xsl:param name="target4"/>
 
 	<xsl:template match="/">
 		<xsl:call-template name="framework">
@@ -31,6 +30,11 @@
 				$(function () { DOS.Media.embedBrowser("browser"); });
 			</script>
 			<h1>The Dictionary of Sydney - Sydney's history online and connected</h1>
+		</div>
+
+		<div class="teaser">
+			<a href="">
+			</a>
 		</div>
 
 		<div class="teaser">
@@ -59,7 +63,7 @@
 			</a>
 		</div>
 
-		<div class="teaser">
+		<div class="teaser teaser-end">
 			<a href="item/{$target3}">
 				<img>
 					<xsl:attribute name="src">
@@ -71,53 +75,40 @@
 				</img>
 			</a>
 		</div>
-
-		<div class="teaser teaser-end">
-			<a href="item/{$target4}">
-				<img>
-					<xsl:attribute name="src">
-						<xsl:call-template name="getFileURL">
-							<xsl:with-param name="file" select="data/export[8]/references/reference/detail[@id=221]"/>
-							<xsl:with-param name="size" select="'thumbnail'"/>
-						</xsl:call-template>
-					</xsl:attribute>
-				</img>
-			</a>
-		</div>
 		<div class="clearfix"/>
 
 		<div class="teaser">
-			<h2>Featured article</h2>
-			<p><xsl:value-of select="data/export[1]/references/reference/detail[@id=191]"/></p>
+			<h2>About us</h2>
+			<p>Find out more about this growing online history project and the partners and supporters who make it possible.</p>
 		</div>
 
 		<div class="teaser">
 			<h2>Sydney suburbs</h2>
-			<p><xsl:value-of select="data/export[3]/references/reference/detail[@id=191]"/></p>
+			<p><xsl:value-of select="data/export[1]/references/reference/detail[@id=191]"/></p>
 		</div>
 
 		<div class="teaser">
 			<h2>Sydney people</h2>
-			<p><xsl:value-of select="data/export[5]/references/reference/detail[@id=191]"/></p>
+			<p><xsl:value-of select="data/export[3]/references/reference/detail[@id=191]"/></p>
 		</div>
 
 		<div class="teaser teaser-end">
 			<h2>Sydney cultures</h2>
-			<p><xsl:value-of select="data/export[7]/references/reference/detail[@id=191]"/></p>
+			<p><xsl:value-of select="data/export[5]/references/reference/detail[@id=191]"/></p>
 		</div>
 		<div class="clearfix"/>
 
+		<div class="teaser">
+			<a href="about.html">more &#187;</a>
+		</div>
 		<div class="teaser">
 			<a href="item/{$target1}">more &#187;</a>
 		</div>
 		<div class="teaser">
 			<a href="item/{$target2}">more &#187;</a>
 		</div>
-		<div class="teaser">
-			<a href="item/{$target3}">more &#187;</a>
-		</div>
 		<div class="teaser teaser-end">
-			<a href="item/{$target4}">more &#187;</a>
+			<a href="item/{$target3}">more &#187;</a>
 		</div>
 		<div class="clearfix"/>
 
