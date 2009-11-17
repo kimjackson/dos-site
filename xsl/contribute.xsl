@@ -22,7 +22,14 @@
 	<xsl:template name="content">
 
 		<div id="form-heading">
-			<img src="{$urlbase}images/pictures/img-contribute.jpg" width="698" height="186"/>
+			<a href="image/{export/references/reference/id}" class="preview-{export/references/reference/id}">
+				<img src="{$urlbase}images/pictures/img-contribute.jpg"/>
+			</a>
+			<div id="banner-attribution">
+				<xsl:call-template name="makeMediaAttributionStatement">
+					<xsl:with-param name="record" select="export/references/reference"/>
+				</xsl:call-template>
+			</div>
 		</div>
 		<div id="form-left-col">
 			<h1>Contribute</h1>
@@ -47,7 +54,7 @@
 		</div>
 		<div id="form-right-col">
 			<form method="post" action="{$urlbase}contact.php" onsubmit="return validateForm()">
-				<input type="hidden" name="mode" value="contact"/>
+				<input type="hidden" name="mode" value="contribute"/>
 				<p>Please send us your message here ...</p>
 				<div class="form-row">
 					<label>Name</label>

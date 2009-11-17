@@ -592,8 +592,9 @@ a.selected {
 	margin: 0 0 14px 0
 }
 
-#block-heading img {
-	border: 1px solid #320a0a;
+#banner-attribution {
+	font-size: 10px;
+	text-align: right;
 	margin: 0 0 24px 0
 }
 
@@ -619,10 +620,6 @@ a.selected {
 #form-heading {
 	width: 700px;
 	margin: 0 0 23px 0;
-}
-
-#form-heading img {
-	border: 1px solid #320a0a;
 }
 
 #form-left-col {

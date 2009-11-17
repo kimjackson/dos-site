@@ -131,7 +131,7 @@
    </map:match>
 
    <map:match pattern="browse/*">
-    <map:generate src="empty.xml"/>		<!-- dummy source for our "transform" -->
+    <map:generate src="empty.xml"/>    <!-- dummy source for our "transform" -->
     <map:transform src="xsl/browse.xsl">
      <map:parameter name="type" value="{1}"/>
     </map:transform>
@@ -171,45 +171,60 @@
    </map:match>
 
    <map:match pattern="about">
-    <map:generate src="empty.xml"/>
+    <map:generate src="cocoon:/xml1/18345"/>
     <map:transform src="xsl/about.xsl"/>
+    <map:transform src="xsl/rewrite_urls.xsl">
+     <map:parameter name="base" value=""/>
+    </map:transform>
     <map:serialize type="html"/>
    </map:match>
 
    <map:match pattern="contact">
-    <map:generate src="empty.xml"/>
+    <map:generate src="cocoon:/xml1/19194"/>
     <map:transform src="xsl/contact.xsl"/>
+    <map:transform src="xsl/rewrite_urls.xsl">
+     <map:parameter name="base" value=""/>
+    </map:transform>
     <map:serialize type="html"/>
    </map:match>
 
    <map:match pattern="contribute">
-    <map:generate src="empty.xml"/>
+    <map:generate src="cocoon:/xml1/18383"/>
     <map:transform src="xsl/contribute.xsl"/>
+    <map:transform src="xsl/rewrite_urls.xsl">
+     <map:parameter name="base" value=""/>
+    </map:transform>
     <map:serialize type="html"/>
    </map:match>
 
    <map:match pattern="copyright">
-    <map:generate src="empty.xml"/>
+    <map:generate src="cocoon:/xml1/18964"/>
     <map:transform src="xsl/copyright.xsl"/>
+    <map:transform src="xsl/rewrite_urls.xsl">
+     <map:parameter name="base" value=""/>
+    </map:transform>
     <map:serialize type="html"/>
    </map:match>
 
    <map:match pattern="faq">
-    <map:generate src="empty.xml"/>
+    <map:generate src="cocoon:/xml1/20921"/>
     <map:transform src="xsl/faq.xsl"/>
+    <map:transform src="xsl/rewrite_urls.xsl">
+     <map:parameter name="base" value=""/>
+    </map:transform>
     <map:serialize type="html"/>
    </map:match>
 
 
    <map:match pattern="urlmap-xsl">
-	<map:generate src="xsl/urlmap_precursor.xsl"/>
+    <map:generate src="xsl/urlmap_precursor.xsl"/>
     <map:transform type="xinclude"/>
-	<map:serialize type="xml"/>
+    <map:serialize type="xml"/>
    </map:match>
 
    <map:match pattern="*-urlmapped/*">
     <map:generate src="cocoon:/{1}/{2}"/>
-	<map:transform src="xsl/rewrite_urls.xsl"/>
+    <map:transform src="xsl/rewrite_urls.xsl"/>
     <map:serialize type="html"/>
    </map:match>
 

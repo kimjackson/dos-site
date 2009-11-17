@@ -20,7 +20,16 @@
 
 <div id="block-heading">
 
-<img src="{$urlbase}images/pictures/img-faqs.jpg" width="698" height="186"/>
+<a href="image/{export/references/reference/id}" class="preview-{export/references/reference/id}">
+	<img src="{$urlbase}images/pictures/img-faqs.jpg"/>
+</a>
+
+<div id="banner-attribution">
+	<xsl:call-template name="makeMediaAttributionStatement">
+		<xsl:with-param name="record" select="export/references/reference"/>
+	</xsl:call-template>
+</div>
+
 
 <h1>Frequently Asked Questions</h1>
 

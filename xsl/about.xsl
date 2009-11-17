@@ -20,7 +20,15 @@
 
 <div id="block-heading">
 
-<img src="{$urlbase}images/pictures/img-about-us.jpg" width="698" height="186"/>
+<a href="image/{export/references/reference/id}" class="preview-{export/references/reference/id}">
+	<img src="{$urlbase}images/pictures/img-about-us.jpg"/>
+</a>
+
+<div id="banner-attribution">
+	<xsl:call-template name="makeMediaAttributionStatement">
+		<xsl:with-param name="record" select="export/references/reference"/>
+	</xsl:call-template>
+</div>
 
 <h1>The Dictionary of Sydney project</h1>
 
@@ -50,8 +58,7 @@ spans the years from the earliest human habitation to the present.
 The project welcomes all kinds of history &#8211; engineering history, social
 and cultural history, economic history and so on. We are also interested in
 historical contributions from neighbouring disciplines such as archaeology,
-sociology, literary studies, historical geography and cultural studies. This
-will not be purely an 'urban history' site.
+sociology, literary studies, historical geography and cultural studies.
 </p>
 
 <p>
@@ -69,6 +76,34 @@ readers. We can't possibly know all the experts we need, so we welcome help in
 finding them. Readers are encouraged to contribute by suggesting topics,
 authors, images, multimedia and more, using the Contribute link found on every
 page.
+</p>
+
+</div>
+
+<div class="block-content">
+
+<h2>Disclaimer</h2>
+
+<p>
+The Dictionary of Sydney makes every effort to ensure the accuracy of the
+material we present but can accept no liability for any loss or damage
+incurred through or subsequent to the use of this website or its
+contents. If you find any information on this website that you believe
+may be inaccurate, please let us know.
+</p>
+
+<p>
+The Dictionary may change, delete, add to, or otherwise amend information
+contained on this website without notice.  The Dictionary is not
+responsible for the content of other websites linked to or referenced
+from this website. The Dictionary neither endorses the information,
+content, presentation, or accuracy of such other websites, nor makes any
+warranty, express or implied, regarding these other websites.
+Reference to any commercial product or service, whether by trade name,
+trademark, manufacture, or otherwise, does not constitute an endorsement
+or recommendation by the Dictionary. Each page on this website must be
+read in conjunction with this disclaimer and any other disclaimer that
+forms part of it.
 </p>
 
 </div>

@@ -4,6 +4,7 @@
 	<xsl:include href="myvariables.xsl"/>
 	<xsl:include href="urlmap.xsl"/>
 
+	<xsl:param name="base">../</xsl:param>
 
 	<!-- identity transform -->
 	<xsl:template match="@*|node()">
@@ -42,7 +43,7 @@
 		<xsl:attribute name="href">
 			<xsl:choose>
 				<xsl:when test="$path != ''">
-					<xsl:text>../</xsl:text>
+					<xsl:value-of select="$base"/>
 					<xsl:value-of select="$path"/>
 					<xsl:value-of select="$suffix"/>
 				</xsl:when>

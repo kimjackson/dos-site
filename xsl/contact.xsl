@@ -22,7 +22,14 @@
 	<xsl:template name="content">
 
 		<div id="form-heading">
-			<img src="{$urlbase}images/pictures/img-contact-us.jpg" width="698" height="186"/>
+			<a href="image/{export/references/reference/id}" class="preview-{export/references/reference/id}">
+				<img src="{$urlbase}images/pictures/img-contact-us.jpg"/>
+			</a>
+			<div id="banner-attribution">
+				<xsl:call-template name="makeMediaAttributionStatement">
+					<xsl:with-param name="record" select="export/references/reference"/>
+				</xsl:call-template>
+			</div>
 		</div>
 		<div id="form-left-col">
 			<h1>Contact Us</h1>
