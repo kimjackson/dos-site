@@ -1,0 +1,2 @@
+perl -pe "s|</body>|<script type=\"text/javascript\">\nvar gaJsHost = ((\"https:\" == document.location.protocol) ? \"https://ssl.\" : \"http://www.\");\ndocument.write(unescape(\"%3Cscript src='\" + gaJsHost + \"google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E\"));\n</script>\n<script type=\"text/javascript\">\ntry {\nvar pageTracker = _gat._getTracker(\"UA-11403264-1\");\npageTracker._trackPageview();\n} catch(err) {}</script>\n</body>|"
+
