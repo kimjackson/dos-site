@@ -107,7 +107,7 @@ RelBrowser.History = {
 				"<div class='breadcrumb nav-" + e.type + "'>" +
 					"<a href='" + e.url + "' class='" + className + "'>" +
 						"<img src='" + RelBrowser.baseURL + "images/16x16-clear.gif'/>" +
-						(e.type === "search" ? "<div class='search-term'>" + unescape(e.id) + "</div>" : "") +
+						(e.type === "search" ? "<div class='search-term'>" + unescape(e.id).replace('+', ' ') + "</div>" : "") +
 					"</a>" +
 				"</div>"
 			);
