@@ -20,7 +20,7 @@
 					var tb_pathToImage = RelBrowser.baseURL + "images/loadingAnimation.gif";
 				</script>
 				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;amp;key={$hapi-key}" type="text/javascript"/>
-				<script src="/jquery/jquery.js" type="text/javascript"/>
+				<script src="{$urlbase}jquery/jquery.js" type="text/javascript"/>
 				<script src="{$urlbase}js/cookies.js" type="text/javascript"/>
 				<script src="{$urlbase}js/fontsize.js" type="text/javascript"/>
 				<script src="{$urlbase}js/history.js" type="text/javascript"/>
