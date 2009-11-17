@@ -157,7 +157,7 @@ $subtypes = array();
 $orderedSubtypes = array();
 
 if ($type == "Entry") {
-	$query = "select if (entity_type.rd_val is null, 'Thematic', entity_type.rd_val),
+	$query = "select distinct if (entity_type.rd_val is null, 'Thematic', entity_type.rd_val),
 	                 if (entity_type.rd_val is null, 'Thematic Entries',
 	                     concat(
 	                            'Entries about ',
