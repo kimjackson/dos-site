@@ -1,6 +1,6 @@
 .context .highlight { background: #FFFF70; }
 .searchheading { font-size: 130%; font-weight: bold; }
-.summary { float: right; font-style: italic; }
+.summary { float: right; font-style: italic; width: 300px; margin-left: 10px; }
 .suggestion { font-size: 100%; padding: 0 0 15px 0; }
 .results { font-size: 100%; }
 .category { color: #999999; }
