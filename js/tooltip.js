@@ -37,7 +37,7 @@ DOS.ToolTip = {
 	},
 
 	addPreviewToolTips: function ($elems) {
-		$elems.hover(function (e) {
+		$elems.live("mouseover", function (e) {
 			var myClass, $preview, $that;
 			myClass = $(this).attr("class").replace(/.*(preview-\S+).*/, "$1");
 			$preview = $("#"+myClass);
@@ -57,7 +57,7 @@ DOS.ToolTip = {
 					}
 				});
 			}
-		}, function () {
+		}).live("mouseout", function () {
 			$(this).removeData("loading");
 			var myClass = $(this).attr("class").replace(/.*(preview-\S+).*/, "$1");
 			$("#"+myClass).hide();
