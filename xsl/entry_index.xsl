@@ -9,7 +9,7 @@
 	</xsl:template>
 
 
-	<xsl:template match="//div[@id='chapters-middle']">
+	<xsl:template match="div[@id='chapters-middle']">
 		<xsl:copy>
 			<xsl:copy-of select="@*|node()"/>
 			<ul>
@@ -24,6 +24,13 @@
 					<a href="#" onclick="showSection('all'); return false;"><xsl:value-of select="h2"/>Show all</a>
 				</li>
 			</ul>
+		</xsl:copy>
+	</xsl:template>
+
+
+	<xsl:template match="p[@class='DoSAuthor']">
+		<xsl:copy>
+			<xsl:copy-of select="@*"/>
 		</xsl:copy>
 	</xsl:template>
 
