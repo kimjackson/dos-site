@@ -558,11 +558,11 @@ a.selected {
 	padding: 0 0 0 10px
 }
 
-#resource p.attribution {
+p.attribution {
 	margin: 0 0 10px 0
 }
 
-#resource p.license {
+p.license {
 	margin: 0 0 10px 0
 }
 
@@ -1066,6 +1066,7 @@ img.entity-picture {
 }
 #map.image {
 	height: 512px;
+	margin-bottom: 17px;
 }
 #map.full {
 	height: 400px;

@@ -21,6 +21,20 @@
 				$(function () { RelBrowser.GMapImage.init(<xsl:value-of select="id"/>, <xsl:value-of select="detail[@id=587]"/>); });
 			</script>
 
+			<p class="attribution">
+				<xsl:call-template name="makeMediaAttributionStatement">
+					<xsl:with-param name="record" select="."/>
+				</xsl:call-template>
+			</p>
+
+			<xsl:if test="detail[@id=590]">
+				<p class="license">
+					<xsl:call-template name="makeLicenseIcon">
+						<xsl:with-param name="record" select="."/>
+					</xsl:call-template>
+				</p>
+			</xsl:if>
+
 		</div>
 
 	</xsl:template>
