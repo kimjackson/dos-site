@@ -175,6 +175,9 @@ function transformTextNode(elem, refs, startingRefs, endingRefs, wordOffset) {
 	leadingSpace = (matches[1].length > 0) ? matches[1] : null;
 	trailingSpace = (matches[3].length > 0) ? matches[3] : null;
 	text = matches[2];
+	if (text.length === 0) {
+		return 0;
+	}
 	words = text.split(/\s+/);
 
 	// filter just the applicable refs from startingRefs and endingRefs
