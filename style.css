@@ -523,25 +523,25 @@ a.selected {
 }
 
 
-.list-artefact     { background: url(images/40x40/icon40-artefact.jpg) 0px 4px no-repeat }
-.list-audio        { background: url(images/40x40/icon40-audio.jpg) 0px 4px no-repeat }
-.list-building     { background: url(images/40x40/icon40-building.jpg) 0px 4px no-repeat }
-.list-contributor  { background: url(images/40x40/icon40-contributor.jpg) 0px 4px no-repeat }
-.list-entry        { background: url(images/40x40/icon40-entry.jpg) 0px 4px no-repeat }
-.list-event        { background: url(images/40x40/icon40-event.jpg) 0px 4px no-repeat }
-.list-image        { background: url(images/40x40/icon40-image.jpg) 0px 4px no-repeat }
-.list-link         { background: url(images/40x40/icon40-link.jpg) 0px 4px no-repeat }
-.list-map          { background: url(images/40x40/icon40-map.jpg) 0px 4px no-repeat }
-.list-natural      { background: url(images/40x40/icon40-natural.jpg) 0px 4px no-repeat }
-.list-organisation { background: url(images/40x40/icon40-organisation.jpg) 0px 4px no-repeat }
-.list-person       { background: url(images/40x40/icon40-person.jpg) 0px 4px no-repeat }
-.list-place        { background: url(images/40x40/icon40-place.jpg) 0px 4px no-repeat }
-.list-reference    { background: url(images/40x40/icon40-reference.jpg) 0px 4px no-repeat }
-.list-role         { background: url(images/40x40/icon40-role.jpg) 0px 4px no-repeat }
-.list-search       { background: url(images/40x40/icon40-search.jpg) 0px 4px no-repeat }
-.list-structure    { background: url(images/40x40/icon40-structure.jpg) 0px 4px no-repeat }
-.list-term         { background: url(images/40x40/icon40-term.jpg) 0px 4px no-repeat }
-.list-video        { background: url(images/40x40/icon40-video.jpg) 0px 4px no-repeat }
+.list-artefact     { background: url(images/40x40/icon40-artefact.jpg) 0 0 no-repeat }
+.list-audio        { background: url(images/40x40/icon40-audio.jpg) 0 0 no-repeat }
+.list-building     { background: url(images/40x40/icon40-building.jpg) 0 0 no-repeat }
+.list-contributor  { background: url(images/40x40/icon40-contributor.jpg) 0 0 no-repeat }
+.list-entry        { background: url(images/40x40/icon40-entry.jpg) 0 0 no-repeat }
+.list-event        { background: url(images/40x40/icon40-event.jpg) 0 0 no-repeat }
+.list-image        { background: url(images/40x40/icon40-image.jpg) 0 0 no-repeat }
+.list-link         { background: url(images/40x40/icon40-link.jpg) 0 0 no-repeat }
+.list-map          { background: url(images/40x40/icon40-map.jpg) 0 0 no-repeat }
+.list-natural      { background: url(images/40x40/icon40-natural.jpg) 0 0 no-repeat }
+.list-organisation { background: url(images/40x40/icon40-organisation.jpg) 0 0 no-repeat }
+.list-person       { background: url(images/40x40/icon40-person.jpg) 0 0 no-repeat }
+.list-place        { background: url(images/40x40/icon40-place.jpg) 0 0 no-repeat }
+.list-reference    { background: url(images/40x40/icon40-reference.jpg) 0 0 no-repeat }
+.list-role         { background: url(images/40x40/icon40-role.jpg) 0 0 no-repeat }
+.list-search       { background: url(images/40x40/icon40-search.jpg) 0 0 no-repeat }
+.list-structure    { background: url(images/40x40/icon40-structure.jpg) 0 0 no-repeat }
+.list-term         { background: url(images/40x40/icon40-term.jpg) 0 0 no-repeat }
+.list-video        { background: url(images/40x40/icon40-video.jpg) 0 0 no-repeat }
 
 #resource img.resource-image {
 	border: 1px solid #320a0a;
