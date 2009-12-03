@@ -77,9 +77,11 @@
 
 		<ul id="browse-alpha-index"/>
 		<ul id="browse-type-index"/>
+		<ul id="browse-licence-index"/>
 
 		<div class="list-right-col-browse" id="entities-alpha"/>
 		<div class="list-right-col-browse" id="entities-type"/>
+		<div class="list-right-col-browse" id="entities-licence"/>
 		<div class="list-right-col-browse" id="entities-content">
 			<h2><xsl:value-of select="$pluralTypeName"/> with Entries</h2>
 			<ul id="entities-with-entries"/>

@@ -483,11 +483,11 @@ img { border: 0 }
 	margin: 0px 11px 0px 0px
 }
 
-#browse-type-index, #browse-alpha-index {
+#browse-type-index, #browse-alpha-index, #browse-licence-index {
 	list-style: none;
 	margin: 0 0 20px 0
 }
-#browse-type-index li, #browse-alpha-index li {
+#browse-type-index li, #browse-alpha-index li, #browse-licence-index li {
 	float: left;
 	background: url(images/bg-content-bullet.jpg) 1px 6px no-repeat;
 	white-space: nowrap;

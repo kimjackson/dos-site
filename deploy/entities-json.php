@@ -164,8 +164,7 @@ if ($type == "Entry") {
 	                            if (entity_type.rd_val = 'Person', 'People', concat(entity_type.rd_val, 's'))
 	                     )
 	                 ),
-	                 entry.rec_id,
-	                 entry.rec_title
+	                 entry.rec_id
 	            from records entry
 	       left join rec_details rel_ptr_1
 	                          on rel_ptr_1.rd_val = entry.rec_id
@@ -238,6 +237,29 @@ if ($type == "Role") {
 	$subtypes["Occupation"] = array("Occupation", $orderedEntities);
 }
 
+if ($type == "Entry") {
+	$licenceTypes = array();
+	$orderedLicenceTypes = array();
+	$query = "select distinct if (licence.rd_val is null, 'other', licence.rd_val),
+	                 entry.rec_id
+	            from records entry
+	       left join rec_details licence
+	                          on licence.rd_rec_id = entry.rec_id
+	                         and licence.rd_type = 590
+	           where rec_type = 98
+	             and rec_id != 2674
+	        order by licence.rd_val is null,
+	                 licence.rd_val,
+	                 if (rec_title like 'the %', substr(rec_title, 5), replace(rec_title, '\'', ''))";
+	$res = mysql_query($query);
+	while ($row = mysql_fetch_row($res)) {
+		if (! @$licenceTypes[$row[0]]) {
+			$licenceTypes[$row[0]] = array();
+			array_push($orderedLicenceTypes, $row[0]);
+		}
+		array_push($licenceTypes[$row[0]], $row[1]);
+	}
+}
 
 print "if (! window.DOS) { DOS = {}; }\n";
 print "if (! DOS.Browse) { DOS.Browse = {}; }\n";
@@ -246,5 +268,9 @@ print "DOS.Browse.entities = " . json_format($entities) . ";\n";
 print "DOS.Browse.orderedEntities = " . json_format($orderedEntities) . ";\n";
 print "DOS.Browse.subtypes = " . json_format($subtypes) . ";\n";
 print "DOS.Browse.orderedSubtypes = " . json_format($orderedSubtypes) . ";\n";
+if ($type == "Entry") {
+	print "DOS.Browse.licenceTypes = " . json_format($licenceTypes) . ";\n";
+	print "DOS.Browse.orderedLicenceTypes = " . json_format($orderedLicenceTypes) . ";\n";
+}
 
 ?>

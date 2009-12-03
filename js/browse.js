@@ -158,6 +158,65 @@ return {
 		}
 	},
 
+	// list by licence type
+	renderLicenceTypeList: function(i) {
+		var id, entity, title, href, licence, licenceName, licenceIcon, entityIDs, $ul, className;
+
+		if (! i) {
+			i = 0;
+		}
+
+		if (! DOS.Browse.orderedLicenceTypes  ||  ! DOS.Browse.orderedLicenceTypes.length) {
+			DOS.Browse.renderSubTypeList();
+			return;
+		}
+
+		licence = DOS.Browse.orderedLicenceTypes[i];
+
+		licenceName = "Other";
+		licenceIcon = "";
+
+		if (licence === "CC-Generic") {
+			licenceName = "Creative Commons";
+			licenceIcon = " <a rel='license' target='_blank' href='http://creativecommons.org/licenses/by/2.5/au/'>"
+				+ "<img alt='Creative Commons License' src='http://i.creativecommons.org/l/by/2.5/au/80x15.png'/></a>";
+		}
+		if (licence === "CC-SA") {
+			licenceName = "Creative Commons";
+			licenceIcon = " <a rel='license' target='_blank' href='http://creativecommons.org/licenses/by-sa/2.5/au/'>"
+				+ "<img alt='Creative Commons License' src='http://i.creativecommons.org/l/by-sa/2.5/au/80x15.png'/></a>";
+		}
+
+		if (DOS.Browse.orderedLicenceTypes.length > 1) {
+			$("#browse-licence-index").append("<li><a href='#"+licence+"'>"+licenceName+"</a></li>");
+		}
+
+		entityIDs = DOS.Browse.licenceTypes[licence];
+
+		$("#entities-licence").append("<h2 id='"+licence+"'>" + licenceName + licenceIcon + "</h2>");
+		$ul = $("<ul/>").appendTo("#entities-licence");
+		for (j = 0; j < entityIDs.length; ++j) {
+			id = entityIDs[j];
+			entity = DOS.Browse.entities[id];
+			title = entity[0];
+			href = _getHref(id, title);
+			if (entity) {
+				className = entity[2] ? " class='has-entry'" : "";
+				$ul.append("<li"+className+"><a class='preview-"+id+"' href='"+href+"'>"+title+"</a></li>");
+			}
+		}
+
+		if (i + 1 === DOS.Browse.orderedLicenceTypes.length) {
+			$("#browse-licence-index").append("<div class='clearfix'/>");
+			DOS.Browse.renderSubTypeList();
+		}
+		else {
+			setTimeout(function () {
+				DOS.Browse.renderLicenceTypeList(i + 1);
+			}, 0);
+		}
+	},
+
 
 	// split into entities with entries and those without
 	renderContentList: function(offset) {
@@ -204,7 +263,7 @@ return {
 					$(this).find("li:odd").addClass("shade"); }
 				);
 			}
-			DOS.Browse.renderSubTypeList();
+			DOS.Browse.renderLicenceTypeList();
 		}
 		else {
 			setTimeout(function () {
@@ -215,10 +274,11 @@ return {
 
 
 	renderSortbyLinks: function() {
-		var entries, types;
+		var entries, types, licences;
 
 		entries = $("#entities-with-entries li").length > 0;
 		types = DOS.Browse.orderedSubtypes.length > 0;
+		licences = DOS.Browse.orderedLicenceTypes  &&  DOS.Browse.orderedLicenceTypes.length > 0;
 
 		if (entries && types) {
 			// Sort by Content, Name or Type
@@ -229,6 +289,11 @@ return {
 			// Sort by Content or Name
 			$("#sub-title").append("Sort by <a id='content-sort-link' href='#'>Content</a>")
 			               .append(" or <a id='name-sort-link' href='#'>Name</a>")
+		} else if (types && licences) {
+			// Sort by Name or Type or Licence type
+			$("#sub-title").append("Sort by <a id='name-sort-link' href='#'>Name</a>")
+			               .append(", <a id='type-sort-link' href='#'>Type</a>")
+			               .append(" or <a id='licence-sort-link' href='#'>Licence type</a>");
 		} else if (types) {
 			// Sort by Name or Type
 			$("#sub-title").append("Sort by <a id='name-sort-link' href='#'>Name</a>")
@@ -246,33 +311,42 @@ return {
 		$('#type-sort-link').click(DOS.Browse.sortByType);
 		$('#name-sort-link').click(DOS.Browse.sortByName);
 		$('#content-sort-link').click(DOS.Browse.sortByContent);
+		$('#licence-sort-link').click(DOS.Browse.sortByLicence);
 	},
 
 	render: function() {
-		$("#entities-alpha, #browse-alpha-index, #entities-type, #browse-type-index, #entities-content").hide();
+		$("#entities-alpha, #browse-alpha-index, #entities-type, #browse-type-index, #entities-licence, #browse-licence-index, #entities-content").hide();
 		DOS.Browse.renderContentList();
 	},
 
 	sortByName: function() {
-		$('#type-sort-link, #content-sort-link').removeClass('selected');
+		$('#type-sort-link, #licence-sort-link, #content-sort-link').removeClass('selected');
 		$('#name-sort-link').addClass('selected');
-		$("#entities-type, #browse-type-index, #entities-content").hide();
+		$("#entities-type, #browse-type-index, #entities-licence, #browse-licence-index, #entities-content").hide();
 		$("#entities-alpha, #browse-alpha-index").show();
 		return false;
 	},
 
 	sortByType: function() {
-		$('#name-sort-link, #content-sort-link').removeClass('selected');
+		$('#name-sort-link, #licence-sort-link, #content-sort-link').removeClass('selected');
 		$('#type-sort-link').addClass('selected');
-		$("#entities-alpha, #browse-alpha-index, #entities-content").hide();
+		$("#entities-alpha, #browse-alpha-index, #entities-licence, #browse-licence-index, #entities-content").hide();
 		$("#entities-type, #browse-type-index").show();
 		return false;
 	},
 
+	sortByLicence: function() {
+		$('#name-sort-link, #type-sort-link, #content-sort-link').removeClass('selected');
+		$('#licence-sort-link').addClass('selected');
+		$("#entities-alpha, #browse-alpha-index, #entities-type, #browse-type-index, #entities-content").hide();
+		$("#entities-licence, #browse-licence-index").show();
+		return false;
+	},
+
 	sortByContent: function() {
-		$('#name-sort-link, #type-sort-link').removeClass('selected');
+		$('#name-sort-link, #type-sort-link, #licence-sort-link').removeClass('selected');
 		$('#content-sort-link').addClass('selected');
-		$("#entities-alpha, #browse-alpha-index, #entities-type, #browse-type-index").hide();
+		$("#entities-alpha, #browse-alpha-index, #entities-type, #browse-type-index, #entities-licence, #browse-licence-index").hide();
 		$("#entities-content").show();
 		return false;
 	}
