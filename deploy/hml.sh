@@ -1,5 +1,5 @@
 REPO=repo
-HEURIST=../heurist-kj
+HEURIST=../heurist
 ALL_ITEMS_QUERY="select rec_id
                    from records
               left join rec_details rt on rt.rd_rec_id = rec_id and rt.rd_type = 591
