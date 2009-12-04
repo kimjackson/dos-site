@@ -47,7 +47,7 @@
    </map:match>
 
    <map:match pattern="xml*/*">
-    <map:generate src="http://dos.heuristscholar.org/heurist/php/hml.php?q=ids:{2}&amp;depth={1}"/>
+    <map:generate src="hml/{2}.xml"/>
     <map:transform src="xsl/heurist_legacy_xml.xsl"/>
     <map:serialize type="xml"/>
    </map:match>
@@ -68,7 +68,7 @@
     <map:redirect-to uri="../{1}"/>
    </map:match>
 
-   <map:match pattern="item/*">
+   <map:match pattern="item-entry/*">
     <map:generate src="cocoon:/xml2/{1}" label="xmlexport"/>
     <map:transform src="xsl/item_view.xsl" label="transformed"/>
     <map:transform type="xinclude" label="wordml"/>
@@ -77,6 +77,13 @@
     <map:transform src="xsl/entry_index.xsl"/>
     <map:serialize type="html"/>
    </map:match>
+
+   <map:match pattern="item/*">
+    <map:generate src="cocoon:/xml2/{1}" label="xmlexport"/>
+    <map:transform src="xsl/item_view.xsl" label="transformed"/>
+    <map:serialize type="html"/>
+   </map:match>
+
 
    <map:match pattern="preview/*c*">
     <map:call resource="preview">
