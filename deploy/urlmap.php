@@ -8,11 +8,15 @@ require_once('/var/www/htdocs/heurist/php/modules/loading.php');
 
 mysql_connection_db_select('`heuristdb-dos`');
 
-$links = (@$argv[1] === 'links');
+$spider_links = (@$argv[1] === 'spider-links');
+$links = (@$argv[1] === 'links') || $spider_links;
 
 $path_to_id = array();
 
-if ($links) {
+if ($spider_links) {
+	echo "rm -rf spider-*\n";
+	echo "mkdir spider-contributor spider-entry spider-role spider-subject spider-map spider-image spider-audio spider-video spider-artefact spider-building spider-event spider-natural_feature spider-organisation spider-person spider-place spider-structure\n";
+} else if ($links) {
 	echo "rm -rf contributor entry role subject map image audio video artefact building event natural_feature organisation person place structure\n";
 	echo "mkdir contributor entry role subject map image audio video artefact building event natural_feature organisation person place structure\n";
 } else {
@@ -118,8 +122,10 @@ function getRecordType($record) {
 }
 
 function printMapping($id, $path) {
-	global $links;
-	if ($links) {
+	global $links, $spider_links;
+	if ($spider_links) {
+		echo "ln -s ../item/$id \"spider-" . str_replace("&", "AMPERSAND", $path) . "\"\n";
+	} else if ($links) {
 		echo "ln -s ../item/$id \"$path\"\n";
 	} else {
 		echo "<record><id>$id</id><path>$path</path></record>\n";

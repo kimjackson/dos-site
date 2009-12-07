@@ -9,6 +9,7 @@ REPO=repo
 mkdir item preview popup browse search kml kml/full kml/summary files files/thumbnail files/small files/medium files/wide files/large files/full $REPO/hml
 cp -prd $REPO/js $REPO/images $REPO/swf $REPO/*.css $REPO/config.xml $REPO/contact.php .
 cp -pd $REPO/jquery $REPO/timemap.js $REPO/timeline $REPO/recaptcha .
+ln -s ../dos-map-tiles tiles
 
 
 # copy files
@@ -45,8 +46,11 @@ wget --no-cache -O $REPO/xsl/urlmap.xsl $PIPELINE/urlmap-xsl
 
 # create symbolic links
 php $REPO/deploy/urlmap.php links > make_links.sh
+php $REPO/deploy/urlmap.php spider-links > make_spider_links.sh
 . make_links.sh
+. make_spider_links.sh
 rm make_links.sh
+rm make_spider_links.sh
 
 # generate XML for all required items
 . $REPO/deploy/hml.sh
@@ -82,14 +86,14 @@ while read id; do
 		echo $PIPELINE/item-urlmapped/$id;
 	fi
 done | \
-wget --no-cache -i -
+wget --no-cache -w 1 -i -
 echo $ALL_ENTRIES_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos | \
 while read id; do
 	if [[ -e ../$REPO/hml/$id.xml  &&  ! -e $id ]]; then
 		echo $PIPELINE/item-entry-urlmapped/$id;
 	fi
 done | \
-wget --no-cache -i -
+wget --no-cache -w 1 -i -
 cd ..
 
 cd preview
@@ -99,7 +103,7 @@ while read id; do
 		echo $PIPELINE/preview/$id;
 	fi
 done | \
-wget --no-cache -i -
+wget --no-cache -w 1 -i -
 cd ..
 
 # generate previews for all records in all necessary contexts
@@ -177,8 +181,18 @@ wget --no-cache -O contribute.html $PIPELINE/contribute
 wget --no-cache -O copyright.html $PIPELINE/copyright
 wget --no-cache -O faq.html $PIPELINE/faq
 
-# generate pages quietly and track progress at 1 minute intervals
-#rm progress
-#while [ 1 ]; do ls -1 item/ | wc -l >> progress; sleep 60; done &
-#echo "select rec_id from records left join rec_details on rd_rec_id = rec_id and rd_type = 591 where rec_type in (153,151,103,74,91,152,98) and if (rec_type = 91, rd_val in ('Occupation', 'Type'), 1);" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O item/$id $PIPELINE/item-urlmapped/$id 2>/dev/null; done &
+wget --no-cache -O index.html $PIPELINE/
+
+# run zoom indexer over spider-* directories
+# rm -rf spider-*
+
+
+rsync -av about.html artefact audio boxy-ie.css boxy.css browse building config.xml contact.html contact.php contribute.html contributor copyright.html entry event faq.html image images index.html item jquery js kml map natural_feature organisation person place popup preview recaptcha role search search.css structure style.css subject swf tiles timeline timemap.js video kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2009-12-03/
+
+rsync -av ../dos-static-2009-10-22/files/ kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/files/
+
+# on production server:
+perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2009-12-03/../' item/*
+perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2009-12-03/../' popup/*
+perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2009-12-03/http:\/\/dictionaryofsydney.org/' preview/*
 
