@@ -422,6 +422,19 @@ function getAnnotationClassName(elem) {
 	return elem.className.replace(/.*(annotation-id-\S+).*/, "$1");
 }
 
+function getContainingSection(elem) {
+	var i, l, $topElem, $parents;
+	$topElem = $("#tei");
+	$parents = $(elem).parents();
+	l = $parents.length;
+	for (i = 0; i < l; ++i) {
+		if ($parents[i] === $topElem[0]) {
+			return $parents.eq(i - 1);
+		}
+	}
+	return null;
+}
+
 function alignImages() {
 	var $annotation,
 		$section,
@@ -436,7 +449,7 @@ function alignImages() {
 
 	$("div.annotation-img").each(function () {
 		$annotation = $("#tei a." + getAnnotationClassName(this));
-		$section = $annotation.parent().parent();
+		$section = getContainingSection($annotation);
 		if ($section.is(":visible")) {
 			$(this).css("margin-top", "0px");
 			$(this).show();
@@ -515,10 +528,7 @@ function highlightAnnotation(id) {
 
 YAHOO.util.Event.onDOMReady(function () {
 
-	var initPage,
-		initAnnotation,
-		$link,
-		$section;
+	var initPage, initAnnotation;
 
 	if ($("#tei").length > 0  &&  window.refs) {
 		highlight($("#tei")[0], refs);
@@ -559,9 +569,14 @@ YAHOO.util.Event.onDOMReady(function () {
 	}
 
 	function _findAnnotationPage(id) {
+		var $link, $section;
 		$link = $("#tei a.annotation-id-" + id);
-		$section = $link.parent().parent();
-		return $("#tei>div").index($section[0]) + 1;
+		$section = getContainingSection($link);
+		if ($section) {
+			return $("#tei>div").index($section[0]) + 1;
+		} else {
+			return null;
+		}
 	}
 
 	pageCount = $("#tei>div").length;
@@ -571,10 +586,9 @@ YAHOO.util.Event.onDOMReady(function () {
 
 	if (! initPage) {
 		if (initAnnotation) {
-			initPage = String(_findAnnotationPage(initAnnotation));
-		} else {
-			initPage = "all";
+			initPage = _findAnnotationPage(initAnnotation);
 		}
+		initPage = initPage ? String(initPage) : "all";
 	}
 	if (! initAnnotation) {
 		initAnnotation = "";
