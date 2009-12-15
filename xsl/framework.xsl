@@ -89,7 +89,17 @@
 					</div>
 
 					<div id="right-col">
-						<a href="{$urlbase}" title="Dictionary of Sydney Home">
+						<a title="Dictionary of Sydney Home">
+							<xsl:attribute name="href">
+								<xsl:choose>
+									<xsl:when test="$urlbase = ''">
+										<xsl:value-of select="'./'"/>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:value-of select="$urlbase"/>
+									</xsl:otherwise>
+								</xsl:choose>
+							</xsl:attribute>
 							<img src="{$urlbase}images/img-logo.jpg" alt="Dictionary of Sydney" width="198" height="125" class="logo"/>
 						</a>
 						<div id="search-bar">
@@ -112,7 +122,21 @@
 			<div id="footer">
 				<div id="footer-content">
 					<ul id="footer-left-col">
-						<li class="no-bullet"><a href="{$urlbase}">Home</a></li>
+						<li class="no-bullet">
+							<a>
+								<xsl:attribute name="href">
+									<xsl:choose>
+										<xsl:when test="$urlbase = ''">
+											<xsl:value-of select="'./'"/>
+										</xsl:when>
+										<xsl:otherwise>
+											<xsl:value-of select="$urlbase"/>
+										</xsl:otherwise>
+									</xsl:choose>
+								</xsl:attribute>
+								<xsl:text>Home</xsl:text>
+							</a>
+						</li>
 						<li><a href="{$urlbase}about.html">About</a></li>
 						<li><a href="{$urlbase}copyright.html">Copyright</a></li>
 						<li><a href="{$urlbase}faq.html">FAQ</a></li>
