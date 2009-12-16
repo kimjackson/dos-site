@@ -82,6 +82,27 @@ page.
 
 <div class="block-content">
 
+<h2 id="donations">Donations and Funding</h2>
+
+<p>
+The Dictionary of Sydney is run by an independent charitable trust and has no
+ongoing government funding. The project has been funded to date largely from an
+Australian Research Council (ARC) grant with some additional support from other
+<a href="http://trust.dictionaryofsydney.org/www/html/50-funding-the-initiative.asp">partners</a>.
+</p>
+
+<p>
+The Dictionary is constantly seeking new sources of funding and support and
+this can include contributions from the general public. Donations to the
+Dictionary of Sydney Trust are tax deductible and can be made online. If you
+would like to contribute financially to the ongoing work of the project, please
+go to our <a href="http://www.everydayhero.com.au/dictionaryofsydney">donations page</a>.
+</p>
+
+</div>
+
+<div class="block-content">
+
 <h2>Disclaimer</h2>
 
 <p>
