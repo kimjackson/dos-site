@@ -150,16 +150,7 @@
 					<ul id="footer-right-col">
 						<li class="no-bullet"><a href="{$urlbase}about.html#donations">Donate</a></li>
 						<li><a href="{$urlbase}contribute.html">Contribute</a></li>
-						<!-- AddThis Button BEGIN -->
 						<li><a href="http://www.addthis.com/bookmark.php?v=250&amp;amp;pub=dictionaryofsydney" class="addthis_button">Share</a></li>
-						<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=dictionaryofsydney"></script>
-						<script>
-							var addthis_config = {
-								services_exclude: 'myaol'
-							}
-						</script>
-						<!-- AddThis Button END -->
-
 					</ul>
 				</div>
 			</div>
@@ -168,16 +159,21 @@
 				<xsl:call-template name="previewStubs"/>
 			</div>
 
-			<script type="text/javascript">
-				var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-				document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-			</script>
+			<script type="text/javascript" src="http://www.google-analytics.com/ga.js"></script>
 			<script type="text/javascript">
 				try {
 					var pageTracker = _gat._getTracker("UA-11403264-1");
 					pageTracker._trackPageview();
 				} catch(err) {}
 			</script>
+
+			<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=dictionaryofsydney"></script>
+			<script type="text/javascript">
+				var addthis_config = {
+					services_exclude: 'myaol'
+				}
+			</script>
+
 
 			</body>
 		</html>
