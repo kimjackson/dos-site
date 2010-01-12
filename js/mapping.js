@@ -67,6 +67,12 @@ RelBrowser.Mapping = {
 				.change(function () {
 					that._setOpacity(this.checked ? 0.7 : 1);
 				});
+			if ($.browser.msie) { // yuck
+				$cb.click(function () {
+					this.blur();
+					this.focus();
+				});
+			}
 			$label = $("<label/>").append($cb).append(" Transparent");
 			$div = $("<div/>").append($label);
 			$div.appendTo($container);
@@ -78,6 +84,7 @@ RelBrowser.Mapping = {
 		};
 
 		CustomMapTypeControl.prototype._setContainerStyle = function ($div) {
+			$div.css("width", "178px");
 			$div.css("background-color", "white");
 			$div.css("border", "1px solid black");
 			$div.css("padding", "2px 10px");
