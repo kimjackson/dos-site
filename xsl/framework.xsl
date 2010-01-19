@@ -12,6 +12,11 @@
 				<link rel="shortcut icon" href="{$urlbase}images/favicon.ico" type="image/x-icon"/>
 				<link rel="stylesheet" href="{$urlbase}style.css" type="text/css"/>
 				<xsl:call-template name="extraCSS"/>
+				<xsl:comment><![CDATA[[if lt IE 8]>
+					<style type="text/css">
+						.entity-information { zoom: 1; }
+					</style>
+				<![endif]]]></xsl:comment>
 				<script type="text/javascript">
 					RelBrowser = {
 						baseURL: "<xsl:value-of select="$urlbase"/>",
