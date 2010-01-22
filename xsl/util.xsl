@@ -307,7 +307,7 @@
 	<xsl:template name="makeMetaIDTag">
 		<meta name="id">
 			<xsl:attribute name="content">
-				<xsl:value-of select="/export/references/reference/id"/>
+				<xsl:value-of select="/hml/references/reference/id"/>
 			</xsl:attribute>
 		</meta>
 	</xsl:template>
@@ -317,7 +317,7 @@
 		<meta name="class">
 			<xsl:attribute name="content">
 				<xsl:call-template name="getRecordTypeClassName">
-					<xsl:with-param name="record" select="/export/references/reference"/>
+					<xsl:with-param name="record" select="/hml/references/reference"/>
 				</xsl:call-template>
 			</xsl:attribute>
 		</meta>

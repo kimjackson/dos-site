@@ -20,13 +20,13 @@
 
 <div id="block-heading">
 
-<a href="image/{export/references/reference/id}" class="preview-{export/references/reference/id}">
+<a href="image/{hml/references/reference/id}" class="preview-{hml/references/reference/id}">
 	<img src="{$urlbase}images/pictures/img-copyright.jpg"/>
 </a>
 
 <div id="banner-attribution">
 	<xsl:call-template name="makeMediaAttributionStatement">
-		<xsl:with-param name="record" select="export/references/reference"/>
+		<xsl:with-param name="record" select="hml/references/reference"/>
 	</xsl:call-template>
 </div>
 

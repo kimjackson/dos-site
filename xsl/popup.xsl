@@ -8,7 +8,7 @@
 	<!--FIXME: this should be factored a bit -->
 	<xsl:template match="/">
 
-		<xsl:variable name="record" select="export/references/reference"/>
+		<xsl:variable name="record" select="hml/references/reference"/>
 
 		<xsl:apply-templates select="$record">
 			<xsl:with-param name="type">

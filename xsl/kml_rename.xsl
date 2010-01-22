@@ -9,7 +9,7 @@
 	<xsl:include href="myvariables.xsl"/>
 	<xsl:include href="util.xsl"/>
 
-	<xsl:variable name="record" select="/data/export/references/reference"/>
+	<xsl:variable name="record" select="/data/hml/references/reference"/>
 	<xsl:variable name="factoids" select="$record/reverse-pointer"/>
 
 	<!-- identity transform -->

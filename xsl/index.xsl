@@ -40,7 +40,7 @@
 				<img>
 					<xsl:attribute name="src">
 						<xsl:call-template name="getFileURL">
-							<xsl:with-param name="file" select="data/export[2]/references/reference/detail[@id=221]"/>
+							<xsl:with-param name="file" select="data/hml[2]/references/reference/detail[@id=221]"/>
 							<xsl:with-param name="size" select="'thumbnail'"/>
 						</xsl:call-template>
 					</xsl:attribute>
@@ -53,7 +53,7 @@
 				<img>
 					<xsl:attribute name="src">
 						<xsl:call-template name="getFileURL">
-							<xsl:with-param name="file" select="data/export[4]/references/reference/detail[@id=221]"/>
+							<xsl:with-param name="file" select="data/hml[4]/references/reference/detail[@id=221]"/>
 							<xsl:with-param name="size" select="'thumbnail'"/>
 						</xsl:call-template>
 					</xsl:attribute>
@@ -66,7 +66,7 @@
 				<img>
 					<xsl:attribute name="src">
 						<xsl:call-template name="getFileURL">
-							<xsl:with-param name="file" select="data/export[6]/references/reference/detail[@id=221]"/>
+							<xsl:with-param name="file" select="data/hml[6]/references/reference/detail[@id=221]"/>
 							<xsl:with-param name="size" select="'thumbnail'"/>
 						</xsl:call-template>
 					</xsl:attribute>
@@ -82,17 +82,17 @@
 
 		<div class="teaser">
 			<h2>Sydney suburbs</h2>
-			<p><xsl:value-of select="data/export[1]/references/reference/detail[@id=191]"/></p>
+			<p><xsl:value-of select="data/hml[1]/references/reference/detail[@id=191]"/></p>
 		</div>
 
 		<div class="teaser">
 			<h2>Sydney people</h2>
-			<p><xsl:value-of select="data/export[3]/references/reference/detail[@id=191]"/></p>
+			<p><xsl:value-of select="data/hml[3]/references/reference/detail[@id=191]"/></p>
 		</div>
 
 		<div class="teaser teaser-end">
 			<h2>Sydney cultures</h2>
-			<p><xsl:value-of select="data/export[5]/references/reference/detail[@id=191]"/></p>
+			<p><xsl:value-of select="data/hml[5]/references/reference/detail[@id=191]"/></p>
 		</div>
 		<div class="clearfix"/>
 
