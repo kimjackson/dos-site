@@ -125,8 +125,7 @@
 
 	</xsl:template>
 
-
-	<xsl:template match="related | pointer | reversePointer/record">
+	<xsl:template match="related | detail/record | reversePointer/record">
 		<xsl:param name="matches"/>
 		<!-- This template is to be called in the context of just one record,
 		     with the whole list in the "matches" variable.  This gives the template

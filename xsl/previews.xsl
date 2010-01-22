@@ -4,7 +4,7 @@
 	<xsl:template name="previewStubs">
 		<xsl:variable name="root" select="/hml/records/record"/>
 		<!-- direct pointers -->
-		<xsl:for-each select="$root/pointer">
+		<xsl:for-each select="$root/detail/record">
 			<xsl:call-template name="previewStub">
 				<xsl:with-param name="record" select="."/>
 			</xsl:call-template>
@@ -71,13 +71,13 @@
 			</xsl:call-template>
 		</xsl:for-each>
 		<!-- role pages: source -->
-		<xsl:for-each select="$root/reversePointer/record[reftype/@id=150][@id=529][pointer/@id=528]">
+		<xsl:for-each select="$root/reversePointer/record[reftype/@id=150][@id=529][detail/@id=528]">
 			<xsl:call-template name="previewStub">
 				<xsl:with-param name="record" select="current()/detail[@id=528]/record"/>
 			</xsl:call-template>
 		</xsl:for-each>
 		<!-- role pages: target -->
-		<xsl:for-each select="$root/reversePointer/record[reftype/@id=150][@id=529][pointer/@id=527]">
+		<xsl:for-each select="$root/reversePointer/record[reftype/@id=150][@id=529][detail/@id=527]">
 			<xsl:call-template name="previewStub">
 				<xsl:with-param name="record" select="current()/detail[@id=527]/record"/>
 			</xsl:call-template>
