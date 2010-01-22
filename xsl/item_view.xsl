@@ -28,9 +28,9 @@
 
 	<xsl:template name="extraCSS">
 		<link rel="stylesheet" href="{$urlbase}boxy.css" type="text/css" media="screen"/>
-		<xsl:comment><![CDATA[[if IE]>]]>
+		<xsl:comment>[if IE]&gt;
 			&lt;link rel="stylesheet" href="<xsl:value-of select="$urlbase"/>boxy-ie.css" type="text/css" media="screen"/&gt;
-		<![CDATA[<![endif]]]></xsl:comment>
+		&lt;![endif]</xsl:comment>
 	</xsl:template>
 
 	<xsl:template name="extraScripts">
