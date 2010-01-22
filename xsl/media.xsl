@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-	<xsl:template name="media" match="reference[reftype/@id=74]">
+	<xsl:template name="media" match="record[reftype/@id=74]">
 
 		<div id="resource">
 
@@ -77,7 +77,7 @@
 	</xsl:template>
 
 
-	<xsl:template match="reference[reftype/@id=74]" mode="sidebar">
+	<xsl:template match="record[reftype/@id=74]" mode="sidebar">
 		<div id="connections">
 			<h3>Connections</h3>
 			<xsl:call-template name="relatedEntitiesByType"/>

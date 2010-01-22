@@ -10,7 +10,7 @@
 
 	<xsl:template match="/">
 		<xsl:call-template name="preview">
-			<xsl:with-param name="record" select="hml/references/reference"/>
+			<xsl:with-param name="record" select="hml/records/record"/>
 			<xsl:with-param name="context" select="$context"/>
 		</xsl:call-template>
 	</xsl:template>

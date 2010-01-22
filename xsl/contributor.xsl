@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-	<xsl:template name="contributor" match="reference[reftype/@id=153]">
+	<xsl:template name="contributor" match="record[reftype/@id=153]">
 
 		<xsl:variable name="entries" select="
 			reverse-pointer[@id=538][reftype/@id=98]

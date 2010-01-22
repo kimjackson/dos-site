@@ -8,7 +8,7 @@
 	<!--FIXME: this should be factored a bit -->
 	<xsl:template match="/">
 
-		<xsl:variable name="record" select="hml/references/reference"/>
+		<xsl:variable name="record" select="hml/records/record"/>
 
 		<xsl:apply-templates select="$record">
 			<xsl:with-param name="type">
@@ -21,8 +21,8 @@
 	</xsl:template>
 
 
-	<xsl:template match="reference[reftype/@id=74] |
-	                     reference[reftype/@id=168][detail[@id=618] = 'image']">
+	<xsl:template match="record[reftype/@id=74] |
+	                     record[reftype/@id=168][detail[@id=618] = 'image']">
 		<xsl:param name="type"/>
 
 		<div class="picbox-container">

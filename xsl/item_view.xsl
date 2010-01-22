@@ -22,7 +22,7 @@
 
 	<xsl:template match="/">
 		<xsl:call-template name="framework">
-			<xsl:with-param name="title" select="hml/references/reference/detail[@id=160]"/>
+			<xsl:with-param name="title" select="hml/records/record/detail[@id=160]"/>
 		</xsl:call-template>
 	</xsl:template>
 
@@ -40,18 +40,18 @@
 
 	<xsl:template name="content">
 		<xsl:call-template name="makeTitleDiv">
-			<xsl:with-param name="record" select="hml/references/reference[1]"/>
+			<xsl:with-param name="record" select="hml/records/record[1]"/>
 		</xsl:call-template>
-		<xsl:apply-templates select="hml/references/reference"/>
+		<xsl:apply-templates select="hml/records/record"/>
 	</xsl:template>
 
 
 	<xsl:template name="sidebar">
-		<xsl:apply-templates select="hml/references/reference" mode="sidebar"/>
+		<xsl:apply-templates select="hml/records/record" mode="sidebar"/>
 	</xsl:template>
 
 
-	<xsl:template match="reference" mode="sidebar"/>
+	<xsl:template match="record" mode="sidebar"/>
 
 
 	<xsl:template name="connections">

@@ -7,7 +7,7 @@
 
 	<xsl:include href="urlmap.xsl"/>
 
-	<xsl:template name="xmldoc" match="reference[reftype/@id=98]">
+	<xsl:template name="xmldoc" match="record[reftype/@id=98]">
 
 		<xsl:variable name="file" select="detail[@id=231 or @id=221]"/>
 
@@ -150,7 +150,7 @@
 	</xsl:template>
 
 
-	<xsl:template match="reference[reftype/@id=98]" mode="sidebar">
+	<xsl:template match="record[reftype/@id=98]" mode="sidebar">
 
 		<div id="chapters">
 			<div id="chapters-top"/>

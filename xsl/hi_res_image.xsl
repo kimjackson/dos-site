@@ -4,7 +4,7 @@
                 exclude-result-prefixes="exsl"
                 version="1.0">
 
-	<xsl:template match="reference[reftype/@id=168][detail[@id=618] = 'image']">
+	<xsl:template match="record[reftype/@id=168][detail[@id=618] = 'image']">
 
 		<div>
 
@@ -40,7 +40,7 @@
 	</xsl:template>
 
 
-	<xsl:template match="reference[reftype/@id=168][detail[@id=618] = 'image']" mode="sidebar">
+	<xsl:template match="record[reftype/@id=168][detail[@id=618] = 'image']" mode="sidebar">
 		<div id="connections">
 			<h3>Connections</h3>
 			<xsl:call-template name="relatedEntitiesByType"/>

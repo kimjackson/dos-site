@@ -4,7 +4,7 @@
                 exclude-result-prefixes="exsl"
                 version="1.0">
 
-	<xsl:template name="role" match="reference[reftype/@id=91]">
+	<xsl:template name="role" match="record[reftype/@id=91]">
 
 			<!-- dc.description -->
 			<xsl:if test="detail[@id=191]">

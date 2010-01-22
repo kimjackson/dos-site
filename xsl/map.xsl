@@ -4,7 +4,7 @@
                 exclude-result-prefixes="exsl"
                 version="1.0">
 
-	<xsl:template match="reference[reftype/@id=103]">
+	<xsl:template match="record[reftype/@id=103]">
 
 		<div>
 
@@ -28,7 +28,7 @@
 			</div>
 			<script type="text/javascript">
 				<xsl:variable name="sources">
-					<!-- kml references -->
+					<!-- kml records -->
 					<xsl:for-each select="pointer[@id=564]">
 						<source>
 							<title><xsl:value-of select="detail[@id=160]"/></title>
@@ -95,7 +95,7 @@
 	</xsl:template>
 
 
-	<xsl:template match="reference[reftype/@id=103]" mode="sidebar">
+	<xsl:template match="record[reftype/@id=103]" mode="sidebar">
 		<div id="connections">
 			<h3>Connections</h3>
 			<xsl:call-template name="relatedEntitiesByType"/>

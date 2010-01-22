@@ -2,7 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 	<xsl:template name="previewStubs">
-		<xsl:variable name="root" select="/hml/references/reference"/>
+		<xsl:variable name="root" select="/hml/records/record"/>
 		<!-- direct pointers -->
 		<xsl:for-each select="$root/pointer">
 			<xsl:call-template name="previewStub">

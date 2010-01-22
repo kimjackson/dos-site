@@ -146,7 +146,7 @@
 			<xsl:when test="$record/reftype/@id = 103">map</xsl:when>
 			<xsl:when test="$record/reftype/@id = 152">term</xsl:when>
 			<xsl:when test="$record/reftype/@id = 153">contributor</xsl:when>
-			<xsl:when test="$record/reftype/@id = 154">reference</xsl:when>
+			<xsl:when test="$record/reftype/@id = 154">record</xsl:when>
 		</xsl:choose>
 	</xsl:template>
 
@@ -307,7 +307,7 @@
 	<xsl:template name="makeMetaIDTag">
 		<meta name="id">
 			<xsl:attribute name="content">
-				<xsl:value-of select="/hml/references/reference/id"/>
+				<xsl:value-of select="/hml/records/record/id"/>
 			</xsl:attribute>
 		</meta>
 	</xsl:template>
@@ -317,7 +317,7 @@
 		<meta name="class">
 			<xsl:attribute name="content">
 				<xsl:call-template name="getRecordTypeClassName">
-					<xsl:with-param name="record" select="/hml/references/reference"/>
+					<xsl:with-param name="record" select="/hml/records/record"/>
 				</xsl:call-template>
 			</xsl:attribute>
 		</meta>
