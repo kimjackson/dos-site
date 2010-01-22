@@ -4,17 +4,17 @@
 	<xsl:template name="contributor" match="record[reftype/@id=153]">
 
 		<xsl:variable name="entries" select="
-			reversePointer[@id=538][reftype/@id=98]
+			reversePointer[@id=538]/record[reftype/@id=98]
 		"/>
 		<xsl:variable name="images" select="
-			reversePointer[@id=538][reftype/@id=74][starts-with(detail[@id=289], 'image')] |
-			reversePointer[@id=538][reftype/@id=168][detail[@id=618] = 'image']
+			reversePointer[@id=538]/record[reftype/@id=74][starts-with(detail[@id=289], 'image')] |
+			reversePointer[@id=538]/record[reftype/@id=168][detail[@id=618] = 'image']
 		"/>
 		<xsl:variable name="audio" select="
-			reversePointer[@id=538][reftype/@id=74][starts-with(detail[@id=289], 'audio')]
+			reversePointer[@id=538]/record[reftype/@id=74][starts-with(detail[@id=289], 'audio')]
 		"/>
 		<xsl:variable name="video" select="
-			reversePointer[@id=538][reftype/@id=74][starts-with(detail[@id=289], 'video')]
+			reversePointer[@id=538]/record[reftype/@id=74][starts-with(detail[@id=289], 'video')]
 		"/>
 
 		<div id="subject-list">

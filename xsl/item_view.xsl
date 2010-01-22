@@ -88,7 +88,7 @@
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Mentioned in</xsl:with-param>
-			<xsl:with-param name="items" select="reversePointer[@id=199][reftype/@id=99]"/>
+			<xsl:with-param name="items" select="reversePointer[@id=199]/record[reftype/@id=99]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
@@ -126,7 +126,7 @@
 	</xsl:template>
 
 
-	<xsl:template match="related | pointer | reversePointer">
+	<xsl:template match="related | pointer | reversePointer/record">
 		<xsl:param name="matches"/>
 		<!-- This template is to be called in the context of just one record,
 		     with the whole list in the "matches" variable.  This gives the template
