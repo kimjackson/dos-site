@@ -38,13 +38,13 @@
 				<xsl:if test="/hml/records/record[
 				                  reftype/@id=103  or
 				                  reftype/@id=168  or
-				                  reftype/@id=151  and  reverse-pointer[reftype/@id=150]/detail[@id=230 or @id=177]]">
+				                  reftype/@id=151  and  reversePointer[reftype/@id=150]/detail[@id=230 or @id=177]]">
 					<script src="http://maps.google.com/maps?file=api&amp;amp;v=2&amp;amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w" type="text/javascript"/>
 				</xsl:if>
 
 				<xsl:if test="/hml/records/record[
 				                  reftype/@id=103  or
-				                  reftype/@id=151  and  reverse-pointer[reftype/@id=150]/detail[@id=230 or @id=177]]">
+				                  reftype/@id=151  and  reversePointer[reftype/@id=150]/detail[@id=230 or @id=177]]">
 					<script type="text/javascript">
 						var Timeline_urlPrefix = RelBrowser.baseURL + "timeline/timeline_js/";
 						var Timeline_ajax_url = RelBrowser.baseURL + "timeline/timeline_ajax/simile-ajax-api.js";

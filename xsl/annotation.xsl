@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-	<xsl:template match="reverse-pointer[@id=199][reftype/@id=99]">
+	<xsl:template match="reversePointer[@id=199][reftype/@id=99]">
 		<xsl:param name="matches"/>
 		<xsl:for-each select="$matches">
 			<xsl:sort select="pointer[@id=322]/detail[@id=160]"/>

@@ -34,25 +34,25 @@
 			</xsl:if>
 
 			<!-- map -->
-			<xsl:if test="reverse-pointer[reftype/@id=150]/detail[@id=230 or @id=177]">
+			<xsl:if test="reversePointer[reftype/@id=150]/detail[@id=230 or @id=177]">
 				<div id="map">
 					<xsl:attribute name="class">
 						<xsl:text>entity-map</xsl:text>
-						<xsl:if test="not(reverse-pointer[reftype/@id=150]/detail[@id=230])">
+						<xsl:if test="not(reversePointer[reftype/@id=150]/detail[@id=230])">
 							<xsl:text> hide</xsl:text>
 						</xsl:if>
 					</xsl:attribute>
 				</div>
 				<div class="clearfix"/>
 				<div id="timeline-zoom">
-					<xsl:if test="not(reverse-pointer[reftype/@id=150]/detail[@id=177])">
+					<xsl:if test="not(reversePointer[reftype/@id=150]/detail[@id=177])">
 						<xsl:attribute name="class">hide</xsl:attribute>
 					</xsl:if>
 				</div>
 				<div id="timeline">
 					<xsl:attribute name="class">
 						<xsl:text>entity-timeline</xsl:text>
-						<xsl:if test="not(reverse-pointer[reftype/@id=150]/detail[@id=177])">
+						<xsl:if test="not(reversePointer[reftype/@id=150]/detail[@id=177])">
 							<xsl:text> hide</xsl:text>
 						</xsl:if>
 					</xsl:attribute>
@@ -74,7 +74,7 @@
 			<div class="clearfix"/>
 
 			<!-- factoids -->
-			<xsl:if test="reverse-pointer[reftype/@id=150]">
+			<xsl:if test="reversePointer[reftype/@id=150]">
 				<xsl:call-template name="factoids"/>
 			</xsl:if>
 

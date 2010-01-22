@@ -10,7 +10,7 @@
 	<xsl:include href="util.xsl"/>
 
 	<xsl:variable name="record" select="/data/hml/records/record"/>
-	<xsl:variable name="factoids" select="$record/reverse-pointer"/>
+	<xsl:variable name="factoids" select="$record/reversePointer"/>
 
 	<!-- identity transform -->
 	<xsl:template match="@*|node()">

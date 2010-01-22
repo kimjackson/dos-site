@@ -17,12 +17,12 @@
 
 			<div id="map" class="full"/>
 			<div id="timeline-zoom">
-				<xsl:if test="not(related/reverse-pointer[reftype/@id=150]/detail[@id=177])">
+				<xsl:if test="not(related/reversePointer[reftype/@id=150]/detail[@id=177])">
 					<xsl:attribute name="class">hide</xsl:attribute>
 				</xsl:if>
 			</div>
 			<div id="timeline">
-				<xsl:if test="not(related/reverse-pointer[reftype/@id=150]/detail[@id=177])">
+				<xsl:if test="not(related/reversePointer[reftype/@id=150]/detail[@id=177])">
 					<xsl:attribute name="class">hide</xsl:attribute>
 				</xsl:if>
 			</div>
@@ -40,7 +40,7 @@
 					</xsl:for-each>
 					<!-- related entities that have a TimePlace factoid -->
 					<xsl:for-each select="related[reftype/@id=151]
-					                             [reverse-pointer[@id=528]
+					                             [reversePointer[@id=528]
 					                                             [detail[@id=526]='TimePlace']]">
 						<source>
 							<title><xsl:value-of select="detail[@id=160]"/></title>

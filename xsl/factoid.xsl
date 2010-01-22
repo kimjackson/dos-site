@@ -2,31 +2,31 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 	<xsl:template name="factoids">
-		<xsl:if test="count(reverse-pointer[reftype/@id=150][detail[@id=526]='Type']) > 1">
+		<xsl:if test="count(reversePointer[reftype/@id=150][detail[@id=526]='Type']) > 1">
 			<xsl:call-template name="factoidGroup">
 				<xsl:with-param name="heading">Types</xsl:with-param>
-				<xsl:with-param name="factoids" select="reverse-pointer[reftype/@id=150][detail[@id=526]='Type']"/>
+				<xsl:with-param name="factoids" select="reversePointer[reftype/@id=150][detail[@id=526]='Type']"/>
 			</xsl:call-template>
 		</xsl:if>
 		<xsl:call-template name="factoidGroup">
 			<xsl:with-param name="heading">Names</xsl:with-param>
-			<xsl:with-param name="factoids" select="reverse-pointer[reftype/@id=150][detail[@id=526]='Name']"/>
+			<xsl:with-param name="factoids" select="reversePointer[reftype/@id=150][detail[@id=526]='Name']"/>
 		</xsl:call-template>
 		<xsl:call-template name="factoidGroup">
 			<xsl:with-param name="heading">Milestones</xsl:with-param>
-			<xsl:with-param name="factoids" select="reverse-pointer[reftype/@id=150][detail[@id=526]='Milestone']"/>
+			<xsl:with-param name="factoids" select="reversePointer[reftype/@id=150][detail[@id=526]='Milestone']"/>
 		</xsl:call-template>
 		<xsl:call-template name="factoidGroup">
 			<xsl:with-param name="heading">Relationships</xsl:with-param>
-			<xsl:with-param name="factoids" select="reverse-pointer[reftype/@id=150][detail[@id=526]='Relationship']"/>
+			<xsl:with-param name="factoids" select="reversePointer[reftype/@id=150][detail[@id=526]='Relationship']"/>
 		</xsl:call-template>
 		<xsl:call-template name="factoidGroup">
 			<xsl:with-param name="heading">Occupations</xsl:with-param>
-			<xsl:with-param name="factoids" select="reverse-pointer[reftype/@id=150][detail[@id=526]='Occupation']"/>
+			<xsl:with-param name="factoids" select="reversePointer[reftype/@id=150][detail[@id=526]='Occupation']"/>
 		</xsl:call-template>
 		<xsl:call-template name="factoidGroup">
 			<xsl:with-param name="heading">Positions</xsl:with-param>
-			<xsl:with-param name="factoids" select="reverse-pointer[reftype/@id=150][detail[@id=526]='Position']"/>
+			<xsl:with-param name="factoids" select="reversePointer[reftype/@id=150][detail[@id=526]='Position']"/>
 		</xsl:call-template>
 	</xsl:template>
 
@@ -58,7 +58,7 @@
 	</xsl:template>
 
 
-	<xsl:template name="factoid" match="reverse-pointer[reftype/@id=150]">
+	<xsl:template name="factoid" match="reversePointer[reftype/@id=150]">
 
 		<xsl:variable name="roleLink">
 			<xsl:if test="pointer[@id=529]">
@@ -144,7 +144,7 @@
 	</xsl:template>
 
 
-	<xsl:template name="roleFactoid" match="reverse-pointer[reftype/@id=150]">
+	<xsl:template name="roleFactoid" match="reversePointer[reftype/@id=150]">
 
 		<div class="entity-information-col01-02">
 			<a href="{pointer[@id=528]/id}" class="preview-{pointer[@id=528]/id}">

@@ -18,13 +18,13 @@
 
 			<!-- factoids without a target -->
 			<xsl:call-template name="roleFactoidGroup">
-				<xsl:with-param name="factoids" select="reverse-pointer[reftype/@id=150][not(pointer[@id=527])]"/>
+				<xsl:with-param name="factoids" select="reversePointer[reftype/@id=150][not(pointer[@id=527])]"/>
 			</xsl:call-template>
 
 
 			<xsl:variable name="targets">
-				<xsl:for-each select="reverse-pointer[reftype/@id=150]/pointer[@id=527]/detail[@id=160] |
-				                      reverse-pointer[reftype/@id=150]/detail[@id=179]">
+				<xsl:for-each select="reversePointer[reftype/@id=150]/pointer[@id=527]/detail[@id=160] |
+				                      reversePointer[reftype/@id=150]/detail[@id=179]">
 					<xsl:sort/>
 					<target>
 						<xsl:if test="@id=160">
@@ -41,7 +41,7 @@
 				<xsl:call-template name="roleFactoidGroup">
 					<xsl:with-param name="id" select="@id"/>
 					<xsl:with-param name="factoids" select="
-						$base/reverse-pointer
+						$base/reversePointer
 							[reftype/@id=150]
 							[
 								pointer[@id=527]/id = current()/@id  or

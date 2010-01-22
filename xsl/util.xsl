@@ -191,7 +191,7 @@
 
 	<xsl:template name="getEntityTypeList">
 		<xsl:param name="entity"/>
-		<xsl:for-each select="$entity/reverse-pointer[@id=528][detail[@id=526]='Type']">
+		<xsl:for-each select="$entity/reversePointer[@id=528][detail[@id=526]='Type']">
 			<xsl:sort select="detail[@id=177]/year"/>
 			<xsl:sort select="detail[@id=177]/month"/>
 			<xsl:sort select="detail[@id=177]/day"/>

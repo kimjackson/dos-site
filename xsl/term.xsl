@@ -67,7 +67,7 @@
 			</xsl:call-template>
 			<xsl:call-template name="termRelatedItems">
 				<xsl:with-param name="label">Mentioned in</xsl:with-param>
-				<xsl:with-param name="items" select="reverse-pointer[@id=199][reftype/@id=99]"/>
+				<xsl:with-param name="items" select="reversePointer[@id=199][reftype/@id=99]"/>
 			</xsl:call-template>
 			<xsl:call-template name="termRelatedItems">
 				<xsl:with-param name="label">External links</xsl:with-param>
