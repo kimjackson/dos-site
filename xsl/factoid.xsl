@@ -47,7 +47,7 @@
 					<xsl:sort select="detail[@id=178]/year"/>
 					<xsl:sort select="detail[@id=178]/month"/>
 					<xsl:sort select="detail[@id=178]/day"/>
-					<xsl:sort select="pointer[@id=529]/detail[@id=160]"/>
+					<xsl:sort select="detail[@id=529]/record/detail[@id=160]"/>
 
 					<xsl:call-template name="factoid"/>
 
@@ -61,11 +61,11 @@
 	<xsl:template name="factoid" match="reversePointer/record[reftype/@id=150]">
 
 		<xsl:variable name="roleLink">
-			<xsl:if test="pointer[@id=529]">
-				<xsl:value-of select="pointer[@id=529]/id"/>
-				<xsl:if test="pointer[@id=527]">
+			<xsl:if test="detail[@id=529]/record">
+				<xsl:value-of select="detail[@id=529]/record/id"/>
+				<xsl:if test="detail[@id=527]/record">
 					<xsl:text>#t</xsl:text>
-					<xsl:value-of select="pointer[@id=527]/id"/>
+					<xsl:value-of select="detail[@id=527]/record/id"/>
 				</xsl:if>
 			</xsl:if>
 		</xsl:variable>
@@ -73,14 +73,14 @@
 
 		<xsl:choose>
 			<!-- generic and type factoids can span two columns -->
-			<xsl:when test="pointer[@id=529]/detail[@id=160] = 'Generic'">
+			<xsl:when test="detail[@id=529]/record/detail[@id=160] = 'Generic'">
 				<div class="entity-information-col01-02">
 					<xsl:value-of select="detail[@id=160]"/>
 				</div>
 			</xsl:when>
 			<xsl:when test="detail[@id=526] = 'Type'">
 				<div class="entity-information-col01-02">
-					<a href="{$roleLink}" class="preview-{pointer[@id=529]/id}">
+					<a href="{$roleLink}" class="preview-{detail[@id=529]/record/id}">
 						<xsl:call-template name="getRoleName">
 							<xsl:with-param name="factoid" select="."/>
 						</xsl:call-template>
@@ -91,7 +91,7 @@
 				<div class="entity-information-col01">
 					<xsl:choose>
 						<xsl:when test="detail[@id=526] = 'Occupation' or detail[@id=526] = 'Position'">
-							<a href="{$roleLink}" class="preview-{pointer[@id=529]/id}">
+							<a href="{$roleLink}" class="preview-{detail[@id=529]/record/id}">
 								<xsl:call-template name="getRoleName">
 									<xsl:with-param name="factoid" select="."/>
 								</xsl:call-template>
@@ -106,14 +106,14 @@
 				</div>
 				<div class="entity-information-col02">
 					<xsl:choose>
-						<xsl:when test="@id=527 and pointer[@id=528]">
-							<a href="{pointer[@id=528]/id}" class="preview-{pointer[@id=528]/id}">
-								<xsl:value-of select="pointer[@id=528]/detail[@id=160]"/>
+						<xsl:when test="@id=527 and detail[@id=528]/record">
+							<a href="{detail[@id=528]/record/id}" class="preview-{detail[@id=528]/record/id}">
+								<xsl:value-of select="detail[@id=528]/record/detail[@id=160]"/>
 							</a>
 						</xsl:when>
-						<xsl:when test="@id=528 and pointer[@id=527]">
-							<a href="{pointer[@id=527]/id}" class="preview-{pointer[@id=527]/id}">
-								<xsl:value-of select="pointer[@id=527]/detail[@id=160]"/>
+						<xsl:when test="@id=528 and detail[@id=527]/record">
+							<a href="{detail[@id=527]/record/id}" class="preview-{detail[@id=527]/record/id}">
+								<xsl:value-of select="detail[@id=527]/record/detail[@id=160]"/>
 							</a>
 						</xsl:when>
 						<xsl:when test="@id=528 and detail[@id=179]">
@@ -147,8 +147,8 @@
 	<xsl:template name="roleFactoid" match="reversePointer/record[reftype/@id=150]">
 
 		<div class="entity-information-col01-02">
-			<a href="{pointer[@id=528]/id}" class="preview-{pointer[@id=528]/id}">
-				<xsl:value-of select="pointer[@id=528]/detail[@id=160]"/>
+			<a href="{detail[@id=528]/record/id}" class="preview-{detail[@id=528]/record/id}">
+				<xsl:value-of select="detail[@id=528]/record/detail[@id=160]"/>
 			</a>
 		</div>
 
@@ -174,7 +174,7 @@
 
 	<xsl:template name="getRoleName">
 		<xsl:param name="factoid"/>
-		<xsl:variable name="role" select="$factoid/pointer[@id=529]"/>
+		<xsl:variable name="role" select="$factoid/detail[@id=529]/record"/>
 		<xsl:choose>
 			<xsl:when test="$role/detail[@id=160] = 'Generic'">
 				<!-- generic role, use factoid title instead -->

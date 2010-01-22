@@ -239,10 +239,10 @@
 	<xsl:template name="makeEntryByline">
 		<xsl:param name="entry"/>
 		<xsl:choose>
-			<xsl:when test="$entry/pointer[@id=538]">
+			<xsl:when test="$entry/detail[@id=538]/record">
 				<xsl:text>by </xsl:text>
 				<xsl:call-template name="makeAuthorList">
-					<xsl:with-param name="authors" select="$entry/pointer[@id=538]"/>
+					<xsl:with-param name="authors" select="$entry/detail[@id=538]/record"/>
 					<xsl:with-param name="link" select="'true'"/>
 				</xsl:call-template>
 				<xsl:if test="$entry/detail[@id=166]">
@@ -332,7 +332,7 @@
 
 	<xsl:template name="makeMediaAttributionStatement">
 		<xsl:param name="record"/>
-		<xsl:variable name="contributor" select="$record/pointer[@id=538]"/>
+		<xsl:variable name="contributor" select="$record/detail[@id=538]/record"/>
 		<xsl:if test="$record/detail[@id=365]">
 			<xsl:text>By </xsl:text>
 			<xsl:value-of select="$record/detail[@id=365]"/>

@@ -18,8 +18,8 @@
 			</xsl:if>
 
 			<!-- default image: dos.main_image -->
-			<xsl:if test="pointer[@id=508]">
-				<xsl:variable name="main_img" select="pointer[@id=508][1]"/>
+			<xsl:if test="detail[@id=508]/record">
+				<xsl:variable name="main_img" select="detail[@id=508]/record[1]"/>
 				<a class="popup preview-{$main_img/id}" href="{$main_img/id}">
 					<img class="entity-picture">
 						<xsl:attribute name="alt"/><!-- FIXME -->
@@ -96,11 +96,11 @@
 						<h2>
 							<xsl:value-of select="detail[@id=160]"/>
 						</h2>
-						<xsl:if test="pointer[@id=538]">
+						<xsl:if test="detail[@id=538]/record">
 							<span class="contributor">
 								<xsl:text>by </xsl:text>
 								<xsl:call-template name="makeAuthorList">
-									<xsl:with-param name="authors" select="pointer[@id=538]"/>
+									<xsl:with-param name="authors" select="detail[@id=538]/record"/>
 								</xsl:call-template>
 							</span>
 						</xsl:if>
@@ -122,7 +122,7 @@
 		<div class="clearfix"/>
 
 		<!-- images of this entity -->
-		<xsl:variable name="images_of" select="related[@type='IsInMM'][starts-with(detail[@id=289], 'image')][not(id = current()/pointer[@id=508]/id)]"/>
+		<xsl:variable name="images_of" select="related[@type='IsInMM'][starts-with(detail[@id=289], 'image')][not(id = current()/detail[@id=508]/record/id)]"/>
 		<xsl:if test="$images_of">
 			<div class="list-left-col list-image" title="Pictures"></div>
 			<div class="list-right-col">

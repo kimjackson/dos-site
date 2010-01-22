@@ -18,12 +18,12 @@
 
 			<!-- factoids without a target -->
 			<xsl:call-template name="roleFactoidGroup">
-				<xsl:with-param name="factoids" select="reversePointer/record[reftype/@id=150][not(pointer[@id=527])]"/>
+				<xsl:with-param name="factoids" select="reversePointer/record[reftype/@id=150][not(detail[@id=527]/record)]"/>
 			</xsl:call-template>
 
 
 			<xsl:variable name="targets">
-				<xsl:for-each select="reversePointer/record[reftype/@id=150]/pointer[@id=527]/detail[@id=160] |
+				<xsl:for-each select="reversePointer/record[reftype/@id=150]/detail[@id=527]/record/detail[@id=160] |
 				                      reversePointer/record[reftype/@id=150]/detail[@id=179]">
 					<xsl:sort/>
 					<target>
@@ -44,7 +44,7 @@
 						$base/reversePointer/record
 							[reftype/@id=150]
 							[
-								pointer[@id=527]/id = current()/@id  or
+								detail[@id=527]/record/id = current()/@id  or
 								detail[@id=179] = current()/text()
 							]"/>
 				</xsl:call-template>
@@ -64,13 +64,13 @@
 				</xsl:if>
 				<div class="entity-information-heading">
 					<xsl:choose>
-						<xsl:when test="$factoids[1]/pointer[@id=527]">
+						<xsl:when test="$factoids[1]/detail[@id=527]/record">
 							<xsl:value-of select="$factoids[1]/detail[@id=526]"/>
 							<xsl:text> - </xsl:text>
-							<xsl:value-of select="$factoids[1]/pointer[@id=529]/detail[@id=160]"/>
+							<xsl:value-of select="$factoids[1]/detail[@id=529]/record/detail[@id=160]"/>
 							<xsl:text> of </xsl:text>
-							<a href="{$factoids[1]/pointer[@id=527]/id}" class="preview-{$factoids[1]/pointer[@id=527]/id}">
-								<xsl:value-of select="$factoids[1]/pointer[@id=527]/detail[@id=160]"/>
+							<a href="{$factoids[1]/detail[@id=527]/record/id}" class="preview-{$factoids[1]/detail[@id=527]/record/id}">
+								<xsl:value-of select="$factoids[1]/detail[@id=527]/record/detail[@id=160]"/>
 							</a>
 						</xsl:when>
 						<xsl:otherwise>
@@ -81,7 +81,7 @@
 					</xsl:choose>
 				</div>
 				<xsl:for-each select="$factoids">
-					<xsl:sort select="pointer[@id=528]/detail[@id=160]"/>
+					<xsl:sort select="detail[@id=528]/record/detail[@id=160]"/>
 					<xsl:sort select="detail[@id=177]/year"/>
 					<xsl:sort select="detail[@id=177]/month"/>
 					<xsl:sort select="detail[@id=177]/day"/>

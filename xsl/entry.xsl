@@ -56,15 +56,15 @@
 
 			<xsl:choose>
 				<xsl:when test="detail[@id=359]='Annotation Multimedia'">
-					<xsl:if test="pointer[@id=199][reftype/@id=74 or reftype/@id=168]">
+					<xsl:if test="detail[@id=199]/record[reftype/@id=74 or reftype/@id=168]">
 						<xsl:choose>
-							<xsl:when test="starts-with(pointer[@id=199]/detail[@id=289], 'image') or pointer[@id=199]/detail[@id=618] = 'image'">
+							<xsl:when test="starts-with(detail[@id=199]/record/detail[@id=289], 'image') or detail[@id=199]/record/detail[@id=618] = 'image'">
 								<div class="annotation-img annotation-id-{id}">
-									<a href="{pointer[@id=199]/id}" class="popup preview-{pointer[@id=199]/id}c{id}">
+									<a href="{detail[@id=199]/record/id}" class="popup preview-{detail[@id=199]/record/id}c{id}">
 										<img>
 											<xsl:attribute name="src">
 												<xsl:call-template name="getFileURL">
-													<xsl:with-param name="file" select="pointer[@id=199]/detail[@id=221]"/>
+													<xsl:with-param name="file" select="detail[@id=199]/record/detail[@id=221]"/>
 													<xsl:with-param name="size" select="'small'"/>
 												</xsl:call-template>
 											</xsl:attribute>
@@ -72,20 +72,20 @@
 									</a>
 								</div>
 							</xsl:when>
-							<xsl:when test="starts-with(pointer[@id=199]/detail[@id=289], 'audio')">
+							<xsl:when test="starts-with(detail[@id=199]/record/detail[@id=289], 'audio')">
 								<div class="annotation-img annotation-id-{id}">
-									<a href="{pointer[@id=199]/id}" class="popup preview-{pointer[@id=199]/id}c{id}">
+									<a href="{detail[@id=199]/record/id}" class="popup preview-{detail[@id=199]/record/id}c{id}">
 										<img src="{$urlbase}images/img-entity-audio.jpg"/>
 									</a>
 								</div>
 							</xsl:when>
-							<xsl:when test="starts-with(pointer[@id=199]/detail[@id=289], 'video')">
+							<xsl:when test="starts-with(detail[@id=199]/record/detail[@id=289], 'video')">
 								<div class="annotation-img annotation-id-{id}">
-									<a href="{pointer[@id=199]/id}" class="popup preview-{pointer[@id=199]/id}c{id}">
+									<a href="{detail[@id=199]/record/id}" class="popup preview-{detail[@id=199]/record/id}c{id}">
 										<img>
 											<xsl:attribute name="src">
 												<xsl:call-template name="getFileURL">
-													<xsl:with-param name="file" select="pointer[@id=199]/detail[@id=223]"/>
+													<xsl:with-param name="file" select="detail[@id=199]/record/detail[@id=223]"/>
 													<xsl:with-param name="size" select="'small'"/>
 												</xsl:call-template>
 											</xsl:attribute>
@@ -139,9 +139,9 @@
 					<xsl:if test="$hide='true'">
 					hide : true,
 					</xsl:if>
-					<xsl:if test="pointer[@id=199]">
-					targetID : <xsl:value-of select="pointer[@id=199]/id"/>,
-					href : "../<xsl:call-template name="getPath"><xsl:with-param name="id" select="pointer[@id=199]/id"/></xsl:call-template>",
+					<xsl:if test="detail[@id=199]/record">
+					targetID : <xsl:value-of select="detail[@id=199]/record/id"/>,
+					href : "../<xsl:call-template name="getPath"><xsl:with-param name="id" select="detail[@id=199]/record/id"/></xsl:call-template>",
 					</xsl:if>
 					recordID : "<xsl:value-of select="id"/>"
 				} );

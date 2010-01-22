@@ -29,7 +29,7 @@
 			<script type="text/javascript">
 				<xsl:variable name="sources">
 					<!-- kml records -->
-					<xsl:for-each select="pointer[@id=564]">
+					<xsl:for-each select="detail[@id=564]/record">
 						<source>
 							<title><xsl:value-of select="detail[@id=160]"/></title>
 							<!--url><xsl:call-template name="getFileURL">
@@ -75,7 +75,7 @@
 						</xsl:for-each>
 					],
 					layers: [
-						<xsl:for-each select="pointer[@id=588]">
+						<xsl:for-each select="detail[@id=588]/record">
 						{
 							title: "<xsl:value-of select="detail[@id=173]"/>",
 							type: "<xsl:value-of select="detail[@id=585]"/>",

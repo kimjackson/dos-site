@@ -59,7 +59,7 @@
 			<xsl:with-param name="factoid" select="$factoid"/>
 		</xsl:call-template>
 
-		<xsl:if test="$factoid/pointer[@id=529]/detail[@id=591] = 'Name'"> name</xsl:if>
+		<xsl:if test="$factoid/detail[@id=529]/record/detail[@id=591] = 'Name'"> name</xsl:if>
 
 	</xsl:template>
 
@@ -69,11 +69,11 @@
 		<xsl:choose>
 			<xsl:when test="$factoid/@id = 528">
 				<xsl:choose>
-					<xsl:when test="$factoid/pointer[@id=527]"> - <xsl:value-of select="$factoid/pointer[@id=527]/detail[@id=160]"/></xsl:when>
+					<xsl:when test="$factoid/detail[@id=527]/record"> - <xsl:value-of select="$factoid/detail[@id=527]/record/detail[@id=160]"/></xsl:when>
 					<xsl:when test="$factoid/detail[@id=179]"> - <xsl:value-of select="$factoid/detail[@id=179]"/></xsl:when>
 				</xsl:choose>
 			</xsl:when>
-			<xsl:when test="$factoid/@id = 527"> - <xsl:value-of select="$factoid/pointer[@id=528]/detail[@id=160]"/></xsl:when>
+			<xsl:when test="$factoid/@id = 527"> - <xsl:value-of select="$factoid/detail[@id=528]/record/detail[@id=160]"/></xsl:when>
 		</xsl:choose>
 	</xsl:template>
 </xsl:stylesheet>

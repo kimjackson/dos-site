@@ -4,10 +4,10 @@
 	<xsl:template match="reversePointer[@id=199]/record[reftype/@id=99]">
 		<xsl:param name="matches"/>
 		<xsl:for-each select="$matches">
-			<xsl:sort select="pointer[@id=322]/detail[@id=160]"/>
+			<xsl:sort select="detail[@id=322]/record/detail[@id=160]"/>
 			<li>
-				<a href="{pointer[@id=322]/id}#ref={id}" class="preview-{pointer[@id=322]/id}c{id}">
-					<xsl:value-of select="pointer[@id=322]/detail[@id=160]"/>
+				<a href="{detail[@id=322]/record/id}#ref={id}" class="preview-{detail[@id=322]/record/id}c{id}">
+					<xsl:value-of select="detail[@id=322]/record/detail[@id=160]"/>
 				</a>
 			</li>
 		</xsl:for-each>
