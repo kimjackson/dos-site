@@ -7,7 +7,7 @@
 
 	<xsl:include href="urlmap.xsl"/>
 
-	<xsl:template name="xmldoc" match="record[reftype/@id=98]">
+	<xsl:template name="xmldoc" match="record[type/@id=98]">
 
 		<xsl:variable name="file" select="detail[@id=231 or @id=221]"/>
 
@@ -32,8 +32,8 @@
 		</div>
 
 		<div id="content-right-col">
-			<xsl:apply-templates select="reversePointer[@id=322]/record[reftype/@id=99][1]">
-				<xsl:with-param name="matches" select="reversePointer[@id=322]/record[reftype/@id=99]"/>
+			<xsl:apply-templates select="reversePointer[@id=322]/record[type/@id=99][1]">
+				<xsl:with-param name="matches" select="reversePointer[@id=322]/record[type/@id=99]"/>
 			</xsl:apply-templates>
 		</div>
 
@@ -42,7 +42,7 @@
 	</xsl:template>
 
 
-	<xsl:template match="reversePointer[@id=322]/record[reftype/@id=99]">
+	<xsl:template match="reversePointer[@id=322]/record[type/@id=99]">
 		<xsl:param name="matches"/>
 
 		<xsl:call-template name="setupRefs"/>
@@ -56,7 +56,7 @@
 
 			<xsl:choose>
 				<xsl:when test="detail[@id=359]='Annotation Multimedia'">
-					<xsl:if test="detail[@id=199]/record[reftype/@id=74 or reftype/@id=168]">
+					<xsl:if test="detail[@id=199]/record[type/@id=74 or type/@id=168]">
 						<xsl:choose>
 							<xsl:when test="starts-with(detail[@id=199]/record/detail[@id=289], 'image') or detail[@id=199]/record/detail[@id=618] = 'image'">
 								<div class="annotation-img annotation-id-{id}">
@@ -150,7 +150,7 @@
 	</xsl:template>
 
 
-	<xsl:template match="record[reftype/@id=98]" mode="sidebar">
+	<xsl:template match="record[type/@id=98]" mode="sidebar">
 
 		<div id="chapters">
 			<div id="chapters-top"/>

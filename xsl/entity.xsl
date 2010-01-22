@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-	<xsl:template name="entity" match="record[reftype/@id=151]">
+	<xsl:template name="entity" match="record[type/@id=151]">
 
 		<div class="list-left-col"/>
 		<div class="list-right-col">
@@ -34,25 +34,25 @@
 			</xsl:if>
 
 			<!-- map -->
-			<xsl:if test="reversePointer/record[reftype/@id=150]/detail[@id=230 or @id=177]">
+			<xsl:if test="reversePointer/record[type/@id=150]/detail[@id=230 or @id=177]">
 				<div id="map">
 					<xsl:attribute name="class">
 						<xsl:text>entity-map</xsl:text>
-						<xsl:if test="not(reversePointer/record[reftype/@id=150]/detail[@id=230])">
+						<xsl:if test="not(reversePointer/record[type/@id=150]/detail[@id=230])">
 							<xsl:text> hide</xsl:text>
 						</xsl:if>
 					</xsl:attribute>
 				</div>
 				<div class="clearfix"/>
 				<div id="timeline-zoom">
-					<xsl:if test="not(reversePointer/record[reftype/@id=150]/detail[@id=177])">
+					<xsl:if test="not(reversePointer/record[type/@id=150]/detail[@id=177])">
 						<xsl:attribute name="class">hide</xsl:attribute>
 					</xsl:if>
 				</div>
 				<div id="timeline">
 					<xsl:attribute name="class">
 						<xsl:text>entity-timeline</xsl:text>
-						<xsl:if test="not(reversePointer/record[reftype/@id=150]/detail[@id=177])">
+						<xsl:if test="not(reversePointer/record[type/@id=150]/detail[@id=177])">
 							<xsl:text> hide</xsl:text>
 						</xsl:if>
 					</xsl:attribute>
@@ -74,7 +74,7 @@
 			<div class="clearfix"/>
 
 			<!-- factoids -->
-			<xsl:if test="reversePointer/record[reftype/@id=150]">
+			<xsl:if test="reversePointer/record[type/@id=150]">
 				<xsl:call-template name="factoids"/>
 			</xsl:if>
 
@@ -82,7 +82,7 @@
 		<div class="clearfix"/>
 
 		<!-- related entries -->
-		<xsl:for-each select="related[reftype/@id=98]">
+		<xsl:for-each select="related[type/@id=98]">
 			<xsl:variable name="content_class">
 				<xsl:choose>
 					<xsl:when test="position() = last()">list-right-col-content</xsl:when>
@@ -192,7 +192,7 @@
 		</xsl:if>
 
 		<!-- maps of this entity -->
-		<xsl:variable name="maps_of" select="related[@type='IsIn'][reftype/@id=103]"/>
+		<xsl:variable name="maps_of" select="related[@type='IsIn'][type/@id=103]"/>
 		<xsl:if test="$maps_of">
 			<div class="list-left-col list-map" title="Maps"></div>
 			<div class="list-right-col">
@@ -210,7 +210,7 @@
 	</xsl:template>
 
 
-	<xsl:template match="record[reftype/@id=151]" mode="sidebar">
+	<xsl:template match="record[type/@id=151]" mode="sidebar">
 		<div id="connections">
 			<h3>Connections</h3>
 			<xsl:call-template name="relatedEntitiesByType"/>
@@ -223,35 +223,35 @@
 
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">People</xsl:with-param>
-			<xsl:with-param name="items" select="related[reftype/@id=151][detail[@id=523] = 'Person']"/>
+			<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Person']"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Artefacts</xsl:with-param>
-			<xsl:with-param name="items" select="related[reftype/@id=151][detail[@id=523] = 'Artefact']"/>
+			<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Artefact']"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Buildings</xsl:with-param>
-			<xsl:with-param name="items" select="related[reftype/@id=151][detail[@id=523] = 'Building']"/>
+			<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Building']"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Events</xsl:with-param>
-			<xsl:with-param name="items" select="related[reftype/@id=151][detail[@id=523] = 'Event']"/>
+			<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Event']"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Natural features</xsl:with-param>
-			<xsl:with-param name="items" select="related[reftype/@id=151][detail[@id=523] = 'Natural feature']"/>
+			<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Natural feature']"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Organisations</xsl:with-param>
-			<xsl:with-param name="items" select="related[reftype/@id=151][detail[@id=523] = 'Organisation']"/>
+			<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Organisation']"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Places</xsl:with-param>
-			<xsl:with-param name="items" select="related[reftype/@id=151][detail[@id=523] = 'Place']"/>
+			<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Place']"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Structures</xsl:with-param>
-			<xsl:with-param name="items" select="related[reftype/@id=151][detail[@id=523] = 'Structure']"/>
+			<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Structure']"/>
 		</xsl:call-template>
 
 	</xsl:template>

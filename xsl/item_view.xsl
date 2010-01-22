@@ -58,42 +58,42 @@
 		<xsl:param name="omit"/>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Entries</xsl:with-param>
-			<xsl:with-param name="items" select="related[reftype/@id=98]"/>
+			<xsl:with-param name="items" select="related[type/@id=98]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Pictures</xsl:with-param>
-			<xsl:with-param name="items" select="related[reftype/@id=74][starts-with(detail[@id=289], 'image')]"/>
+			<xsl:with-param name="items" select="related[type/@id=74][starts-with(detail[@id=289], 'image')]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Sound</xsl:with-param>
-			<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=74][starts-with(detail[@id=289], 'audio')]"/>
+			<xsl:with-param name="items" select="related[@type='IsRelatedTo'][type/@id=74][starts-with(detail[@id=289], 'audio')]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Video</xsl:with-param>
-			<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=74][starts-with(detail[@id=289], 'video')]"/>
+			<xsl:with-param name="items" select="related[@type='IsRelatedTo'][type/@id=74][starts-with(detail[@id=289], 'video')]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Maps</xsl:with-param>
-			<xsl:with-param name="items" select="related[@type='IsRelatedTo'][reftype/@id=103]"/>
+			<xsl:with-param name="items" select="related[@type='IsRelatedTo'][type/@id=103]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Subjects</xsl:with-param>
-			<xsl:with-param name="items" select="related[reftype/@id=152]"/>
+			<xsl:with-param name="items" select="related[type/@id=152]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Mentioned in</xsl:with-param>
-			<xsl:with-param name="items" select="reversePointer[@id=199]/record[reftype/@id=99]"/>
+			<xsl:with-param name="items" select="reversePointer[@id=199]/record[type/@id=99]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">External links</xsl:with-param>
-			<xsl:with-param name="items" select="related[@type='hasExternalLink'][reftype/@id=1]"/>
+			<xsl:with-param name="items" select="related[@type='hasExternalLink'][type/@id=1]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 	</xsl:template>
@@ -138,7 +138,7 @@
 			<xsl:sort select="detail[@id=160]"/>
 
 			<xsl:variable name="class">
-				<xsl:if test="reftype/@id=74">
+				<xsl:if test="type/@id=74">
 					<xsl:text>popup </xsl:text>
 				</xsl:if>
 				<xsl:text>preview-</xsl:text>
@@ -165,7 +165,7 @@
 	</xsl:template>
 
 
-	<xsl:template match="related[reftype/@id=1]">
+	<xsl:template match="related[type/@id=1]">
 		<!-- external links: link to external link, new window, no preview -->
 		<xsl:param name="matches"/>
 		<xsl:for-each select="$matches">

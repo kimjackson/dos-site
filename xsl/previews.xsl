@@ -20,14 +20,14 @@
 		<!-- annotations (in either direction) -->
 
 		<!-- with targets -->
-		<xsl:for-each select="$root/reversePointer/record[reftype/@id=99][detail[@id=199]/record]">
+		<xsl:for-each select="$root/reversePointer/record[type/@id=99][detail[@id=199]/record]">
 			<xsl:call-template name="previewStub">
 				<xsl:with-param name="record" select="current()[@id=199]/detail[@id=322]/record | current()[@id=322]/detail[@id=199]/record"/>
 				<xsl:with-param name="context" select="id"/>
 			</xsl:call-template>
 		</xsl:for-each>
 		<!-- without targets (gloss annotations) -->
-		<xsl:for-each select="$root/reversePointer/record[reftype/@id=99][not(detail[@id=199]/record)]">
+		<xsl:for-each select="$root/reversePointer/record[type/@id=99][not(detail[@id=199]/record)]">
 			<xsl:call-template name="previewStub">
 				<xsl:with-param name="record" select="."/>
 			</xsl:call-template>
@@ -43,13 +43,13 @@
 		<!-- records related through factoids -->
 
 		<!-- source-factoids with targets -->
-		<xsl:for-each select="$root/reversePointer/record[reftype/@id=150][@id=528][detail[@id=527]/record]">
+		<xsl:for-each select="$root/reversePointer/record[type/@id=150][@id=528][detail[@id=527]/record]">
 			<xsl:call-template name="previewStub">
 				<xsl:with-param name="record" select="current()/detail[@id=527]/record"/>
 			</xsl:call-template>
 		</xsl:for-each>
 		<!-- source-factoids with roles -->
-		<xsl:for-each select="$root/reversePointer/record[reftype/@id=150][@id=528]
+		<xsl:for-each select="$root/reversePointer/record[type/@id=150][@id=528]
 			[detail[@id=529]/record[detail[@id=160]!='Generic']]
 			[detail[@id=526]='Type' or detail[@id=526]='Occupation' or detail[@id=526]='Position']">
 			<xsl:call-template name="previewStub">
@@ -57,13 +57,13 @@
 			</xsl:call-template>
 		</xsl:for-each>
 		<!-- target-factoids -->
-		<xsl:for-each select="$root/reversePointer/record[reftype/@id=150][@id=527]">
+		<xsl:for-each select="$root/reversePointer/record[type/@id=150][@id=527]">
 			<xsl:call-template name="previewStub">
 				<xsl:with-param name="record" select="current()/detail[@id=528]/record"/>
 			</xsl:call-template>
 		</xsl:for-each>
 		<!-- target-factoids with roles -->
-		<xsl:for-each select="$root/reversePointer/record[reftype/@id=150][@id=527]
+		<xsl:for-each select="$root/reversePointer/record[type/@id=150][@id=527]
 			[detail[@id=529]/record[detail[@id=160]!='Generic']]
 			[detail[@id=526]='Type' or detail[@id=526]='Occupation' or detail[@id=526]='Position']">
 			<xsl:call-template name="previewStub">
@@ -71,13 +71,13 @@
 			</xsl:call-template>
 		</xsl:for-each>
 		<!-- role pages: source -->
-		<xsl:for-each select="$root/reversePointer/record[reftype/@id=150][@id=529][detail/@id=528]">
+		<xsl:for-each select="$root/reversePointer/record[type/@id=150][@id=529][detail/@id=528]">
 			<xsl:call-template name="previewStub">
 				<xsl:with-param name="record" select="current()/detail[@id=528]/record"/>
 			</xsl:call-template>
 		</xsl:for-each>
 		<!-- role pages: target -->
-		<xsl:for-each select="$root/reversePointer/record[reftype/@id=150][@id=529][detail/@id=527]">
+		<xsl:for-each select="$root/reversePointer/record[type/@id=150][@id=529][detail/@id=527]">
 			<xsl:call-template name="previewStub">
 				<xsl:with-param name="record" select="current()/detail[@id=527]/record"/>
 			</xsl:call-template>
@@ -136,17 +136,17 @@
 
 		<xsl:variable name="thumbnail" select="
 			$record
-				[reftype/@id=74]
+				[type/@id=74]
 				[starts-with(detail[@id=289], 'image')]
 					/detail[@id=221]
 			|
 			$record
-				[reftype/@id=151]
+				[type/@id=151]
 					/detail[@id=508]/record
 						/detail[@id=221]
 			|
 			$record
-				[reftype/@id=168]
+				[type/@id=168]
 					/detail[@id=221]
 		"/>
 

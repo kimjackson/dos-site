@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-	<xsl:template name="contributor" match="record[reftype/@id=153]">
+	<xsl:template name="contributor" match="record[type/@id=153]">
 
 		<xsl:variable name="entries" select="
-			reversePointer[@id=538]/record[reftype/@id=98]
+			reversePointer[@id=538]/record[type/@id=98]
 		"/>
 		<xsl:variable name="images" select="
-			reversePointer[@id=538]/record[reftype/@id=74][starts-with(detail[@id=289], 'image')] |
-			reversePointer[@id=538]/record[reftype/@id=168][detail[@id=618] = 'image']
+			reversePointer[@id=538]/record[type/@id=74][starts-with(detail[@id=289], 'image')] |
+			reversePointer[@id=538]/record[type/@id=168][detail[@id=618] = 'image']
 		"/>
 		<xsl:variable name="audio" select="
-			reversePointer[@id=538]/record[reftype/@id=74][starts-with(detail[@id=289], 'audio')]
+			reversePointer[@id=538]/record[type/@id=74][starts-with(detail[@id=289], 'audio')]
 		"/>
 		<xsl:variable name="video" select="
-			reversePointer[@id=538]/record[reftype/@id=74][starts-with(detail[@id=289], 'video')]
+			reversePointer[@id=538]/record[type/@id=74][starts-with(detail[@id=289], 'video')]
 		"/>
 
 		<div id="subject-list">

@@ -4,7 +4,7 @@
                 exclude-result-prefixes="exsl"
                 version="1.0">
 
-	<xsl:template name="role" match="record[reftype/@id=91]">
+	<xsl:template name="role" match="record[type/@id=91]">
 
 			<!-- dc.description -->
 			<xsl:if test="detail[@id=191]">
@@ -18,13 +18,13 @@
 
 			<!-- factoids without a target -->
 			<xsl:call-template name="roleFactoidGroup">
-				<xsl:with-param name="factoids" select="reversePointer/record[reftype/@id=150][not(detail[@id=527]/record)]"/>
+				<xsl:with-param name="factoids" select="reversePointer/record[type/@id=150][not(detail[@id=527]/record)]"/>
 			</xsl:call-template>
 
 
 			<xsl:variable name="targets">
-				<xsl:for-each select="reversePointer/record[reftype/@id=150]/detail[@id=527]/record/detail[@id=160] |
-				                      reversePointer/record[reftype/@id=150]/detail[@id=179]">
+				<xsl:for-each select="reversePointer/record[type/@id=150]/detail[@id=527]/record/detail[@id=160] |
+				                      reversePointer/record[type/@id=150]/detail[@id=179]">
 					<xsl:sort/>
 					<target>
 						<xsl:if test="@id=160">
@@ -42,7 +42,7 @@
 					<xsl:with-param name="id" select="@id"/>
 					<xsl:with-param name="factoids" select="
 						$base/reversePointer/record
-							[reftype/@id=150]
+							[type/@id=150]
 							[
 								detail[@id=527]/record/id = current()/@id  or
 								detail[@id=179] = current()/text()

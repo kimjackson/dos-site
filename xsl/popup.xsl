@@ -21,8 +21,8 @@
 	</xsl:template>
 
 
-	<xsl:template match="record[reftype/@id=74] |
-	                     record[reftype/@id=168][detail[@id=618] = 'image']">
+	<xsl:template match="record[type/@id=74] |
+	                     record[type/@id=168][detail[@id=618] = 'image']">
 		<xsl:param name="type"/>
 
 		<div class="picbox-container">
@@ -32,7 +32,7 @@
 			</div>
 			<div class="clearfix"/>
 
-			<xsl:if test="starts-with(detail[@id=289], 'image') or reftype/@id = 168">
+			<xsl:if test="starts-with(detail[@id=289], 'image') or type/@id = 168">
 				<div class="picbox-image">
 					<img>
 						<xsl:attribute name="src">
@@ -88,7 +88,7 @@
 					</xsl:call-template>
 				</p>
 				<p>
-					<xsl:if test="reftype/@id = 168">
+					<xsl:if test="type/@id = 168">
 						<xsl:text>This is a high-resolution image - to view in more detail, go to the </xsl:text>
 					</xsl:if>
 					<a href="{id}">full record &#187;</a>

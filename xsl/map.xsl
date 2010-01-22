@@ -4,7 +4,7 @@
                 exclude-result-prefixes="exsl"
                 version="1.0">
 
-	<xsl:template match="record[reftype/@id=103]">
+	<xsl:template match="record[type/@id=103]">
 
 		<div>
 
@@ -17,12 +17,12 @@
 
 			<div id="map" class="full"/>
 			<div id="timeline-zoom">
-				<xsl:if test="not(related/reversePointer/record[reftype/@id=150]/detail[@id=177])">
+				<xsl:if test="not(related/reversePointer/record[type/@id=150]/detail[@id=177])">
 					<xsl:attribute name="class">hide</xsl:attribute>
 				</xsl:if>
 			</div>
 			<div id="timeline">
-				<xsl:if test="not(related/reversePointer/record[reftype/@id=150]/detail[@id=177])">
+				<xsl:if test="not(related/reversePointer/record[type/@id=150]/detail[@id=177])">
 					<xsl:attribute name="class">hide</xsl:attribute>
 				</xsl:if>
 			</div>
@@ -39,7 +39,7 @@
 						</source>
 					</xsl:for-each>
 					<!-- related entities that have a TimePlace factoid -->
-					<xsl:for-each select="related[reftype/@id=151]
+					<xsl:for-each select="related[type/@id=151]
 					                             [reversePointer[@id=528]/record
 					                                             [detail[@id=526]='TimePlace']]">
 						<source>
@@ -95,7 +95,7 @@
 	</xsl:template>
 
 
-	<xsl:template match="record[reftype/@id=103]" mode="sidebar">
+	<xsl:template match="record[type/@id=103]" mode="sidebar">
 		<div id="connections">
 			<h3>Connections</h3>
 			<xsl:call-template name="relatedEntitiesByType"/>

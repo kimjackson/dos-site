@@ -36,15 +36,15 @@
 				<script src="{$urlbase}js/media.js" type="text/javascript"/>
 
 				<xsl:if test="/hml/records/record[
-				                  reftype/@id=103  or
-				                  reftype/@id=168  or
-				                  reftype/@id=151  and  reversePointer/record[reftype/@id=150]/detail[@id=230 or @id=177]]">
+				                  type/@id=103  or
+				                  type/@id=168  or
+				                  type/@id=151  and  reversePointer/record[type/@id=150]/detail[@id=230 or @id=177]]">
 					<script src="http://maps.google.com/maps?file=api&amp;amp;v=2&amp;amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w" type="text/javascript"/>
 				</xsl:if>
 
 				<xsl:if test="/hml/records/record[
-				                  reftype/@id=103  or
-				                  reftype/@id=151  and  reversePointer/record[reftype/@id=150]/detail[@id=230 or @id=177]]">
+				                  type/@id=103  or
+				                  type/@id=151  and  reversePointer/record[type/@id=150]/detail[@id=230 or @id=177]]">
 					<script type="text/javascript">
 						var Timeline_urlPrefix = RelBrowser.baseURL + "timeline/timeline_js/";
 						var Timeline_ajax_url = RelBrowser.baseURL + "timeline/timeline_ajax/simile-ajax-api.js";
@@ -57,11 +57,11 @@
 					<script src="{$urlbase}js/mapping.js" type="text/javascript"/>
 				</xsl:if>
 
-				<xsl:if test="/hml/records/record[reftype/@id=168][detail[@id=618] = 'image']">
+				<xsl:if test="/hml/records/record[type/@id=168][detail[@id=618] = 'image']">
 					<script src="{$urlbase}js/gmapimage.js" type="text/javascript"/>
 				</xsl:if>
 
-				<xsl:if test="/hml/records/record/reftype/@id = 98">
+				<xsl:if test="/hml/records/record/type/@id = 98">
 					<script src="http://yui.yahooapis.com/2.7.0/build/yahoo/yahoo-min.js" type="text/javascript"/>
 					<script src="http://yui.yahooapis.com/2.7.0/build/event/event-min.js" type="text/javascript"/>
 					<script src="http://yui.yahooapis.com/2.7.0/build/history/history-min.js" type="text/javascript"/>
@@ -71,7 +71,7 @@
 
 
 			<body>
-			<xsl:if test="/hml/records/record/reftype/@id = 98">
+			<xsl:if test="/hml/records/record/type/@id = 98">
 				<iframe id="yui-history-iframe" src="{$urlbase}images/minus.png"/>
 				<input id="yui-history-field" type="hidden"/>
 			</xsl:if>
