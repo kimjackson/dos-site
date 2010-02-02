@@ -13,57 +13,57 @@
 
 			<xsl:call-template name="termRelatedItems">
 				<xsl:with-param name="label">Entries</xsl:with-param>
-				<xsl:with-param name="items" select="related[type/@id=98]"/>
+				<xsl:with-param name="items" select="$related[type/@id=98]"/>
 			</xsl:call-template>
 
 			<xsl:call-template name="termRelatedItems">
 				<xsl:with-param name="label">People</xsl:with-param>
-				<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Person']"/>
+				<xsl:with-param name="items" select="$related[type/@id=151][detail[@id=523] = 'Person']"/>
 			</xsl:call-template>
 			<xsl:call-template name="termRelatedItems">
 				<xsl:with-param name="label">Artefacts</xsl:with-param>
-				<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Artefact']"/>
+				<xsl:with-param name="items" select="$related[type/@id=151][detail[@id=523] = 'Artefact']"/>
 			</xsl:call-template>
 			<xsl:call-template name="termRelatedItems">
 				<xsl:with-param name="label">Buildings</xsl:with-param>
-				<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Building']"/>
+				<xsl:with-param name="items" select="$related[type/@id=151][detail[@id=523] = 'Building']"/>
 			</xsl:call-template>
 			<xsl:call-template name="termRelatedItems">
 				<xsl:with-param name="label">Events</xsl:with-param>
-				<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Event']"/>
+				<xsl:with-param name="items" select="$related[type/@id=151][detail[@id=523] = 'Event']"/>
 			</xsl:call-template>
 			<xsl:call-template name="termRelatedItems">
 				<xsl:with-param name="label">Natural features</xsl:with-param>
-				<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Natural feature']"/>
+				<xsl:with-param name="items" select="$related[type/@id=151][detail[@id=523] = 'Natural feature']"/>
 			</xsl:call-template>
 			<xsl:call-template name="termRelatedItems">
 				<xsl:with-param name="label">Organisations</xsl:with-param>
-				<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Organisation']"/>
+				<xsl:with-param name="items" select="$related[type/@id=151][detail[@id=523] = 'Organisation']"/>
 			</xsl:call-template>
 			<xsl:call-template name="termRelatedItems">
 				<xsl:with-param name="label">Places</xsl:with-param>
-				<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Place']"/>
+				<xsl:with-param name="items" select="$related[type/@id=151][detail[@id=523] = 'Place']"/>
 			</xsl:call-template>
 			<xsl:call-template name="termRelatedItems">
 				<xsl:with-param name="label">Structures</xsl:with-param>
-				<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Structure']"/>
+				<xsl:with-param name="items" select="$related[type/@id=151][detail[@id=523] = 'Structure']"/>
 			</xsl:call-template>
 
 			<xsl:call-template name="termRelatedItems">
 				<xsl:with-param name="label">Pictures</xsl:with-param>
-				<xsl:with-param name="items" select="related[type/@id=74][starts-with(detail[@id=289], 'image')]"/>
+				<xsl:with-param name="items" select="$related[type/@id=74][starts-with(detail[@id=289], 'image')]"/>
 			</xsl:call-template>
 			<xsl:call-template name="termRelatedItems">
 				<xsl:with-param name="label">Sound</xsl:with-param>
-				<xsl:with-param name="items" select="related[@type='IsRelatedTo'][type/@id=74][starts-with(detail[@id=289], 'audio')]"/>
+				<xsl:with-param name="items" select="$related[@type='IsRelatedTo'][type/@id=74][starts-with(detail[@id=289], 'audio')]"/>
 			</xsl:call-template>
 			<xsl:call-template name="termRelatedItems">
 				<xsl:with-param name="label">Video</xsl:with-param>
-				<xsl:with-param name="items" select="related[@type='IsRelatedTo'][type/@id=74][starts-with(detail[@id=289], 'video')]"/>
+				<xsl:with-param name="items" select="$related[@type='IsRelatedTo'][type/@id=74][starts-with(detail[@id=289], 'video')]"/>
 			</xsl:call-template>
 			<xsl:call-template name="termRelatedItems">
 				<xsl:with-param name="label">Maps</xsl:with-param>
-				<xsl:with-param name="items" select="related[@type='IsRelatedTo'][type/@id=103]"/>
+				<xsl:with-param name="items" select="$related[@type='IsRelatedTo'][type/@id=103]"/>
 			</xsl:call-template>
 			<xsl:call-template name="termRelatedItems">
 				<xsl:with-param name="label">Mentioned in</xsl:with-param>
@@ -71,7 +71,7 @@
 			</xsl:call-template>
 			<xsl:call-template name="termRelatedItems">
 				<xsl:with-param name="label">External links</xsl:with-param>
-				<xsl:with-param name="items" select="related[@type='hasExternalLink'][type/@id=1]"/>
+				<xsl:with-param name="items" select="$related[@type='hasExternalLink'][type/@id=1]"/>
 			</xsl:call-template>
 
 		</div>
@@ -115,11 +115,11 @@
 			<h3>Connections</h3>
 			<xsl:call-template name="relatedItems">
 				<xsl:with-param name="label">Broader subjects</xsl:with-param>
-				<xsl:with-param name="items" select="related[@type='HasBroaderTerm']"/>
+				<xsl:with-param name="items" select="$related[@type='HasBroaderTerm']"/>
 			</xsl:call-template>
 			<xsl:call-template name="relatedItems">
 				<xsl:with-param name="label">Narrower subjects</xsl:with-param>
-				<xsl:with-param name="items" select="related[@type='HasNarrowerTerm']"/>
+				<xsl:with-param name="items" select="$related[@type='HasNarrowerTerm']"/>
 			</xsl:call-template>
 		</div>
 	</xsl:template>

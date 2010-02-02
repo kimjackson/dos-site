@@ -20,9 +20,17 @@
 	<xsl:include href="contributor.xsl"/>
 	<xsl:include href="previews.xsl"/>
 
+	<xsl:variable name="record" select="hml/records/record"/>
+	<xsl:variable name="related" select="
+		$record/relationships
+			/record
+				/detail[@id=202 or @id=199]
+					/record[id != $record/id]
+	"/>
+
 	<xsl:template match="/">
 		<xsl:call-template name="framework">
-			<xsl:with-param name="title" select="hml/records/record/detail[@id=160]"/>
+			<xsl:with-param name="title" select="$record/detail[@id=160]"/>
 		</xsl:call-template>
 	</xsl:template>
 
@@ -40,14 +48,14 @@
 
 	<xsl:template name="content">
 		<xsl:call-template name="makeTitleDiv">
-			<xsl:with-param name="record" select="hml/records/record[1]"/>
+			<xsl:with-param name="record" select="$record"/>
 		</xsl:call-template>
-		<xsl:apply-templates select="hml/records/record"/>
+		<xsl:apply-templates select="$record"/>
 	</xsl:template>
 
 
 	<xsl:template name="sidebar">
-		<xsl:apply-templates select="hml/records/record" mode="sidebar"/>
+		<xsl:apply-templates select="$record" mode="sidebar"/>
 	</xsl:template>
 
 
@@ -58,32 +66,32 @@
 		<xsl:param name="omit"/>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Entries</xsl:with-param>
-			<xsl:with-param name="items" select="related[type/@id=98]"/>
+			<xsl:with-param name="items" select="$related[type/@id=98]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Pictures</xsl:with-param>
-			<xsl:with-param name="items" select="related[type/@id=74][starts-with(detail[@id=289], 'image')]"/>
+			<xsl:with-param name="items" select="$related[type/@id=74][starts-with(detail[@id=289], 'image')]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Sound</xsl:with-param>
-			<xsl:with-param name="items" select="related[@type='IsRelatedTo'][type/@id=74][starts-with(detail[@id=289], 'audio')]"/>
+			<xsl:with-param name="items" select="$related[@type='IsRelatedTo'][type/@id=74][starts-with(detail[@id=289], 'audio')]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Video</xsl:with-param>
-			<xsl:with-param name="items" select="related[@type='IsRelatedTo'][type/@id=74][starts-with(detail[@id=289], 'video')]"/>
+			<xsl:with-param name="items" select="$related[@type='IsRelatedTo'][type/@id=74][starts-with(detail[@id=289], 'video')]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Maps</xsl:with-param>
-			<xsl:with-param name="items" select="related[@type='IsRelatedTo'][type/@id=103]"/>
+			<xsl:with-param name="items" select="$related[@type='IsRelatedTo'][type/@id=103]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Subjects</xsl:with-param>
-			<xsl:with-param name="items" select="related[type/@id=152]"/>
+			<xsl:with-param name="items" select="$related[type/@id=152]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
@@ -93,7 +101,7 @@
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">External links</xsl:with-param>
-			<xsl:with-param name="items" select="related[@type='hasExternalLink'][type/@id=1]"/>
+			<xsl:with-param name="items" select="$related[@type='hasExternalLink'][type/@id=1]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 	</xsl:template>
@@ -125,7 +133,7 @@
 
 	</xsl:template>
 
-	<xsl:template match="related | detail/record | reversePointer/record">
+	<xsl:template match="relationships/record/detail/record | detail/record | reversePointer/record">
 		<xsl:param name="matches"/>
 		<!-- This template is to be called in the context of just one record,
 		     with the whole list in the "matches" variable.  This gives the template
@@ -143,9 +151,9 @@
 				</xsl:if>
 				<xsl:text>preview-</xsl:text>
 				<xsl:value-of select="id"/>
-				<xsl:if test="local-name() = 'related'">
+				<xsl:if test="local-name(../../..) = 'relationships'">
 					<xsl:text>c</xsl:text>
-					<xsl:value-of select="@id"/>
+					<xsl:value-of select="../../id"/>
 				</xsl:if>
 			</xsl:variable>
 
@@ -165,7 +173,7 @@
 	</xsl:template>
 
 
-	<xsl:template match="related[type/@id=1]">
+	<xsl:template match="relationships/record/detail/record[type/@id=1]">
 		<!-- external links: link to external link, new window, no preview -->
 		<xsl:param name="matches"/>
 		<xsl:for-each select="$matches">

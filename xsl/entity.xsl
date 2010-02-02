@@ -82,7 +82,7 @@
 		<div class="clearfix"/>
 
 		<!-- related entries -->
-		<xsl:for-each select="related[type/@id=98]">
+		<xsl:for-each select="$related[type/@id=98]">
 			<xsl:variable name="content_class">
 				<xsl:choose>
 					<xsl:when test="position() = last()">list-right-col-content</xsl:when>
@@ -122,7 +122,7 @@
 		<div class="clearfix"/>
 
 		<!-- images of this entity -->
-		<xsl:variable name="images_of" select="related[@type='IsInMM'][starts-with(detail[@id=289], 'image')][not(id = current()/detail[@id=508]/record/id)]"/>
+		<xsl:variable name="images_of" select="$related[@type='IsInMM'][starts-with(detail[@id=289], 'image')][not(id = current()/detail[@id=508]/record/id)]"/>
 		<xsl:if test="$images_of">
 			<div class="list-left-col list-image" title="Pictures"></div>
 			<div class="list-right-col">
@@ -160,7 +160,7 @@
 		</xsl:if>
 
 		<!-- audio of this entity -->
-		<xsl:variable name="audio_of" select="related[@type='IsInMM'][starts-with(detail[@id=289], 'audio')]"/>
+		<xsl:variable name="audio_of" select="$related[@type='IsInMM'][starts-with(detail[@id=289], 'audio')]"/>
 		<xsl:if test="$audio_of">
 			<div class="list-left-col list-audio" title="Sound"></div>
 			<div class="list-right-col">
@@ -176,7 +176,7 @@
 		</xsl:if>
 
 		<!-- videos of this entity -->
-		<xsl:variable name="video_of" select="related[@type='IsInMM'][starts-with(detail[@id=289], 'video')]"/>
+		<xsl:variable name="video_of" select="$related[@type='IsInMM'][starts-with(detail[@id=289], 'video')]"/>
 		<xsl:if test="$video_of">
 			<div class="list-left-col list-video" title="Video"></div>
 			<div class="list-right-col">
@@ -192,7 +192,7 @@
 		</xsl:if>
 
 		<!-- maps of this entity -->
-		<xsl:variable name="maps_of" select="related[@type='IsIn'][type/@id=103]"/>
+		<xsl:variable name="maps_of" select="$related[@type='IsIn'][type/@id=103]"/>
 		<xsl:if test="$maps_of">
 			<div class="list-left-col list-map" title="Maps"></div>
 			<div class="list-right-col">
@@ -223,35 +223,35 @@
 
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">People</xsl:with-param>
-			<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Person']"/>
+			<xsl:with-param name="items" select="$related[type/@id=151][detail[@id=523] = 'Person']"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Artefacts</xsl:with-param>
-			<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Artefact']"/>
+			<xsl:with-param name="items" select="$related[type/@id=151][detail[@id=523] = 'Artefact']"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Buildings</xsl:with-param>
-			<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Building']"/>
+			<xsl:with-param name="items" select="$related[type/@id=151][detail[@id=523] = 'Building']"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Events</xsl:with-param>
-			<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Event']"/>
+			<xsl:with-param name="items" select="$related[type/@id=151][detail[@id=523] = 'Event']"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Natural features</xsl:with-param>
-			<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Natural feature']"/>
+			<xsl:with-param name="items" select="$related[type/@id=151][detail[@id=523] = 'Natural feature']"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Organisations</xsl:with-param>
-			<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Organisation']"/>
+			<xsl:with-param name="items" select="$related[type/@id=151][detail[@id=523] = 'Organisation']"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Places</xsl:with-param>
-			<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Place']"/>
+			<xsl:with-param name="items" select="$related[type/@id=151][detail[@id=523] = 'Place']"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Structures</xsl:with-param>
-			<xsl:with-param name="items" select="related[type/@id=151][detail[@id=523] = 'Structure']"/>
+			<xsl:with-param name="items" select="$related[type/@id=151][detail[@id=523] = 'Structure']"/>
 		</xsl:call-template>
 
 	</xsl:template>

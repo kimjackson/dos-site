@@ -3,6 +3,12 @@
 
 	<xsl:template name="previewStubs">
 		<xsl:variable name="root" select="/hml/records/record"/>
+		<xsl:variable name="related" select="
+			$root/relationships
+				/record
+					/detail[@id=202 or @id=199]
+						/record[id != $root/id]
+		"/>
 		<!-- direct pointers -->
 		<xsl:for-each select="$root/detail/record">
 			<xsl:call-template name="previewStub">
