@@ -97,27 +97,27 @@
 		<!-- live from Heurist -->
 		<xsl:choose>
 			<xsl:when test="$size = 'thumbnail'">
-				<xsl:value-of select="$file/file_thumb_url"/>
+				<xsl:value-of select="$file/file/thumbURL"/>
 				<xsl:text>&amp;amp;w=148&amp;amp;h=148</xsl:text>
 			</xsl:when>
 			<xsl:when test="$size = 'small'">
-				<xsl:value-of select="$file/file_thumb_url"/>
+				<xsl:value-of select="$file/file/thumbURL"/>
 				<xsl:text>&amp;amp;w=148</xsl:text>
 			</xsl:when>
 			<xsl:when test="$size = 'medium'">
-				<xsl:value-of select="$file/file_thumb_url"/>
+				<xsl:value-of select="$file/file/thumbURL"/>
 				<xsl:text>&amp;amp;h=180</xsl:text>
 			</xsl:when>
 			<xsl:when test="$size = 'wide'">
-				<xsl:value-of select="$file/file_thumb_url"/>
+				<xsl:value-of select="$file/file/thumbURL"/>
 				<xsl:text>&amp;amp;maxw=800&amp;amp;maxh=400</xsl:text>
 			</xsl:when>
 			<xsl:when test="$size = 'large'">
-				<xsl:value-of select="$file/file_thumb_url"/>
+				<xsl:value-of select="$file/file/thumbURL"/>
 				<xsl:text>&amp;amp;maxw=698</xsl:text>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:value-of select="$file/file_fetch_url"/>
+				<xsl:value-of select="$file/file/url"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
