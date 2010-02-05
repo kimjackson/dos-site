@@ -106,17 +106,17 @@
 				</div>
 				<div class="entity-information-col02">
 					<xsl:choose>
-						<xsl:when test="@id=527 and detail[@id=528]/record">
+						<xsl:when test="../@id=527 and detail[@id=528]/record">
 							<a href="{detail[@id=528]/record/id}" class="preview-{detail[@id=528]/record/id}">
 								<xsl:value-of select="detail[@id=528]/record/detail[@id=160]"/>
 							</a>
 						</xsl:when>
-						<xsl:when test="@id=528 and detail[@id=527]/record">
+						<xsl:when test="../@id=528 and detail[@id=527]/record">
 							<a href="{detail[@id=527]/record/id}" class="preview-{detail[@id=527]/record/id}">
 								<xsl:value-of select="detail[@id=527]/record/detail[@id=160]"/>
 							</a>
 						</xsl:when>
-						<xsl:when test="@id=528 and detail[@id=179]">
+						<xsl:when test="../@id=528 and detail[@id=179]">
 							<xsl:value-of select="detail[@id=179]"/>
 						</xsl:when>
 					</xsl:choose>
@@ -180,7 +180,7 @@
 				<!-- generic role, use factoid title instead -->
 				<xsl:value-of select="$factoid/detail[@id=160]"/>
 			</xsl:when>
-			<xsl:when test="$factoid/@id = 527 and $role/detail[@id=174]">
+			<xsl:when test="$factoid/../@id = 527 and $role/detail[@id=174]">
 				<!-- use inverse role name -->
 				<xsl:value-of select="$role/detail[@id=174]"/>
 			</xsl:when>

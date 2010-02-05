@@ -10,7 +10,7 @@
 	<xsl:include href="util.xsl"/>
 
 	<xsl:variable name="record" select="/data/hml/records/record"/>
-	<xsl:variable name="factoids" select="$record/reversePointer/record"/>
+	<xsl:variable name="factoids" select="$record/reversePointer/record[type/@id=150]"/>
 
 	<!-- identity transform -->
 	<xsl:template match="@*|node()">
@@ -67,13 +67,13 @@
 	<xsl:template name="getTarget">
 		<xsl:param name="factoid"/>
 		<xsl:choose>
-			<xsl:when test="$factoid/@id = 528">
+			<xsl:when test="$factoid/../@id = 528">
 				<xsl:choose>
 					<xsl:when test="$factoid/detail[@id=527]/record"> - <xsl:value-of select="$factoid/detail[@id=527]/record/detail[@id=160]"/></xsl:when>
 					<xsl:when test="$factoid/detail[@id=179]"> - <xsl:value-of select="$factoid/detail[@id=179]"/></xsl:when>
 				</xsl:choose>
 			</xsl:when>
-			<xsl:when test="$factoid/@id = 527"> - <xsl:value-of select="$factoid/detail[@id=528]/record/detail[@id=160]"/></xsl:when>
+			<xsl:when test="$factoid/../@id = 527"> - <xsl:value-of select="$factoid/detail[@id=528]/record/detail[@id=160]"/></xsl:when>
 		</xsl:choose>
 	</xsl:template>
 </xsl:stylesheet>
