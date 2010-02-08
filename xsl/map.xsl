@@ -6,6 +6,13 @@
 
 	<xsl:template match="record[type/@id=103]">
 
+		<xsl:variable name="related" select="
+			relationships
+				/record
+					/detail[@id=202 or @id=199]
+						/record[id != current()/id]
+		"/>
+
 		<div>
 
 			<!-- dc.description -->

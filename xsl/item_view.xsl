@@ -21,12 +21,6 @@
 	<xsl:include href="previews.xsl"/>
 
 	<xsl:variable name="record" select="hml/records/record"/>
-	<xsl:variable name="related" select="
-		$record/relationships
-			/record
-				/detail[@id=202 or @id=199]
-					/record[id != $record/id]
-	"/>
 
 	<xsl:template match="/">
 		<xsl:call-template name="framework">
@@ -64,6 +58,12 @@
 
 	<xsl:template name="connections">
 		<xsl:param name="omit"/>
+		<xsl:variable name="related" select="
+			relationships
+				/record
+					/detail[@id=202 or @id=199]
+						/record[id != current()/id]
+		"/>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Entries</xsl:with-param>
 			<xsl:with-param name="items" select="$related[type/@id=98]"/>

@@ -3,6 +3,13 @@
 
 	<xsl:template name="term" match="record[type/@id=152]">
 
+		<xsl:variable name="related" select="
+			relationships
+				/record
+					/detail[@id=202 or @id=199]
+						/record[id != current()/id]
+		"/>
+
 		<div id="subject-list">
 			<!-- dc.description -->
 			<xsl:if test="detail[@id=191]">
@@ -111,6 +118,12 @@
 
 
 	<xsl:template match="record[type/@id=152]" mode="sidebar">
+		<xsl:variable name="related" select="
+			relationships
+				/record
+					/detail[@id=202 or @id=199]
+						/record[id != current()/id]
+		"/>
 		<div id="connections">
 			<h3>Connections</h3>
 			<xsl:call-template name="relatedItems">

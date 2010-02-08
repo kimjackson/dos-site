@@ -3,6 +3,13 @@
 
 	<xsl:template name="entity" match="record[type/@id=151]">
 
+		<xsl:variable name="related" select="
+			relationships
+				/record
+					/detail[@id=202 or @id=199]
+						/record[id != current()/id]
+		"/>
+
 		<div class="list-left-col"/>
 		<div class="list-right-col">
 
@@ -220,6 +227,13 @@
 
 
 	<xsl:template name="relatedEntitiesByType">
+
+		<xsl:variable name="related" select="
+			relationships
+				/record
+					/detail[@id=202 or @id=199]
+						/record[id != current()/id]
+		"/>
 
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">People</xsl:with-param>
