@@ -32,9 +32,9 @@
 		</div>
 
 		<div id="content-right-col">
-			<xsl:apply-templates select="reversePointer[@id=322]/record[type/@id=99][1]">
+			<xsl:call-template name="addAnnotations">
 				<xsl:with-param name="matches" select="reversePointer[@id=322]/record[type/@id=99]"/>
-			</xsl:apply-templates>
+			</xsl:call-template>
 		</div>
 
 		<div class="clearfix"/>
@@ -42,7 +42,7 @@
 	</xsl:template>
 
 
-	<xsl:template match="reversePointer[@id=322]/record[type/@id=99]">
+	<xsl:template name="addAnnotations">
 		<xsl:param name="matches"/>
 
 		<xsl:call-template name="setupRefs"/>
