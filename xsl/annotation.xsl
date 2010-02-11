@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-	<xsl:template match="reversePointer[@id=199]/record[type/@id=99]">
+	<xsl:template match="reversePointer[@id=199]/record[type/@id=99]" priority="1">
 		<xsl:param name="matches"/>
 		<xsl:for-each select="$matches">
 			<xsl:sort select="detail[@id=322]/record/detail[@id=160]"/>
