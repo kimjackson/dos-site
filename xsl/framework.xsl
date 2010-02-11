@@ -42,18 +42,32 @@
 					<script src="http://maps.google.com/maps?file=api&amp;amp;v=2&amp;amp;key=ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w" type="text/javascript"/>
 				</xsl:if>
 
-				<xsl:if test="/hml/records/record[
-				                  type/@id=103  or
-				                  type/@id=151  and  reversePointer/record[type/@id=150]/detail[@id=230 or @id=177]]">
-					<script type="text/javascript">
-						var Timeline_urlPrefix = RelBrowser.baseURL + "timeline/timeline_js/";
-						var Timeline_ajax_url = RelBrowser.baseURL + "timeline/timeline_ajax/simile-ajax-api.js";
-						var Timeline_parameters = "bundle=true";
-					</script>
-					<script src="{$urlbase}timeline/timeline_js/timeline-api.js" type="text/javascript"/>
-					<script src="{$urlbase}timemap.js/timemap.js" type="text/javascript"/>
-					<script src="{$urlbase}timemap.js/loaders/kml.js" type="text/javascript"/>
-					<script src="{$urlbase}timemap.js/manipulation.js" type="text/javascript"/>
+				<xsl:if test="/hml/records/record[type/@id=103 or type/@id=151]">
+					<xsl:if test="/hml/records/record[
+					                  (
+					                      type/@id=103  and  (
+					                          detail[@id=564]/record  or
+					                          relationships/record/detail/record
+					                              [type/@id=151]
+					                              [reversePointer[@id=528]/record
+					                                  [detail[@id=526]='TimePlace']
+					                              ]
+					                      )
+					                  )  or  (
+					                      type/@id=151  and
+					                      reversePointer/record[type/@id=150]/detail[@id=230 or @id=177]
+					                  )
+					              ]">
+						<script type="text/javascript">
+							var Timeline_urlPrefix = RelBrowser.baseURL + "timeline/timeline_js/";
+							var Timeline_ajax_url = RelBrowser.baseURL + "timeline/timeline_ajax/simile-ajax-api.js";
+							var Timeline_parameters = "bundle=true";
+						</script>
+						<script src="{$urlbase}timeline/timeline_js/timeline-api.js" type="text/javascript"/>
+						<script src="{$urlbase}timemap.js/timemap.js" type="text/javascript"/>
+						<script src="{$urlbase}timemap.js/loaders/kml.js" type="text/javascript"/>
+						<script src="{$urlbase}timemap.js/manipulation.js" type="text/javascript"/>
+					</xsl:if>
 					<script src="{$urlbase}js/mapping.js" type="text/javascript"/>
 				</xsl:if>
 

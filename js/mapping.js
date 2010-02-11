@@ -4,9 +4,13 @@ if (! window.RelBrowser) { RelBrowser = {}; }
 
 RelBrowser.Mapping = {
 
+	map: null,
 	tmap: null,
 
-	timeZoomSteps : [
+	defaultCenter: new GLatLng(-33.888, 151.19),
+	defaultZoom: 11,
+
+	timeZoomSteps : window["Timeline"] ? [
 		{ pixelsPerInterval: 200,  unit: Timeline.DateTime.DAY },
 		{ pixelsPerInterval: 100,  unit: Timeline.DateTime.DAY },
 		{ pixelsPerInterval:  50,  unit: Timeline.DateTime.DAY },
@@ -22,7 +26,7 @@ RelBrowser.Mapping = {
 		{ pixelsPerInterval:  50,  unit: Timeline.DateTime.DECADE },
 		{ pixelsPerInterval: 200,  unit: Timeline.DateTime.CENTURY },
 		{ pixelsPerInterval: 100,  unit: Timeline.DateTime.CENTURY }
-	],
+	] : [],
 
 	customMapTypes: [],
 
@@ -35,7 +39,7 @@ RelBrowser.Mapping = {
 		CustomMapTypeControl.prototype = new GControl(false);
 
 		CustomMapTypeControl.prototype.getDefaultPosition = function () {
-			return new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(7, 30));
+			return new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(7, 40));
 		};
 
 		CustomMapTypeControl.prototype.initialize = function (map) {
@@ -47,7 +51,7 @@ RelBrowser.Mapping = {
 				(function (m) {
 					var $a = $("<a href='#'>" + m.getName() + "</a>")
 						.click(function () {
-							M.tmap.map.setMapType(m);
+							M.map.setMapType(m);
 							return false;
 						})
 						$div = $("<div/>");
@@ -114,12 +118,12 @@ RelBrowser.Mapping = {
 			for (i = 0; i < M.customMapTypes.length; ++i) {
 				M.customMapTypes[i].getTileLayers()[1].opacity = opacity;
 			}
-			mapType = M.tmap.map.getCurrentMapType();
-			M.tmap.map.setMapType(G_NORMAL_MAP);
-			M.tmap.map.setMapType(mapType);
+			mapType = M.map.getCurrentMapType();
+			M.map.setMapType(G_NORMAL_MAP);
+			M.map.setMapType(mapType);
 		};
 
-		RelBrowser.Mapping.tmap.map.addControl(new CustomMapTypeControl());
+		RelBrowser.Mapping.map.addControl(new CustomMapTypeControl());
 	},
 
 
@@ -186,26 +190,20 @@ RelBrowser.Mapping = {
 	},
 
 
-	initTMap: function (mini) {
-		var tl_theme, matches, coords, points, i, lnglat, bounds = null, onDataLoaded, M = RelBrowser.Mapping;
-
-		SimileAjax.History.enabled = false;
+	initMap: function (mini) {
+		var matches, coords, points, l, i, lnglat, bounds = null, M = RelBrowser.Mapping;
 
 		if (M.mapdata["layers"]) {
 			M.addLayers();
 		}
 
-		// modify timeline theme
-		tl_theme = Timeline.ClassicTheme.create();
-		tl_theme.autoWidth = true;
-
-		// set map center and zoom to show provided focus area
 		if (M.mapdata.focus) {
 			matches = M.mapdata.focus.match(/^POLYGON\(\((.*)\)\)$/)
 			if (matches) {
 				coords = matches[1].split(",");
 				points = [];
-				for (i = 0; i < coords.length; ++i) {
+				l = coords.length;
+				for (i = 0; i < l; ++i) {
 					lnglat = coords[i].split(" ");
 					if (lnglat.length === 2) {
 						points.push(new GLatLng(lnglat[1], lnglat[0]));
@@ -213,12 +211,37 @@ RelBrowser.Mapping = {
 				}
 				if (points.length > 0) {
 					bounds = new GLatLngBounds(points[0], points[0]);
-					for (i = 1; i < points.length; ++i) {
+					l = points.length;
+					for (i = 1; i < l; ++i) {
 						bounds.extend(points[i]);
 					}
 				}
 			}
 		}
+
+		if (window["TimeMap"]) {
+			M.initTMap(mini, bounds);
+		} else {
+			M.map = new GMap2($("#map")[0]);
+			M.map.setCenter(M.defaultCenter, M.defaultZoom);
+			M.map.setMapType(M.customMapTypes[0] || G_NORMAL_MAP);
+		}
+
+		M.map.setUIToDefault();
+		if (! mini) {
+			M.addCustomMapTypeControl();
+		}
+	},
+
+
+	initTMap: function (mini, bounds) {
+		var tl_theme, onDataLoaded, M = RelBrowser.Mapping;
+
+		SimileAjax.History.enabled = false;
+
+		// modify timeline theme
+		tl_theme = Timeline.ClassicTheme.create();
+		tl_theme.autoWidth = true;
 
 		onDataLoaded = function (tm) {
 			// find centre date, choose scale to show entire dataset
@@ -278,10 +301,7 @@ RelBrowser.Mapping = {
 			dataLoadedFunction: onDataLoaded
 		});
 
-		M.tmap.map.setUIToDefault();
-		if (! mini) {
-			M.addCustomMapTypeControl();
-		}
+		M.map = M.tmap.map;
 	},
 
 	tileToQuadKey: function (x, y, zoom) {
@@ -358,8 +378,8 @@ $(function () {
 	mini = M.mapdata.mini || false;
 	$img = $("img.entity-picture");
 	if ($img.length > 0  &&  $img.width() === 0) {
-		$img.load(function () { M.initTMap(mini); });
+		$img.load(function () { M.initMap(mini); });
 	} else {
-		M.initTMap(mini);
+		M.initMap(mini);
 	}
 });
