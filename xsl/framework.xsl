@@ -108,7 +108,7 @@
 					</div>
 
 					<div id="right-col">
-						<a title="Dictionary of Sydney Home">
+						<a title="">
 							<xsl:attribute name="href">
 								<xsl:choose>
 									<xsl:when test="$urlbase = ''">
@@ -119,7 +119,7 @@
 									</xsl:otherwise>
 								</xsl:choose>
 							</xsl:attribute>
-							<img src="{$urlbase}images/img-logo.jpg" alt="Dictionary of Sydney" width="198" height="125" class="logo"/>
+							<!-- img src="{$urlbase}images/img-logo.jpg" alt="Title for logo" width="198" height="125" class="logo"/ -->
 						</a>
 						<div id="search-bar">
 							<form method="post" action=".">
