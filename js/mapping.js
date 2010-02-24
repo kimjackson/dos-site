@@ -223,7 +223,11 @@ RelBrowser.Mapping = {
 			M.initTMap(mini, bounds);
 		} else {
 			M.map = new GMap2($("#map")[0]);
-			M.map.setCenter(M.defaultCenter, M.defaultZoom);
+			if (bounds) {
+				M.map.setCenter(bounds.getCenter(), M.map.getBoundsZoomLevel(bounds));
+			} else {
+				M.map.setCenter(M.defaultCenter, M.defaultZoom);
+			}
 			M.map.setMapType(M.customMapTypes[0] || G_NORMAL_MAP);
 		}
 
