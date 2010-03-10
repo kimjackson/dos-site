@@ -167,7 +167,7 @@
 						</li>
 					</ul>
 					<ul id="footer-right-col">
-						<li class="no-bullet"><a href="{$urlbase}about.html#donations">Donate</a></li>
+						<li class="no-bullet"><a href="http://www.everydayhero.com.au/dictionaryofsydney">Donate</a></li>
 						<li><a href="{$urlbase}contribute.html">Contribute</a></li>
 						<li><a href="http://www.addthis.com/bookmark.php?v=250&amp;amp;pub=dictionaryofsydney" class="addthis_button">Share</a></li>
 					</ul>
