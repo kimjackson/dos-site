@@ -1,7 +1,7 @@
 # make sure we go direct to the server!
 unset http_proxy
 
-PIPELINE=http://heuristscholar.org/cocoon/relbrowser-kj
+PIPELINE=http://localhost:8888/dos-static-2010-04-24
 
 REPO=repo
 
@@ -188,13 +188,13 @@ wget --no-cache -O index.html $PIPELINE/
 chmod +x search/search.cgi
 
 
-rsync -av about.html artefact audio boxy-ie.css boxy.css browse building config.xml contact.html contact.php contribute.html contributor copyright.html entry event faq.html image images index.html item jquery js kml map natural_feature organisation person place popup preview recaptcha role search search.css structure style.css subject swf tiles timeline timemap.js video kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2009-12-03/
+rsync -av about.html artefact audio boxy-ie.css boxy.css browse building config.xml contact.html contact.php contribute.html contributor copyright.html entry event faq.html image images index.html item jquery js kml map natural_feature organisation person place popup preview recaptcha role search search.css structure style.css subject swf tiles timeline timemap.js video kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2010-04-24/
 
 rsync -av ../dos-static-2009-10-22/files/ kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/files/
 
 # on production server:
-perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2009-12-03/../' item/*
-perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2009-12-03/../' popup/*
-perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2009-12-03/http:\/\/dictionaryofsydney.org/' `grep -l heurist preview/*`
+perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2010-04-24/../' item/*
+perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2010-04-24/../' popup/*
+perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2010-04-24/http:\/\/dictionaryofsydney.org/' `grep -l heurist preview/*`
 perl -pi -e 's/ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w/ABQIAAAA5wNKmbSIriGRr4NY0snaURTtHC9RsOn6g1vDRMmqV_X8ivHa_xSNBstkFn6GHErY6WRDLHcEp1TxkQ/' `grep -l maps.google.com item/*`
 
