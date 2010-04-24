@@ -522,8 +522,42 @@ function showSection(i) {
 	}
 }
 
+function showFootnotes() {
+	YAHOO.util.History.multiNavigate({
+		"page": String(pageCount),
+		"ref": "notes"
+	});
+}
+
 function highlightAnnotation(id) {
-	YAHOO.util.History.navigate("ref", String(id));
+	YAHOO.util.History.multiNavigate({
+		"page": findAnnotationPage(id),
+		"ref": String(id)
+	});
+}
+
+function highlightNote(id) {
+	YAHOO.util.History.multiNavigate({
+		"page": "all",
+		"ref": "note" + String(id)
+	});
+}
+
+function findAnnotationPage(id) {
+	var $link, $section;
+	if (id === "notes") {
+		return pageCount;
+	} else if (id.match(/note\d+/)) {
+		$link = $("#tei a." + id);
+	} else {
+		$link = $("#tei a.annotation-id-" + id);
+	}
+	$section = getContainingSection($link);
+	if ($section) {
+		return $("#tei>div").index($section[0]) + 1;
+	} else {
+		return null;
+	}
 }
 
 YAHOO.util.Event.onDOMReady(function () {
@@ -561,21 +595,21 @@ YAHOO.util.Event.onDOMReady(function () {
 		}
 	}
 
+	// "annotations" can now be footnotes as well
 	function _highlightAnnotation(id) {
 		if (id) {
-			$("#tei a.annotation.highlighted").removeClass("highlighted");
-			$("#tei a.annotation-id-" + id).not(".hide").addClass("highlighted");
-		}
-	}
-
-	function _findAnnotationPage(id) {
-		var $link, $section;
-		$link = $("#tei a.annotation-id-" + id);
-		$section = getContainingSection($link);
-		if ($section) {
-			return $("#tei>div").index($section[0]) + 1;
-		} else {
-			return null;
+			$("#tei a.highlighted").removeClass("highlighted");
+			if (id === "notes") {
+				$("#tei h2:contains(Notes)")[0].scrollIntoView();
+			} else if (id.match(/note\d+/)) {
+				$("#tei a." + id)
+					.addClass("highlighted")
+					[0].scrollIntoView();
+			} else {
+				$("#tei a.annotation-id-" + id).not(".hide")
+					.addClass("highlighted")
+					[0].scrollIntoView();
+			}
 		}
 	}
 
@@ -586,7 +620,7 @@ YAHOO.util.Event.onDOMReady(function () {
 
 	if (! initPage) {
 		if (initAnnotation) {
-			initPage = _findAnnotationPage(initAnnotation);
+			initPage = findAnnotationPage(initAnnotation);
 		}
 		initPage = initPage ? String(initPage) : "all";
 	}

@@ -1149,11 +1149,16 @@ a.annotation.hide {
 #content a.annotation.hide:hover {
 	text-decoration: none;
 }
-a.annotation.highlighted {
+a.highlighted {
 	background-color: yellow;
 }
 #content a.footnote:hover {
 	text-decoration: none;
+}
+#tei .footnote-content {
+	font-size: 80%;
+	padding-left: 20px;
+	margin-bottom: 5px;
 }
 
 

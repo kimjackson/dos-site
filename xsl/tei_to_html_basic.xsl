@@ -31,6 +31,12 @@
 	<xsl:template match="TEI/text/body/div">
 		<xsl:copy>
 			<xsl:apply-templates/>
+			<xsl:if test="position() = last()">
+				<h2>Notes</h2>
+				<xsl:call-template name="copy-footnotes">
+					<xsl:with-param name="footnotes" select="//note"/>
+				</xsl:call-template>
+			</xsl:if>
 		</xsl:copy>
 	</xsl:template>
 
@@ -68,9 +74,34 @@
 	</xsl:template>
 
 	<xsl:template match="TEI//note">
+		<xsl:variable name="note_number">
+			<xsl:number count="TEI//note" level="any"/>
+		</xsl:variable>
+
+		<!-- move leading whitespace out of the note -->
+		<xsl:if test="substring(., 1, 1) = ' '">
+			<xsl:text> </xsl:text>
+		</xsl:if>
+
 		<span class="note">
-			<a class="footnote" href="#" onclick="return false;" title="{.}">[<xsl:number count="TEI//note" level="any"/>]</a>
+			<a class="footnote note{$note_number}" href="#" onclick="showFootnotes({$note_number}); return false;" title="{normalize-space(.)}">[<xsl:value-of select="$note_number"/>]</a>
 		</span>
+	</xsl:template>
+
+	<xsl:template name="copy-footnotes">
+		<xsl:param name="footnotes"/>
+		<div class="footnotes">
+			<xsl:for-each select="$footnotes">
+				<xsl:variable name="note_number">
+					<xsl:number count="TEI//note" level="any"/>
+				</xsl:variable>
+				<div class="footnote-content fnote{$note_number}">
+					<a href="#" onclick="highlightNote('{$note_number}'); return false;">[<xsl:value-of select="$note_number"/>]</a>
+					<xsl:text> </xsl:text>
+					<xsl:value-of select="."/>
+				</div>
+			</xsl:for-each>
+		</div>
 	</xsl:template>
 
 	<!-- table -->
