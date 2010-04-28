@@ -59,7 +59,7 @@
 									<xsl:with-param name="id" select="id"/>
 								</xsl:call-template>
 							</target>
-							<preview><xsl:value-of select="id"/>c<xsl:value-of select="@id"/></preview>
+							<preview><xsl:value-of select="id"/>c<xsl:value-of select="../../id"/></preview>
 						</source>
 					</xsl:for-each>
 				</xsl:variable>

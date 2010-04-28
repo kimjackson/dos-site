@@ -128,11 +128,11 @@
 			<h3>Connections</h3>
 			<xsl:call-template name="relatedItems">
 				<xsl:with-param name="label">Broader subjects</xsl:with-param>
-				<xsl:with-param name="items" select="$related[@type='HasBroaderTerm']"/>
+				<xsl:with-param name="items" select="$related[../../detail[@id=200]='HasBroaderTerm']"/>
 			</xsl:call-template>
 			<xsl:call-template name="relatedItems">
 				<xsl:with-param name="label">Narrower subjects</xsl:with-param>
-				<xsl:with-param name="items" select="$related[@type='HasNarrowerTerm']"/>
+				<xsl:with-param name="items" select="$related[../../detail[@id=200]='HasNarrowerTerm']"/>
 			</xsl:call-template>
 		</div>
 	</xsl:template>

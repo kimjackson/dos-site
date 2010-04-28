@@ -16,10 +16,10 @@
 			</xsl:call-template>
 		</xsl:for-each>
 		<!-- related records -->
-		<xsl:for-each select="$root/related">
+		<xsl:for-each select="$related">
 			<xsl:call-template name="previewStub">
 				<xsl:with-param name="record" select="."/>
-				<xsl:with-param name="context" select="@id"/>
+				<xsl:with-param name="context" select="../../id"/>
 			</xsl:call-template>
 		</xsl:for-each>
 
@@ -144,25 +144,24 @@
 			$record
 				[type/@id=74]
 				[starts-with(detail[@id=289], 'image')]
-					/detail[@id=221]
+				[detail/@id=221]
 			|
 			$record
 				[type/@id=151]
 					/detail[@id=508]/record
-						/detail[@id=221]
+						[detail/@id=221]
 			|
 			$record
 				[type/@id=168]
-					/detail[@id=221]
+				[detail/@id=221]
 		"/>
 
 		<xsl:choose>
 			<xsl:when test="$thumbnail">
-					<img class="thumbnail">
-						<xsl:attribute name="alt"/><!-- FIXME -->
+					<img class="thumbnail" alt="{$thumbnail/detail[@id=160]}">
 						<xsl:attribute name="src">
 							<xsl:call-template name="getFileURL">
-								<xsl:with-param name="file" select="$thumbnail"/>
+								<xsl:with-param name="file" select="$thumbnail/detail[@id=221]"/>
 								<xsl:with-param name="size" select="'thumbnail'"/>
 							</xsl:call-template>
 						</xsl:attribute>

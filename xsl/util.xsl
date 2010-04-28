@@ -92,7 +92,7 @@
 		<xsl:text>files/</xsl:text>
 		<xsl:value-of select="$dir"/>
 		<xsl:text>/</xsl:text>
-		<xsl:value-of select="$file/file_id"/>
+		<xsl:value-of select="$file/file/nonce"/>
 		-->
 		<!-- live from Heurist -->
 		<xsl:choose>
