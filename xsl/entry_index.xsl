@@ -15,12 +15,7 @@
 			<ul>
 				<xsl:for-each select="//div[@id='tei']/div">
 					<li>
-						<a href="#" onclick="showSection({position()}); return false;">
-							<xsl:value-of select="h2"/>
-							<xsl:if test="position() = last()">
-								<xsl:text>; Notes</xsl:text>
-							</xsl:if>
-						</a>
+						<a href="#" onclick="showSection({position()}); return false;"><xsl:value-of select="h2"/></a>
 					</li>
 				</xsl:for-each>
 			</ul>
