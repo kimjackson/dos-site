@@ -28,7 +28,7 @@
 		<!-- with targets -->
 		<xsl:for-each select="$root/reversePointer/record[type/@id=99][detail[@id=199]/record]">
 			<xsl:call-template name="previewStub">
-				<xsl:with-param name="record" select="current()[@id=199]/detail[@id=322]/record | current()[@id=322]/detail[@id=199]/record"/>
+				<xsl:with-param name="record" select="current()[../@id=199]/detail[@id=322]/record | current()[../@id=322]/detail[@id=199]/record"/>
 				<xsl:with-param name="context" select="id"/>
 			</xsl:call-template>
 		</xsl:for-each>
