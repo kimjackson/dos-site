@@ -128,8 +128,21 @@
 		</xsl:for-each>
 		<div class="clearfix"/>
 
+		<xsl:variable name="related_mm" select="
+			relationships
+				/record[detail[@id=200]='isOf']
+					/detail[@id=202]
+						/record[id != current()/id]
+			|
+			relationships
+				/record[detail[@id=200]='IsInMM']
+					/detail[@id=199]
+						/record[id != current()/id]
+
+		"/>
+
 		<!-- images of this entity -->
-		<xsl:variable name="images_of" select="$related[@type='IsInMM'][starts-with(detail[@id=289], 'image')][not(id = current()/detail[@id=508]/record/id)]"/>
+		<xsl:variable name="images_of" select="$related_mm[starts-with(detail[@id=289], 'image')][not(id = current()/detail[@id=508]/record/id)]"/>
 		<xsl:if test="$images_of">
 			<div class="list-left-col list-image" title="Pictures"></div>
 			<div class="list-right-col">
@@ -167,7 +180,7 @@
 		</xsl:if>
 
 		<!-- audio of this entity -->
-		<xsl:variable name="audio_of" select="$related[@type='IsInMM'][starts-with(detail[@id=289], 'audio')]"/>
+		<xsl:variable name="audio_of" select="$related_mm[starts-with(detail[@id=289], 'audio')]"/>
 		<xsl:if test="$audio_of">
 			<div class="list-left-col list-audio" title="Sound"></div>
 			<div class="list-right-col">
@@ -183,29 +196,13 @@
 		</xsl:if>
 
 		<!-- videos of this entity -->
-		<xsl:variable name="video_of" select="$related[@type='IsInMM'][starts-with(detail[@id=289], 'video')]"/>
+		<xsl:variable name="video_of" select="$related_mm[starts-with(detail[@id=289], 'video')]"/>
 		<xsl:if test="$video_of">
 			<div class="list-left-col list-video" title="Video"></div>
 			<div class="list-right-col">
 				<div class="list-right-col-content entity-thumbnail">
 					<xsl:for-each select="$video_of">
 						<a href="{id}" class="popup preview-{id}c{@id}">
-							<xsl:value-of select="detail[@id=160]"/>
-						</a>
-					</xsl:for-each>
-				</div>
-			</div>
-			<div class="clearfix"/>
-		</xsl:if>
-
-		<!-- maps of this entity -->
-		<xsl:variable name="maps_of" select="$related[@type='IsIn'][type/@id=103]"/>
-		<xsl:if test="$maps_of">
-			<div class="list-left-col list-map" title="Maps"></div>
-			<div class="list-right-col">
-				<div class="list-right-col-content"><!-- FIXME -->
-					<xsl:for-each select="$maps_of">
-						<a href="{id}" class="preview-{id}c{@id}">
 							<xsl:value-of select="detail[@id=160]"/>
 						</a>
 					</xsl:for-each>

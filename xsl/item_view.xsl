@@ -76,17 +76,17 @@
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Sound</xsl:with-param>
-			<xsl:with-param name="items" select="$related[@type='IsRelatedTo'][type/@id=74][starts-with(detail[@id=289], 'audio')]"/>
+			<xsl:with-param name="items" select="$related[../../detail[@id=200]='IsRelatedTo'][type/@id=74][starts-with(detail[@id=289], 'audio')]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Video</xsl:with-param>
-			<xsl:with-param name="items" select="$related[@type='IsRelatedTo'][type/@id=74][starts-with(detail[@id=289], 'video')]"/>
+			<xsl:with-param name="items" select="$related[../../detail[@id=200]='IsRelatedTo'][type/@id=74][starts-with(detail[@id=289], 'video')]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">Maps</xsl:with-param>
-			<xsl:with-param name="items" select="$related[@type='IsRelatedTo'][type/@id=103]"/>
+			<xsl:with-param name="items" select="$related[../../detail[@id=200]='IsRelatedTo'][type/@id=103]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
@@ -101,7 +101,11 @@
 		</xsl:call-template>
 		<xsl:call-template name="relatedItems">
 			<xsl:with-param name="label">External links</xsl:with-param>
-			<xsl:with-param name="items" select="$related[@type='hasExternalLink'][type/@id=1]"/>
+			<xsl:with-param name="items" select="
+				$related[
+					../../detail[@id=200]='hasExternalLink' or
+					../../detail[@id=200]='isExternalLinkOf'
+				][type/@id=1]"/>
 			<xsl:with-param name="omit" select="$omit"/>
 		</xsl:call-template>
 	</xsl:template>
