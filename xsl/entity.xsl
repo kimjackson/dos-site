@@ -161,7 +161,7 @@
 									</xsl:choose>
 								</xsl:attribute>
 							</xsl:if>
-							<a href="{id}" class="popup preview-{id}c{@id}">
+							<a href="{id}" class="popup preview-{id}c{../../id}">
 								<img>
 									<xsl:attribute name="alt"/><!-- FIXME -->
 									<xsl:attribute name="src">
@@ -186,7 +186,7 @@
 			<div class="list-right-col">
 				<div class="list-right-col-audio">
 					<xsl:for-each select="$audio_of">
-						<a href="{id}" class="popup preview-{id}c{@id}">
+						<a href="{id}" class="popup preview-{id}c{../../id}">
 							<img src="{$urlbase}images/img-entity-audio.jpg" alt=""/><!-- FIXME -->
 						</a>
 					</xsl:for-each>
@@ -202,7 +202,7 @@
 			<div class="list-right-col">
 				<div class="list-right-col-content entity-thumbnail">
 					<xsl:for-each select="$video_of">
-						<a href="{id}" class="popup preview-{id}c{@id}">
+						<a href="{id}" class="popup preview-{id}c{../../id}">
 							<xsl:value-of select="detail[@id=160]"/>
 						</a>
 					</xsl:for-each>
