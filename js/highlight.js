@@ -449,8 +449,8 @@ function alignImages() {
 
 	$("div.annotation-img").each(function () {
 		$annotation = $("#tei a." + getAnnotationClassName(this));
-		$section = getContainingSection($annotation);
-		if ($section.is(":visible")) {
+		$section = $annotation ? getContainingSection($annotation) : null;
+		if ($section  &&  $section.is(":visible")) {
 			$(this).css("margin-top", "0px");
 			$(this).show();
 			$img = $(this).find("img");
