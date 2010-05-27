@@ -14,7 +14,7 @@
 				<xsl:call-template name="setup_refs"/>
 
 				<xsl:apply-templates select="$matches">
-					<xsl:sort data-type="number" select="detail[@id=359]"/>
+					<xsl:sort data-type="number" select="detail[@id=341]"/>
 					<xsl:sort data-type="number" select="id"/>
 				</xsl:apply-templates>
 
