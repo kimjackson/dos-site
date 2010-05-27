@@ -29,9 +29,9 @@
 				<script>
 					var itemPath = "http://heuristscholar.org/<xsl:value-of select="$cocoonbase"/>/item/";
 					var imgpath = "http://heuristscholar.org/<xsl:value-of select="$urlbase"/>/img/reftype/";
-					
+
 					function showFootnote(recordID) {
-						document.getElementById("page").style.bottom = "205px";
+						document.getElementById("page").style.bottom = "105px";
 						document.getElementById("footnotes").style.display = "block";
 
 						var elts = document.getElementsByName("footnote");
@@ -82,7 +82,7 @@
 						   elts.innerHTML += "&lt;br>&lt;br>&lt;span style=\"padding-right:5px; vertical-align:top\">&lt;a href=\""+itemPath+val.getID()+"\">"+val.getTitle()+"&lt;/a>&lt;/span>"+"&lt;img src=\"" + imgpath+val.getRecordType().getID() +".gif\"/>";
 						}
 				   }
-				   
+
 				  </script>
 				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;key={$hapi-key}"/>
 				<script>
@@ -126,7 +126,7 @@
 								<xsl:with-param name="record" select="export/references/reference"/>
 								<xsl:with-param name="themeToUse" select="$focusTheme"/>
 							</xsl:call-template>
-						</xsl:if>					
+						</xsl:if>
 						<span style="margin-left:5px;">
 							<xsl:call-template name="minimise_text">
 								<xsl:with-param name="sstring"><xsl:value-of select="export/references/reference/title"/></xsl:with-param>
@@ -134,7 +134,7 @@
 						</span>
 					</h2 -->
 					<div id="logo">
-						<a href="{$cocoonbase}/item/{$home-id}" style="font-size: 30px;">
+						<a href="{$cocoonbase}/item/{$home-id}">
 							<xsl:value-of select="$site-title"/>
 						</a>
 					</div>
@@ -198,7 +198,7 @@
 							<!-- <xsl:value-of select="export/references/reference[1]/title"/> -->
 							<span style="padding-right:5px; padding-left:5px; vertical-align:top;">
 								<a href="#" onclick="window.open('{$urlbase}/edit.html?id={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false; " title="Edit main record">
-									<img src="{$hbase}/img/edit-pencil.gif" style="vertical-align: top;"/>
+									<img src="{$hbase}/img/edit-pencil.gif" class="editPencil" style="vertical-align: top;"/>
 								</a>
 							</span>
 							<xsl:value-of select="export/references/reference[1]/title"/>
@@ -211,18 +211,18 @@
 				<div id="page">
 					<xsl:choose>
 						<xsl:when test="export/references/reference/reftype[@id = 51 or @id = 55]">
-							<div id="page-inner" style="width: 40%; height: 370px; margin-right: auto; margin-left: 10px">
+							<div id="page-inner">
 								<!-- full version of record -->
 								<xsl:apply-templates select="export/references/reference"/>
 							</div>
 						</xsl:when>
 						<xsl:otherwise>
-							<div id="page-inner" style="width: 100%; height: 370px; margin-right: auto; margin-left: auto">
+							<div id="page-inner">
 								<h1>
 									<!-- <xsl:value-of select="export/references/reference[1]/title"/> -->
 									<span style="padding-right:5px; vertical-align:top">
 										<a href="#" onclick="window.open('{$urlbase}/edit.html?id={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false; " title="Edit main record">
-											<img src="{$hbase}/img/edit-pencil.gif" style="vertical-align: top;"/>
+											<img src="{$hbase}/img/edit-pencil.gif" class="editPencil" style="vertical-align: top;"/>
 										</a>
 									</span>
 									<xsl:value-of select="export/references/reference[1]/title"/>
@@ -283,7 +283,7 @@
 						div.id = "saved-search-" + i;
 						var a = document.createElement("a");
 						a.href = "#";
-						
+
 						var regexS = "[\\?&amp;]q=([^&amp;#]*)";
 						var regex = new RegExp( regexS );
 						var results = regex.exec( savedSearches[i][1]);
@@ -291,10 +291,10 @@
 						a.appendChild(document.createTextNode(savedSearches[i][0]));
 						div.appendChild(a);
 						document.getElementById("saved-searches").appendChild(div);
-						
+
 					}
 				}
-				
+
 				function savedSearchesOnclick (e, res) {
 					e.onclick = function() {
 						document.getElementById('query-input').value = res;
@@ -390,6 +390,12 @@
 			<xsl:otherwise>
 				<tr>
 					<td>
+                    <div class="editIcon">						
+						<a href="{$urlbase}/edit.html?id={id}" onclick="window.open(this.href,'','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="edit">
+							<img src="{$hbase}/img/edit-pencil.gif" class="editPencil"/>
+						</a>
+					</div>
+					<div class="thumbnailCell">
 						<!-- PRESENTATION  for KML Map 103, Historical Event 51, KML file 165 , Place record 122 and Site record 57-->
 						<xsl:if test="(../reftype/@id = 103 or ../reftype/@id = 165 or ../reftype/@id = 122 or ../reftype/@id = 57)">
 							<xsl:call-template name="renderAppropriateLegend">
@@ -417,14 +423,18 @@
 						<xsl:if test="detail[@id = 222 or @id=223 or @id=224]">
 							<xsl:if test="detail/file_thumb_url">
 								<a href="{$cocoonbase}/item/{id}">
-									<img src="{detail/file_thumb_url}"/>
+									<img src="{detail/file_thumb_url}" class="thumbnail"/>
 								</a>
-								<br/>
-							</xsl:if>
+								<!-- <br/>  -->
+							</xsl:if> 
 						</xsl:if>
+						<!--
 						<a href="{$urlbase}/edit.html?id={id}" onclick="window.open(this.href,'','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="edit">
 							<img src="{$hbase}/img/edit-pencil.gif"/>
 						</a>
+						-->
+					</div>	
+					<div class="link">	
 						<a href="{$cocoonbase}/item/{id}" class="sb_two">
 							<xsl:choose>
 								<!-- related / notes -->
@@ -443,11 +453,12 @@
 								</xsl:otherwise>
 							</xsl:choose>
 						</a>
-					</td>
-					<td align="right">
+					</div>
+					<div class="reftypeIcon">
 						<!-- change this to pick up the actuall system name of the reftye or to use the mapping method as in JHSB that calls human-readable-names.xml -->
 						<img style="vertical-align: middle;horizontal-align: right" src="{$hbase}/img/reftype/{reftype/@id}.gif"/>
-					</td>
+					</div>
+                </td>    
 				</tr>
 			</xsl:otherwise>
 		</xsl:choose>
@@ -467,7 +478,7 @@
 			</tr>
 			<xsl:if test="url != ''">
 				<tr>
-					<td style="padding-right: 10px;">URL</td>
+					<td class="col1">URL</td>
 					<td>
 						<a href="{url}">
 							<xsl:choose>
@@ -485,7 +496,7 @@
 			<!-- this calls  ? -->
 			<xsl:for-each select="detail[@id!=222 and @id!=223 and @id!=224]">
 				<tr>
-					<td style="padding-right: 10px;">
+					<td class="col1">
 						<nobr>
 							<xsl:choose>
 								<xsl:when test="string-length(@name)">
@@ -526,15 +537,17 @@
 				</tr>
 			</xsl:for-each>
 			<tr>
-				<td style="padding-right: 10px;">
+				<td class="col1">
 					<xsl:value-of select="pointer[@id=264]/@name"/>
 				</td>
 				<td>
-					<xsl:apply-templates select="pointer[@id=264]"/>
+					<table>
+						<xsl:apply-templates select="pointer[@id=264]"/>
+					</table>
 				</td>
 			</tr>
 			<tr>
-				<td style="padding-right: 10px;">
+				<td class="col1">
 					<xsl:value-of select="pointer[@id=267]/@name"/>
 				</td>
 				<td>
@@ -543,7 +556,7 @@
 			</tr>
 			<xsl:if test="notes != ''">
 				<tr>
-					<td style="padding-right: 10px;">Notes</td>
+					<td class="col1">Notes</td>
 					<td>
 						<xsl:value-of select="notes"/>
 					</td>
@@ -551,11 +564,11 @@
 			</xsl:if>
 			<xsl:if test="detail[@id=222 or @id=223 or @id=224]">
 				<tr>
-					<td style="padding-right: 10px;">Images</td>
+					<td class="col1">Images</td>
 					<td>
 						<!-- 222 = Logo image,  223 = Thumbnail,  224 = Images -->
 						<xsl:for-each select="detail[@id=222 or @id=223 or @id=224]"><a href="{file_fetch_url}">
-								<img src="{file_thumb_url}" border="0"/>
+								<img src="{file_thumb_url}" border="0" class="thumbnail"/>
 							</a> &#160;&#160; </xsl:for-each>
 					</td>
 				</tr>

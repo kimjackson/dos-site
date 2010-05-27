@@ -75,8 +75,8 @@ function displayResults(s,r) {
 	var thisInstancePath = HAPI.instance ? "http://"+ HAPI.instance +".heuristscholar.org/heurist/" : "http://heuristscholar.org/heurist/";
 	for (var i = 0; i < r.length; i++) {
 		if (r[i].getRecordType()){
-			innerHTML += "<img src=\""+ thisInstancePath + "img/reftype/" + r[i].getRecordType().getID() + ".gif\"/>";
-			innerHTML += " <a href=../" + r[i].getID() + "/ target=\"_blank\">" + r[i].getTitle() + "</a><br/>";
+			innerHTML += "<div class='displayTable'><div class='editIcon'><img src=\""+ thisInstancePath + "img/reftype/" + r[i].getRecordType().getID() + ".gif\"/></div>";
+			innerHTML += " <div class='link'><a href=../" + r[i].getID() + "/ target=\"_blank\">" + r[i].getTitle() + "</a></div></div>";
 		}
 	}
 

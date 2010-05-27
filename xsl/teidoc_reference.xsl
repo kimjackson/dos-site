@@ -25,11 +25,14 @@
 						<!--a href="{$base}/item/{id}/{/export/references/reference/reftype/@id}?flavour={$flavour}#ref1"-->
 
 						<!-- chose if base id = annotation target id - then include onclick handler and href is below -->
+						<div class="editIcon">
 						<a href="{$urlbase}/edit-annotation.html?id={id}"
 							onclick="window.open(this.href,'','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;"
 							title="edit">
 							<img src="{$hbase}/img/edit-pencil.gif"/>
 						</a>
+						</div>
+						<div class="annotation">
 						<xsl:choose>
 							<xsl:when test="../id = pointer[@id=322]/id">
 								<a href="#ref{id}" annotation-id="{id}"
@@ -42,14 +45,15 @@
 								<a href="{$cocoonbase}/item/{pointer[@id=322]/id}/#ref{id}" class="sb_two">
 									<xsl:value-of select="title"/>
 								</a>
-								<br/>... (annotation in <em>
+								<span>(annotation in: <em>
 									<xsl:value-of select="pointer[@id=322]/title"/>
-								</em>
+								</em> 
 								<img style="vertical-align: middle;horizontal-align: right"
-									src="{$hbase}/img/reftype/{pointer[@id=322]/reftype/@id}.gif"/>)
+									src="{$hbase}/img/reftype/{pointer[@id=322]/reftype/@id}.gif"/>) 
+								</span>
 							</xsl:otherwise>
 						</xsl:choose>
-
+                        </div>
 
 						<!-- iotherwise get the id if the target and -->
 
