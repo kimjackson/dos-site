@@ -11,7 +11,10 @@
 	<xsl:include href="teidoc.xsl"/>
 	<xsl:include href="teidoc_reference.xsl"/>
 	<xsl:include href="kml-timeline.xsl"/>
+	<xsl:include href="collection.xsl"/>
+	<xsl:include href="artist.xsl"/>
 	<xsl:include href="artwork.xsl"/>
+	<xsl:include href="relation_translator.xsl"/>
 
 	<xsl:variable name="currentid">
 		<xsl:value-of select="export/references/reference/id"/>
@@ -177,7 +180,7 @@
 							document.getElementById("login").appendChild(a);</script>
 								</td>
 								<td id="heurist-link">
-									<a href="http://{$instance_prefix}heuristscholar.org/heurist/">Heurist</a>
+									<a href="http://{$instance_prefix}heuristscholar.org/heurist/?q=id:{export/references/reference/id}">Heurist</a>
 								</td>
 							</tr>
 						</table>
@@ -190,19 +193,17 @@
 								<input type="text" id="query-input" value=""/>
 								<input type="button" value="search" onclick="search(document.getElementById('query-input').value);"/>
 							</form>
-							<div style="padding-left: 150px;">
-								<a title="Coming soon" onclick="alert('Coming soon!');" href="#"> (Advanced)</a>
-							</div>
+							
 						</div>
-						<h1>
-							<!-- <xsl:value-of select="export/references/reference[1]/title"/> -->
+						<!-- h1>
+							
 							<span style="padding-right:5px; padding-left:5px; vertical-align:top;">
 								<a href="#" onclick="window.open('{$urlbase}/edit.html?id={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false; " title="Edit main record">
 									<img src="{$hbase}/img/edit-pencil.gif" style="vertical-align: top;"/>
 								</a>
 							</span>
 							<xsl:value-of select="export/references/reference[1]/title"/>
-						</h1>
+						</h1 -->
 						<xsl:call-template name="related_items_section">
 							<xsl:with-param name="items" select="export/references/reference/related | export/references/reference/pointer | export/references/reference/reverse-pointer"/>
 						</xsl:call-template>
@@ -217,7 +218,16 @@
 							</div>
 						</xsl:when>
 						<xsl:otherwise>
-							<div id="page-inner" style="width: 100%; height: 370px; margin-right: auto; margin-left: auto">
+							<div id="page-inner" style="height: 370px; margin-right: auto; margin-left: auto">   <!-- removed width: 100%; -->
+								<!-- h1>
+									
+									<span style="padding-right:5px; vertical-align:top">
+										<a href="#" onclick="window.open('{$urlbase}/edit.html?id={export/references/reference/id}','','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false; " title="Edit main record">
+											<img src="{$hbase}/img/edit-pencil.gif" style="vertical-align: top;"/>
+										</a>
+									</span>
+									<xsl:value-of select="export/references/reference[1]/title"/>
+								</h1 -->
 								<!-- full version of record -->
 								<xsl:apply-templates select="export/references/reference"/>
 							</div>
@@ -252,61 +262,26 @@
 			<!-- this step of the code aggregates related items into groupings based on the type of related item -->
 			<xsl:for-each select="$items[not(@type = preceding-sibling::*/@type)] ">
 				<xsl:choose>
-					<xsl:when test="@type != 'Source entity reference' and @type != 'Entity reference' and @type != 'Target entity reference'">
+					<xsl:when test="@type != 'Map image layer reference' and @type != 'Source entity reference' and @type != 'Entity reference' and @type != 'Target entity reference'">
+						<!-- small>[<xsl:value-of select="local-name()"/>]</small -->
 						<xsl:call-template name="related_items_by_reltype">
 							<xsl:with-param name="reftype_id" select="reftype/@id"/>
 							<xsl:with-param name="reltype" select="@type"/>
+							<xsl:with-param name="reldirection" select="local-name()"/>
 							<xsl:with-param name="items" select="$items[@type = current()/@type and reftype/@id != 52]"/>
 						</xsl:call-template>
+					
 					</xsl:when>
 				</xsl:choose>
 			</xsl:for-each>
 		</table>
-		<div id="track-placeholder"/>
-		<div id="saved-searches">
-			<div id="saved-searches-header"/>
-			<script>
-				if (HCurrentUser.isLoggedIn()) {
-					var savedSearches = top.HEURIST.user.workgroupSavedSearches["2"];
-					if (savedSearches) document.getElementById("saved-searches-header").innerHTML = "Saved Searches";
-					for (i in savedSearches) {
-						var div = document.createElement("div");
-						div.id = "saved-search-" + i;
-						var a = document.createElement("a");
-						a.href = "#";
-						
-						var regexS = "[\\?&amp;]q=([^&amp;#]*)";
-						var regex = new RegExp( regexS );
-						var results = regex.exec( savedSearches[i][1]);
-						savedSearchesOnclick (a, results[1]);
-						a.appendChild(document.createTextNode(savedSearches[i][0]));
-						div.appendChild(a);
-						document.getElementById("saved-searches").appendChild(div);
-						
-					}
-				}
-				
-				function savedSearchesOnclick (e, res) {
-					e.onclick = function() {
-						document.getElementById('query-input').value = res;
-						search (res);
-					}
-				}
-			</script>
-		</div>
+		
 	</xsl:template>
 	<xsl:template name="related_items_by_reltype">
 		<xsl:param name="reftype_id"/>
 		<xsl:param name="reltype"/>
+		<xsl:param name="reldirection"/>
 		<xsl:param name="items"/>
-		
-		<!-- tr>
-			<td>
-				debug: top of list of related stuff
-				.......
-			</td>
-		</tr -->
-		
 		<xsl:if test="count($items) &gt; 0">
 			<xsl:if test="$reftype_id != 150  or  ../reftype/@id = 103">
 				<tr>
@@ -315,9 +290,15 @@
 							<xsl:choose>
 								<xsl:when test="$reftype_id = 99">Annotations</xsl:when>
 								<xsl:otherwise>
-									<xsl:value-of select="$reltype"/>
+									
+									<xsl:call-template name="translate_relations">
+										<xsl:with-param name="reltype" select="$reltype"/>
+										<xsl:with-param name="reldirection" select="$reldirection"/>
+										<xsl:with-param name="reftype_id" select="$reftype_id"/>
+									</xsl:call-template>
+									<!-- xsl:value-of select="$reltype"/ -->
 									<xsl:value-of select="../@id"/>
-									<!--(<xsl:value-of select="count($items)"/>) number of items with this relation -->
+								
 								</xsl:otherwise>
 							</xsl:choose>
 						</b>
@@ -327,6 +308,7 @@
 					<td>
 						<!-- (<xsl:value-of select="$items[1]"/>) -->
 						<table width="100%">
+							<!-- p>id: <xsl:value-of select="$currentid"/> - [<xsl:value-of select="id"/>] - </p -->
 							<xsl:apply-templates select="$items[1]">
 								<xsl:with-param name="matches" select="$items"/>
 							</xsl:apply-templates>
@@ -336,7 +318,6 @@
 			</xsl:if>
 		</xsl:if>
 	</xsl:template>
-	
 	<xsl:template name="related_items">
 		<xsl:param name="reftype_id"/>
 		<xsl:param name="reftype_label"/>
@@ -380,6 +361,7 @@
 		<xsl:choose>
 			<xsl:when test="$matches">
 				<xsl:apply-templates select="$matches">
+					<xsl:sort select="title"/>
 					<xsl:sort select="detail[@id=177]/year"/>
 					<xsl:sort select="detail[@id=177]/month"/>
 					<xsl:sort select="detail[@id=177]/day"/>
@@ -396,8 +378,6 @@
 								<xsl:with-param name="themeToUse" select="$relatedTheme"/>
 							</xsl:call-template>
 						</xsl:if>
-						<!-- end -->
-						
 						<xsl:if test=" ../reftype/@id=51">
 							<xsl:choose>
 								<xsl:when test="@id = 276">
@@ -415,25 +395,21 @@
 								</xsl:otherwise>
 							</xsl:choose>
 						</xsl:if>
-						<xsl:if test="detail[@id = 222 or @id=223 or @id=224 or @id=606]">
+						
+						<!-- I think this is the bit of code that renders thumbnails on the right hand side -->
+						<!-- xsl:if test="detail[@id = 222 or @id=223 or @id=224]">
 							<xsl:if test="detail/file_thumb_url">
 								<a href="{$cocoonbase}/item/{id}">
 									<img src="{detail/file_thumb_url}"/>
 								</a>
 								<br/>
 							</xsl:if>
-							
-							<xsl:if test="detail[@id=606]">
-								<a href="{$cocoonbase}/item/{id}">
-									<img width="180" src="{detail[@id=606]}"/>
-								</a>
-								<br/>
-							</xsl:if>
-						</xsl:if>
-						
-						<a href="{$urlbase}/edit.html?id={id}" onclick="window.open(this.href,'','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="edit">
+						</xsl:if -->
+						<!-- a href="{$urlbase}/edit.html?id={id}" onclick="window.open(this.href,'','status=0,scrollbars=1,resizable=1,width=800,height=600'); return false;" title="edit">
 							<img src="{$hbase}/img/edit-pencil.gif"/>
-						</a>
+							</a -->
+						
+						
 						<a href="{$cocoonbase}/item/{id}" class="sb_two">
 							<xsl:choose>
 								<!-- related / notes -->
@@ -461,12 +437,11 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-	
 	<!-- fall-back template for any reference types that aren't already handled -->
 	<xsl:template match="reference">
-		<xsl:if test="detail[@id=221]">
+		<!-- xsl:if test="detail[@id=221]">
 			<img src="{detail[@id=221]/file_thumb_url}&amp;w=400"/>
-		</xsl:if>
+		</xsl:if -->
 		<table>
 			<tr>
 				<td colspan="2">
@@ -536,7 +511,7 @@
 				</tr>
 			</xsl:for-each>
 			<tr>
-				<td style="padding-right: 10px;"> .....
+				<td style="padding-right: 10px;">
 					<xsl:value-of select="pointer[@id=264]/@name"/>
 				</td>
 				<td>
@@ -557,16 +532,17 @@
 					<td>
 						<xsl:value-of select="notes"/>
 					</td>
-				</tr>
+				</tr><!-- change this to pick up the actuall system name of the reftye or to use the mapping method as in JHSB that calls human-readable-names.xml -->
+					
 			</xsl:if>
 			<xsl:if test="detail[@id=222 or @id=223 or @id=224]">
 				<tr>
 					<td style="padding-right: 10px;">Images</td>
-					<td>
+					<td> removed thumbnail
 						<!-- 222 = Logo image,  223 = Thumbnail,  224 = Images -->
-						<xsl:for-each select="detail[@id=222 or @id=223 or @id=224]"><a href="{file_fetch_url}">
+						<!-- xsl:for-each select="detail[@id=222 or @id=223 or @id=224]"><a href="{file_fetch_url}">
 								<img src="{file_thumb_url}" border="0"/>
-							</a> &#160;&#160; </xsl:for-each>
+							</a> &#160;&#160; </xsl:for-each -->
 					</td>
 				</tr>
 			</xsl:if>

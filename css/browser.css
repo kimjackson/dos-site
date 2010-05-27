@@ -25,8 +25,8 @@
                     A:active { font-family: Helvetica, Arial, Verdana; color:#0096E3; font-size: 12px }
                     A:hover { font-family: Helvetica, Arial, Verdana; color:#0096E3; font-size: 12px }
 
-                    A.map-type { text-decoration: none; font-weight: bold; }
-                    A.map-type:link, A.map-type:visited {  color:#666666; }
+                    A.map-type { text-decoration: none; font-weight: normal; display:block; padding-left: 10px;}
+                    A.map-type:link, A.map-type:visited {  color:#333333; }
                     A.map-type:active, A.map-type:hover { color:#0096E3; }
 
 
@@ -50,10 +50,10 @@
                     A.sb_two:active { font-family: Helvetica, Arial, Verdana; color:#0096E3; text-decoration:none; font-weight: normal; font-size: 12px }
                     A.sb_two:hover { font-family: Helvetica, Arial, Verdana; color:#0096E3; text-decoration:none; font-weight: normal; font-size: 12px }
 
-                    A.bodynav:link { font-family: Helvetica, Arial, Verdana; color:#666666; text-decoration:none; font-weight: bold; font-size: 12px }
-                    A.bodynav:visited { font-family: Helvetica, Arial, Verdana; color:#666666; text-decoration:none; font-weight: bold; font-size: 12px }
-                    A.bodynav:active { font-family: Helvetica, Arial, Verdana; color:#0096E3; text-decoration:none; font-weight: bold; font-size: 12px }
-                    A.bodynav:hover { font-family: Helvetica, Arial, Verdana; color:#0096E3; text-decoration:none; font-weight: bold; font-size: 12px }
+                    A.bodynav:link { font-family: Helvetica, Arial, Verdana; color:#666666; text-decoration:none; font-weight: normal; font-size: 12px }
+                    A.bodynav:visited { font-family: Helvetica, Arial, Verdana; color:#999999; text-decoration:none; font-weight: normal; font-size: 12px }
+                    A.bodynav:active { font-family: Helvetica, Arial, Verdana; color:#0096E3; text-decoration:none; font-weight: normal; font-size: 12px }
+                    A.bodynav:hover { font-family: Helvetica, Arial, Verdana; color:#0096E3; text-decoration:none; font-weight: normal; font-size: 12px }
 
                     A.footer:link { font-family: Helvetica, Arial, Verdana; color:#666666; text-decoration:none; font-size: 9px }
                     A.footer:visited { font-family: Helvetica, Arial, Verdana; color:#666666; text-decoration:none; font-size: 9px }
@@ -75,7 +75,7 @@
 					.colourcellone  { font-family: Arial, Helvetica, Verdana; color:#FFF; font-size: 11px; font-weight: bold; background-color: #0096E3 }
 					.colourcelltwo { font-family: Arial, Helvetica, Verdana; color:#FFF; font-size: 11px; background-color: #888888 }
 					.colourcellthree { font-family: Arial, Helvetica, Verdana; color:#333; font-size: 11px; background-color: #EFEFEF }
-					.colourcellfour { font-family: Arial, Helvetica, Verdana; color:#333; font-size: 11px; background-color: #B1B1B1 }
+					.colourcellfour { font-family: Arial, Helvetica, Verdana; color:#333; font-size: 11px; background-color: none }  /*    changed below to none */
 					.colourcellfive { font-family: Arial, Helvetica, Verdana; color:#FFF; font-size: 11px; background-color: #EEAC03 }
 					.colourcellsix { font-family: Arial, Helvetica, Verdana; color:#333; font-size: 11px; background-color: #F8E061 }
 					.colourcellseven { font-family: Arial, Helvetica, Verdana; color:#333; font-size: 11px; background-color: #DCE9FB }
@@ -98,7 +98,7 @@
                     margin-left: 6px;
                     margin-right: 6px;
                     width: 50%;
-                    padding: 2px 6px 2px 6px;
+                    padding: 0 3px 0 3px;
                     font-size: 12px;
                     height: 18px; 
                     -moz-border-radius-bottomleft:10px;
@@ -113,6 +113,7 @@
                     border-bottom-right-radius:10px;
                     border-top-left-radius:10px;
                     border-top-right-radius:10px;
+
 
                     }
 					
@@ -181,7 +182,7 @@
                     border:1px  solid #999999;
 					}
                     
-					#page-inner { padding: 25px; }
+					#page-inner { padding: 10px; }
 
 					#entity {
 					padding: 0;
@@ -569,7 +570,7 @@
 					
 					.selected{
 					font-size: 11px;
-					background-color: yellow;
+					background-color: RGBA(255,255,255,0.4);
 					}
 					
                     div#artwork.artwork img {width:100%;}
@@ -592,9 +593,17 @@
                     font-weight: normal;
                     }
                     
+                    td.group-td div{
+                        background-color: white; 
+                        text-align:center; 
+                        border:1px solid white; 
+                        margin:10px 5px; 
+                        padding-top:10px;    
+                    }
+                    
                     div#page-inner table {
                     width:100%;
-                    border-spacing :10px;
+                    border-spacing :5px;
                     }
                     
                     #logo a {
@@ -609,3 +618,36 @@
                     text-decoration:none;
                     text-shadow:0 0px 0px rgba(0, 0, 0, 0.5);
                     text-transform:capitalize;
+                    }
+                    
+                    /* map-types stuff */
+                    #map-types { 
+                    font-family: Arial, Helvetica, Verdana; 
+                    color:#333; 
+                    font-size: 10px;
+                    font-weight:normal;   
+                    background-color: none;
+                    -moz-border-radius:10px;
+                    -webkit-border-radius:10px;
+                    border-radius:10px;
+                    -moz-box-shadow:0 2px 5px rgba(0, 0, 0, 0.5) inset;
+                    box-shadow: 0 6px 12px RGBA(0,0,0,0.7) inset;
+                    background-image:url(http://heuristscholar.org/heurist/img/saved-searches-bg.png);
+                    padding:1px 0 5px 0;
+                    margin-bottom: 20px;    }
+                    
+                    
+                    #map-types H4{
+                    color:#5482AB;
+                    font-size:12px;
+                    font-weight:normal;  
+                    margin:5px 0;
+                    padding-left: 10px;
+                    }
+                    
+                    #map-types input{
+                    margin-left: 20px;
+                    vertical-align: middle;
+                    }  
+                    
+                    

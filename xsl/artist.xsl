@@ -1,100 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-	<xsl:template name="artwork" match="reference[reftype/@id=129]">
-		<!-- root template for artworks -->
 
-		<div id="artwork" class="artwork">
+	<xsl:template name="artist" match="reference[reftype/@id=128]">
+
+		<table width="100%">
+			<tr>
+				<td>
+		<xsl:call-template name="personDetailsForArtist">
+			<xsl:with-param name="personDetails" select="pointer[@id=249]"/>
+		</xsl:call-template>
+		</td>
+			</tr>
+			<tr>
+				<td>
+			<h2>Paintings by this artist</h2>
+
+			<xsl:call-template name="tableOfArtworkThumbnails">
+				<xsl:with-param name="artworks" select="reverse-pointer[@id=580]"/>
+			</xsl:call-template></td>
+		</tr>
+
+		</table>
+
+	</xsl:template>
+
+	<xsl:template name="personDetailsForArtist">
+		<xsl:param name="personDetails"/>
+		<h1><xsl:value-of select="$personDetails/title"/></h1>
+
+		<xsl:choose><xsl:when test="$personDetails/detail[@id=223]">
+			...
+			<img src="{$personDetails/detail[@id=223]/file_fetch_url}" width="300" border="0" vspace="10"
+						hspace="10" align="left"/>
+		</xsl:when></xsl:choose>
 
 		<xsl:choose>
-			<xsl:when test="not (detail[@id=224]) and url">
-				<div  id = "img-external">
-					<img src ="{url}"></img>
-				</div>
+			<xsl:when test="$personDetails/detail[@id=293]">
+				<p>Born: <xsl:value-of select="$personDetails/detail[@id=293]/year"/> in <xsl:value-of select="$personDetails/detail[@id=216]"/></p>
 			</xsl:when>
-			<xsl:when test="detail[@id=224]">
-				<img src="{detail[@id=224]/file_fetch_url}" vspace="10" hspace="10" align="center"/>
-				</xsl:when>
 
-
-			<xsl:otherwise>[no images found]</xsl:otherwise>
 		</xsl:choose>
 
-		<p><xsl:call-template name="photocredit"/></p>
-
-		<p><xsl:call-template name="collection"/></p>
-
-		<p><xsl:call-template name="artist"/></p>
-
-
-		<p><xsl:call-template name="medium"/></p>
-
-
-
-			<p><xsl:call-template name="description"/></p>
-
-
-			<p><xsl:call-template name="dimensions"/></p>
-
-			<p>
-			<b>quality:</b> <xsl:call-template name="quality"/><br/>
-			<b>condition:</b> <xsl:call-template name="condition"/>
-			</p>
-
-
-
-
-		</div>
 	</xsl:template>
 
-	<xsl:template name="photocredit" match="detail[@id=609]">
-		<!-- photcredit -->
-		<em><small>artwork photographed by: <xsl:value-of select="detail[@id=609]"/></small></em>
-
-
-	</xsl:template>
-
-	<xsl:template name="collection" match="pointer[@id=397]">
-		<!-- pointer to collection record -->
-		<xsl:value-of select="pointer[@id=397]/title"/>
-		<br/>
-		<xsl:value-of select="pointer[@id=397]/detail[@id=201]"/>
-		<!-- citation protocol -->
-	</xsl:template>
-
-	<xsl:template name="artist" match="pointer[@id=580]">
-		<!-- pointer to artist record -->
-		<xsl:value-of select="pointer[@id=580]/title"/>
-	</xsl:template>
-
-	<xsl:template name="description" match="detail[@id=303]">
-			<xsl:call-template name="paragraphise">
-				<xsl:with-param name="text">
-					<xsl:value-of select="detail[@id=303]"/>
-				</xsl:with-param>
-			</xsl:call-template>
-	</xsl:template>
-
-	<xsl:template name="medium" match="detail[@id=437]">
-		<xsl:value-of select="detail[@id=437]"/>
-	</xsl:template>
-
-	<xsl:template name="quality" match="detail[@id=424]">
-		<xsl:value-of select="detail[@id=424]"/>
-	</xsl:template>
-
-	<xsl:template name="condition" match="detail[@id=578]">
-		<xsl:value-of select="detail[@id=578]"/>
-	</xsl:template>
-
-	<xsl:template name="dimensions">
-		<xsl:if test="detail[@id=594]">
-		<xsl:value-of select="detail[@id=594]"/> cm <i>by </i> <xsl:value-of select="detail[@id=595]"/> cm
-		</xsl:if>
-		<br/>
-
-		<xsl:if test="detail[@id=597]">
-		<xsl:value-of select="detail[@id=597]"/> inches <i>by</i> <xsl:value-of select="detail[@id=595]"/> inches
-		</xsl:if>
-
-	</xsl:template>
 </xsl:stylesheet>

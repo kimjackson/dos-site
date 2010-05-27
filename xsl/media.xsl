@@ -2,6 +2,35 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 	<xsl:template name="media" match="reference[reftype/@id=74]">
+		
+		<div id="artwork" class="artwork">
+		<xsl:choose>
+			<xsl:when test="not (detail[@id=224]) and (detail[@id=603])">
+				<div  id = "img-external">
+					<img src ="{detail[@id=603]}"></img>
+				</div>
+			</xsl:when>
+			
+			<xsl:when test="not (detail[@id=224]) and not (detail[@id=603]) and (detail[@id=604])">
+				<div  id = "img-external">
+					<a href="{url}"><img src ="{detail[@id=604]}" border="0"  vspace="10" hspace="10" align="center"/></a>
+				</div>
+			</xsl:when>
+			
+			<xsl:when test="not (detail[@id=224]) and not (detail[@id=603]) and not (detail[@id=604]) and url">
+				<div  id = "img-external">
+					<a href="{url}"><img src ="{url}" border="0"  vspace="10" hspace="10" align="center"/></a>
+				</div>
+			</xsl:when>
+			<xsl:when test="detail[@id=224]">
+				<a href="{url}"><img src="{detail[@id=224]/file_fetch_url}" border="0"  vspace="10" hspace="10" align="center"/></a>
+			</xsl:when>
+			
+			
+			<xsl:otherwise>[no images found]</xsl:otherwise>
+		</xsl:choose>
+			</div>
+		
 		<table>
 			<tr>
 				<td align="center">
@@ -102,5 +131,13 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
+	
+	<!-- xsl:template match="reverse-pointer[reftype/@id=129]">
+		Additional image for
+		
+		
+	
+
+	</xsl:template -->
 
 </xsl:stylesheet>

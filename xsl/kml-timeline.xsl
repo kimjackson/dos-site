@@ -5,9 +5,17 @@ xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 <xsl:template name="kml" match="reference[reftype/@id=103 or reftype/@id=51 or reftype/@id=165 or reftype/@id=122 or reftype/@id=57 or reftype/@id=168]">
 	<div id="main" class="div-main">
 		<div id="map" class="map"/>
-		<div id="timeline" class="timeline"/>
 		<div id="map-types" class="map-timeline-key"/>
-		<div id="timeline-zoom" class="timeline-zoom"/>
+		<xsl:choose>
+		    <xsl:when test="$show-timelines-with-maps = 'no'">
+		    </xsl:when>
+			<xsl:otherwise>
+			<div id="timeline" class="timeline"/>
+			<div id="timeline-zoom" class="timeline-zoom"/> 
+			</xsl:otherwise>
+		
+		</xsl:choose>
+		
 	</div>
 	
 	<script type="text/javascript">			
@@ -99,50 +107,15 @@ xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 				</xsl:choose>
 			</xsl:with-param>
 		</xsl:call-template>
-		<xsl:call-template name="generateTimeMapObjectsForCrumbs"></xsl:call-template>
 		
-	if (enableMapTrack){
-		saveAndLoad({recId: <xsl:value-of select="id"/>, recTitle: document.getElementById("<xsl:value-of select="id"/>").text, recType: '<xsl:value-of select="reftype/@id"/>', hasGeoData:'<xsl:call-template name="checkForGeoData"/>'});	
-	} else {
+		
+	
 		initTMap();
-	}
+	
         	</script>
 </xsl:template>
 	
-<xsl:template name="generateTimeMapObjectsForCrumbs">
-	if (enableMapTrack){
-	// and time map objects based on breadcrumbs!
-	HAPI.PJ.retrieve(_nameTrack, function (name, value){
-		gatherCrumbs(_nameTrack, value,<xsl:value-of select="id"/>);
-		if (value)  {
-			var i;				
-			for ((value[0].recId == <xsl:value-of select="id"/>?i=1: i=0); i &lt; value.length; ++i) {
-				var link;
-				var title = "MapCrumb" + i;
-	
-				if (value[i].recType &amp; value[i].recType == '165') {
-					link = "http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kmlfile/" + value[i].recId;
-				} else {
-					link = "http://heuristscholar.org<xsl:value-of select="$cocoonbase"/>/kml/id:" + value[i].recId;
-				}
-	
-				var timeCrumb = {
-					title: "Breadcrumb"+i,
-					theme: TimeMapDataset.redTheme({
-						color: crumbThemes[(value[0].recId == <xsl:value-of select="id"/>?i-1: i)].colour,
-						iconImage: crumbThemes[(value[0].recId == <xsl:value-of select="id"/>?i-1: i)].icon
-					}),
-					data: {
-						type: "kml", 
-						url: link
-					}
-				}					
-				window.mapdata.timemap.push(timeCrumb);
-			}
-		}	
-	}); //end hapi   
-	}
-</xsl:template>
+
 	
 <xsl:template name="checkForGeoData">	
 		<!-- Historical event 51 -->

@@ -3,12 +3,13 @@
 	xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
 <xsl:variable name="hbase">http://balipaintings.heuristscholar.org/heurist</xsl:variable>
 <xsl:variable name="urlbase">/bali-paintings</xsl:variable>
-<xsl:variable name="cocoonbase">/cocoon/bali-paintings</xsl:variable>
+	<xsl:variable name="cocoonbase">/cocoon/bali-paintings</xsl:variable>
 <xsl:variable name="hapi-key">42a2ea64e433d2d0e65d1208c7cb1956681e0986</xsl:variable>
 <xsl:variable name="instance">balipaintings</xsl:variable>
 <xsl:variable name="instance_prefix">balipaintings.</xsl:variable>
 <xsl:variable name="site-title">bali paintings</xsl:variable>
 <xsl:variable name="home-id">1</xsl:variable>
+<xsl:variable name="show-timelines-with-maps"></xsl:variable>
 
   <xsl:variable name="enableMapTrack">false</xsl:variable> <!-- include map track functionality for this  browser instance -->
   <xsl:variable name="bcrumbNameTrack">bali</xsl:variable> <!-- a more or less unique name for map track recording -->

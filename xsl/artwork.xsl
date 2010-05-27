@@ -31,11 +31,12 @@
 			<xsl:otherwise>[no images found]</xsl:otherwise>
 		</xsl:choose>
 
+		<p><xsl:call-template name="artworkTitle"/></p>
+
 		<p><xsl:call-template name="photocredit"/></p>
 
-		<p><xsl:call-template name="collection"/></p>
+		
 
-		<p><xsl:call-template name="artist"/></p>
 
 
 		<p><xsl:call-template name="medium"/></p>
@@ -43,6 +44,8 @@
 
 
 			<p><xsl:call-template name="description"/></p>
+			
+			<p><xsl:call-template name="abstract"/></p>
 
 
 			<p><xsl:call-template name="dimensions"/></p>
@@ -56,6 +59,16 @@
 
 
 		</div>
+		
+		<xsl:call-template name="tableOfArtworkThumbnails">
+			<xsl:with-param name="artworks" select="pointer[@id=508]"/>
+		</xsl:call-template>
+		
+	</xsl:template>
+	
+	
+	<xsl:template name="artworkTitle">
+		<h2><xsl:value-of select="title"/></h2>
 	</xsl:template>
 
 	<xsl:template name="photocredit" match="detail[@id=609]">
@@ -65,27 +78,24 @@
 
 	</xsl:template>
 
-	<xsl:template name="collection" match="pointer[@id=397]">
-		<!-- pointer to collection record -->
-		<a href="{$cocoonbase}/item/{id}"><xsl:value-of select="title"/></a>
-		<br/>
-		<p><small><em>permission to publish images from this collection on this website <xsl:value-of select="detail[@id=201]"/>
-		<!-- citation protocol -->
-		
-		</em></small></p>
-	</xsl:template>
+	
 
-	<xsl:template name="artist" match="pointer[@id=580]">
-		<!-- pointer to artist record -->
-		<xsl:value-of select="pointer[@id=580]/title"/>
-	</xsl:template>
+	
 
 	<xsl:template name="description" match="detail[@id=303]">
-			<xsl:call-template name="paragraphise">
+			<div width="80%"><xsl:call-template name="paragraphise">
 				<xsl:with-param name="text">
 					<xsl:value-of select="detail[@id=303]"/>
 				</xsl:with-param>
-			</xsl:call-template>
+			</xsl:call-template></div>
+	</xsl:template>
+
+	<xsl:template name="abstract" match="detail[@id=560]">
+		<div width="80%"><xsl:call-template name="paragraphise">
+			<xsl:with-param name="text">
+				<xsl:value-of select="detail[@id=560]"/>
+			</xsl:with-param>
+		</xsl:call-template></div>
 	</xsl:template>
 
 	<xsl:template name="medium" match="detail[@id=437]">
@@ -111,4 +121,7 @@
 		</xsl:if>
 
 	</xsl:template>
+	
+	
+	
 </xsl:stylesheet>
