@@ -6,56 +6,16 @@ PIPELINE=http://heuristscholar.org/cocoon/relbrowser-kj
 REPO=repo
 
 # create directories
-mkdir item preview popup browse search kml kml/full kml/summary files files/thumbnail files/small files/medium files/wide files/large files/full $REPO/hml
+mkdir item preview popup browse search kml kml/full kml/summary $REPO/hml
+# mkdir files files/thumbnail files/small files/medium files/wide files/large files/full
+ln -s ../dos-static-2009-10-22/files
 cp -prd $REPO/js $REPO/images $REPO/swf $REPO/*.css $REPO/config.xml $REPO/contact.php .
 cp -pd $REPO/jquery $REPO/timemap.js $REPO/timeline $REPO/recaptcha .
 ln -s ../dos-map-tiles tiles
 
-
-# copy files
-echo "select distinct file_id, file_nonce from rec_details, files where file_id = rd_file_id;" | mysql -s -u readonly -pmitnick heuristdb-dos | \
-while read id nonce; do
-	if [[ ! -e files/full/$nonce ]]; then
-		cp /var/www/htdocs/uploaded-heurist-files/dos/$id files/full/$nonce;
-	fi
-done
-
-# generate resized images
-echo "select distinct file_nonce from rec_details, files where file_id = rd_file_id and file_mimetype like 'image%';" | mysql -s -u readonly -pmitnick heuristdb-dos | \
-while read nonce; do
-	if [[ ! -e files/thumbnail/$nonce ]]; then
-		wget -O files/thumbnail/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&w=148\&h=148;
-	fi
-	if [[ ! -e files/small/$nonce ]]; then
-		wget -O files/small/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&w=148;
-	fi
-	if [[ ! -e files/medium/$nonce ]]; then
-		wget -O files/medium/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&h=180;
-	fi
-	if [[ ! -e files/wide/$nonce ]]; then
-		wget -O files/wide/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&maxw=800\&maxh=400;
-	fi
-	if [[ ! -e files/large/$nonce ]]; then
-		wget -O files/large/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&maxw=698;
-	fi
-done
-
-# generate URL map
-php $REPO/deploy/urlmap.php > $REPO/xsl/urlmap.xml
-wget --no-cache -O $REPO/xsl/urlmap.xsl $PIPELINE/urlmap-xsl
-
-# create symbolic links
-php $REPO/deploy/urlmap.php links > make_links.sh
-php $REPO/deploy/urlmap.php spider-links > make_spider_links.sh
-. make_links.sh
-. make_spider_links.sh
-rm make_links.sh
-rm make_spider_links.sh
-
-# generate XML for all required items
-. $REPO/deploy/hml.sh
-
-# generate pages, previews for all appropriate records
+# run all required queries
+echo "select distinct file_id, file_nonce from rec_details, files where file_id = rd_file_id;" | mysql -s -u readonly -pmitnick heuristdb-dos > file_ids.txt
+echo "select distinct file_nonce from rec_details, files where file_id = rd_file_id and file_mimetype like 'image%';" | mysql -s -u readonly -pmitnick heuristdb-dos > image_files.txt
 # 2674 is the Heuristos landing page
 # 2675 is a link to Heuristos
 ALL_ITEMS_QUERY="select rec_id
@@ -78,70 +38,13 @@ ALL_ENTRIES_QUERY="select rec_id
                    from records
                   where rec_type = 98
                     and rec_id not in (2674,2675);"
+echo $NOT_ENTIRES_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos > not_entries.txt
+echo $ALL_ENTRIES_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos > all_entries.txt
+echo $ALL_ITEMS_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos > all_items.txt
 
-cd item
-echo $NOT_ENTIRES_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos | \
-while read id; do
-	if [[ -e ../$REPO/hml/$id.xml  &&  ! -e $id ]]; then
-		echo $PIPELINE/item-urlmapped/$id;
-	fi
-done | \
-wget --no-cache -w 1 -i -
-echo $ALL_ENTRIES_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos | \
-while read id; do
-	if [[ -e ../$REPO/hml/$id.xml  &&  ! -e $id ]]; then
-		echo $PIPELINE/item-entry-urlmapped/$id;
-	fi
-done | \
-wget --no-cache -w 1 -i -
-cd ..
-
-cd preview
-echo $ALL_ITEMS_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos | \
-while read id; do
-	if [[ ! -e $id ]]; then
-		echo $PIPELINE/preview/$id;
-	fi
-done | \
-wget --no-cache -w 1 -i -
-cd ..
-
-# generate previews for all records in all necessary contexts
-cd preview
-grep -r 'preview-[0-9]' ../item | perl -pe 's/.*preview-(\d+(c\d+)?).*/\1/' | sort | uniq | \
-while read id; do
-	if [[ ! -e $id ]]; then
-		echo $PIPELINE/preview/$id;
-	fi
-done | \
-wget --no-cache -i -
-cd ..
-
-# generate popups for all multimedia records
-cd popup
-echo "select rec_id from records left join rec_details on rd_rec_id = rec_id and rd_type = 618 where (rec_type = 74) or (rec_type = 168 and rd_val = 'image');" | mysql -s -u readonly -pmitnick heuristdb-dos | \
-while read id; do
-	if [[ ! -e $id ]]; then
-		echo $PIPELINE/popup-urlmapped/$id;
-	fi
-done | \
-wget --no-cache -i -
-cd ..
-
-# generate KML for all entities
-echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type = 526 and a.rd_val = 'TimePlace' and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos | \
-while read id; do
-	if [[ ! -e kml/summary/$id.kml ]]; then
-		wget --no-cache -O kml/summary/$id.kml $PIPELINE/kml/summary/rename/$id;
-	fi
-done
-
-echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type in (177,178,230) and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos | \
-while read id; do
-	if [[ ! -e kml/full/$id.kml ]]; then
-		wget --no-cache -O kml/full/$id.kml $PIPELINE/kml/full/rename/$id;
-	fi
-done
+echo "select rec_id from records left join rec_details on rd_rec_id = rec_id and rd_type = 618 where (rec_type = 74) or (rec_type = 168 and rd_val = 'image');" | mysql -s -u readonly -pmitnick heuristdb-dos > popups.txt
+echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type = 526 and a.rd_val = 'TimePlace' and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos > kml_summary.txt
+echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type in (177,178,230) and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos > kml_full.txt
 
 # generate browsing data
 php $REPO/deploy/entities-json.php Artefact artefact > browse/artefacts.js
@@ -158,6 +61,125 @@ php $REPO/deploy/entities-json.php Map map > browse/maps.js
 php $REPO/deploy/entities-json.php Term subject > browse/subjects.js
 php $REPO/deploy/entities-json.php Role role > browse/roles.js
 php $REPO/deploy/entities-json.php Contributor contributor > browse/contributors.js
+
+# generate URL map
+php $REPO/deploy/urlmap.php > $REPO/xsl/urlmap.xml
+php $REPO/deploy/urlmap.php links > make_links.sh
+php $REPO/deploy/urlmap.php spider-links > make_spider_links.sh
+
+# generate XML for all required items
+. $REPO/deploy/hml.sh
+
+#FIXME: KML uses heurist: move up here?  split?
+
+########################################
+### END HEURIST-DEPENDENT OPERATIONS ###
+########################################
+
+
+# copy files
+cat file_ids.txt | \
+while read id nonce; do
+	if [[ ! -e files/full/$nonce ]]; then
+		cp /var/www/htdocs/uploaded-heurist-files/dos/$id files/full/$nonce;
+	fi
+done
+
+# generate resized images
+cat image_files.txt | \
+while read nonce; do
+	if [[ ! -e files/thumbnail/$nonce ]]; then
+		wget -O files/thumbnail/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&w=148\&h=148;
+	fi
+	if [[ ! -e files/small/$nonce ]]; then
+		wget -O files/small/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&w=148;
+	fi
+	if [[ ! -e files/medium/$nonce ]]; then
+		wget -O files/medium/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&h=180;
+	fi
+	if [[ ! -e files/wide/$nonce ]]; then
+		wget -O files/wide/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&maxw=800\&maxh=400;
+	fi
+	if [[ ! -e files/large/$nonce ]]; then
+		wget -O files/large/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&maxw=698;
+	fi
+done
+
+# generate URL map
+wget --no-cache -O $REPO/xsl/urlmap.xsl $PIPELINE/urlmap-xsl
+
+# create symbolic links
+. make_links.sh
+. make_spider_links.sh
+rm make_links.sh
+rm make_spider_links.sh
+
+# generate pages, previews for all appropriate records
+
+cd item
+cat ../not_entries.txt | \
+while read id; do
+	if [[ -e ../$REPO/hml/$id.xml  &&  ! -e $id ]]; then
+		echo $PIPELINE/item-urlmapped/$id;
+	fi
+done | \
+wget --no-cache -w 1 -i -
+cat ../all_entries.txt | \
+while read id; do
+	if [[ -e ../$REPO/hml/$id.xml  &&  ! -e $id ]]; then
+		echo $PIPELINE/item-entry-urlmapped/$id;
+	fi
+done | \
+wget --no-cache -w 1 -i -
+cd ..
+
+cd preview
+cat ../all_items.txt | \
+while read id; do
+	if [[ -e ../$REPO/hml/$id.xml  &&  ! -e $id ]]; then
+		echo $PIPELINE/preview/$id;
+	fi
+done | \
+wget --no-cache -w 1 -i -
+cd ..
+
+# generate previews for all records in all necessary contexts
+cd preview
+grep -r 'preview-[0-9]' ../item | perl -pe 's/.*preview-(\d+(c\d+)?).*/\1/' | sort | uniq | \
+while read id; do
+    base_id=`echo $id | sed 's/c.*//'`
+	if [[ -e ../$REPO/hml/$base_id.xml  &&  ! -e $id ]]; then
+		echo $PIPELINE/preview/$id;
+	fi
+done | \
+wget --no-cache -i -
+cd ..
+
+# generate popups for all multimedia records
+cd popup
+cat ../popups.txt | \
+while read id; do
+	if [[ -e ../$REPO/hml/$id.xml  &&  ! -e $id ]]; then
+		echo $PIPELINE/popup-urlmapped/$id;
+	fi
+done | \
+wget --no-cache -i -
+cd ..
+
+# generate KML for all entities
+cat kml_summary.txt | \
+while read id; do
+	if [[ ! -e kml/summary/$id.kml ]]; then
+		wget --no-cache -O kml/summary/$id.kml $PIPELINE/kml/summary/rename/$id;
+	fi
+done
+
+cat kml_full.txt | \
+while read id; do
+	if [[ ! -e kml/full/$id.kml ]]; then
+		wget --no-cache -O kml/full/$id.kml $PIPELINE/kml/full/rename/$id;
+	fi
+done
 
 wget --no-cache -O browse/artefacts $PIPELINE/browse/artefacts
 wget --no-cache -O browse/buildings $PIPELINE/browse/buildings
@@ -193,8 +215,15 @@ rsync -av about.html artefact audio boxy-ie.css boxy.css browse building config.
 rsync -av ../dos-static-2009-10-22/files/ kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/files/
 
 # on production server:
+cd /var/www/dos-2009-12-03
 perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2009-12-03/../' item/*
 perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2009-12-03/../' popup/*
 perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2009-12-03/http:\/\/dictionaryofsydney.org/' `grep -l heurist preview/*`
 perl -pi -e 's/ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w/ABQIAAAA5wNKmbSIriGRr4NY0snaURTtHC9RsOn6g1vDRMmqV_X8ivHa_xSNBstkFn6GHErY6WRDLHcEp1TxkQ/' `grep -l maps.google.com item/*`
+ln -fs ../files
+ln -fs ../tiles
+ln -fs ../test
+ln -fs ../previous
+cd /var/www/
+ln -fs dos-2009-12-03 test
 
