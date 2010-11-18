@@ -1,3 +1,8 @@
+##!!!!!!First Read README in current repo directory
+#check disk space df -h  and/or du -ha| grep M
+
+### STEP 1
+#setup environment and copy files
 # make sure we go direct to the server!
 unset http_proxy
 
@@ -8,10 +13,14 @@ REPO=repo
 # create directories
 mkdir item preview popup browse search kml kml/full kml/summary $REPO/hml
 # mkdir files files/thumbnail files/small files/medium files/wide files/large files/full
+# Kim decided to leave files in the same directory and update from there. So we create a sym link to that directory and update things there
 ln -s ../dos-static-2009-10-22/files
 cp -prd $REPO/js $REPO/images $REPO/swf $REPO/*.css $REPO/config.xml $REPO/contact.php .
 cp -pd $REPO/jquery $REPO/timemap.js $REPO/timeline $REPO/recaptcha .
 ln -s ../dos-map-tiles tiles
+
+
+####STEP 2 Generate supporting files NOTE run each command separately to verify correctness
 
 # run all required queries
 echo "select distinct file_id, file_nonce from rec_details, files where file_id = rd_file_id;" | mysql -s -u readonly -pmitnick heuristdb-dos > file_ids.txt
@@ -42,9 +51,17 @@ echo $NOT_ENTIRES_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos > not_ent
 echo $ALL_ENTRIES_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos > all_entries.txt
 echo $ALL_ITEMS_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos > all_items.txt
 
+# popups and KML files
 echo "select rec_id from records left join rec_details on rd_rec_id = rec_id and rd_type = 618 where (rec_type = 74) or (rec_type = 168 and rd_val = 'image');" | mysql -s -u readonly -pmitnick heuristdb-dos > popups.txt
 echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type = 526 and a.rd_val = 'TimePlace' and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos > kml_summary.txt
 echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type in (177,178,230) and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos > kml_full.txt
+
+# generate URL map
+php $REPO/deploy/urlmap.php check  # until errors are fixed
+
+php $REPO/deploy/urlmap.php > $REPO/xsl/urlmap.xml
+php $REPO/deploy/urlmap.php links > make_links.sh
+php $REPO/deploy/urlmap.php spider-links > make_spider_links.sh
 
 # generate browsing data
 php $REPO/deploy/entities-json.php Artefact artefact > browse/artefacts.js
@@ -62,21 +79,20 @@ php $REPO/deploy/entities-json.php Term subject > browse/subjects.js
 php $REPO/deploy/entities-json.php Role role > browse/roles.js
 php $REPO/deploy/entities-json.php Contributor contributor > browse/contributors.js
 
-# generate URL map
-php $REPO/deploy/urlmap.php > $REPO/xsl/urlmap.xml
-php $REPO/deploy/urlmap.php links > make_links.sh
-php $REPO/deploy/urlmap.php spider-links > make_spider_links.sh
+###STEP 3 Generate all records hml  NOTE this will take several hours.
+# consider using "screen -S genHML" and then start the command below and
+# then detach "ctrl+A d"  and "screen -r genHML" to reattach
+# when the command is finished just "exit" from screen
 
 # generate XML for all required items
 . $REPO/deploy/hml.sh
 
-#FIXME: KML uses heurist: move up here?  split?
 
 ########################################
 ### END HEURIST-DEPENDENT OPERATIONS ###
 ########################################
 
-
+###STEP 4 Generate content files
 # copy files
 cat file_ids.txt | \
 while read id nonce; do
@@ -104,6 +120,7 @@ while read nonce; do
 		wget -O files/large/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&maxw=698;
 	fi
 done
+
 
 # generate URL map
 wget --no-cache -O $REPO/xsl/urlmap.xsl $PIPELINE/urlmap-xsl
