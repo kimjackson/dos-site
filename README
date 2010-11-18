@@ -1,0 +1,24 @@
+mkdir /var/www/htdocs/dos-static-<yyyy-mm-dd>
+cd !$
+git clone /var/www/pub/relbrowser.git repo
+cd repo
+git checkout -b dos-site --track origin/dos-site
+git checkout -b dos-site-deploy-<yyyy-mm-dd>
+
+# git log origin/dos-site-deploy-<previous>
+# this, ideally, contains one commit, message "Static version"
+
+git cherry-pick -n origin/dos-site-deploy-<previous>  #or commit id for aforementioned
+# update dates in deploy/generate.sh
+
+git commit -m'Static version.'
+
+#push these to the bare repo
+#git push origin dos-site-deploy-<yyyy-mm-dd>
+# which is the same as
+#git push origin dos-site-deploy-<yyyy-mm-dd>:refs/heads/dos-site-deploy-<yyyy-mm-dd>
+
+# add a line to /opt/cocoon/mount-table.xml
+
+cd ..
+# start running sections of repo/deploy/generate.sh
