@@ -10,6 +10,7 @@ mysql_connection_db_select('`heuristdb-dos`');
 
 $spider_links = (@$argv[1] === 'spider-links');
 $links = (@$argv[1] === 'links') || $spider_links;
+$check = (@$argv[1] === 'check');
 
 $path_to_id = array();
 
@@ -31,7 +32,9 @@ while ($row = mysql_fetch_row($res)) {
 	$path = getRecordType($record) . '/' . getTitle($record);
 	if (array_key_exists($path, $path_to_id)) {
 		echo "Conflict: $path: " . $path_to_id[$path] . ", $id\n";
-		exit;
+		if (! $check) {
+			exit;
+		}
 	}
 	$path_to_id[$path] = $id;
 
@@ -79,12 +82,15 @@ if (! $links) echo "</map>\n";
 
 
 function getTitle($record) {
-	global $links;
+	global $links, $spider_links, $check;
 	$search = array(',', '\'', ' ', '/', '&');
 	$replace = array('', '', '_', '_', ($links ? '&' : '&amp;'));
 	if (! $record['details'][160]) {
+		echo "Missing title!\n";
 		var_dump($record);
-		exit;
+		if (! $check) {
+			exit;
+		}
 	}
 	foreach ($record['details'][160] as $detailID => $value) {
 		return str_replace($search, $replace, mb_strtolower($value, 'UTF-8'));
@@ -92,9 +98,13 @@ function getTitle($record) {
 }
 
 function getEntityType($record) {
+	global $check;
 	if (! $record['details'][523]) {
+		echo "Missing entity type!\n";
 		var_dump($record);
-		exit;
+		if (! $check) {
+			exit;
+		}
 	}
 	foreach ($record['details'][523] as $detailID => $value) {
 		return str_replace(' ', '_', strtolower($value));
@@ -122,11 +132,13 @@ function getRecordType($record) {
 }
 
 function printMapping($id, $path) {
-	global $links, $spider_links;
+	global $links, $spider_links, $check;
 	if ($spider_links) {
 		echo "ln -s ../item/$id \"spider-" . str_replace("&", "AMPERSAND", $path) . "\"\n";
 	} else if ($links) {
 		echo "ln -s ../item/$id \"$path\"\n";
+	} else if ($check) {
+		# noop, only output errors
 	} else {
 		echo "<record><id>$id</id><path>$path</path></record>\n";
 	}
