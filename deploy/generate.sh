@@ -93,6 +93,12 @@ php $REPO/deploy/entities-json.php Contributor contributor > browse/contributors
 ########################################
 
 ###STEP 4 Generate content files
+# THE FOLLOWING STEPS CAN TAKE A WHILE TO COMPLETE
+# CONSIDER using "screen -S genContent" and then start the commands below and
+# then detach "ctrl+A d"  and "screen -r genHML" to reattach
+# when the command is finished just "exit" from screen
+# this will allow you to dhut down you machine and reconnect at anytime.
+
 # copy files
 cat file_ids.txt | \
 while read id nonce; do
@@ -164,7 +170,7 @@ cd ..
 cd preview
 grep -r 'preview-[0-9]' ../item | perl -pe 's/.*preview-(\d+(c\d+)?).*/\1/' | sort | uniq | \
 while read id; do
-    base_id=`echo $id | sed 's/c.*//'`
+	base_id=`echo $id | sed 's/c.*//'`
 	if [[ -e ../$REPO/hml/$base_id.xml  &&  ! -e $id ]]; then
 		echo $PIPELINE/preview/$id;
 	fi
@@ -223,24 +229,45 @@ wget --no-cache -O faq.html $PIPELINE/faq
 wget --no-cache -O index.html $PIPELINE/
 
 # run zoom indexer over spider-* directories
+# this is done on kim's machine and has a script for updating.
+# this will generate the index files for the site.
+# NOTE the search engine that we generate is CGI for speed and you WILL
+#      NEED to ENSURE that the search directory is enable to run the script
+#      OR the binbary script file gets downloaded as crud into the browser.
+
+#remove the index links
 # rm -rf spider-*
 chmod +x search/search.cgi
 
+#######
+##DONE with the generation this should now be a working site at http://heuristscholar.org/dos-static-2010-11-18
+#######
 
-rsync -av about.html artefact audio boxy-ie.css boxy.css browse building config.xml contact.html contact.php contribute.html contributor copyright.html entry event faq.html image images index.html item jquery js kml map natural_feature organisation person place popup preview recaptcha role search search.css structure style.css subject swf tiles timeline timemap.js video kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2009-12-03/
+#COPY the files up to the production server into a new directory
+#su as kjackson to run this command
+rsync -av about.html artefact audio boxy-ie.css boxy.css browse building config.xml contact.html contact.php contribute.html contributor copyright.html entry event faq.html image images index.html item jquery js kml map natural_feature organisation person place popup preview recaptcha role search search.css structure style.css subject swf tiles timeline timemap.js video kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2010-11-18/
 
+#sync the uploaded files
 rsync -av ../dos-static-2009-10-22/files/ kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/files/
 
-# on production server:
-cd /var/www/dos-2009-12-03
-perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2009-12-03/../' item/*
-perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2009-12-03/../' popup/*
-perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2009-12-03/http:\/\/dictionaryofsydney.org/' `grep -l heurist preview/*`
+##########################
+## on production server:##
+##########################
+cd /var/www/dos-2010-11-18
+#replace dynamic links on built version to the relative links for the static production version
+perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2010-11-18/../' item/*
+perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2010-11-18/../' popup/*
+perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2010-11-18/http:\/\/dictionaryofsydney.org/' `grep -l heurist preview/*`
+#change the google key to the production key
 perl -pi -e 's/ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w/ABQIAAAA5wNKmbSIriGRr4NY0snaURTtHC9RsOn6g1vDRMmqV_X8ivHa_xSNBstkFn6GHErY6WRDLHcEp1TxkQ/' `grep -l maps.google.com item/*`
+
+# create production site sym links
 ln -fs ../files
 ln -fs ../tiles
 ln -fs ../test
 ln -fs ../previous
 cd /var/www/
-ln -fs dos-2009-12-03 test
+
+# hook this into test  (make sure this link sticks, may have to delete the link first, "rm test")
+ln -fs /var/www/dos-2010-11-18 test
 

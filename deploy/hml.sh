@@ -12,7 +12,7 @@ echo $ALL_ITEMS_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos | \
 while read id; do
 	if [[ ! -e $REPO/hml/$id.xml ]]; then
 		echo $id;
-		php $HEURIST/php/hml.php -instance dos -depth 2 -q id:$id -f 1> $REPO/hml/$id.xml
+		php $HEURIST/php/hml.php -instance dos -depth 2 -q id:$id -f 1 > $REPO/hml/$id.xml
 	fi
 done
 
