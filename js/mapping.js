@@ -278,6 +278,8 @@ RelBrowser.Mapping = {
 
 			if (bounds) {
 				tm.map.setCenter(bounds.getCenter(), tm.map.getBoundsZoomLevel(bounds));
+			} else {
+				tm.map.setZoom(tm.opts.mapZoom);
 			}
 		};
 
@@ -288,6 +290,7 @@ RelBrowser.Mapping = {
 			options: {
 				showMapCtrl: false,
 				showMapTypeCtrl: false,
+				mapZoom: RelBrowser.Mapping.defaultZoom,
 				centerMapOnItems: bounds ? false : true,
 				mapType: M.customMapTypes[0] || G_NORMAL_MAP,
 				theme: TimeMap.themes.blue({ eventIconPath: RelBrowser.baseURL + "timemap.js/images/" }),
