@@ -1,12 +1,15 @@
-##!!!!!!First Read README in current repo directory
+#####################################################
+##!!!!!!First Read README in current repo directory##
+#####################################################
 #check disk space df -h  and/or du -ha| grep M
 
 ### STEP 1
+##########################################################################################
 #setup environment and copy files
 # make sure we go direct to the server!
 unset http_proxy
 
-PIPELINE=http://heuristscholar.org/cocoon/relbrowser-kj
+PIPELINE=http://localhost:8888/dos-static-2010-11-18
 
 REPO=repo
 
@@ -21,7 +24,7 @@ ln -s ../dos-map-tiles tiles
 
 
 ####STEP 2 Generate supporting files NOTE run each command separately to verify correctness
-
+############################################################################################
 # run all required queries
 echo "select distinct file_id, file_nonce from rec_details, files where file_id = rd_file_id;" | mysql -s -u readonly -pmitnick heuristdb-dos > file_ids.txt
 echo "select distinct file_nonce from rec_details, files where file_id = rd_file_id and file_mimetype like 'image%';" | mysql -s -u readonly -pmitnick heuristdb-dos > image_files.txt
@@ -80,6 +83,7 @@ php $REPO/deploy/entities-json.php Role role > browse/roles.js
 php $REPO/deploy/entities-json.php Contributor contributor > browse/contributors.js
 
 ###STEP 3 Generate all records hml  NOTE this will take several hours.
+##########################################################################################
 # consider using "screen -S genHML" and then start the command below and
 # then detach "ctrl+A d"  and "screen -r genHML" to reattach
 # when the command is finished just "exit" from screen
@@ -93,6 +97,7 @@ php $REPO/deploy/entities-json.php Contributor contributor > browse/contributors
 ########################################
 
 ###STEP 4 Generate content files
+##########################################################################################
 # THE FOLLOWING STEPS CAN TAKE A WHILE TO COMPLETE
 # CONSIDER using "screen -S genContent" and then start the commands below and
 # then detach "ctrl+A d"  and "screen -r genHML" to reattach
@@ -100,6 +105,7 @@ php $REPO/deploy/entities-json.php Contributor contributor > browse/contributors
 # this will allow you to dhut down you machine and reconnect at anytime.
 
 # copy files
+##########################################################################################
 cat file_ids.txt | \
 while read id nonce; do
 	if [[ ! -e files/full/$nonce ]]; then
@@ -108,6 +114,7 @@ while read id nonce; do
 done
 
 # generate resized images
+##########################################################################################
 cat image_files.txt | \
 while read nonce; do
 	if [[ ! -e files/thumbnail/$nonce ]]; then
@@ -129,6 +136,7 @@ done
 
 
 # generate URL map
+##########################################################################################
 wget --no-cache -O $REPO/xsl/urlmap.xsl $PIPELINE/urlmap-xsl
 
 # create symbolic links
@@ -138,6 +146,7 @@ rm make_links.sh
 rm make_spider_links.sh
 
 # generate pages, previews for all appropriate records
+##########################################################################################
 
 cd item
 cat ../not_entries.txt | \
@@ -167,6 +176,7 @@ wget --no-cache -w 1 -i -
 cd ..
 
 # generate previews for all records in all necessary contexts
+##########################################################################################
 cd preview
 grep -r 'preview-[0-9]' ../item | perl -pe 's/.*preview-(\d+(c\d+)?).*/\1/' | sort | uniq | \
 while read id; do
@@ -179,6 +189,7 @@ wget --no-cache -i -
 cd ..
 
 # generate popups for all multimedia records
+##########################################################################################
 cd popup
 cat ../popups.txt | \
 while read id; do
@@ -190,6 +201,7 @@ wget --no-cache -i -
 cd ..
 
 # generate KML for all entities
+##########################################################################################
 cat kml_summary.txt | \
 while read id; do
 	if [[ ! -e kml/summary/$id.kml ]]; then
@@ -262,6 +274,7 @@ perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2010-11-18/http:\/\/dicti
 perl -pi -e 's/ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w/ABQIAAAA5wNKmbSIriGRr4NY0snaURTtHC9RsOn6g1vDRMmqV_X8ivHa_xSNBstkFn6GHErY6WRDLHcEp1TxkQ/' `grep -l maps.google.com item/*`
 
 # create production site sym links
+##########################################################################################
 ln -fs ../files
 ln -fs ../tiles
 ln -fs ../test
@@ -269,5 +282,6 @@ ln -fs ../previous
 cd /var/www/
 
 # hook this into test  (make sure this link sticks, may have to delete the link first, "rm test")
+##########################################################################################
 ln -fs /var/www/dos-2010-11-18 test
 

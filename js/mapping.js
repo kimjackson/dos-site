@@ -162,7 +162,7 @@ RelBrowser.Mapping = {
 			if (this.dataset.opts.preview) {
 				if ($("#preview-" + this.dataset.opts.preview + " .balloon-middle").length < 1) {
 					$("#preview-" + this.dataset.opts.preview).load(
-						RelBrowser.pipelineBaseURL + "preview/" + this.dataset.opts.preview,
+						RelBrowser.baseURL + "preview/" + this.dataset.opts.preview,
 						this.openInfoWindowHandler
 					);
 					return;
