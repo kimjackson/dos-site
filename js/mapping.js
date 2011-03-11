@@ -1,14 +1,15 @@
-if (! window.RelBrowser) { RelBrowser = {}; }
+if (typeof GLatLng == "function") {
+	if (! window.RelBrowser) { RelBrowser = {}; }
 
-// FIXME: make JSLint-happy
+	// FIXME: make JSLint-happy
 
-RelBrowser.Mapping = {
+	RelBrowser.Mapping = {
 
 	map: null,
 	tmap: null,
 
 	defaultCenter: new GLatLng(-33.888, 151.19),
-	defaultZoom: 11,
+		defaultZoom: 14,
 
 	timeZoomSteps : window["Timeline"] ? [
 		{ pixelsPerInterval: 200,  unit: Timeline.DateTime.DAY },
@@ -278,9 +279,12 @@ RelBrowser.Mapping = {
 
 			if (bounds) {
 				tm.map.setCenter(bounds.getCenter(), tm.map.getBoundsZoomLevel(bounds));
-			} else {
+				} else if (tm.datasets.ds0.items.length ==1 && tm.datasets.ds0.items[0].getType() == "marker") {
 				tm.map.setZoom(tm.opts.mapZoom);
+				} else if (tm.mapBounds){
+					tm.map.setCenter(tm.mapBounds.getCenter(), tm.map.getBoundsZoomLevel(tm.mapBounds));
 			}
+
 		};
 
 		M.tmap = TimeMap.init({
@@ -375,12 +379,12 @@ RelBrowser.Mapping = {
 		}
 		return i;
 	}
-};
+	};
 
-// default to 100px per century
-RelBrowser.Mapping.initTimeZoomIndex = RelBrowser.Mapping.timeZoomSteps.length - 1;
+	// default to 100px per century
+	RelBrowser.Mapping.initTimeZoomIndex = RelBrowser.Mapping.timeZoomSteps.length - 1;
 
-$(function () {
+	$(function () {
 	var mini, $img, M = RelBrowser.Mapping;
 	mini = M.mapdata.mini || false;
 	$img = $("img.entity-picture");
@@ -389,4 +393,5 @@ $(function () {
 	} else {
 		M.initMap(mini);
 	}
-});
+	});
+}
