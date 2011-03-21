@@ -5,66 +5,66 @@ if (typeof GLatLng == "function") {
 
 	RelBrowser.Mapping = {
 
-	map: null,
-	tmap: null,
+		map: null,
+		tmap: null,
 
-	defaultCenter: new GLatLng(-33.888, 151.19),
+		defaultCenter: new GLatLng(-33.888, 151.19),
 		defaultZoom: 14,
 
-	timeZoomSteps : window["Timeline"] ? [
-		{ pixelsPerInterval: 200,  unit: Timeline.DateTime.DAY },
-		{ pixelsPerInterval: 100,  unit: Timeline.DateTime.DAY },
-		{ pixelsPerInterval:  50,  unit: Timeline.DateTime.DAY },
-		{ pixelsPerInterval: 400,  unit: Timeline.DateTime.MONTH },
-		{ pixelsPerInterval: 200,  unit: Timeline.DateTime.MONTH },
-		{ pixelsPerInterval: 100,  unit: Timeline.DateTime.MONTH },
-		{ pixelsPerInterval:  50,  unit: Timeline.DateTime.MONTH },
-		{ pixelsPerInterval: 200,  unit: Timeline.DateTime.YEAR },
-		{ pixelsPerInterval: 100,  unit: Timeline.DateTime.YEAR },
-		{ pixelsPerInterval:  50,  unit: Timeline.DateTime.YEAR },
-		{ pixelsPerInterval: 200,  unit: Timeline.DateTime.DECADE },
-		{ pixelsPerInterval: 100,  unit: Timeline.DateTime.DECADE },
-		{ pixelsPerInterval:  50,  unit: Timeline.DateTime.DECADE },
-		{ pixelsPerInterval: 200,  unit: Timeline.DateTime.CENTURY },
-		{ pixelsPerInterval: 100,  unit: Timeline.DateTime.CENTURY }
-	] : [],
+		timeZoomSteps : window["Timeline"] ? [
+			{ pixelsPerInterval: 200,  unit: Timeline.DateTime.DAY },
+			{ pixelsPerInterval: 100,  unit: Timeline.DateTime.DAY },
+			{ pixelsPerInterval:  50,  unit: Timeline.DateTime.DAY },
+			{ pixelsPerInterval: 400,  unit: Timeline.DateTime.MONTH },
+			{ pixelsPerInterval: 200,  unit: Timeline.DateTime.MONTH },
+			{ pixelsPerInterval: 100,  unit: Timeline.DateTime.MONTH },
+			{ pixelsPerInterval:  50,  unit: Timeline.DateTime.MONTH },
+			{ pixelsPerInterval: 200,  unit: Timeline.DateTime.YEAR },
+			{ pixelsPerInterval: 100,  unit: Timeline.DateTime.YEAR },
+			{ pixelsPerInterval:  50,  unit: Timeline.DateTime.YEAR },
+			{ pixelsPerInterval: 200,  unit: Timeline.DateTime.DECADE },
+			{ pixelsPerInterval: 100,  unit: Timeline.DateTime.DECADE },
+			{ pixelsPerInterval:  50,  unit: Timeline.DateTime.DECADE },
+			{ pixelsPerInterval: 200,  unit: Timeline.DateTime.CENTURY },
+			{ pixelsPerInterval: 100,  unit: Timeline.DateTime.CENTURY }
+		] : [],
 
-	customMapTypes: [],
+		customMapTypes: [],
 
 
-	addCustomMapTypeControl: function () {
-		var CustomMapTypeControl = function () {}, M = RelBrowser.Mapping;
+		addCustomMapTypeControl: function () {
+			var CustomMapTypeControl = function () {}, M = RelBrowser.Mapping;
 
-		if (M.customMapTypes.length < 1) { return; }
+			if (M.customMapTypes.length < 1) { return; }
 
-		CustomMapTypeControl.prototype = new GControl(false);
+			CustomMapTypeControl.prototype = new GControl(false);
 
-		CustomMapTypeControl.prototype.getDefaultPosition = function () {
-			return new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(7, 40));
-		};
+			CustomMapTypeControl.prototype.getDefaultPosition = function () {
+				return new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(7, 40));
+			};
 
-		CustomMapTypeControl.prototype.initialize = function (map) {
-			var i, $container, $cb, that = this;
+			CustomMapTypeControl.prototype.initialize = function (map) {
+				var i, $container, $cb, that = this;
 
-			$container = $("<div/>");
+				$container = $("<div/>");
 
-			for (i = 0; i < M.customMapTypes.length; ++i) {
-				(function (m) {
-					var $a = $("<a href='#'>" + m.getName() + "</a>")
-						.click(function () {
-							M.map.setMapType(m);
-							return false;
-						})
-						$div = $("<div/>");
-						$a.appendTo($div.appendTo($container));
+				for (i = 0; i < M.customMapTypes.length; ++i) {
+					(function (m) {
+						var $a = $("<a href='#'>" + m.getName() + "</a>")
+							.click(function () {
+								M.map.setMapType(m);
+								return false;
+							})
+							$div = $("<div/>");
+							$a.appendTo($div.appendTo($container));
 
-					GEvent.addListener(map, "maptypechanged", function () {
+						GEvent.addListener(map, "maptypechanged", function () {
+							that._setSelected($a, (map.getCurrentMapType() === m));
+						});
 						that._setSelected($a, (map.getCurrentMapType() === m));
-					});
-					that._setSelected($a, (map.getCurrentMapType() === m));
-					that._setLinkDivStyle($div);
-				})(M.customMapTypes[i]);
-			}
+						that._setLinkDivStyle($div);
+					})(M.customMapTypes[i]);
+				}
 
 			$container.append("<hr/>");
 
@@ -154,244 +154,256 @@ if (typeof GLatLng == "function") {
 	},
 
 
-	openInfoWindowHandler: function () {
-		var $preview, content;
+		openInfoWindowHandler: function () {
+			var $preview, content;
 
-		content = $(this).data("info");
-		if (! content) {
-			// grab the preview content
-			if (this.dataset.opts.preview) {
-				if ($("#preview-" + this.dataset.opts.preview + " .balloon-middle").length < 1) {
-					$("#preview-" + this.dataset.opts.preview).load(
-						RelBrowser.pipelineBaseURL + "preview/" + this.dataset.opts.preview,
-						this.openInfoWindowHandler
+			content = $(this).data("info");
+			if (! content) {
+				// grab the preview content
+				if (this.dataset.opts.preview) {
+					if ($("#preview-" + this.dataset.opts.preview + " .balloon-middle").length < 1) {
+						$("#preview-" + this.dataset.opts.preview).load(
+							RelBrowser.baseURL + "preview/" + this.dataset.opts.preview,
+							this.openInfoWindowHandler
+						);
+						return;
+					}
+					$preview = $("#preview-" + this.dataset.opts.preview + " .balloon-middle").clone();
+					$preview.removeClass("balloon-middle").addClass("map-balloon");
+					$(".balloon-content .clearfix", $preview).before(
+						"<p><a href='" + this.dataset.opts.target + "'>more &raquo;</a></p>"
 					);
-					return;
+					content = $preview.get(0);
+				} else {
+					content = this.dataset.getTitle();
 				}
-				$preview = $("#preview-" + this.dataset.opts.preview + " .balloon-middle").clone();
-				$preview.removeClass("balloon-middle").addClass("map-balloon");
-				$(".balloon-content .clearfix", $preview).before(
-					"<p><a href='" + this.dataset.opts.target + "'>more &raquo;</a></p>"
-				);
-				content = $preview.get(0);
-			} else {
-				content = this.dataset.getTitle();
+				$(this).data("info", content);
 			}
-			$(this).data("info", content);
-		}
 
-		// open window
-		if (this.getType() == "marker") {
-			this.placemark.openInfoWindow(content);
-		} else {
-			this.map.openInfoWindow(this.getInfoPoint(), content);
-		}
-		// custom functions will need to set this as well
-		this.selected = true;
-	},
+			// open window
+			if (this.getType() == "marker") {
+				this.placemark.openInfoWindow(content);
+			} else {
+				this.map.openInfoWindow(this.getInfoPoint(), content);
+			}
+			// custom functions will need to set this as well
+			this.selected = true;
+		},
 
 
-	initMap: function (mini) {
-		var matches, coords, points, l, i, lnglat, bounds = null, M = RelBrowser.Mapping;
+		initMap: function (mini) {
+			var matches, coords, points, l, i, lnglat, bounds = null, M = RelBrowser.Mapping;
 
-		if (M.mapdata["layers"]) {
-			M.addLayers();
-		}
+			if (M.mapdata["layers"]) {
+				M.addLayers();
+			}
 
-		if (M.mapdata.focus) {
-			matches = M.mapdata.focus.match(/^POLYGON\(\((.*)\)\)$/)
-			if (matches) {
-				coords = matches[1].split(",");
-				points = [];
-				l = coords.length;
-				for (i = 0; i < l; ++i) {
-					lnglat = coords[i].split(" ");
-					if (lnglat.length === 2) {
-						points.push(new GLatLng(lnglat[1], lnglat[0]));
+			if (M.mapdata.focus) {
+				matches = M.mapdata.focus.match(/^POLYGON\(\((.*)\)\)$/)
+				if (matches) {
+					coords = matches[1].split(",");
+					points = [];
+					l = coords.length;
+					for (i = 0; i < l; ++i) {
+						lnglat = coords[i].split(" ");
+						if (lnglat.length === 2) {
+							points.push(new GLatLng(lnglat[1], lnglat[0]));
+						}
 					}
-				}
-				if (points.length > 0) {
-					bounds = new GLatLngBounds(points[0], points[0]);
-					l = points.length;
-					for (i = 1; i < l; ++i) {
-						bounds.extend(points[i]);
+					if (points.length > 0) {
+						bounds = new GLatLngBounds(points[0], points[0]);
+						l = points.length;
+						for (i = 1; i < l; ++i) {
+							bounds.extend(points[i]);
+						}
 					}
 				}
 			}
-		}
 
-		if (window["TimeMap"]) {
-			M.initTMap(mini, bounds);
-		} else {
-			M.map = new GMap2($("#map")[0]);
-			if (bounds) {
-				M.map.setCenter(bounds.getCenter(), M.map.getBoundsZoomLevel(bounds));
+			if (window["TimeMap"]) {
+				M.initTMap(mini, bounds);
 			} else {
-				M.map.setCenter(M.defaultCenter, M.defaultZoom);
-			}
-			M.map.setMapType(M.customMapTypes[0] || G_NORMAL_MAP);
-		}
-
-		M.map.setUIToDefault();
-		if (! mini) {
-			M.addCustomMapTypeControl();
-		}
-	},
-
-
-	initTMap: function (mini, bounds) {
-		var tl_theme, onDataLoaded, M = RelBrowser.Mapping;
-
-		SimileAjax.History.enabled = false;
-
-		// modify timeline theme
-		tl_theme = Timeline.ClassicTheme.create();
-		tl_theme.autoWidth = true;
-
-		onDataLoaded = function (tm) {
-			// find centre date, choose scale to show entire dataset
-			var start, end, zoomIndex, changeScale, eventSource, d = new Date();
-
-			eventSource = tm.timeline.getBand(0).getEventSource();
-			if (eventSource.getCount() > 0) {
-				start = eventSource.getEarliestDate();
-				end = eventSource.getLatestDate();
-				d = M.timeMidPoint(start, end);
-
-				zoomIndex = M.findTimeScale(start, end, M.timeZoomSteps, ($(tm.tElement).width()));
-
-				changeScale = function (bandIndex) {
-					var band, interval;
-					band = tm.timeline.getBand(bandIndex),
-					interval = M.timeZoomSteps[zoomIndex].unit;
-					band._zoomIndex = zoomIndex;
-					band.getEther()._pixelsPerInterval = M.timeZoomSteps[zoomIndex].pixelsPerInterval;
-					band.getEther()._interval = Timeline.DateTime.gregorianUnitLengths[interval];
-					band.getEtherPainter()._unit = interval;
-				};
-				changeScale(0);
-			}
-			tm.timeline.getBand(0).setCenterVisibleDate(d);
-			tm.timeline.layout();
-
-			// finally, draw the zoom control
-			M.renderTimelineZoom();
-
-			if (bounds) {
-				tm.map.setCenter(bounds.getCenter(), tm.map.getBoundsZoomLevel(bounds));
-				} else if (tm.datasets.ds0.items.length ==1 && tm.datasets.ds0.items[0].getType() == "marker") {
-				tm.map.setZoom(tm.opts.mapZoom);
-				} else if (tm.mapBounds){
-					tm.map.setCenter(tm.mapBounds.getCenter(), tm.map.getBoundsZoomLevel(tm.mapBounds));
-			}
-
-		};
-
-		M.tmap = TimeMap.init({
-			mapId: "map", // Id of map div element (required)
-			timelineId: "timeline", // Id of timeline div element (required)
-			datasets: M.mapdata.timemap,
-			options: {
-				showMapCtrl: false,
-				showMapTypeCtrl: false,
-				mapZoom: RelBrowser.Mapping.defaultZoom,
-				centerMapOnItems: bounds ? false : true,
-				mapType: M.customMapTypes[0] || G_NORMAL_MAP,
-				theme: TimeMap.themes.blue({ eventIconPath: RelBrowser.baseURL + "timemap.js/images/" }),
-				openInfoWindow: mini ? function () { return false; } : RelBrowser.Mapping.openInfoWindowHandler
-			},
-			bandInfo: [ {
-				theme: tl_theme,
-				showEventText: true,
-				intervalUnit: M.timeZoomSteps[M.initTimeZoomIndex].unit,
-				intervalPixels: M.timeZoomSteps[M.initTimeZoomIndex].pixelsPerInterval,
-				zoomIndex: M.initTimeZoomIndex,
-				zoomSteps: M.timeZoomSteps,
-				width: "100%"
-			} ],
-			dataLoadedFunction: onDataLoaded
-		});
-
-		M.map = M.tmap.map;
-	},
-
-	tileToQuadKey: function (x, y, zoom) {
-		var i, mask, cell, quad = "";
-		for (i = zoom; i > 0; i--) {
-			mask = 1 << (i - 1);
-			cell = 0;
-			if ((x & mask) != 0) cell++;
-			if ((y & mask) != 0) cell += 2;
-			quad += cell;
-		}
-		return quad;
-	},
-
-	addLayers: function () {
-		var i, M = RelBrowser.Mapping;
-		for (i = 0; i < M.mapdata.layers.length; ++i) {
-			(function (layer) {
-				var newLayer, newMapType;
-				newLayer = new GTileLayer(new GCopyrightCollection(""), layer.min_zoom, layer.max_zoom);
-				if (layer.type === "virtual earth") {
-					newLayer.getTileUrl = function (a,b) {
-						return layer.url + M.tileToQuadKey(a.x,a.y,b) + (layer.mime_type == "image/png" ? ".png" : ".gif");
-					};
-				} else if (layer.type === "maptiler") {
-					newLayer.getTileUrl = function (a,b) {
-						var y = (1 << b) - a.y - 1;
-						return layer.url + b + "/" + a.x + "/" + y + (layer.mime_type == "image/png" ? ".png" : ".gif");
-					};
+				M.map = new GMap2($("#map")[0]);
+				if (bounds) {
+					M.map.setCenter(bounds.getCenter(), M.map.getBoundsZoomLevel(bounds));
+				} else {
+					M.map.setCenter(M.defaultCenter, M.defaultZoom);
 				}
-				newLayer.getCopyright = function (a,b) { return layer.copyright; };
-				newLayer.isPng = function () { return layer.mime_type == "image/png"; };
-				newLayer.getOpacity = function () { return this.opacity; };
-				newLayer.opacity = 1;
-
-				newMapType = new GMapType([G_NORMAL_MAP.getTileLayers()[0], newLayer], G_NORMAL_MAP.getProjection(), layer.title);
-
-				M.customMapTypes.push(newMapType);
-
-			})(M.mapdata.layers[i]);
-		}
-	},
-
-	timeMidPoint: function (start, end) {
-		var d, diff;
-		d = new Date();
-		diff = end.getTime() - start.getTime();
-		d.setTime(start.getTime() + diff/2);
-		return d;
-	},
-
-	findTimeScale: function (start, end, scales, timelineWidth) {
-		var diff, span, unitLength, intervals, i;
-		s = new Date();
-		e = new Date();
-		diff = end.getTime() - start.getTime();
-		span = diff * 1.1;	// pad by 5% each end
-		for (i = 0; i < scales.length; ++i) {
-			unitLength = Timeline.DateTime.gregorianUnitLengths[scales[i].unit];
-			intervals = timelineWidth / scales[i].pixelsPerInterval;
-			if (span / unitLength <= intervals) {
-				return i;
+				M.map.setMapType(M.customMapTypes[0] || G_NORMAL_MAP);
 			}
+
+			M.map.setUIToDefault();
+			if (! mini) {
+				M.addCustomMapTypeControl();
+			}
+		},
+
+
+		initTMap: function (mini, bounds) {
+			var tl_theme, onDataLoaded, M = RelBrowser.Mapping;
+
+			SimileAjax.History.enabled = false;
+
+			// modify timeline theme
+			tl_theme = Timeline.ClassicTheme.create();
+			tl_theme.autoWidth = true;
+
+			onDataLoaded = function (tm) {
+				// find centre date, choose scale to show entire dataset
+				var start, end, zoomIndex, changeScale, eventSource, d = new Date();
+
+				eventSource = tm.timeline.getBand(0).getEventSource();
+				if (eventSource.getCount() > 0) {
+					start = eventSource.getEarliestDate();
+					end = eventSource.getLatestDate();
+					d = M.timeMidPoint(start, end);
+
+					zoomIndex = M.findTimeScale(start, end, M.timeZoomSteps, ($(tm.tElement).width()));
+
+					changeScale = function (bandIndex) {
+						var band, interval;
+						band = tm.timeline.getBand(bandIndex),
+						interval = M.timeZoomSteps[zoomIndex].unit;
+						band._zoomIndex = zoomIndex;
+						band.getEther()._pixelsPerInterval = M.timeZoomSteps[zoomIndex].pixelsPerInterval;
+						band.getEther()._interval = Timeline.DateTime.gregorianUnitLengths[interval];
+						band.getEtherPainter()._unit = interval;
+					};
+					changeScale(0);
+				}
+				tm.timeline.getBand(0).setCenterVisibleDate(d);
+				tm.timeline.layout();
+
+				// finally, draw the zoom control
+				M.renderTimelineZoom();
+
+				if (bounds) {
+					tm.map.setCenter(bounds.getCenter(), tm.map.getBoundsZoomLevel(bounds));
+				} else {
+					var mapables = 0, markers = 0;
+					for (var i = 0; i < tm.datasets.ds0.items.length; i++) {
+						var type = tm.datasets.ds0.items[i].getType();
+						if ( type == "none") {
+							continue;
+						} else if (type  == "marker"){
+							markers++;
+						}
+						mapables++
+					}
+					if (mapables == 1 && markers == 1){
+						tm.map.setZoom(tm.opts.mapZoom);
+					} else if (tm.mapBounds){
+						tm.map.setCenter(tm.mapBounds.getCenter(), tm.map.getBoundsZoomLevel(tm.mapBounds));
+					}
+				}
+
+			};
+
+			M.tmap = TimeMap.init({
+				mapId: "map", // Id of map div element (required)
+				timelineId: "timeline", // Id of timeline div element (required)
+				datasets: M.mapdata.timemap,
+				options: {
+					showMapCtrl: false,
+					showMapTypeCtrl: false,
+					mapZoom: RelBrowser.Mapping.defaultZoom,
+					centerMapOnItems: bounds ? false : true,
+					mapType: M.customMapTypes[0] || G_NORMAL_MAP,
+					theme: TimeMap.themes.blue({ eventIconPath: RelBrowser.baseURL + "timemap.js/images/" }),
+					openInfoWindow: mini ? function () { return false; } : RelBrowser.Mapping.openInfoWindowHandler
+				},
+				bandInfo: [ {
+					theme: tl_theme,
+					showEventText: true,
+					intervalUnit: M.timeZoomSteps[M.initTimeZoomIndex].unit,
+					intervalPixels: M.timeZoomSteps[M.initTimeZoomIndex].pixelsPerInterval,
+					zoomIndex: M.initTimeZoomIndex,
+					zoomSteps: M.timeZoomSteps,
+					width: "100%"
+				} ],
+				dataLoadedFunction: onDataLoaded
+			});
+
+			M.map = M.tmap.map;
+		},
+
+		tileToQuadKey: function (x, y, zoom) {
+			var i, mask, cell, quad = "";
+			for (i = zoom; i > 0; i--) {
+				mask = 1 << (i - 1);
+				cell = 0;
+				if ((x & mask) != 0) cell++;
+				if ((y & mask) != 0) cell += 2;
+				quad += cell;
+			}
+			return quad;
+		},
+
+		addLayers: function () {
+			var i, M = RelBrowser.Mapping;
+			for (i = 0; i < M.mapdata.layers.length; ++i) {
+				(function (layer) {
+					var newLayer, newMapType;
+					newLayer = new GTileLayer(new GCopyrightCollection(""), layer.min_zoom, layer.max_zoom);
+					if (layer.type === "virtual earth") {
+						newLayer.getTileUrl = function (a,b) {
+							return layer.url + M.tileToQuadKey(a.x,a.y,b) + (layer.mime_type == "image/png" ? ".png" : ".gif");
+						};
+					} else if (layer.type === "maptiler") {
+						newLayer.getTileUrl = function (a,b) {
+							var y = (1 << b) - a.y - 1;
+							return layer.url + b + "/" + a.x + "/" + y + (layer.mime_type == "image/png" ? ".png" : ".gif");
+						};
+					}
+					newLayer.getCopyright = function (a,b) { return layer.copyright; };
+					newLayer.isPng = function () { return layer.mime_type == "image/png"; };
+					newLayer.getOpacity = function () { return this.opacity; };
+					newLayer.opacity = 1;
+
+					newMapType = new GMapType([G_NORMAL_MAP.getTileLayers()[0], newLayer], G_NORMAL_MAP.getProjection(), layer.title);
+
+					M.customMapTypes.push(newMapType);
+
+				})(M.mapdata.layers[i]);
+			}
+		},
+
+		timeMidPoint: function (start, end) {
+			var d, diff;
+			d = new Date();
+			diff = end.getTime() - start.getTime();
+			d.setTime(start.getTime() + diff/2);
+			return d;
+		},
+
+		findTimeScale: function (start, end, scales, timelineWidth) {
+			var diff, span, unitLength, intervals, i;
+			s = new Date();
+			e = new Date();
+			diff = end.getTime() - start.getTime();
+			span = diff * 1.1;	// pad by 5% each end
+			for (i = 0; i < scales.length; ++i) {
+				unitLength = Timeline.DateTime.gregorianUnitLengths[scales[i].unit];
+				intervals = timelineWidth / scales[i].pixelsPerInterval;
+				if (span / unitLength <= intervals) {
+					return i;
+				}
+			}
+			return i;
 		}
-		return i;
-	}
 	};
 
 	// default to 100px per century
 	RelBrowser.Mapping.initTimeZoomIndex = RelBrowser.Mapping.timeZoomSteps.length - 1;
 
 	$(function () {
-	var mini, $img, M = RelBrowser.Mapping;
-	mini = M.mapdata.mini || false;
-	$img = $("img.entity-picture");
-	if ($img.length > 0  &&  $img.width() === 0) {
-		$img.load(function () { M.initMap(mini); });
-	} else {
-		M.initMap(mini);
-	}
+		var mini, $img, M = RelBrowser.Mapping;
+		mini = M.mapdata.mini || false;
+		$img = $("img.entity-picture");
+		if ($img.length > 0  &&  $img.width() === 0) {
+			$img.load(function () { M.initMap(mini); });
+		} else {
+			M.initMap(mini);
+		}
 	});
 }
