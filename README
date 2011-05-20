@@ -5,12 +5,13 @@ cd repo
 git checkout -b dos-site --track origin/dos-site
 git checkout -b dos-site-deploy-<yyyy-mm-dd>
 
-# git log origin/dos-site-deploy-<previous>
-# this, ideally, contains one commit, message "Static version"
+# apply changes needed to make this a static site
+git apply dos-site-to-static-patch.txt
 
-git cherry-pick -n origin/dos-site-deploy-<previous>  #or commit id for aforementioned
 # update dates in deploy/generate.sh
 
+# stage all changes to be committed
+git add -u
 git commit -m'Static version.'
 
 #push these to the bare repo
@@ -18,7 +19,8 @@ git commit -m'Static version.'
 # which is the same as
 #git push origin dos-site-deploy-<yyyy-mm-dd>:refs/heads/dos-site-deploy-<yyyy-mm-dd>
 
-# add a line to /opt/cocoon/mount-table.xml
+# add a line to /opt/cocoon/mount-table.xml so that the generate.sh script can use cocoon to generate output.
+# just duplicate one of the existing ones and change it to the new static dir on heurist
 
 cd ..
 # start running sections of repo/deploy/generate.sh
