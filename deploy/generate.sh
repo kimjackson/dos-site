@@ -9,7 +9,7 @@
 # make sure we go direct to the server!
 unset http_proxy
 
-PIPELINE=http://heuristscholar.org/cocoon/relbrowser-kj
+PIPELINE=http://localhost:8888/dos-static-2011-05-20
 
 REPO=repo
 
@@ -17,7 +17,7 @@ REPO=repo
 mkdir item preview popup browse search kml kml/full kml/summary $REPO/hml
 # mkdir files files/thumbnail files/small files/medium files/wide files/large files/full
 # Kim decided to leave files in the same directory and update from there. So we create a sym link to that directory and update things there
-ln -s ../dos-static-2009-10-22/files
+ln -s ../dos-static-2011-05-20/files
 cp -prd $REPO/js $REPO/images $REPO/swf $REPO/*.css $REPO/config.xml $REPO/contact.php .
 cp -pd $REPO/jquery $REPO/timemap.js $REPO/timeline $REPO/recaptcha .
 ln -s ../dos-map-tiles tiles
@@ -252,24 +252,24 @@ wget --no-cache -O index.html $PIPELINE/
 chmod +x search/search.cgi
 
 #######
-##DONE with the generation this should now be a working site at http://heuristscholar.org/dos-static-2010-11-18
+##DONE with the generation this should now be a working site at http://heuristscholar.org/dos-static-2011-05-20
 #######
 
 #COPY the files up to the production server into a new directory
 #su as kjackson to run this command
-rsync -av about.html artefact audio boxy-ie.css boxy.css browse building config.xml contact.html contact.php contribute.html contributor copyright.html entry event faq.html image images index.html item jquery js kml map natural_feature organisation person place popup preview recaptcha role search search.css structure style.css subject swf tiles timeline timemap.js video kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2010-11-18/
+rsync -av about.html artefact audio boxy-ie.css boxy.css browse building config.xml contact.html contact.php contribute.html contributor copyright.html entry event faq.html image images index.html item jquery js kml map natural_feature organisation person place popup preview recaptcha role search search.css structure style.css subject swf tiles timeline timemap.js video kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-static-2011-05-20/
 
 #sync the uploaded files
-rsync -av ../dos-static-2009-10-22/files/ kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/files/
+rsync -av ../dos-static-2011-05-20/files/ kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/files/
 
 ##########################
 ## on production server:##
 ##########################
-cd /var/www/dos-2010-11-18
+cd /var/www/dos-static-2011-05-20
 #replace dynamic links on built version to the relative links for the static production version
-perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2010-11-18/../' item/*
-perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2010-11-18/../' popup/*
-perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2010-11-18/http:\/\/dictionaryofsydney.org/' `grep -l heurist preview/*`
+perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2011-05-20/../' item/*
+perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2011-05-20/../' popup/*
+perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2011-05-20/http:\/\/dictionaryofsydney.org/' `grep -l heurist preview/*`
 #change the google key to the production key
 perl -pi -e 's/ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w/ABQIAAAA5wNKmbSIriGRr4NY0snaURTtHC9RsOn6g1vDRMmqV_X8ivHa_xSNBstkFn6GHErY6WRDLHcEp1TxkQ/' `grep -l maps.google.com item/*`
 
@@ -283,5 +283,5 @@ cd /var/www/
 
 # hook this into test  (make sure this link sticks, may have to delete the link first, "rm test")
 ##########################################################################################
-ln -fs /var/www/dos-2010-11-18 test
+ln -fs /var/www/dos-static-2011-05-20 test
 
