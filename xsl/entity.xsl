@@ -89,14 +89,22 @@
 		<div class="clearfix"/>
 
 		<!-- related entries -->
-		<xsl:for-each select="$related[type/@id=98]">
+
+		<xsl:for-each select="relationships/record/detail[@id=202]/record[type/@id=98]">
+		<!-- xsl:for-each select="$related[type/@id=98]" -->
 			<xsl:variable name="content_class">
 				<xsl:choose>
 					<xsl:when test="position() = last()">list-right-col-content</xsl:when>
 					<xsl:otherwise>list-right-col-content margin</xsl:otherwise>
 				</xsl:choose>
 			</xsl:variable>
-			<div class="list-left-col list-entry" title="Entries"/>
+
+			<xsl:variable name="content_class">list-right-col-content margin</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="position() = 1"><div class="list-left-col list-entry" title="Entries"/></xsl:when>
+			</xsl:choose>
+
+
 			<div class="list-right-col">
 				<div class="entity-entry">
 					<div class="list-right-col-heading">
@@ -108,6 +116,7 @@
 								<xsl:text>by </xsl:text>
 								<xsl:call-template name="makeAuthorList">
 									<xsl:with-param name="authors" select="detail[@id=538]/record"/>
+									<xsl:with-param name="year" select="detail[@id=166]/year"/>
 								</xsl:call-template>
 							</span>
 						</xsl:if>
@@ -124,9 +133,48 @@
 						</p>
 					</div>
 				</div>
+
 			</div>
 		</xsl:for-each>
+
 		<div class="clearfix"/>
+
+		<!-- new structure added by Steven Hayes - May 2011 - to handle relocated demographic links -->
+
+		<xsl:for-each select="relationships/record/detail[@id=199]/record[type/@id=1]">
+
+			<xsl:variable name="substring-test">demographics</xsl:variable>
+
+			<!-- following gymnastics to deal with the fact that XSL 1.0 has no ends-with function -->
+			<xsl:if test="substring(detail[@id=160],(string-length(detail[@id=160])
+				- string-length($substring-test)) + 1) = $substring-test">
+
+			<xsl:variable name="content_class">
+				<xsl:choose>
+					<xsl:when test="position() = last()">list-right-col-content</xsl:when>
+					<xsl:otherwise>list-right-col-content margin</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+			<div class="list-left-col list-link" title="Demographics"/>
+			<div class="list-right-col">
+				<div class="entity-entry">
+					<div class="list-right-col-heading">
+						<h2>
+							<xsl:value-of select="detail[@id=160]"/>
+						</h2>
+						<div class="{$content_class}">
+								<p><a href="{detail[@id=198]}" target="_blank">more &#187;</a></p>
+						</div>
+					</div>
+					</div>
+
+			</div>
+			</xsl:if>
+		</xsl:for-each>
+
+		<!-- end new structure -->
+
+
 
 		<xsl:variable name="related_mm" select="
 			relationships

@@ -171,6 +171,7 @@
 
 		<p>
 			<xsl:choose>
+				
 				<xsl:when test="$context and $record/reversePointer/record[id=$context]/detail[@id=191]">
 					<xsl:value-of select="$record/reversePointer/record[id=$context]/detail[@id=191]"/>
 				</xsl:when>

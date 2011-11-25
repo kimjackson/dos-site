@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:exsl="http://exslt.org/common"
-                xmlns:str="http://exslt.org/strings"
-                exclude-result-prefixes="exsl str"
-                version="1.0">
+				xmlns:exsl="http://exslt.org/common"
+				xmlns:str="http://exslt.org/strings"
+				exclude-result-prefixes="exsl str"
+				version="1.0">
 
 	<xsl:template name="cleanQuote">
 		<xsl:param name="string"/>
@@ -22,22 +22,47 @@
 	</xsl:template>
 
 
+	<!-- added display parameter - Steven Hayes - May 2011 -->
+
 	<xsl:template name="linkify">
 		<xsl:param name="string"/>
+		<xsl:param name="display"/>
 		<xsl:for-each select="str:split($string,' ')">
 			<xsl:choose>
 				<xsl:when test="starts-with(., 'http://')">
 					<a href="{.}" target="_blank">
-						<xsl:value-of select="."/>
+						<xsl:choose>
+							<xsl:when test="string-length($display) > 0">
+							<xsl:value-of select="$display"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="."/>
+						</xsl:otherwise>
+						</xsl:choose>
+
 					</a>
 				</xsl:when>
 				<xsl:when test="starts-with(., 'www')">
 					<a href="http://{.}" target="_blank">
-						<xsl:value-of select="."/>
+						<xsl:choose>
+							<xsl:when test="string-length($display) > 0">
+								<xsl:value-of select="$display"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="."/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</a>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:value-of select="."/>
+					<xsl:choose>
+						<xsl:when test="string-length($display) > 0">
+							<xsl:value-of select="$display"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="."/>
+						</xsl:otherwise>
+					</xsl:choose>
 				</xsl:otherwise>
 			</xsl:choose>
 			<xsl:if test="position() != last()">
@@ -46,6 +71,7 @@
 		</xsl:for-each>
 	</xsl:template>
 
+	<!-- end changes -->
 
 	<xsl:template name="formatDate">
 		<xsl:param name="date"/>
@@ -208,33 +234,137 @@
 	</xsl:template>
 
 
+
+	<!-- changes made by Steven Hayes - May 2011 - add supporter code -->
 	<xsl:template name="makeAuthorList">
 		<xsl:param name="authors"/>
+		<xsl:param name="year"/>
 		<xsl:param name="link"/>
+
+
+		<!-- [non supporters <xsl:value-of select="count($authors/detail[@id=568] != 'supporter')"/>] -->
+
+
+
+
+
+
+
 		<xsl:for-each select="$authors">
-			<xsl:if test="position() > 1">
+			<xsl:sort select="detail[@id=568]" order="ascending"/>
+			<xsl:sort select="detail[@id=160]"/>
+			<!-- note supporter comes after contributor in alphabetic order -->
+			<!-- second sort should put authors and supporters in alpha order in thier respective groups -->
+
+
+
+			<!-- xsl:when test="$link = 'true'"><a href="{id}" class="preview-{id}"><xsl:value-of select="detail[@id=160]"></xsl:value-of -->
+			<xsl:if test="position() > 0">
 				<xsl:choose>
 					<xsl:when test="position() = last()">
-						<xsl:text> and </xsl:text>
+
+						<xsl:choose>
+							<xsl:when test="detail[@id=568] = 'supporter'">, <xsl:value-of select="$year"/><br/>supported by
+								<xsl:call-template name="writename">
+									<xsl:with-param name="detail" select="detail[@id=160]"/>
+									<xsl:with-param name="id" select="id"/>
+									<xsl:with-param name="link" select="$link"/>
+								</xsl:call-template>
+							</xsl:when>
+							<xsl:otherwise>
+
+								<xsl:choose>
+									<xsl:when test="count($authors) &gt; 1"> and </xsl:when>
+								</xsl:choose>
+
+								<xsl:call-template name="writename">
+									<xsl:with-param name="detail" select="detail[@id=160]"/>
+									<xsl:with-param name="id" select="id"/>
+									<xsl:with-param name="link" select="$link"/>
+								</xsl:call-template>
+
+								<xsl:choose>
+									<xsl:when test="$year and string-length($year) &gt; 0">, <xsl:value-of select="$year"/>
+									</xsl:when>
+								</xsl:choose>
+
+							</xsl:otherwise>
+
+						</xsl:choose>
 					</xsl:when>
+
 					<xsl:otherwise>
-						<xsl:text>, </xsl:text>
+						<xsl:choose>
+							<xsl:when test="detail[@id=568] != 'supporter'">
+							<xsl:call-template name="writename">
+							<xsl:with-param name="detail" select="detail[@id=160]"/>
+							<xsl:with-param name="id" select="id"/>
+							<xsl:with-param name="link" select="$link"/>
+							</xsl:call-template>
+								</xsl:when>
+						</xsl:choose>
 					</xsl:otherwise>
+					<!-- xsl:otherwise>
+						<xsl:call-template name="writename">
+							<xsl:with-param name="detail" select="detail[@id=160]"/>
+							<xsl:with-param name="id" select="id"/>
+							<xsl:with-param name="link" select="$link"/>
+						</xsl:call-template>
+					</xsl:otherwise -->
 				</xsl:choose>
 			</xsl:if>
-			<xsl:choose>
+
+
+
+
+
+
+			<!-- test to see if a) this is the last in the list and
+				b) if it is a type=supporter -->
+			<!-- xsl:if test="position() = last()">
+				<xsl:choose>
+					<xsl:when test="detail[@id=568] = 'supporter'">[get year]..<br/>supported by <xsl:value-of select="detail[@id=160]"/></xsl:when>
+					<xsl:otherwise><xsl:value-of select="detail[@id=160]"/> [get year]</xsl:otherwise>
+				</xsl:choose>
+
+			</xsl:if -->
+
+			<!-- xsl:choose>
 				<xsl:when test="$link = 'true'">
 					<a href="{id}" class="preview-{id}">
 						<xsl:value-of select="detail[@id=160]"/>
 					</a>
 				</xsl:when>
+
 				<xsl:otherwise>
 					<xsl:value-of select="detail[@id=160]"/>
 				</xsl:otherwise>
-			</xsl:choose>
+
+			</xsl:choose -->
+
+
 		</xsl:for-each>
+		<p style="clear:both"><xsl:text>&#160;</xsl:text></p>
 	</xsl:template>
 
+	<xsl:template name="writename">
+		<xsl:param name="detail"/>
+		<xsl:param name="id"/>
+		<xsl:param name="link"/>
+
+		<xsl:choose>
+			<xsl:when test="$link = 'true'">
+				<a href="{$id}" class="preview-{$id}">
+					<xsl:value-of select="$detail"/>
+				</a>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$detail"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	<!-- end changes -->
 
 	<xsl:template name="makeEntryByline">
 		<xsl:param name="entry"/>
@@ -243,12 +373,9 @@
 				<xsl:text>by </xsl:text>
 				<xsl:call-template name="makeAuthorList">
 					<xsl:with-param name="authors" select="$entry/detail[@id=538]/record"/>
+					<xsl:with-param name="year" select="$entry/detail[@id=166]/year"/>
 					<xsl:with-param name="link" select="'true'"/>
 				</xsl:call-template>
-				<xsl:if test="$entry/detail[@id=166]">
-					<xsl:text>, </xsl:text>
-					<xsl:value-of select="$entry/detail[@id=166]/year"/>
-				</xsl:if>
 			</xsl:when>
 		</xsl:choose>
 	</xsl:template>
@@ -344,6 +471,8 @@
 					<xsl:value-of select="$contributor/detail[@id=569]"/>
 					<xsl:text> </xsl:text>
 				</xsl:when>
+
+
 				<xsl:otherwise>
 					<!-- default attribution phrase -->
 					<xsl:text>Contributed by </xsl:text>
@@ -353,6 +482,9 @@
 				<xsl:value-of select="$contributor/detail[@id=160]"/>
 			</a>
 		</xsl:if>
+
+		<!-- changes made by Steven Hayes in May 2011 to implement MM deep links -->
+
 		<xsl:if test="$record/detail[@id=368]">
 			<xsl:text> </xsl:text>
 			<xsl:text>[</xsl:text>
@@ -362,6 +494,14 @@
 						<xsl:value-of select="$record/detail[@id=368]"/>
 					</a>
 				</xsl:when>
+
+				<xsl:when test="$record/detail[@id=304]">
+					<xsl:call-template name="linkify">
+						<xsl:with-param name="string" select="$record/detail[@id=304]"/>
+						<xsl:with-param name="display" select="$record/detail[@id=368]"/>
+					</xsl:call-template>
+				</xsl:when>
+
 				<xsl:otherwise>
 					<xsl:call-template name="linkify">
 						<xsl:with-param name="string" select="$record/detail[@id=368]"/>
@@ -380,6 +520,7 @@
 		</xsl:if>
 	</xsl:template>
 
+	<!-- end changes made by Steven Hayes in May 2011 -->
 
 	<xsl:template name="makeLicenseIcon">
 		<xsl:param name="record"/>

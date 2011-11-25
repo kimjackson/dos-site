@@ -56,8 +56,16 @@ echo $ALL_ITEMS_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos > all_items
 
 # popups and KML files
 echo "select rec_id from records left join rec_details on rd_rec_id = rec_id and rd_type = 618 where (rec_type = 74) or (rec_type = 168 and rd_val = 'image');" | mysql -s -u readonly -pmitnick heuristdb-dos > popups.txt
-echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type = 526 and a.rd_val = 'TimePlace' and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos > kml_summary.txt
-echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type in (177,178,230) and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos > kml_full.txt
+
+echo $KML_SUMMARY_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos > kml_summary.txt
+
+
+KML_FULL_QUERY="select distinct b.rd_val from rec_details a 
+left join rec_details b on a.rd_rec_id = b.rd_rec_id 
+where a.rd_type in (177,178,230) and b.rd_type = 528;"
+
+ 
+echo $KML_FULL_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos > kml_full.txt
 
 # generate URL map
 php $REPO/deploy/urlmap.php check  # until errors are fixed
@@ -156,6 +164,7 @@ while read id; do
 	fi
 done | \
 wget --no-cache -w 1 -i -
+
 cat ../all_entries.txt | \
 while read id; do
 	if [[ -e ../$REPO/hml/$id.xml  &&  ! -e $id ]]; then
@@ -252,8 +261,13 @@ wget --no-cache -O index.html $PIPELINE/
 chmod +x search/search.cgi
 
 #######
+<<<<<<< HEAD:deploy/generate.sh
 ##DONE with the generation this should now be a working site at http://heuristscholar.org/dos-static-2010-11-18
 #######
+=======
+##DONE with the generation this should now be a working site at http://heuristscholar.org/dos-static-2011-05-20
+#######ssh
+>>>>>>> 70c3745... stevens changes 2011-05-20:deploy/generate.sh
 
 #COPY the files up to the production server into a new directory
 #su as kjackson to run this command
@@ -261,6 +275,8 @@ rsync -av about.html artefact audio boxy-ie.css boxy.css browse building config.
 
 #sync the uploaded files
 rsync -av ../dos-static-2009-10-22/files/ kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/files/
+
+rsync -av recaptcha kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-static-2011-05-20/
 
 ##########################
 ## on production server:##
@@ -272,6 +288,11 @@ perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2010-11-18/../' popup/*
 perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2010-11-18/http:\/\/dictionaryofsydney.org/' `grep -l heurist preview/*`
 #change the google key to the production key
 perl -pi -e 's/ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w/ABQIAAAA5wNKmbSIriGRr4NY0snaURTtHC9RsOn6g1vDRMmqV_X8ivHa_xSNBstkFn6GHErY6WRDLHcEp1TxkQ/' `grep -l maps.google.com item/*`
+
+perl -pi -e 's/item\/http/http/' *.html
+perl -pi -e 's/..http/http/' item/*
+
+perl -pi -e 's/href="#"/href="..\/item\/#"/' item/*
 
 # create production site sym links
 ##########################################################################################
@@ -285,3 +306,4 @@ cd /var/www/
 ##########################################################################################
 ln -fs /var/www/dos-2010-11-18 test
 
+ln -fs /var/www/dos-static-2011-05-20 dos

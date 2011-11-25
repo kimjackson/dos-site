@@ -60,6 +60,7 @@
 						<xsl:choose>
 							<xsl:when test="starts-with(detail[@id=199]/record/detail[@id=289], 'image') or detail[@id=199]/record/detail[@id=618] = 'image'">
 								<div class="annotation-img annotation-id-{id}">
+									
 									<a href="{detail[@id=199]/record/id}" class="popup preview-{detail[@id=199]/record/id}c{id}">
 										<img>
 											<xsl:attribute name="src">
@@ -70,6 +71,10 @@
 											</xsl:attribute>
 										</img>
 									</a>
+									<div style="display:none" class="annotation-caption">
+										<h4><xsl:value-of select="detail[@id=199]/record/title"/></h4>
+										<p><xsl:value-of select="detail[@id=191]"/></p>
+									</div>
 								</div>
 							</xsl:when>
 							<xsl:when test="starts-with(detail[@id=199]/record/detail[@id=289], 'audio')">
@@ -77,6 +82,10 @@
 									<a href="{detail[@id=199]/record/id}" class="popup preview-{detail[@id=199]/record/id}c{id}">
 										<img src="{$urlbase}images/img-entity-audio.jpg"/>
 									</a>
+									<div style="display:none" class="annotation-caption">
+										<h4><xsl:value-of select="detail[@id=199]/record/title"/></h4>
+										<p><xsl:value-of select="detail[@id=191]"/></p>
+									</div>
 								</div>
 							</xsl:when>
 							<xsl:when test="starts-with(detail[@id=199]/record/detail[@id=289], 'video')">
@@ -91,6 +100,10 @@
 											</xsl:attribute>
 										</img>
 									</a>
+									<div style="display:none" class="annotation-caption">
+										<h4><xsl:value-of select="detail[@id=199]/record/title"/></h4>
+										<p><xsl:value-of select="detail[@id=191]"/></p>
+									</div>
 								</div>
 							</xsl:when>
 						</xsl:choose>

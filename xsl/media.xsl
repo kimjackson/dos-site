@@ -4,7 +4,7 @@
 	<xsl:template name="media" match="record[type/@id=74]">
 
 		<div id="resource">
-
+			
 			<!-- dc.description -->
 			<xsl:if test="detail[@id=191]">
 				<p>
@@ -12,13 +12,7 @@
 				</p>
 			</xsl:if>
 
-			<!-- dc.coverage.start - dc.coverage.finish>
-			<xsl:if test="detail[@id=177]">
-				<p>
-					<xsl:value-of select="detail[@id=177]"/>
-					<xsl:if test="detail[@id=178]"> - <xsl:value-of select="detail[@id=178]"/></xsl:if>
-				</p>
-			</xsl:if-->
+			
 
 			<xsl:if test="starts-with(detail[@id=289], 'image')">
 				<img class="resource-image">
@@ -57,6 +51,16 @@
 					);
 				</script>
 			</xsl:if>
+			
+			
+				<!-- dc.coverage.start - dc.coverage.finish -->
+				<xsl:if test="detail[@id=177]">
+					<p class="attribution">
+						<xsl:value-of select="detail[@id=177]/year"/>
+						<xsl:if test="detail[@id=178]"> - <xsl:value-of select="detail[@id=178]/year"/></xsl:if>
+					</p>
+				</xsl:if>
+			
 
 			<p class="attribution">
 				<xsl:call-template name="makeMediaAttributionStatement">

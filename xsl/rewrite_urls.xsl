@@ -15,7 +15,10 @@
 
 
 	<xsl:template match="a/@href">
+		
+		<!-- this template looks for a href elements only -->
 
+		<!-- this presumably finds the id number with two cases - one with a hash after it one not  -->
 		<xsl:variable name="id">
 			<xsl:choose>
 				<xsl:when test="contains(., '#')">
@@ -27,6 +30,7 @@
 			</xsl:choose>
 		</xsl:variable>
 
+		<!-- this preserves hash endings of urls - I think for the internal doc refs in entries -->
 		<xsl:variable name="suffix">
 			<xsl:if test="contains(., '#')">
 				<xsl:text>#</xsl:text>
@@ -34,6 +38,8 @@
 			</xsl:if>
 		</xsl:variable>
 
+
+		<!-- getPath template lives in urlmap.xsl - links ids to names -->
 		<xsl:variable name="path">
 			<xsl:call-template name="getPath">
 				<xsl:with-param name="id" select="$id"/>
