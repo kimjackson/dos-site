@@ -32,6 +32,13 @@
    </map:transform>
    <map:serialize type="html"/>
   </map:resource>
+  <map:resource name="citation">
+   <map:generate src="cocoon:/xml1/{id}"/>
+   <map:transform src="xsl/citation_standalone.xsl">
+    <map:parameter name="context" value="{context}"/>
+   </map:transform>
+   <map:serialize type="html"/>
+  </map:resource>
  </map:resources>
 
 
@@ -86,6 +93,12 @@
 
    <map:match pattern="preview/*">
     <map:call resource="preview">
+     <map:parameter name="id" value="{1}"/>
+    </map:call>
+   </map:match>
+   
+   <map:match pattern="citation/*">
+    <map:call resource="citation">
      <map:parameter name="id" value="{1}"/>
     </map:call>
    </map:match>

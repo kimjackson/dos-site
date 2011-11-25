@@ -98,6 +98,7 @@
 	</xsl:template>
 
 
+
 	<xsl:template name="getFileURL">
 		<xsl:param name="file"/>
 		<xsl:param name="size"/>
@@ -549,9 +550,11 @@
 				</xsl:call-template>
 				<li class="browse-entry"><a href="{$base}browse/entries">Entries</a></li>
 				<li class="browse-map"><a href="{$base}browse/maps">Maps</a></li>
+				<li class="browse-image"><a href="{$base}browse/multimedia">Multimedia</a></li>
 				<li class="browse-term"><a href="{$base}browse/subjects">Subjects</a></li>
 				<li class="browse-role"><a href="{$base}browse/roles">Roles</a></li>
 				<li class="browse-contributor"><a href="{$base}browse/contributors">Contributors</a></li>
+
 			</ul>
 		</div>
 	</xsl:template>

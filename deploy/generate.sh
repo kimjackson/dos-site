@@ -60,11 +60,11 @@ echo "select rec_id from records left join rec_details on rd_rec_id = rec_id and
 echo $KML_SUMMARY_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos > kml_summary.txt
 
 
-KML_FULL_QUERY="select distinct b.rd_val from rec_details a 
-left join rec_details b on a.rd_rec_id = b.rd_rec_id 
+KML_FULL_QUERY="select distinct b.rd_val from rec_details a
+left join rec_details b on a.rd_rec_id = b.rd_rec_id
 where a.rd_type in (177,178,230) and b.rd_type = 528;"
 
- 
+
 echo $KML_FULL_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos > kml_full.txt
 
 # generate URL map
@@ -83,6 +83,8 @@ php $REPO/deploy/entities-json.php Organisation organisation > browse/organisati
 php $REPO/deploy/entities-json.php Person person > browse/people.js
 php $REPO/deploy/entities-json.php Place place > browse/places.js
 php $REPO/deploy/entities-json.php Structure structure > browse/structures.js
+# newly added browse type Nov 2011
+php $REPO/deploy/entities-json.php Multimedia multimedia > browse/multimedia.js
 
 php $REPO/deploy/entities-json.php Entry entry > browse/entries.js
 php $REPO/deploy/entities-json.php Map map > browse/maps.js
@@ -184,6 +186,19 @@ done | \
 wget --no-cache -w 1 -i -
 cd ..
 
+
+# added by Steven Hayes Nov 2011 to generate citations for all entries
+cd citation
+cat ../all_entries.txt | \
+while read id; do
+	if [[ -e ../$REPO/hml/$id.xml  &&  ! -e $id ]]; then
+		echo $PIPELINE/citation/$id;
+	fi
+done | \
+wget --no-cache -w 1 -i -
+cd ..
+
+
 # generate previews for all records in all necessary contexts
 ##########################################################################################
 cd preview
@@ -239,6 +254,9 @@ wget --no-cache -O browse/subjects $PIPELINE/browse/subjects
 wget --no-cache -O browse/roles $PIPELINE/browse/roles
 wget --no-cache -O browse/contributors $PIPELINE/browse/contributors
 
+#new browse method added in Nov 2011
+wget --no-cache -O browse/multimedia $PIPELINE/browse/multimedia
+
 wget --no-cache -O search/search_template.html $PIPELINE/search
 
 wget --no-cache -O about.html $PIPELINE/about
@@ -261,27 +279,22 @@ wget --no-cache -O index.html $PIPELINE/
 chmod +x search/search.cgi
 
 #######
-<<<<<<< HEAD:deploy/generate.sh
-##DONE with the generation this should now be a working site at http://heuristscholar.org/dos-static-2010-11-18
-#######
-=======
 ##DONE with the generation this should now be a working site at http://heuristscholar.org/dos-static-2011-05-20
 #######ssh
->>>>>>> 70c3745... stevens changes 2011-05-20:deploy/generate.sh
 
 #COPY the files up to the production server into a new directory
 #su as kjackson to run this command
-rsync -av about.html artefact audio boxy-ie.css boxy.css browse building config.xml contact.html contact.php contribute.html contributor copyright.html entry event faq.html image images index.html item jquery js kml map natural_feature organisation person place popup preview recaptcha role search search.css structure style.css subject swf tiles timeline timemap.js video kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2010-11-18/
+rsync -av about.html artefact audio boxy-ie.css boxy.css browse building config.xml contact.html contact.php contribute.html contributor copyright.html entry event faq.html image images index.html item jquery js kml map natural_feature organisation person place popup preview recaptcha role search search.css structure style.css subject swf tiles timeline timemap.js video kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2011-05-20/
 
 #sync the uploaded files
 rsync -av ../dos-static-2009-10-22/files/ kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/files/
 
-rsync -av recaptcha kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-static-2011-05-20/
+rsync -av recaptcha kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2011-05-20/
 
 ##########################
 ## on production server:##
 ##########################
-cd /var/www/dos-2010-11-18
+cd /var/www/dos-2011-05-20
 #replace dynamic links on built version to the relative links for the static production version
 perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2010-11-18/../' item/*
 perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2010-11-18/../' popup/*
@@ -304,6 +317,7 @@ cd /var/www/
 
 # hook this into test  (make sure this link sticks, may have to delete the link first, "rm test")
 ##########################################################################################
-ln -fs /var/www/dos-2010-11-18 test
+ln -fs /var/www/dos-2011-05-20 test
 
-ln -fs /var/www/dos-static-2011-05-20 dos
+#once the new version is tested then log in to the server same as before and run this command to go LIVE!
+#ln -fs /var/www/dos-2011-05-20 dos

@@ -32,7 +32,18 @@ if ($type == "Entry") {
 	           where rec_type = 103
 	        order by if (rec_title like 'the %', substr(rec_title, 5), replace(rec_title, '\'', ''))";
 
-} else if ($type == "Term") {
+}
+
+else if ($type == "Multimedia") {
+	$query = "SELECT
+                records.rec_id,
+                records.rec_title 
+                from records 
+                WHERE rec_type =  74 
+                order by if (rec_title like 'the %', substr(rec_title, 5), replace(rec_title, '\'', '')) ";
+
+}
+else if ($type == "Term") {
 	$query = "select rec_id,
 	                 rec_title,
 	                 null,

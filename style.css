@@ -262,6 +262,7 @@ img { border: 0 }
 .menu-term         { background: url(images/24x24/icon24-term.gif) 2px 10px no-repeat }
 .menu-video        { background: url(images/24x24/icon24-video.gif) 2px 10px no-repeat }
 
+
 /*BROWSE MENU
 --------------------------------------------------*/
 #browse-connections { padding: 0 7px 0 29px }
@@ -307,6 +308,7 @@ img { border: 0 }
 .browse-structure    { background: url(images/24x24/icon24-structure.gif) 1px 0 no-repeat }
 .browse-term         { background: url(images/24x24/icon24-term.gif) 1px 0 no-repeat }
 .browse-video        { background: url(images/24x24/icon24-video.gif) 1px 0 no-repeat }
+
 
 
 /*CONTENT (Left Column)

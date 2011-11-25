@@ -15,6 +15,7 @@
 			<xsl:when test="$type = 'subjects'">Subjects</xsl:when>
 			<xsl:when test="$type = 'roles'">Roles</xsl:when>
 			<xsl:when test="$type = 'contributors'">Contributors</xsl:when>
+			<xsl:when test="$type = 'multimedia'">Multimedia</xsl:when>
 			<xsl:otherwise>
 				<xsl:call-template name="getEntityPluralName">
 					<xsl:with-param name="codeName" select="$type"/>
@@ -30,6 +31,7 @@
 			<xsl:when test="$type = 'subjects'">term</xsl:when>
 			<xsl:when test="$type = 'roles'">role</xsl:when>
 			<xsl:when test="$type = 'contributors'">contributor</xsl:when>
+			<xsl:when test="$type = 'multimedia'">image</xsl:when>
 			<xsl:otherwise>
 				<xsl:call-template name="getEntityCodeName">
 					<xsl:with-param name="typeName" select="$type"/>

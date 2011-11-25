@@ -26,7 +26,11 @@
 		</xsl:call-template>
 		<xsl:call-template name="factoidGroup">
 			<xsl:with-param name="heading">Positions</xsl:with-param>
-			<xsl:with-param name="factoids" select="reversePointer/record[type/@id=150][detail[@id=526]='Position']"/>
+			<xsl:with-param name="factoids" select="reversePointer/record[type/@id=150][detail[@id=526]='Position' and detail[@id=529]/record/title!='Owner']"/>
+		</xsl:call-template>
+		<xsl:call-template name="factoidGroup">
+			<xsl:with-param name="heading">Property</xsl:with-param>
+			<xsl:with-param name="factoids" select="reversePointer/record[type/@id=150][detail[@id=526]='Position' and detail[@id=529]/record/title='Owner']"/>
 		</xsl:call-template>
 	</xsl:template>
 
@@ -49,8 +53,11 @@
 					<xsl:sort select="detail[@id=178]/day"/>
 					<xsl:sort select="detail[@id=529]/record/detail[@id=160]"/>
 
-					<xsl:call-template name="factoid"/>
-
+					<!-- pass heading param for conditional logic on type of factoid -->
+					<xsl:call-template name="factoid">
+						<xsl:with-param name="heading" select="$heading"/>
+					</xsl:call-template>
+						
 					<div class="clearfix"></div>
 				</xsl:for-each>
 			</div>
@@ -59,7 +66,7 @@
 
 
 	<xsl:template name="factoid" match="reversePointer/record[type/@id=150]">
-
+		<xsl:param name="heading"/>
 		<xsl:variable name="roleLink">
 			<xsl:if test="detail[@id=529]/record">
 				<xsl:value-of select="detail[@id=529]/record/id"/>
@@ -75,7 +82,7 @@
 			<!-- generic and type factoids can span two columns -->
 			<xsl:when test="detail[@id=529]/record/detail[@id=160] = 'Generic'">
 				<div class="entity-information-col01-02">
-					<xsl:value-of select="detail[@id=160]"/>
+					<xsl:value-of select="detail[@id=160]"/> 
 				</div>
 			</xsl:when>
 			<xsl:when test="detail[@id=526] = 'Type'">
@@ -91,11 +98,15 @@
 				<div class="entity-information-col01">
 					<xsl:choose>
 						<xsl:when test="detail[@id=526] = 'Occupation' or detail[@id=526] = 'Position'">
+							
 							<a href="{$roleLink}" class="preview-{detail[@id=529]/record/id}">
-								<xsl:call-template name="getRoleName">
-									<xsl:with-param name="factoid" select="."/>
-								</xsl:call-template>
+									<xsl:call-template name="getRoleName">
+										<xsl:with-param name="factoid" select="."/>
+									</xsl:call-template>
 							</a>
+							
+							
+							
 						</xsl:when>
 						<xsl:otherwise>
 							<xsl:call-template name="getRoleName">
@@ -123,7 +134,8 @@
 				</div>
 			</xsl:otherwise>
 		</xsl:choose>
-
+		
+		
 		<div class="entity-information-col03">
 			<xsl:call-template name="formatDate">
 				<xsl:with-param name="date" select="detail[@id=177]"/>
