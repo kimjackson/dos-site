@@ -70,8 +70,7 @@
 						timemap: [ {
 							type: "kml",
 							options: {
-								url: "../kml/full/rename/<xsl:value-of select="id"/>"
-								//url: "<xsl:value-of select="$urlbase"/>kml/full/<xsl:value-of select="id"/>.kml"
+								url: "<xsl:value-of select="$urlbase"/>kml/full/<xsl:value-of select="id"/>.kml"
 							}
 						} ]
 					};
