@@ -1,5 +1,6 @@
 <?php
 
+define('HOST_BASE', 'heuristscholar.org');
 define('HEURIST_INSTANCE', 'dos');
 define('DATABASE', '`heuristdb-dos`');
 

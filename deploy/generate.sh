@@ -14,7 +14,7 @@ PIPELINE=http://heuristscholar.org/cocoon/relbrowser-kj
 REPO=repo
 
 # create directories
-mkdir item preview popup browse search kml kml/full kml/summary $REPO/hml
+mkdir item preview popup browse citation search kml kml/full kml/summary $REPO/hml
 # mkdir files files/thumbnail files/small files/medium files/wide files/large files/full
 # Kim decided to leave files in the same directory and update from there. So we create a sym link to that directory and update things there
 ln -s ../dos-static-2009-10-22/files
@@ -57,12 +57,17 @@ echo $ALL_ITEMS_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos > all_items
 # popups and KML files
 echo "select rec_id from records left join rec_details on rd_rec_id = rec_id and rd_type = 618 where (rec_type = 74) or (rec_type = 168 and rd_val = 'image');" | mysql -s -u readonly -pmitnick heuristdb-dos > popups.txt
 
+KML_SUMMARY_QUERY="select distinct b.rd_val
+                     from rec_details a
+                left join rec_details b on a.rd_rec_id = b.rd_rec_id
+                    where a.rd_type = 526 and a.rd_val = 'TimePlace' and b.rd_type = 528;"
 echo $KML_SUMMARY_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos > kml_summary.txt
 
 
-KML_FULL_QUERY="select distinct b.rd_val from rec_details a
-left join rec_details b on a.rd_rec_id = b.rd_rec_id
-where a.rd_type in (177,178,230) and b.rd_type = 528;"
+KML_FULL_QUERY="select distinct b.rd_val
+                  from rec_details a
+             left join rec_details b on a.rd_rec_id = b.rd_rec_id
+                 where a.rd_type in (177,178,230) and b.rd_type = 528;"
 
 
 echo $KML_FULL_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos > kml_full.txt
@@ -201,9 +206,9 @@ cd ..
 
 # generate previews for all records in all necessary contexts
 ##########################################################################################
+grep -r 'preview-[0-9]' item | perl -pe 's/.*preview-(\d+(c\d+)?).*/\1/' | sort | uniq > preview_contexts.txt
 cd preview
-grep -r 'preview-[0-9]' ../item | perl -pe 's/.*preview-(\d+(c\d+)?).*/\1/' | sort | uniq | \
-while read id; do
+cat ../preview_contexts.txt | while read id; do
 	base_id=`echo $id | sed 's/c.*//'`
 	if [[ -e ../$REPO/hml/$base_id.xml  &&  ! -e $id ]]; then
 		echo $PIPELINE/preview/$id;
