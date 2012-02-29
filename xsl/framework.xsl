@@ -157,10 +157,9 @@
 								<xsl:text>Home</xsl:text>
 							</a>
 						</li>
-						<li><a href="{$urlbase}about.html">About</a></li>
-						<li><a href="{$urlbase}copyright.html">Copyright</a></li>
-						<li><a href="{$urlbase}faq.html">FAQ</a></li>
-						<li><a href="{$urlbase}contact.html">Contact</a></li>
+						<li><a href="http://trust.dictionaryofsydney.org/about-the-trust/">About</a></li>
+						<li><a href="http://trust.dictionaryofsydney.org/participate/copyright/">Copyright</a></li>
+						<li><a href="http://trust.dictionaryofsydney.org/participate/contact-form/">Contact</a></li>
 						<li>
 							<a href="#" class="increasefont" title="Increase font size">Font +</a>
 							<xsl:text> </xsl:text>
@@ -169,7 +168,7 @@
 					</ul>
 					<ul id="footer-right-col">
 						<li class="no-bullet"><a href="http://www.everydayhero.com.au/dictionaryofsydney">Donate</a></li>
-						<li><a href="{$urlbase}contribute.html">Contribute</a></li>
+						<li><a href="http://trust.dictionaryofsydney.org/participate/contact-form/">Contribute</a></li>
 						<li><a href="http://www.addthis.com/bookmark.php?v=250&amp;amp;pub=dictionaryofsydney" class="addthis_button">Share</a></li>
 					</ul>
 				</div>

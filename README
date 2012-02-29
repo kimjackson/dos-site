@@ -8,7 +8,8 @@ git checkout -b dos-site-deploy-<yyyy-mm-dd>
 # apply changes needed to make this a static site
 git apply dos-site-to-static-patch.txt
 
-# update dates in deploy/generate.sh
+# ********* UPDATE DATES in deploy/generate.sh ************
+# ********* UPDATE DATES in xsl/myvariables.xsl ***********
 
 # stage all changes to be committed
 git add -u

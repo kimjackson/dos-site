@@ -289,7 +289,7 @@ chmod +x search/search.cgi
 
 #COPY the files up to the production server into a new directory
 #su as kjackson to run this command
-rsync -av about.html artefact audio boxy-ie.css boxy.css browse building config.xml contact.html contact.php contribute.html contributor copyright.html entry event faq.html image images index.html item jquery js kml map natural_feature organisation person place popup preview recaptcha role search search.css structure style.css subject swf tiles timeline timemap.js video kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2011-05-20/
+rsync -av about.html artefact audio boxy-ie.css boxy.css browse building citation config.xml contact.html contact.php contribute.html contributor copyright.html entry event faq.html image images index.html item jquery js kml map natural_feature organisation person place popup preview recaptcha role search search.css structure style.css subject swf tiles timeline timemap.js video kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2012-02-24/
 
 #sync the uploaded files
 rsync -av ../dos-static-2009-10-22/files/ kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/files/
@@ -301,28 +301,46 @@ rsync -av recaptcha kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2011-05-20/
 ##########################
 cd /var/www/dos-2011-05-20
 #replace dynamic links on built version to the relative links for the static production version
-perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2010-11-18/../' item/*
-perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2010-11-18/../' popup/*
-perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2010-11-18/http:\/\/dictionaryofsydney.org/' `grep -l heurist preview/*`
+# old way gets Arg list too long error		perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2012-02-24/../' item/*
+grep -rl dos-static-2012-02-24 item |\
+while read filename; do
+	perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2012-02-24/../' $filename;
+done
+
+# old way gets Arg list too long error		perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2012-02-24/../' popup/*
+grep -rl dos-static-2012-02-24 popup |\
+while read filename; do
+	perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2012-02-24/../' $filename;
+done
+
+grep -rl heurist preview |\
+while read filename; do
+	perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2012-02-24/http:\/\/dictionaryofsydney.org/' $filename;
+done
+
 #change the google key to the production key
-perl -pi -e 's/ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w/ABQIAAAA5wNKmbSIriGRr4NY0snaURTtHC9RsOn6g1vDRMmqV_X8ivHa_xSNBstkFn6GHErY6WRDLHcEp1TxkQ/' `grep -l maps.google.com item/*`
-
-perl -pi -e 's/item\/http/http/' *.html
-perl -pi -e 's/..http/http/' item/*
-
-perl -pi -e 's/href="#"/href="..\/item\/#"/' item/*
+grep -rl maps.google.com item |\
+while read filename; do
+	perl -pi -e 's/ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w/ABQIAAAA5wNKmbSIriGRr4NY0snaURTtHC9RsOn6g1vDRMmqV_X8ivHa_xSNBstkFn6GHErY6WRDLHcEp1TxkQ/' $filename
+done
 
 # create production site sym links
 ##########################################################################################
 ln -fs ../files
 ln -fs ../tiles
-ln -fs ../test
-ln -fs ../previous
+ln -s ../test
+ln -s ../previous
 cd /var/www/
 
-# hook this into test  (make sure this link sticks, may have to delete the link first, "rm test")
+# hook this into test  (make sure this link sticks,
+# may have TO DELETE the link first, "rm test")
 ##########################################################################################
-ln -fs /var/www/dos-2011-05-20 test
+ln -s /var/www/dos-2012-02-24 test
 
-#once the new version is tested then log in to the server same as before and run this command to go LIVE!
-#ln -fs /var/www/dos-2011-05-20 dos
+# once the new version is tested then log in to the server same as before and
+# change the dos link to point to the new build by running this command to go LIVE!
+# note that again you may have to remove the link first "rm dos"
+#ln -fs /var/www/dos-2012-02-24 dos
+
+# you should also move the previous link "rm previous" then
+# ln -s /var/www/dos-(yyyy-mm-dd formatted date of previous build goes here)
