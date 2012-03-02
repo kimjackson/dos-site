@@ -1,9 +1,9 @@
 if (typeof GLatLng == "function") {
-	if (! window.RelBrowser) { RelBrowser = {}; }
+	if (! window.RelBrowser) { window.RelBrowser = {}; }
 
 	// FIXME: make JSLint-happy
 
-	RelBrowser.Mapping = {
+	window.RelBrowser.Mapping = {
 
 		map: null,
 		tmap: null,
@@ -33,7 +33,7 @@ if (typeof GLatLng == "function") {
 
 
 		addCustomMapTypeControl: function () {
-			var CustomMapTypeControl = function () {}, M = RelBrowser.Mapping;
+			var CustomMapTypeControl = function () {}, M = (RelBrowser.Mapping ? RelBrowser.Mapping : DOS.rb.Mapping);
 
 			if (M.customMapTypes.length < 1) { return; }
 
@@ -66,70 +66,70 @@ if (typeof GLatLng == "function") {
 					})(M.customMapTypes[i]);
 				}
 
-			$container.append("<hr/>");
+				$container.append("<hr/>");
 
-			$cb = $("<input type='checkbox'/>")
-				.change(function () {
-					that._setOpacity(this.checked ? 0.7 : 1);
-				});
-			if ($.browser.msie) { // yuck
-				$cb.click(function () {
-					this.blur();
-					this.focus();
-				});
-			}
-			$label = $("<label/>").append($cb).append(" Transparent");
-			$div = $("<div/>").append($label);
-			$div.appendTo($container);
-			this._setCheckboxStyle($cb);
-			this._setLabelStyle($label);
-			this._setContainerStyle($container);
-			$container.appendTo(map.getContainer());
-			return $container.get(0);
-		};
+				$cb = $("<input type='checkbox'/>")
+					.change(function () {
+						that._setOpacity(this.checked ? 0.7 : 1);
+					});
+				if ($.browser.msie) { // yuck
+					$cb.click(function () {
+						this.blur();
+						this.focus();
+					});
+				}
+				$label = $("<label/>").append($cb).append(" Transparent");
+				$div = $("<div/>").append($label);
+				$div.appendTo($container);
+				this._setCheckboxStyle($cb);
+				this._setLabelStyle($label);
+				this._setContainerStyle($container);
+				$container.appendTo(map.getContainer());
+				return $container.get(0);
+			};
 
-		CustomMapTypeControl.prototype._setContainerStyle = function ($div) {
-			$div.css("width", "178px");
-			$div.css("background-color", "white");
-			$div.css("border", "1px solid black");
-			$div.css("padding", "2px 10px");
-			$div.css("font-family", "Arial,sans-serif");
-			$div.css("font-size", "12px");
-		};
+			CustomMapTypeControl.prototype._setContainerStyle = function ($div) {
+				$div.css("width", "178px");
+				$div.css("background-color", "white");
+				$div.css("border", "1px solid black");
+				$div.css("padding", "2px 10px");
+				$div.css("font-family", "Arial,sans-serif");
+				$div.css("font-size", "12px");
+			};
 
-		CustomMapTypeControl.prototype._setLinkDivStyle = function ($link) {
-			$div.css("padding", "0 0 3px 0");
-		};
+			CustomMapTypeControl.prototype._setLinkDivStyle = function ($link) {
+				$div.css("padding", "0 0 3px 0");
+			};
 
-		CustomMapTypeControl.prototype._setCheckboxStyle = function ($cb) {
-			$cb.css("vertical-align", "middle");
-		};
+			CustomMapTypeControl.prototype._setCheckboxStyle = function ($cb) {
+				$cb.css("vertical-align", "middle");
+			};
 
-		CustomMapTypeControl.prototype._setLabelStyle = function ($div) {
-			$div.css("font-size", "11px");
-			$div.css("cursor", "pointer");
-		};
+			CustomMapTypeControl.prototype._setLabelStyle = function ($div) {
+				$div.css("font-size", "11px");
+				$div.css("cursor", "pointer");
+			};
 
-		CustomMapTypeControl.prototype._setSelected = function ($a, selected) {
-			$a.css("font-weight", selected ? "bold" : "");
-		};
+			CustomMapTypeControl.prototype._setSelected = function ($a, selected) {
+				$a.css("font-weight", selected ? "bold" : "");
+			};
 
-		CustomMapTypeControl.prototype._setOpacity = function (opacity) {
-			var i, mapType, M = RelBrowser.Mapping;
-			for (i = 0; i < M.customMapTypes.length; ++i) {
-				M.customMapTypes[i].getTileLayers()[1].opacity = opacity;
-			}
-			mapType = M.map.getCurrentMapType();
-			M.map.setMapType(G_NORMAL_MAP);
-			M.map.setMapType(mapType);
-		};
+			CustomMapTypeControl.prototype._setOpacity = function (opacity) {
+				var i, mapType, M = (RelBrowser.Mapping ? RelBrowser.Mapping : DOS.rb.Mapping);
+				for (i = 0; i < M.customMapTypes.length; ++i) {
+					M.customMapTypes[i].getTileLayers()[1].opacity = opacity;
+				}
+				mapType = M.map.getCurrentMapType();
+				M.map.setMapType(G_NORMAL_MAP);
+				M.map.setMapType(mapType);
+			};
 
-		RelBrowser.Mapping.map.addControl(new CustomMapTypeControl());
-	},
+			RelBrowser.Mapping.map.addControl(new CustomMapTypeControl());
+		},
 
 
 	renderTimelineZoom: function () {
-		var band, zoom, x, $div, M = RelBrowser.Mapping;
+		var band, zoom, x, $div, M = (RelBrowser.Mapping ? RelBrowser.Mapping : DOS.rb.Mapping);
 
 		$div = $("#timeline-zoom");
 
@@ -192,7 +192,7 @@ if (typeof GLatLng == "function") {
 
 
 		initMap: function (mini) {
-			var matches, coords, points, l, i, lnglat, bounds = null, M = RelBrowser.Mapping;
+			var matches, coords, points, l, i, lnglat, bounds = null, M = (RelBrowser.Mapping ? RelBrowser.Mapping : DOS.rb.Mapping);
 
 			if (M.mapdata["layers"]) {
 				M.addLayers();
@@ -240,7 +240,7 @@ if (typeof GLatLng == "function") {
 
 
 		initTMap: function (mini, bounds) {
-			var tl_theme, onDataLoaded, M = RelBrowser.Mapping;
+			var tl_theme, onDataLoaded, M = (RelBrowser.Mapping ? RelBrowser.Mapping : DOS.rb.Mapping);
 
 			SimileAjax.History.enabled = false;
 
@@ -340,7 +340,7 @@ if (typeof GLatLng == "function") {
 		},
 
 		addLayers: function () {
-			var i, M = RelBrowser.Mapping;
+			var i, M = (RelBrowser.Mapping ? RelBrowser.Mapping : DOS.rb.Mapping);
 			for (i = 0; i < M.mapdata.layers.length; ++i) {
 				(function (layer) {
 					var newLayer, newMapType;
@@ -396,8 +396,10 @@ if (typeof GLatLng == "function") {
 	// default to 100px per century
 	RelBrowser.Mapping.initTimeZoomIndex = RelBrowser.Mapping.timeZoomSteps.length - 1;
 
-	$(function () {
+	// changed to ensure orderred startup SAW 2/2/12
+	initialiseMapping = function () {
 		var mini, $img, M = RelBrowser.Mapping;
+		DOS.rb = RelBrowser;	// Add to ensure context is passed currently startup is somehow resetting the context.
 		mini = M.mapdata.mini || false;
 		$img = $("img.entity-picture");
 		if ($img.length > 0  &&  $img.width() === 0) {
@@ -405,5 +407,5 @@ if (typeof GLatLng == "function") {
 		} else {
 			M.initMap(mini);
 		}
-	});
+	};
 }

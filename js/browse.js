@@ -27,6 +27,8 @@ DOS.Browse = (function () {
 		if (DOS.Browse.pathBase) {
 			if (DOS.Browse.pathBase === "map") {
 				return "../map/" + id;
+			}else if (DOS.Browse.pathBase === "multimedia") {
+				return "../item/" + id;
 			} else {
 				return "../" + DOS.Browse.pathBase + "/" + escape(
 					title.toLowerCase()
