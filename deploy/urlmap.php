@@ -2,6 +2,7 @@
 
 define('HOST_BASE', 'heuristscholar.org');
 define('HEURIST_INSTANCE', 'dos');
+define('HEURIST_INSTANCE_PREFIX', 'dos.');
 define('DATABASE', '`heuristdb-dos`');
 
 require_once('/var/www/htdocs/heurist/php/modules/db.php');

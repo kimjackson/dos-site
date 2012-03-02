@@ -107,7 +107,8 @@
 					</div>
 
 					<div id="right-col">
-						<a title="Dictionary of Sydney Home">
+
+						<a title="Dictionary of Sydney">
 							<xsl:attribute name="href">
 								<xsl:choose>
 									<xsl:when test="$urlbase = ''">
@@ -126,6 +127,23 @@
 								<div id="search-submit"/>
 							</form>
 						</div>
+
+
+					<div id="browse-link">
+						<a title="Dictionary of Sydney Browse">
+							<xsl:attribute name="href">
+								<xsl:choose>
+									<xsl:when test="$urlbase = ''">
+										<xsl:value-of select="'./'"/><xsl:text>browse.html</xsl:text>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:value-of select="$urlbase"/><xsl:text>browse.html</xsl:text>
+									</xsl:otherwise>
+								</xsl:choose>
+							</xsl:attribute>
+							Browse
+						</a>
+					</div>
 
 						<xsl:call-template name="sidebar"/>
 

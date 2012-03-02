@@ -37,9 +37,9 @@ if ($type == "Entry") {
 else if ($type == "Multimedia") {
 	$query = "SELECT
                 records.rec_id,
-                records.rec_title 
-                from records 
-                WHERE rec_type =  74 
+                records.rec_title
+                from records
+                WHERE rec_type =  74
                 order by if (rec_title like 'the %', substr(rec_title, 5), replace(rec_title, '\'', '')) ";
 
 }
@@ -195,8 +195,11 @@ if ($type == "Entry") {
 	        order by entity_type.rd_val,
 	                 if (rec_title like 'the %', substr(rec_title, 5), replace(rec_title, '\'', ''))";
 } else if ($type == "Contributor") {
-	$query = "select rd_val,
-	                 if (rd_val = 'author', 'Authors', if (rd_val = 'institution', 'Institutions and Collections', 'Other')),
+	$query = "select rd_val, ".
+					"if (rd_val = 'author', 'Authors', ".
+					"if (rd_val = 'institution', 'Institutions and Collections', ".
+					"if (rd_val = 'public', 'Public', ".
+					"if (rd_val = 'supporter', 'Supporters', 'Other'))),
 	                 rec_id
 	            from records,
 	                 rec_details

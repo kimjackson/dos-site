@@ -264,11 +264,11 @@ wget --no-cache -O browse/multimedia $PIPELINE/browse/multimedia
 
 wget --no-cache -O search/search_template.html $PIPELINE/search
 
-wget --no-cache -O about.html $PIPELINE/about
-wget --no-cache -O contact.html $PIPELINE/contact
-wget --no-cache -O contribute.html $PIPELINE/contribute
-wget --no-cache -O copyright.html $PIPELINE/copyright
-wget --no-cache -O faq.html $PIPELINE/faq
+#wget --no-cache -O about.html $PIPELINE/about
+#wget --no-cache -O contact.html $PIPELINE/contact
+#wget --no-cache -O contribute.html $PIPELINE/contribute
+#wget --no-cache -O copyright.html $PIPELINE/copyright
+#wget --no-cache -O faq.html $PIPELINE/faq
 
 wget --no-cache -O index.html $PIPELINE/
 

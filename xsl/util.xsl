@@ -384,6 +384,7 @@
 
 	<xsl:template name="makeTitleDiv">
 		<xsl:param name="record"/>
+		<xsl:param name="base" select="'../'"/>
 		<xsl:variable name="type">
 			<xsl:call-template name="getRecordTypeClassName">
 				<xsl:with-param name="record" select="$record"/>
@@ -428,6 +429,15 @@
 					</xsl:call-template>
 				</xsl:if>
 			</span>
+
+			<xsl:choose>
+			<xsl:when test="$record/type/@id = 98">
+				<span id="citation">
+					<a class="citation-link" href="{$base}citation/{$record/id}">Cite this</a>
+				</span>
+			</xsl:when>
+			</xsl:choose>
+
 		</div>
 	</xsl:template>
 
@@ -489,6 +499,10 @@
 		<xsl:if test="$record/detail[@id=368]">
 			<xsl:text> </xsl:text>
 			<xsl:text>[</xsl:text>
+			<!-- if the contributor has a URL base, prefix this to the custom id -->
+
+			<!-- note: this should be ignored, Stewart will get back to us on this 14/12/2011 -->
+
 			<xsl:choose>
 				<xsl:when test="$contributor/detail[@id=339]">
 					<a href="{$contributor/detail[@id=339]}{$record/detail[@id=368]}" target="_blank">
@@ -496,6 +510,7 @@
 					</a>
 				</xsl:when>
 
+				<!-- 304 = dc.source -->
 				<xsl:when test="$record/detail[@id=304]">
 					<xsl:call-template name="linkify">
 						<xsl:with-param name="string" select="$record/detail[@id=304]"/>
@@ -503,6 +518,7 @@
 					</xsl:call-template>
 				</xsl:when>
 
+				<!-- if none of the above use the straight custom id -->
 				<xsl:otherwise>
 					<xsl:call-template name="linkify">
 						<xsl:with-param name="string" select="$record/detail[@id=368]"/>
