@@ -270,7 +270,9 @@ wget --no-cache -O search/search_template.html $PIPELINE/search
 #wget --no-cache -O copyright.html $PIPELINE/copyright
 #wget --no-cache -O faq.html $PIPELINE/faq
 
-wget --no-cache -O index.html $PIPELINE/
+#wget --no-cache -O index.html $PIPELINE/
+
+wget --no-cache -O browse.html $PIPELINE/browse
 
 # run zoom indexer over spider-* directories
 # this is done on kim's machine and has a script for updating.

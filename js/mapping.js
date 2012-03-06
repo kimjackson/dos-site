@@ -1,5 +1,5 @@
 if (typeof GLatLng == "function") {
-	if (! window.RelBrowser) { window.RelBrowser = {}; }
+	if (! window.RelBrowser) { window.RelBrowser = {baseURL: "../"}; }
 
 	// FIXME: make JSLint-happy
 

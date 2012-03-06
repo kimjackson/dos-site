@@ -42,7 +42,7 @@ var _decode = function (s) {
 };
 
 
-if (! window.RelBrowser) { RelBrowser = {}; }
+if (! window.RelBrowser) { RelBrowser = {baseURL: "../"}; }
 
 RelBrowser.History = {
 

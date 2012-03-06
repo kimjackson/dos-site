@@ -75,6 +75,8 @@
 							}
 						} ]
 					};
+					//added to ensure proper startup timing SAW 2-2-12
+					initialiseMapping();
 				</script>
 			</xsl:if>
 

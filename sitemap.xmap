@@ -96,7 +96,7 @@
      <map:parameter name="id" value="{1}"/>
     </map:call>
    </map:match>
-   
+
    <map:match pattern="citation/*">
     <map:call resource="citation">
      <map:parameter name="id" value="{1}"/>
@@ -159,6 +159,12 @@
    <map:match pattern="">
     <map:generate src="empty.xml"/>
     <map:transform src="xsl/index.xsl"/>
+    <map:serialize type="html"/>
+   </map:match>
+
+   <map:match pattern="browse">
+    <map:generate src="empty.xml"/>
+    <map:transform src="xsl/default_browse.xsl"/>
     <map:serialize type="html"/>
    </map:match>
 
