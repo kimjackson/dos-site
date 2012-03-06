@@ -37,6 +37,7 @@ DOS.ToolTip = {
 	},
 
 	addPreviewToolTips: function ($elems) {
+		if ('ontouchstart' in document.documentElement) return;
 		$elems.live("mouseover", function (e) {
 			var myClass, $preview, $that;
 			myClass = $(this).attr("class").replace(/.*(preview-\S+).*/, "$1");

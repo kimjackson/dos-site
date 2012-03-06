@@ -43,7 +43,7 @@ var _set = function (n) {
 };
 
 
-if (! window.RelBrowser) { RelBrowser = {}; }
+if (! window.RelBrowser) { RelBrowser = {baseURL: "../"}; }
 
 RelBrowser.FontSize = {
 

@@ -1229,3 +1229,107 @@ body.fontSize3 h2 { font-size: 20px !important }
 body.fontSize3 h4 { font-size: 21px !important }
 body.fontSize3 h3 { font-size: 22px !important }
 body.fontSize3 h1 { font-size: 26px !important }
+
+video {width:400px; height:300px}
+
+/*MOBILE DEVICE CSS
+--------------------------------------------------*/
+@media only screen and (max-width: 768px) {
+	/* Disctionary of Sydney Mobile version CSS */
+	/* (c)2011 Ireneusz Golka, The University of Sydney */
+
+
+	/* restet CSS */
+	html, body, div, span, applet, object, iframe,
+	h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+	a, abbr, acronym, address, big, cite, code,
+	del, dfn, em, img, ins, kbd, q, s, samp,
+	small, strike, strong, sub, sup, tt, var,
+	b, u, i, center,
+	dl, dt, dd, ol, ul, li,
+	fieldset, form, label, legend,
+	table, caption, tbody, tfoot, thead, tr, th, td,
+	article, aside, canvas, details, embed,
+	figure, figcaption, footer, header, hgroup,
+	menu, nav, output, ruby, section, summary,
+	time, mark, audio, video {margin: 0;padding: 0;	border: 0;-webkit-text-size-adjust:none;}
+	div{clear:both!important;float:none!important;margin:0;padding:0;}
+
+	/* remove unnecessary elements */
+	*|* {padding:0;}
+	#subheader {display:none}
+	#home-heading object{display:none}
+	body {background-image: none !important; background-color: #FFF;}
+	.teaser img {display:none}
+	#logos {display:none}
+	#container-bottom {display:none}
+	#heading {width:0px; left:0;right:0; width:100%; padding:0}
+	#header {display:block;background: #2F0103 none center no-repeat;height:60px}
+	#middle {width:100%; top:20px; background-image: none;}
+	#left-col {display:block; width:96%; background-image: none;padding:2%}
+	#right-col {display:block; clear:both; background-color:#2F0103; width:100%;padding: 0;}
+	div.teaser {width:0; float: left;margin: 0 10px 0 0;width: 100%;display:none}
+	#right-col a img.logo {display: block;height: 66px;left: 0px;position: absolute;top:-67px;	width: auto;}
+	#right-col {background-image:none;}
+	#container {position: relative;top: 0;width: 100%;background-image: none;}
+	#content-left-col {float: none;width: 0px;width:100%}
+	#chapters {margin: 0; padding: 0}
+	#chapters-top {background-image:none;background-color:#2F0103;height: 15px;}
+	#chapters-middle {background-image:none;background-color:#4B0F0F;padding: 0;width: 0; width:100%}
+	#chapters-middle h3, #connections h3{padding:0 0 0 10px}
+	#chapters-bottom {background-image:none;background-color:#2F0103;height: 15px;}
+	#connections {padding: 0}
+	.menu-artefact {background-position: 12px 10px;}
+	.menu h4 {padding: 13px 0 0 45px;}
+	.increasefont, .decreasefont {display:none}
+	.teaser.teaser-end {width:100%}
+	#footer-content {width:100px; width:100%; background-image:none; background-color:#2F0103;padding:0}
+	#footer {border-top: 1px solid #FFF;}
+	#footer-left-col, #footer-right-col {float:none; display: block;clear:both}
+	#search-bar {top:0}
+	#browse-connections {padding:5px}
+	#browse-connections li {display: block;}
+	#entities-alpha .left, #entities-content .left {width: 90%;}
+	#heading #sub-title {width:auto;left: 0;right:0; position: relative;white-space: nowrap;}
+	#entities-content h2 {padding-bottom: 1ex;line-height: 1em}
+	a {word-break: break-all;}
+	#heading #sub-title, #heading #sub-title a{position: relative;white-space: normal;word-break: normal;}
+	#heading #sub-title, #heading h1 {white-space:normal;padding:0 0 0 90px}
+	#heading #extra {left:90px; display:block}
+	.title-entry, .title-artefact {background-position: -8px 0}
+	.list-right-col { border-left: none; float: none; margin: 0 ;padding: 0; width: 0; width:100%;}
+	.list-left-col {margin:10px 0 0 0}
+	#home-heading h1 {color: #2F0103;}
+	#home-heading {margin-bottom: 50px;}
+	#resource img.resource-image {border: 1px solid #320a0a;margin: 0px 0px 17px 0px; max-width:100%}
+	#resource #media {margin: 0px 0px 17px 0px; max-width:100%}
+	div.entity-information > div {display:inline-block;float: none !important}
+	div.entity-information .clearfix {display:block; border-bottom:1px solid #CCC; height:5px}
+	.entity-entry > .list-right-col-content {width:100%}
+	.entity-information {padding:7px 10px}
+	.entity-thumbnail img {height:100px;}
+	.entity-information-heading { font-weight: bold; display:block !important;border-bottom:1px solid #CCC; padding-bottom:5px }
+	.entity-information-col01 { margin: 4px 20px 0 5px; width: auto;}
+	.entity-information-col02 { margin: 4px 10px 0 0;width: auto ;clear:none !important}
+	.entity-information-col03 { margin: 4px 0 0 20px; text-align: right; width: auto ;float:right !important}
+	.entity-information-col04 { margin: 4px 6px 0; float:right !important; clear:none !important }
+	.entity-information-col05 { margin: 4px 0 0 0; width: auto;float:right !important; clear:none !important }
+	.entity-information-col01-02 { margin: 4px 20px 0 20px; width: auto ;float:left !important; clear:none !important 	}
+	#content-right-col .annotation-img {max-width:100%;display:block;margin-bottom:15px;padding:0px;}
+	#content-right-col .annotation-img .annotation-caption{display:inline;clear:both;color:#666;}
+	#content-right-col .annotation-img .annotation-caption h4{ padding:0 0 1ex 0}
+	#content-right-col .annotation-img img{float:left;margin:0 10px 10px 0 !important;}
+	#content-right-col {width:100%}
+	.entity-thumbnail div {clear:none !important; display: inline-block; float:left !important; max-width:48%; width:auto; margin:5px !important}
+	.menu, .menu:hover {background-repeat:repeat-y}
+	.menu {background-position:right 135px}
+	.menu:hover {background-position:right 45px}
+	#connections div.closed.menu {background-position:right 180px}
+	#connections div.closed.menu:hover {background-position:right 90px;background-repeat:repeat-y}
+	#connections div.closed.menu {background-position:right 180px; background-repeat:repeat-y}
+	#search-bar {left:-6px}
+	#content-right-col .annotation-img .annotation-caption {display:inline !important;color:#999;font-size:10px}
+	#content-right-col .annotation-img .annotation-caption p{padding-left:160px}
+	video {width:100%; min-height:250px; height:auto;}
+/* end iPhone CSS */
+}

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-	xmlns:ex="http://exslt.org/dates-and-times" 
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	xmlns:ex="http://exslt.org/dates-and-times"
 	version="1.0">
 
 	<xsl:include href="urlmap.xsl"/>
@@ -19,7 +19,7 @@
 				<xsl:with-param name="record" select="."/>
 			</xsl:call-template>
 		</xsl:for-each>
-		
+
 
 		<!-- annotations (in either direction) -->
 
@@ -44,8 +44,8 @@
 			</xsl:call-template>
 		</xsl:for-each>
 
-		
-		
+
+
 	</xsl:template>
 
 
@@ -68,56 +68,60 @@
 	<xsl:template name="citation">
 		<xsl:param name="record"/>
 		<xsl:param name="context"/>
-
 		<xsl:variable name="type">
 			<xsl:call-template name="getRecordTypeClassName">
 				<xsl:with-param name="record" select="$record"/>
 			</xsl:call-template>
 		</xsl:variable>
-		
-		<!-- temp for testing -->
-		
-		<html>
-			<head>
-				<title></title>
-				<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=2.0; user-scalable=1;" />
-				<link rel="icon" href="http://heuristscholar.org/dos-static-2011-05-20/images/favicon.ico" type="image/x-icon"/>
-				<link rel="shortcut icon" href="http://heuristscholar.org/dos-static-2011-05-20/images/favicon.ico" type="image/x-icon"/>
-				<link rel="stylesheet" href="http://heuristscholar.org/dos-static-2011-05-20/style.css" type="text/css"/>
-			</head>
-			<body>
 
-		<div class="balloon-container">
-			<div class="balloon-top"/>
-			<div class="balloon-middle">
-				<div class="balloon-heading balloon-{$type}">
-					<h2>Citation</h2>
-				</div>
-				<div class="balloon-content">
+		<script type="text/javascript">
+
+				function fulldate() {
+					var d = new Date();
+					var curr_date = d.getDate();
+					var curr_month = d.getMonth() + 1; //months are zero based
+					var curr_year = d.getFullYear();
+
+  					var fulldate = curr_date + "-" + curr_month + "-" + curr_year;
+					return fulldate;
+				}
+		</script>
+
+
+
+		<div class="citation-container">
+			<div class="citation-close"> <a onclick="Boxy.get(this).hide(); return false;" href="#">[close]</a> </div>
+			<div class="clearfix"></div>
+			<div class="citation-heading balloon-entry">
+				<h2>Citation</h2>
+			</div>
+			<div class="citation-content">
 					<xsl:call-template name="citationContent">
 						<xsl:with-param name="record" select="$record"/>
-						
+
 					</xsl:call-template>
 					<div class="clearfix"></div>
-				</div>
 			</div>
-			<div class="balloon-bottom"/>
+
+
+		<div class="clearfix"></div>
 		</div>
-				
-			</body>
-			</html>
+
+
+
+
 	</xsl:template>
 
 
 	<xsl:template name="citationContent">
 		<xsl:param name="record"/>
-	
+
 		<xsl:variable name="access_date" select="ex:date()"/>
 		<!-- xsl:variable name="nice_date" select="ex:format-date($access_date,'dd MMM yyyy')"/ -->
 		<xsl:variable name="dayofmonth" select="ex:day-in-month($access_date)"/>
 		<xsl:variable name="monthname" select="ex:month-name($access_date)"/>
 		<xsl:variable name="year" select="ex:year($access_date)"/>
-		
+
 		<xsl:variable name="pubDate" select="$record/detail[@id='166']/year"/>
 		<xsl:variable name="author" select="$record/detail[@id=538]/record/detail[@id=160]"/>
 		<!-- getPath template lives in urlmap.xsl - links ids to names -->
@@ -126,40 +130,31 @@
 				<xsl:with-param name="id" select="$record/id"/>
 			</xsl:call-template>
 		</xsl:variable>
-		<p>
-			
-			<div class="balloon-content">
+
+
+
 				<h4>Persistent URL for this entry</h4>
-				<br/>
-				<p>http://www.dictionaryofsydney.org/<xsl:value-of select="$human_url"/></p>
-				<br/>
-			</div>
-			
-			<div class="balloon-content">
+				<div class="citation-text">http://www.dictionaryofsydney.org/<xsl:value-of select="$human_url"/></div>
+
+
+
 				<h4>To cite this entry in text</h4>
-				<br/>
-				<p><xsl:value-of select="$author"/>, '<xsl:value-of select="$record/detail[@id=160]"/>', Dictionary of Sydney, 2009, http://www.dictionaryofsydney.org/entry/<xsl:value-of select="$human_url"/>, viewed <xsl:value-of select="$dayofmonth"/> <xsl:text> </xsl:text> <xsl:value-of select="$monthname"/> <xsl:text> </xsl:text> <xsl:value-of select="$year"/></p>	
-				<br/>
-			</div>
-			
-			
-			<div class="balloon-content">
-				<h4>To cite this entry in a Wikipedia footnote citation</h4>  
-				<br/>
-				<p>&lt;ref&gt;{{cite web |url= http://www.dictionaryofsydney.org/<xsl:value-of select="$human_url"/> |title = <xsl:value-of select="$record/detail[@id=160]"/> | author = <xsl:value-of select="$author"/> | date = <xsl:value-of select="$pubDate"/> |work = Dictionary of Sydney |publisher = Dictionary of Sydney Trust |accessdate = <xsl:value-of select="$access_date"/>}}&lt;/ref&gt;</p>
-				<br/>
-			</div>
-			
-			<div class="balloon-content">
+		<div class="citation-text"><xsl:value-of select="$author"/>, '<xsl:value-of select="$record/detail[@id=160]"/>', Dictionary of Sydney, <xsl:value-of select="$pubDate"/>, http://www.dictionaryofsydney.org/entry/<xsl:value-of select="$human_url"/>, viewed <span class="date"></span></div>
+
+
+
+
+				<h4>To cite this entry in a Wikipedia footnote citation</h4>
+		<div class="citation-text">&lt;ref&gt;{{cite web |url= http://www.dictionaryofsydney.org/<xsl:value-of select="$human_url"/> |title = <xsl:value-of select="$record/detail[@id=160]"/> | author = <xsl:value-of select="$author"/> | date = <xsl:value-of select="$pubDate"/> |work = Dictionary of Sydney |publisher = Dictionary of Sydney Trust |accessdate = <span class="date"></span>}}&lt;/ref&gt;</div>
+
+
+
+
 				<h4>To cite this entry as a Wikipedia External link</h4>
-				<br/>
-				<p>
-					* {{cite web | url = http://www.dictionaryofsydney.org/<xsl:value-of select="$human_url"/> | title = <xsl:value-of select="$record/detail[@id=160]"/> | accessdate = <xsl:value-of select="$access_date"/> | author = <xsl:value-of select="$author"/> | date = <xsl:value-of select="$pubDate"/> | work = Dictionary of Sydney | publisher = Dictionary of Sydney Trust}}
-				</p>
-				<br/>
-				<div class="clearfix"></div>
-			</div>
-		</p>
+		<div class="citation-text">* {{cite web | url = http://www.dictionaryofsydney.org/<xsl:value-of select="$human_url"/> | title = <xsl:value-of select="$record/detail[@id=160]"/> | accessdate = <span class="date"></span> | author = <xsl:value-of select="$author"/> | date = <xsl:value-of select="$pubDate"/> | work = Dictionary of Sydney | publisher = Dictionary of Sydney Trust}}</div>
+
+
+
 	</xsl:template>
 
 </xsl:stylesheet>

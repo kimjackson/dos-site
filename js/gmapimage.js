@@ -1,4 +1,4 @@
-if (! window.RelBrowser) { RelBrowser = {}; }
+if (! window.RelBrowser) { RelBrowser = {baseURL: "../"}; }
 
 RelBrowser.GMapImage = {
 
