@@ -2,6 +2,8 @@ $(document).ready(function () {
 
 	Boxy.DEFAULTS.unloadOnHide = true;
 
+	if ('ontouchstart' in document.documentElement || navigator.userAgent.match(/MSIE 8\.0;/)) return;
+
 	$(".popup").click(function () {
 		var matches, src;
 
@@ -39,7 +41,7 @@ $(document).ready(function () {
 	});
 
 		$(".citation-link").click(function () {
-		if ('ontouchstart' in document.documentElement) {
+		if ('ontouchstart' in document.documentElement || navigator.userAgent.match(/MSIE 8\.0;/)) {
 			var matches, src;
 			src = this.href;
 			$('#content').load(src, function() {

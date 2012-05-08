@@ -38,7 +38,7 @@ DOS.Media = {
 			title: ""
 		};
 		if ('ontouchstart' in document.documentElement) {
-			document.write("<audio src='"+file+"' controls='controls' style='width:60%; height:100px; background-image:url(../images/img-entity-audio.jpg);background-repeat:no-repeat;background-size: 100% 100%;background-position:bottom'></video>");
+			document.write("<audio src='"+file+".mp3' controls='controls' style='width:60%; height:100px; background-image:url(../images/img-entity-audio.jpg);background-repeat:no-repeat;background-size: 100% 100%;background-position:bottom'></audio>");
 		}else{
 			DOS.Media.embed((RelBrowser.baseURL && RelBrowser.baseURL != "" ? RelBrowser.baseURL:"../")+"swf/audio-player.swf", "358", "87", elemID, flashvars);
 		}
