@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-	<xsl:include href="myvariables.xsl"/>
 	<xsl:include href="framework.xsl"/>
 	<xsl:include href="util.xsl"/>
 	<xsl:include href="factoid.xsl"/>
+
+	<xsl:variable name="urlbase"/>
+	<xsl:variable name="fullurlbase"/>
 
 	<xsl:param name="target1"/>
 	<xsl:param name="target2"/>

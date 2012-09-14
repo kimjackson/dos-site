@@ -9,7 +9,7 @@
 # make sure we go direct to the server!
 unset http_proxy
 
-PIPELINE=http://heuristscholar.org/cocoon/relbrowser-kj
+PIPELINE=http://localhost:8888/dos-static-2012-09-15
 
 REPO=repo
 
@@ -286,7 +286,7 @@ wget --no-cache -O browse.html $PIPELINE/browse
 chmod +x search/search.cgi
 
 #######
-##DONE with the generation this should now be a working site at http://heuristscholar.org/dos-static-2011-05-20
+##DONE with the generation this should now be a working site at http://heuristscholar.org/dos-static-2012-09-15
 #######ssh
 
 #COPY the files up to the production server into a new directory
@@ -303,21 +303,21 @@ rsync -av recaptcha kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2011-05-20/
 ##########################
 cd /var/www/dos-2011-05-20
 #replace dynamic links on built version to the relative links for the static production version
-# old way gets Arg list too long error		perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2012-02-24/../' item/*
-grep -rl dos-static-2012-02-24 item |\
+# old way gets Arg list too long error		perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2012-09-15/../' item/*
+grep -rl dos-static-2012-09-15 item |\
 while read filename; do
-	perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2012-02-24/../' $filename;
+	perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2012-09-15/../' $filename;
 done
 
-# old way gets Arg list too long error		perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2012-02-24/../' popup/*
-grep -rl dos-static-2012-02-24 popup |\
+# old way gets Arg list too long error		perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2012-09-15/../' popup/*
+grep -rl dos-static-2012-09-15 popup |\
 while read filename; do
-	perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2012-02-24/../' $filename;
+	perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2012-09-15/../' $filename;
 done
 
 grep -rl heurist preview |\
 while read filename; do
-	perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2012-02-24/http:\/\/dictionaryofsydney.org/' $filename;
+	perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2012-09-15/http:\/\/dictionaryofsydney.org/' $filename;
 done
 
 #change the google key to the production key
@@ -337,12 +337,12 @@ cd /var/www/
 # hook this into test  (make sure this link sticks,
 # may have TO DELETE the link first, "rm test")
 ##########################################################################################
-ln -s /var/www/dos-2012-02-24 test
+ln -s /var/www/dos-2012-09-15 test
 
 # once the new version is tested then log in to the server same as before and
 # change the dos link to point to the new build by running this command to go LIVE!
 # note that again you may have to remove the link first "rm dos"
-#ln -fs /var/www/dos-2012-02-24 dos
+#ln -fs /var/www/dos-2012-09-15 dos
 
 # you should also move the previous link "rm previous" then
 # ln -s /var/www/dos-(yyyy-mm-dd formatted date of previous build goes here)
