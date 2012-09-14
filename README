@@ -21,6 +21,7 @@ git commit -m'Static version.'
 #git push origin dos-site-deploy-<yyyy-mm-dd>:refs/heads/dos-site-deploy-<yyyy-mm-dd>
 
 # add a line to /opt/cocoon/mount-table.xml so that the generate.sh script can use cocoon to generate output.
+#  <mount uri-prefix="dos-static-<yyyy-mm-dd>/" src="http://heuristscholar.org/dos-static-<yyyy-mm-dd>/repo/"/>
 # just duplicate one of the existing ones and change it to the new static dir on heurist
 
 cd ..
