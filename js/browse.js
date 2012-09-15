@@ -7,11 +7,15 @@ DOS.Browse = (function () {
 
 	function _getSubtypes (ids) {
 		var i, s = "";
-		for (i = 0; i < ids.length; ++i) {
-			if (i > 0) {
-				s+= ", ";
+		if (DOS.Browse.subtypes.length > 0) {
+			for (i = 0; i < ids.length; ++i) {
+				if (DOS.Browse.subtypes[ids[i]] && DOS.Browse.subtypes[ids[i]][0]){
+					if (i > 0) {
+						s+= ", ";
+					}
+					s += DOS.Browse.subtypes[ids[i]][0];
+				}
 			}
-			s += DOS.Browse.subtypes[ids[i]][0];
 		}
 		return s;
 	}

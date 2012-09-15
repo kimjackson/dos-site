@@ -8,8 +8,18 @@ git checkout -b dos-site-deploy-<yyyy-mm-dd>
 # apply changes needed to make this a static site
 git apply dos-site-to-static-patch.txt
 
+####### check js files for changes ##########
+#diff -wBy  --suppress-common-lines js ../../dos-static-<last yyyy-mm-dd>/repo/js
+#diff -wBy  --suppress-common-lines -x urlmap* xsl ../../dos-static-<last yyyy-mm-dd>/repo/xsl
+##### if difference resolve code and commit changes to repo and push to main repo
+
 # ********* UPDATE DATES in deploy/generate.sh ************
 # ********* UPDATE DATES in xsl/myvariables.xsl ***********
+
+####### check js files for changes ##########
+#diff -wBy  --suppress-common-lines js ../../dos-static-<last yyyy-mm-dd>/repo/js
+#diff -wBy  --suppress-common-lines -x urlmap* xsl ../../dos-static-<last yyyy-mm-dd>/repo/xsl
+##### should only show date changes
 
 # stage all changes to be committed
 git add -u
