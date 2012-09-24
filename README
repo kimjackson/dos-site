@@ -13,8 +13,10 @@ git apply dos-site-to-static-patch.txt
 #diff -wBy  --suppress-common-lines -x urlmap* xsl ../../dos-static-<last yyyy-mm-dd>/repo/xsl
 ##### if difference resolve code and commit changes to repo and push to main repo
 
+# changing saved dates  dos-static-yyyy-mm-dd to the new dos-static-<last yyyy-mm-dd>
 # ********* UPDATE DATES in deploy/generate.sh ************
 # ********* UPDATE DATES in xsl/myvariables.xsl ***********
+# ********* UPDATE DATES in ./dossearch.zcfg ***********
 
 ####### check js files for changes ##########
 #diff -wBy  --suppress-common-lines js ../../dos-static-<last yyyy-mm-dd>/repo/js
