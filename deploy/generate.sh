@@ -275,7 +275,8 @@ wget --no-cache -O search/search_template.html $PIPELINE/search
 wget --no-cache -O browse.html $PIPELINE/browse
 
 # run zoom indexer over spider-* directories
-# this is done on kim's machine and has a script for updating.
+# this can be done on any machine with zoom indexer.
+# open repo/dossearch.xcfg and replace the
 # this will generate the index files for the site.
 # NOTE the search engine that we generate is CGI for speed and you WILL
 #      NEED to ENSURE that the search directory is enable to run the script
@@ -291,17 +292,17 @@ chmod +x search/search.cgi
 
 #COPY the files up to the production server into a new directory
 #su as kjackson to run this command
-rsync -av about.html artefact audio boxy-ie.css boxy.css browse building citation config.xml contact.html contact.php contribute.html contributor copyright.html entry event faq.html image images index.html item jquery js kml map natural_feature organisation person place popup preview recaptcha role search search.css structure style.css subject swf tiles timeline timemap.js video kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2012-02-24/
+rsync -av artefact audio boxy-ie.css boxy.css browse browse.html building citation config.xml contact.php contributor entry event image images item jquery js kml map natural_feature organisation person place popup preview recaptcha role search search.css structure style.css subject swf tiles timeline timemap.js video kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2012-09-15/
 
 #sync the uploaded files
 rsync -av ../dos-static-2009-10-22/files/ kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/files/
 
-rsync -av recaptcha kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2011-05-20/
+rsync -av recaptcha kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2012-09-15/
 
 ##########################
 ## on production server:##
 ##########################
-cd /var/www/dos-2011-05-20
+cd /var/www/dos-2012-09-15
 #replace dynamic links on built version to the relative links for the static production version
 # old way gets Arg list too long error		perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2012-09-15/../' item/*
 grep -rl dos-static-2012-09-15 item |\
@@ -345,4 +346,4 @@ ln -s /var/www/dos-2012-09-15 test
 #ln -fs /var/www/dos-2012-09-15 dos
 
 # you should also move the previous link "rm previous" then
-# ln -s /var/www/dos-(yyyy-mm-dd formatted date of previous build goes here)
+# ln -s /var/www/dos-(yyyy-mm-dd formatted date of previous build goes here) previous
