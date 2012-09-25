@@ -18,7 +18,7 @@ mkdir item preview popup browse citation search kml kml/full kml/summary $REPO/h
 # mkdir files files/thumbnail files/small files/medium files/wide files/large files/full
 # Kim decided to leave files in the same directory and update from there. So we create a sym link to that directory and update things there
 ln -s ../dos-static-2009-10-22/files
-cp -prd $REPO/js $REPO/images $REPO/swf $REPO/*.css $REPO/config.xml $REPO/contact.php .
+cp -prd $REPO/js $REPO/images $REPO/swf $REPO/*.css $REPO/index.html $REPO/config.xml $REPO/contact.php .
 cp -pd $REPO/jquery $REPO/timemap.js $REPO/timeline $REPO/recaptcha .
 ln -s ../dos-map-tiles tiles
 
