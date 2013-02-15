@@ -13,8 +13,8 @@ index 3e2cc89..ed7a343 100644
  		'&phone=' . urlencode($phone) .
 @@ -62,5 +62,5 @@ $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
  $headers .= 'From: noreply@dictionaryofsydney.org';
- 
- 
+
+
 -mail('kim.jackson@gmail.com', $subject, $email, $headers);
 -header('Location: /cocoon/relbrowser-kj/' . $mode . '?success=1');
 +mail('info@dictionaryofsydney.org', $subject, $email, $headers);
@@ -26,24 +26,24 @@ index 0214371..312d132 100644
 @@ -9,7 +9,7 @@
  # make sure we go direct to the server!
  unset http_proxy
- 
+
 -PIPELINE=http://heuristscholar.org/cocoon/relbrowser-kj
-+PIPELINE=http://localhost:8888/dos-static-2010-11-18
- 
++PIPELINE=http://localhost:8888/dos-static-2013-02-15
+
  REPO=repo
- 
+
 diff --git a/js/search.js b/js/search.js
 index 36e5c47..88aa033 100644
 --- a/js/search.js
 +++ b/js/search.js
 @@ -2,112 +2,28 @@ if (! window.DOS) { DOS = {}; }
- 
+
  DOS.Search = {
- 
+
 -	searchPrompt: "search...",
 -	resultsDiv: null,
 +	searchPrompt: "search..."
- 
+
 -	search: function() {
 -		var query = $("#search").val();
 -		if (! query  ||  query === DOS.Search.searchPrompt) return false;
@@ -134,12 +134,12 @@ index 36e5c47..88aa033 100644
 -		document.getElementById("content").style.display = "block";
 -	}
  };
- 
+
  $(function () {
 -	$("#search-bar form").submit(DOS.Search.search);
 +
 +	var matches, query;
- 
+
  	$("#search-submit")
 -		.click(DOS.Search.search)
 +		.click(function () {
@@ -150,7 +150,7 @@ index 36e5c47..88aa033 100644
  		}, function () {
  			$("#search-bar").removeClass("active");
  		});
- 
+
 -	$("#search").val(DOS.Search.searchPrompt)
 +	matches = location.search.match(/zoom_query=([^&]+)/);
 +	query = matches ? unescape(matches[1]).replace(/\+/g, " ") : null;
@@ -183,7 +183,7 @@ index 36e5c47..88aa033 100644
 +		});
 +	}
  });
- 
+
 diff --git a/js/tooltip.js b/js/tooltip.js
 index 5f96ef9..5fae788 100644
 --- a/js/tooltip.js
@@ -205,24 +205,24 @@ index 5f96ef9..5fae788 100644
 +			$(this).load(this.id.replace(/^preview-(.*)$/, RelBrowser.baseURL + "preview/$1"));
  		});
  	}
- 
+
 diff --git a/sitemap.xmap b/sitemap.xmap
 index 89098bf..e6a49ec 100644
 --- a/sitemap.xmap
 +++ b/sitemap.xmap
 @@ -47,7 +47,7 @@
     </map:match>
- 
+
     <map:match pattern="xml*/*">
 -    <map:generate src="http://dos.heuristscholar.org/heurist/php/hml.php?q=ids:{2}&amp;depth={1}"/>
 +    <map:generate src="hml/{2}.xml"/>
      <map:serialize type="xml"/>
     </map:match>
- 
+
 @@ -67,7 +67,7 @@
      <map:redirect-to uri="../{1}"/>
     </map:match>
- 
+
 -   <map:match pattern="item/*">
 +   <map:match pattern="item-entry/*">
      <map:generate src="cocoon:/xml2/{1}" label="xmlexport"/>
@@ -231,7 +231,7 @@ index 89098bf..e6a49ec 100644
 @@ -77,6 +77,13 @@
      <map:serialize type="html"/>
     </map:match>
- 
+
 +   <map:match pattern="item/*">
 +    <map:generate src="cocoon:/xml2/{1}" label="xmlexport"/>
 +    <map:transform src="xsl/item_view.xsl" label="transformed"/>
@@ -249,12 +249,12 @@ index c9be75b..8b20d3a 100644
 @@ -1,11 +1,13 @@
  <?xml version="1.0" encoding="UTF-8"?>
  <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
- 
+
 -	<xsl:include href="myvariables.xsl"/>
  	<xsl:include href="framework.xsl"/>
  	<xsl:include href="util.xsl"/>
  	<xsl:include href="factoid.xsl"/>
- 
+
 +	<xsl:variable name="urlbase"/>
 +	<xsl:variable name="fullurlbase"/>
 +
@@ -268,12 +268,12 @@ index 65afc32..bd165ac 100644
 @@ -1,11 +1,13 @@
  <?xml version="1.0" encoding="UTF-8"?>
  <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
- 
+
 -	<xsl:include href="myvariables.xsl"/>
  	<xsl:include href="framework.xsl"/>
  	<xsl:include href="util.xsl"/>
  	<xsl:include href="factoid.xsl"/>
- 
+
 +	<xsl:variable name="urlbase"/>
 +	<xsl:variable name="fullurlbase"/>
 +
@@ -287,12 +287,12 @@ index 611d45a..031d6fb 100644
 @@ -1,11 +1,13 @@
  <?xml version="1.0" encoding="UTF-8"?>
  <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
- 
+
 -	<xsl:include href="myvariables.xsl"/>
  	<xsl:include href="framework.xsl"/>
  	<xsl:include href="util.xsl"/>
  	<xsl:include href="factoid.xsl"/>
- 
+
 +	<xsl:variable name="urlbase"/>
 +	<xsl:variable name="fullurlbase"/>
 +
@@ -306,12 +306,12 @@ index cc4c32a..d1d17f2 100644
 @@ -1,11 +1,13 @@
  <?xml version="1.0" encoding="UTF-8"?>
  <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
- 
+
 -	<xsl:include href="myvariables.xsl"/>
  	<xsl:include href="framework.xsl"/>
  	<xsl:include href="util.xsl"/>
  	<xsl:include href="factoid.xsl"/>
- 
+
 +	<xsl:variable name="urlbase"/>
 +	<xsl:variable name="fullurlbase"/>
 +
@@ -339,12 +339,12 @@ index aa007ab..c9548ea 100644
 @@ -1,11 +1,13 @@
  <?xml version="1.0" encoding="UTF-8"?>
  <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
- 
+
 -	<xsl:include href="myvariables.xsl"/>
  	<xsl:include href="framework.xsl"/>
  	<xsl:include href="util.xsl"/>
  	<xsl:include href="factoid.xsl"/>
- 
+
 +	<xsl:variable name="urlbase"/>
 +	<xsl:variable name="fullurlbase"/>
 +
@@ -386,12 +386,12 @@ index 481dcf3..819c040 100644
 @@ -1,11 +1,13 @@
  <?xml version="1.0" encoding="UTF-8"?>
  <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
- 
+
 -	<xsl:include href="myvariables.xsl"/>
  	<xsl:include href="framework.xsl"/>
  	<xsl:include href="util.xsl"/>
  	<xsl:include href="factoid.xsl"/>
- 
+
 +	<xsl:variable name="urlbase"/>
 +	<xsl:variable name="fullurlbase"/>
 +
@@ -448,7 +448,7 @@ index 08927de..911047f 100755
 -	<xsl:variable name="instance">dos</xsl:variable>
 -	<xsl:variable name="instance_prefix">dos.</xsl:variable>
 +	<xsl:variable name="urlbase">../</xsl:variable>
-+	<xsl:variable name="fullurlbase">http://heuristscholar.org/dos-static-2010-11-18/</xsl:variable>
++	<xsl:variable name="fullurlbase">http://heuristscholar.org/dos-static-2013-02-15/</xsl:variable>
  </xsl:stylesheet>
 diff --git a/xsl/util.xsl b/xsl/util.xsl
 index 3680acf..d30ac0d 100644
@@ -478,5 +478,5 @@ index 3680acf..d30ac0d 100644
  		</xsl:choose>
 +		-->
  	</xsl:template>
- 
- 
+
+
