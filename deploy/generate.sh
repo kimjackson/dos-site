@@ -276,11 +276,11 @@ wget --no-cache -O browse.html $PIPELINE/browse
 
 # run zoom indexer over spider-* directories
 # this can be done on any machine with zoom indexer.
-# open repo/dossearch.xcfg and replace the
+# open repo/dossearch.xcfg (having updated pathes the new dates)
 # this will generate the index files for the site.
 # NOTE the search engine that we generate is CGI for speed and you WILL
 #      NEED to ENSURE that the search directory is enable to run the script
-#      OR the binbary script file gets downloaded as crud into the browser.
+#      OR the binary script file gets downloaded as crud into the browser.
 
 #remove the index links
 # rm -rf spider-*
@@ -345,5 +345,10 @@ ln -s /var/www/dos-2013-02-15 test
 # note that again you may have to remove the link first "rm dos"
 #ln -fs /var/www/dos-2013-02-15 dos
 
+
 # you should also move the previous link "rm previous" then
 # ln -s /var/www/dos-(yyyy-mm-dd formatted date of previous build goes here) previous
+
+# copy over the redirection file
+cd previous
+cp index.html ../dos
