@@ -292,7 +292,7 @@ chmod +x search/search.cgi
 
 #COPY the files up to the production server into a new directory
 #su as kjackson to run this command
-rsync -av artefact audio boxy-ie.css boxy.css browse browse.html building citation config.xml contact.php contributor entry event image images item jquery js kml map natural_feature organisation person place popup preview recaptcha role search search.css structure style.css subject swf tiles timeline timemap.js video kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2012-09-15/
+rsync -av artefact audio boxy-ie.css boxy.css browse index.html browse.html building citation config.xml contact.php contributor entry event image images item jquery js kml map natural_feature organisation person place popup preview recaptcha role search search.css structure style.css subject swf tiles timeline timemap.js video kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2013-02-15/
 
 #sync the uploaded files
 rsync -av ../dos-static-2009-10-22/files/ kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/files/
