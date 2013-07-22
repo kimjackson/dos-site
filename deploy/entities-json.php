@@ -199,7 +199,7 @@ if ($type == "Entry") {
 					"if (rd_val = 'author', 'Authors', ".
 					"if (rd_val = 'institution', 'Institutions and Collections', ".
 					"if (rd_val = 'public', 'Public', ".
-					"if (rd_val = 'supporter', 'Supporters', 'Other'))),
+					"if (rd_val = 'supporter', 'Supporters', 'Other')))),
 	                 rec_id
 	            from records,
 	                 rec_details
