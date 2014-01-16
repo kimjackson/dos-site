@@ -7,6 +7,7 @@
 		<html>
 			<head>
 				<title><xsl:value-of select="$title"/></title>
+				<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=2.0; user-scalable=1;" />
 				<xsl:call-template name="makeMetaTags"/>
 				<link rel="icon" href="{$urlbase}images/favicon.ico" type="image/x-icon"/>
 				<link rel="shortcut icon" href="{$urlbase}images/favicon.ico" type="image/x-icon"/>

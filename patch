@@ -1,0 +1,106 @@
+diff --git a/deploy/generate.sh b/deploy/generate.sh
+index 4cd6de5..75886fb 100644
+--- a/deploy/generate.sh
++++ b/deploy/generate.sh
+@@ -1,29 +1,29 @@
+ # copy files
+-echo "select file_id, file_nonce from files;" | mysql -s -u readonly -pmitnick heuristdb-dos-sandbox | while read id nonce; do cp /var/www/htdocs/uploaded-heurist-files/dos-sandbox/$id files/full/$nonce; done
++echo "select file_id, file_nonce from files;" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id nonce; do cp /var/www/htdocs/uploaded-heurist-files/dos/$id files/full/$nonce; done
+ 
+ # generate resized images
+-echo "select file_nonce from files where file_mimetype like 'image%';" | mysql -s -u readonly -pmitnick heuristdb-dos-sandbox | \
++echo "select file_nonce from files where file_mimetype like 'image%';" | mysql -s -u readonly -pmitnick heuristdb-dos | \
+ while read nonce; do
+ 	if [[ ! -e files/thumbnail/$nonce ]] \
+ 	|| [[ ! -e files/small/$nonce ]] \
+ 	|| [[ ! -e files/medium/$nonce ]] \
+ 	|| [[ ! -e files/wide/$nonce ]] \
+ 	|| [[ ! -e files/large/$nonce ]]; then
+-		wget -O files/thumbnail/$nonce http://dos-sandbox.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&w=150\&h=150;
+-		wget -O files/small/$nonce http://dos-sandbox.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&w=150;
+-		wget -O files/medium/$nonce http://dos-sandbox.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&h=180;
+-		wget -O files/wide/$nonce http://dos-sandbox.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&maxw=800\&maxh=400;
+-		wget -O files/large/$nonce http://dos-sandbox.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&maxw=630;
++		wget -O files/thumbnail/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&w=150\&h=150;
++		wget -O files/small/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&w=150;
++		wget -O files/medium/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&h=180;
++		wget -O files/wide/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&maxw=800\&maxh=400;
++		wget -O files/large/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&maxw=630;
+ 	fi
+ done
+ 
+ # generate pages for all appropriate records
+-echo "select rec_id from records where rec_type in (153,151,103,74,91,152,98);" | mysql -s -u readonly -pmitnick heuristdb-dos-sandbox | while read id; do wget --no-cache -O item/$id http://heuristscholar.org/cocoon/relbrowser-kj/item/$id; done
++echo "select rec_id from records where rec_type in (153,151,103,74,91,152,98);" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O item/$id http://heuristscholar.org/cocoon/relbrowser-kj/item/$id; done
+ 
+ # generate KML for all entities
+-echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type = 526 and a.rd_val = 'TimePlace' and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos-sandbox | while read id; do wget --no-cache -O kml/summary/$id.kml http://heuristscholar.org/cocoon/relbrowser-kj/kml/summary/rename/$id; done
++echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type = 526 and a.rd_val = 'TimePlace' and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O kml/summary/$id.kml http://heuristscholar.org/cocoon/relbrowser-kj/kml/summary/rename/$id; done
+ 
+-echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type in (177,178,230) and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos-sandbox | while read id; do wget --no-cache -O kml/full/$id.kml http://heuristscholar.org/cocoon/relbrowser-kj/kml/full/rename/$id; done
++echo "select distinct b.rd_val from rec_details a left join rec_details b on a.rd_rec_id = b.rd_rec_id where a.rd_type in (177,178,230) and b.rd_type = 528;" | mysql -s -u readonly -pmitnick heuristdb-dos | while read id; do wget --no-cache -O kml/full/$id.kml http://heuristscholar.org/cocoon/relbrowser-kj/kml/full/rename/$id; done
+ 
+ # generate browsing data
+ php entities-json.php Artefact > browse/artefacts.js
+diff --git a/sitemap.xmap b/sitemap.xmap
+index fca9072..f414253 100644
+--- a/sitemap.xmap
++++ b/sitemap.xmap
+@@ -39,12 +39,12 @@
+   <map:pipeline>
+ 
+    <map:match pattern="xml0/*">
+-    <map:generate src="http://dos-sandbox.heuristscholar.org/heurist/php/xmlexport.php?q=ids:{1}&amp;w=all&amp;rev=yes&amp;related_details=160,169,174,177,178,191,199,202,291,223,221,230,289,323,324,325,326,327,328,329,330,526,529,569&amp;depth=0"/>
++    <map:generate src="http://dos.heuristscholar.org/heurist/php/xmlexport.php?q=ids:{1}&amp;w=all&amp;rev=yes&amp;related_details=160,169,174,177,178,191,199,202,291,223,221,230,289,323,324,325,326,327,328,329,330,526,529,569&amp;depth=0"/>
+     <map:serialize type="xml"/>
+    </map:match>
+ 
+    <map:match pattern="xml1/*">
+-    <map:generate src="http://dos-sandbox.heuristscholar.org/heurist/php/xmlexport.php?q=ids:{1}&amp;w=all&amp;rev=yes&amp;related_details=160,169,174,177,178,191,291,223,221,230,289,323,324,325,326,327,328,329,330,508,523,526,529,569&amp;depth=1"/>
++    <map:generate src="http://dos.heuristscholar.org/heurist/php/xmlexport.php?q=ids:{1}&amp;w=all&amp;rev=yes&amp;related_details=160,169,174,177,178,191,291,223,221,230,289,323,324,325,326,327,328,329,330,508,523,526,529,569&amp;depth=1"/>
+     <map:serialize type="xml"/>
+    </map:match>
+ 
+@@ -94,12 +94,12 @@
+    </map:match>
+ 
+    <map:match pattern="kml/full/*">
+-    <map:generate src="http://dos-sandbox.heuristscholar.org/heurist/mapper/googleearth.kml.php?multilevel=false&amp;w=all&amp;q=linkto:{1}+type:150"/>
++    <map:generate src="http://dos.heuristscholar.org/heurist/mapper/googleearth.kml.php?multilevel=false&amp;w=all&amp;q=linkto:{1}+type:150"/>
+     <map:serialize type="xml"/>
+    </map:match>
+ 
+    <map:match pattern="kml/summary/*">
+-    <map:generate src="http://dos-sandbox.heuristscholar.org/heurist/mapper/googleearth.kml.php?multilevel=false&amp;w=all&amp;q=linkto:{1}+type:150+f:526=TimePlace"/>
++    <map:generate src="http://dos.heuristscholar.org/heurist/mapper/googleearth.kml.php?multilevel=false&amp;w=all&amp;q=linkto:{1}+type:150+f:526=TimePlace"/>
+     <map:serialize type="xml"/>
+    </map:match>
+ 
+@@ -122,7 +122,7 @@
+    </map:match>
+ 
+    <map:match pattern="kmlfile/*">
+-    <map:generate src="http://dos-sandbox.heuristscholar.org/heurist/php/kml.php?id={1}"/>
++    <map:generate src="http://dos.heuristscholar.org/heurist/php/kml.php?id={1}"/>
+     <map:serialize type="xml"/>
+    </map:match>
+ 
+diff --git a/xsl/myvariables.xsl b/xsl/myvariables.xsl
+index 4f59b2b..ffe514e 100755
+--- a/xsl/myvariables.xsl
++++ b/xsl/myvariables.xsl
+@@ -1,9 +1,8 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+-    <xsl:variable name="hbase">http://dos-sandbox.heuristscholar.org/heurist/</xsl:variable>
+-    <xsl:variable name="urlbase">http://heuristscholar.org/relbrowser-kj/</xsl:variable>
+-    <xsl:variable name="hapi-key">f0380e79c4b03a762b0f84f4aa0a1315367d9bd1</xsl:variable>
+-    <xsl:variable name="instance">dos-sandbox</xsl:variable>
+-    <xsl:variable name="instance_prefix">dos-sandbox.</xsl:variable>
+-    <xsl:variable name="site-title">SANDBOX</xsl:variable>
++    <xsl:variable name="hbase">http://dos.heuristscholar.org/heurist/</xsl:variable>
++    <xsl:variable name="urlbase">http://heuristscholar.org/dos-site/</xsl:variable>
++    <xsl:variable name="hapi-key">1742ecefd4811cfde65b604f730363fe7a86bb45</xsl:variable>
++    <xsl:variable name="instance">dos</xsl:variable>
++    <xsl:variable name="instance_prefix">dos.</xsl:variable>
+ </xsl:stylesheet>

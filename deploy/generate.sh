@@ -1,9 +1,15 @@
+#first step is to create a new static build directory  dos-static-yyyy-mm-dd
+#cd to build directory
+
+
+#setup environment NOTE that this should be done before each step below
 # make sure we go direct to the server!
 unset http_proxy
 
 PIPELINE=http://heuristscholar.org/cocoon/relbrowser-kj
 
 REPO=repo
+
 
 # create directories
 mkdir item preview popup browse search kml kml/full kml/summary files files/thumbnail files/small files/medium files/wide files/large files/full $REPO/hml
