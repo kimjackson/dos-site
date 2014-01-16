@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<RVCMP3>
+	
+	<!-- spectrum configuration-->
+	<config
+		SpectrumLineWidth="1"
+		SpectrumLineColor="0xfab704"
+		SpectrumGlowDirection="horizontal"
+		bufferTime="10"
+		scrollSpeed="80"
+	/>
+	
+	<!-- music source -->
+	<musics>
+		<music
+			title="Go Girl - Pitbull"
+			src="asset/go girl.mp3"
+			length="100"
+		/>		
+		
+	</musics>
+	
+</RVCMP3>

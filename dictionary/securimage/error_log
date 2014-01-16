@@ -1,0 +1,4 @@
+[26-Aug-2009 19:04:27] PHP Warning:  include(securimage.php) [<a href='function.include'>function.include</a>]: failed to open stream: No such file or directory in /home/nurzki/public_html/creativeweblogic/securimage/securimage_show.php on line 3
+[26-Aug-2009 19:04:27] PHP Warning:  include(securimage.php) [<a href='function.include'>function.include</a>]: failed to open stream: No such file or directory in /home/nurzki/public_html/creativeweblogic/securimage/securimage_show.php on line 3
+[26-Aug-2009 19:04:27] PHP Warning:  include() [<a href='function.include'>function.include</a>]: Failed opening 'securimage.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/nurzki/public_html/creativeweblogic/securimage/securimage_show.php on line 3
+[26-Aug-2009 19:04:27] PHP Fatal error:  Class 'securimage' not found in /home/nurzki/public_html/creativeweblogic/securimage/securimage_show.php on line 5

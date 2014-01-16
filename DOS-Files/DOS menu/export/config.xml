@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<config>
+	<icon>
+		<id>Artefact</id>
+		<pageUrl><![CDATA[/artefact.html]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>Building</id>
+		<pageUrl><![CDATA[/building.html]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>Entry</id>
+		<pageUrl><![CDATA[/entry.html]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>Event</id>
+		<pageUrl><![CDATA[/event.html]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>Map</id>
+		<pageUrl><![CDATA[/map.html]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>Natural</id>
+		<pageUrl><![CDATA[/natural.html]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>Organisation</id>
+		<pageUrl><![CDATA[/organisation.html]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>People</id>
+		<pageUrl><![CDATA[/people.html]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>Place</id>
+		<pageUrl><![CDATA[/place.html]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>Role</id>
+		<pageUrl><![CDATA[/role.html]]></pageUrl>
+	</icon>	
+
+	<icon>
+		<id>Structure</id>
+		<pageUrl><![CDATA[/structure.html]]></pageUrl>
+	</icon>
+
+	<icon>
+		<id>Term</id>
+		<pageUrl><![CDATA[/term.html]]></pageUrl>
+	</icon>	
+</config>

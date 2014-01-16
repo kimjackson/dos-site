@@ -1,0 +1,522 @@
+diff --git a/contact.php b/contact.php
+index 3e2cc89..ed7a343 100644
+--- a/contact.php
++++ b/contact.php
+@@ -16,7 +16,7 @@ $resp = recaptcha_check_answer($recaptcha_private_key,
+                                $_POST["recaptcha_challenge_field"],
+                                $_POST["recaptcha_response_field"]);
+ if (! $resp->is_valid) {
+-	header('Location: /cocoon/relbrowser-kj/' . $mode . '?error=' . $resp->error .
++	header('Location: ' . $mode . '.html?error=' . $resp->error .
+ 		'&name=' . urlencode($name) .
+ 		'&email=' . urlencode($email) .
+ 		'&phone=' . urlencode($phone) .
+@@ -62,5 +62,5 @@ $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+ $headers .= 'From: noreply@dictionaryofsydney.org';
+ 
+ 
+-mail('kim.jackson@gmail.com', $subject, $email, $headers);
+-header('Location: /cocoon/relbrowser-kj/' . $mode . '?success=1');
++mail('info@dictionaryofsydney.org', $subject, $email, $headers);
++header('Location: ' . $mode . '.html?success=1');
+diff --git a/deploy/generate.sh b/deploy/generate.sh
+index 0d228df..f4199d7 100644
+--- a/deploy/generate.sh
++++ b/deploy/generate.sh
+@@ -6,7 +6,7 @@
+ # make sure we go direct to the server!
+ unset http_proxy
+ 
+-PIPELINE=http://heuristscholar.org/cocoon/relbrowser-kj
++PIPELINE=http://localhost:8888/dos-static-__DATE__
+ 
+ REPO=repo
+ 
+@@ -227,20 +227,20 @@ wget --no-cache -O index.html $PIPELINE/
+ chmod +x search/search.cgi
+ 
+ 
+-rsync -av about.html artefact audio boxy-ie.css boxy.css browse building config.xml contact.html contact.php contribute.html contributor copyright.html entry event faq.html image images index.html item jquery js kml map natural_feature organisation person place popup preview recaptcha role search search.css structure style.css subject swf tiles timeline timemap.js video kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2009-12-03/
++rsync -av about.html artefact audio boxy-ie.css boxy.css browse building config.xml contact.html contact.php contribute.html contributor copyright.html entry event faq.html image images index.html item jquery js kml map natural_feature organisation person place popup preview recaptcha role search search.css structure style.css subject swf tiles timeline timemap.js video kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-__DATE__/
+ 
+ rsync -av ../dos-static-2009-10-22/files/ kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/files/
+ 
+ # on production server:
+-cd /var/www/dos-2009-12-03
+-perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2009-12-03/../' item/*
+-perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2009-12-03/../' popup/*
+-perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-2009-12-03/http:\/\/dictionaryofsydney.org/' `grep -l heurist preview/*`
++cd /var/www/dos-__DATE__
++perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-__DATE__/../' item/*
++perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-__DATE__/../' popup/*
++perl -pi -e 's/http:\/\/heuristscholar.org\/dos-static-__DATE__/http:\/\/dictionaryofsydney.org/' `grep -l heurist preview/*`
+ perl -pi -e 's/ABQIAAAAGZugEZOePOFa_Kc5QZ0UQRQUeYPJPN0iHdI_mpOIQDTyJGt-ARSOyMjfz0UjulQTRjpuNpjk72vQ3w/ABQIAAAA5wNKmbSIriGRr4NY0snaURTtHC9RsOn6g1vDRMmqV_X8ivHa_xSNBstkFn6GHErY6WRDLHcEp1TxkQ/' `grep -l maps.google.com item/*`
+ ln -fs ../files
+ ln -fs ../tiles
+ ln -fs ../test
+ ln -fs ../previous
+ cd /var/www/
+-ln -fs dos-2009-12-03 test
++ln -fs dos-__DATE__ test
+ 
+diff --git a/js/mapping.js b/js/mapping.js
+index 1bfaf82..b245a6b 100644
+--- a/js/mapping.js
++++ b/js/mapping.js
+@@ -162,7 +162,7 @@ RelBrowser.Mapping = {
+ 			if (this.dataset.opts.preview) {
+ 				if ($("#preview-" + this.dataset.opts.preview + " .balloon-middle").length < 1) {
+ 					$("#preview-" + this.dataset.opts.preview).load(
+-						RelBrowser.pipelineBaseURL + "preview/" + this.dataset.opts.preview,
++						RelBrowser.baseURL + "preview/" + this.dataset.opts.preview,
+ 						this.openInfoWindowHandler
+ 					);
+ 					return;
+diff --git a/js/search.js b/js/search.js
+index 36e5c47..88aa033 100644
+--- a/js/search.js
++++ b/js/search.js
+@@ -2,112 +2,28 @@ if (! window.DOS) { DOS = {}; }
+ 
+ DOS.Search = {
+ 
+-	searchPrompt: "search...",
+-	resultsDiv: null,
++	searchPrompt: "search..."
+ 
+-	search: function() {
+-		var query = $("#search").val();
+-		if (! query  ||  query === DOS.Search.searchPrompt) return false;
+-		var loader = new HLoader(
+-			function(s,r) {
+-				DOS.Search.displayResults(s,r);
+-			},
+-			function(s,e) {
+-				alert("load failed: " + e);
+-			}
+-		);
+-		DOS.Search.loadAllRecords(query, null, loader);
+-		//HeuristScholarDB.loadRecords(new HSearch(query), loader);
+-		DOS.Search.showSearch(query);
+-		return false;
+-	},
+-
+-	loadAllRecords: function(query, options, loader) {
+-			var records = [];
+-			var baseSearch = new HSearch(query, options);
+-			var bulkLoader = new HLoader(
+-				function(s, r) {	// onload
+-					records.push.apply(records, r);
+-					if (r.length < 100) {
+-						// we've loaded all the records: invoke the original loader's onload
+-						document.getElementById('loading-msg').innerHTML = '<b>Loaded ' + records.length + ' records </b>';
+-						loader.onload(baseSearch, records);
+-					}
+-					else { // more records to retrieve
+-						document.getElementById('loading-msg').innerHTML = '<b>Loaded ' + records.length + ' records so far ...</b>';
+-
+-						//  do a search with an offset specified for retrieving the next page of records
+-						var search = new HSearch(query + " offset:"+records.length, options);
+-						HeuristScholarDB.loadRecords(search, bulkLoader);
+-					}
+-				},
+-				loader.onerror
+-			);
+-			HeuristScholarDB.loadRecords(baseSearch, bulkLoader);
+-	},
+-
+-	showSearch: function(query) {
+-		// turn off any highlighting
+-		if (window.highlightElem) {
+-			highlightElem("inline-annotation", null);
+-			highlightElem("annotation-link", null);
+-		}
+-
+-		// hide page-inner and show results div
+-		var resultsDiv = DOS.Search.resultsDiv;
+-		var pageInner = document.getElementById("content");
+-		pageInner.style.display = "none";
+-		if (resultsDiv) {
+-			resultsDiv.innerHTML = "";
+-			resultsDiv.style.display = "block";
+-		} else {
+-			DOS.Search.resultsDiv = resultsDiv = pageInner.parentNode.insertBefore(document.createElement("div"), pageInner.nextSibling);
+-			resultsDiv.id = "results-div";
+-			resultsDiv.className = "content";
+-		}
+-
+-		resultsDiv.innerHTML += "<a style=\"float: right;\" href=# onclick=\"DOS.Search.hideResults(); return false;\">Return to previous view</a>";
+-		resultsDiv.innerHTML += "<h2>Search results for query \"" + query + "\"</h2>";
+-		resultsDiv.innerHTML += "<p id=loading-msg>Loading...</p>";
+-	},
+-
+-	displayResults: function(s,r) {
+-		var l = document.getElementById("loading-msg");
+-		l.parentNode.removeChild(l);
+-
+-		var innerHTML = "";
+-		for (var i = 0; i < r.length; i++) {
+-			//if (r[i].getRecordType().getID() != 52) {
+-				innerHTML += "<img src=\"http://dos.heuristscholar.org/heurist/img/reftype/" + r[i].getRecordType().getID() + ".gif\"/>";
+-				innerHTML += " <a href=../item/" + r[i].getID() + " target=\"_blank\">" + r[i].getTitle() + "</a><br/>";
+-			//}
+-		}
+-
+-		if (innerHTML.length) {
+-			DOS.Search.resultsDiv.innerHTML += innerHTML;
+-		} else {
+-			DOS.Search.resultsDiv.innerHTML += "<p>No matching records</p>";
+-		}
+-	},
+-
+-	hideResults: function() {
+-		DOS.Search.resultsDiv.style.display = "none";
+-		document.getElementById("content").style.display = "block";
+-	}
+ };
+ 
+ $(function () {
+-	$("#search-bar form").submit(DOS.Search.search);
++
++	var matches, query;
+ 
+ 	$("#search-submit")
+-		.click(DOS.Search.search)
++		.click(function () {
++			$("#search-bar form").submit();
++		})
+ 		.hover(function () {
+ 			$("#search-bar").addClass("active");
+ 		}, function () {
+ 			$("#search-bar").removeClass("active");
+ 		});
+ 
+-	$("#search").val(DOS.Search.searchPrompt)
++	matches = location.search.match(/zoom_query=([^&]+)/);
++	query = matches ? unescape(matches[1]).replace(/\+/g, " ") : null;
++
++	$("#search, #bigsearch").val(query ? query : DOS.Search.searchPrompt)
+ 		.focus(function () {
+ 			if (this.value === DOS.Search.searchPrompt) {
+ 				this.value = "";
+@@ -118,5 +34,24 @@ $(function () {
+ 				this.value = DOS.Search.searchPrompt;
+ 			}
+ 		});
++
++	// process search results
++	if ($(".results").length > 0) {
++		$(".result_block, .result_altblock").each(function () {
++			var id, className;
++
++			id = $(".result_metavalue_id", this).text();
++			className = $(".result_metavalue_class", this).text();
++
++			$(".result_title a", this).addClass("preview-" + id);
++			$(this).addClass("list-" + className);
++
++			// this needs to happen before DOS.ToolTip.addToolTips()
++			// in order for previews to be loaded
++			$("#previews").append(
++				"<div class='preview' id='preview-" + id + "'/>"
++			);
++		});
++	}
+ });
+ 
+diff --git a/js/tooltip.js b/js/tooltip.js
+index 5f96ef9..5fae788 100644
+--- a/js/tooltip.js
++++ b/js/tooltip.js
+@@ -50,7 +50,7 @@ DOS.ToolTip = {
+ 			} else {
+ 				$that = $(this);
+ 				$that.data("loading", true);
+-				$preview.load(RelBrowser.pipelineBaseURL + myClass.replace(/-/, "/"), function () {
++				$preview.load(RelBrowser.baseURL + myClass.replace(/-/, "/"), function () {
+ 					if ($that.data("loading")) {
+ 						$that.removeData("loading");
+ 						DOS.ToolTip.showToolTip(e, $preview);
+@@ -85,7 +85,7 @@ $(document).ready(function () {
+ 	if ($previews.length <= DOS.ToolTip.preloadLimit) {
+ 		// load preview contents
+ 		$previews.each(function () {
+-			$(this).load(this.id.replace(/^preview-(.*)$/, RelBrowser.pipelineBaseURL + "preview/$1"));
++			$(this).load(this.id.replace(/^preview-(.*)$/, RelBrowser.baseURL + "preview/$1"));
+ 		});
+ 	}
+ 
+diff --git a/sitemap.xmap b/sitemap.xmap
+index 89098bf..e6a49ec 100644
+--- a/sitemap.xmap
++++ b/sitemap.xmap
+@@ -47,7 +47,7 @@
+    </map:match>
+ 
+    <map:match pattern="xml*/*">
+-    <map:generate src="http://dos.heuristscholar.org/heurist/php/hml.php?q=ids:{2}&amp;depth={1}"/>
++    <map:generate src="hml/{2}.xml"/>
+     <map:serialize type="xml"/>
+    </map:match>
+ 
+@@ -67,7 +67,7 @@
+     <map:redirect-to uri="../{1}"/>
+    </map:match>
+ 
+-   <map:match pattern="item/*">
++   <map:match pattern="item-entry/*">
+     <map:generate src="cocoon:/xml2/{1}" label="xmlexport"/>
+     <map:transform src="xsl/item_view.xsl" label="transformed"/>
+     <map:transform type="xinclude" label="wordml"/>
+@@ -77,6 +77,13 @@
+     <map:serialize type="html"/>
+    </map:match>
+ 
++   <map:match pattern="item/*">
++    <map:generate src="cocoon:/xml2/{1}" label="xmlexport"/>
++    <map:transform src="xsl/item_view.xsl" label="transformed"/>
++    <map:serialize type="html"/>
++   </map:match>
++
++
+    <map:match pattern="preview/*c*">
+     <map:call resource="preview">
+      <map:parameter name="id" value="{1}"/>
+diff --git a/xsl/about.xsl b/xsl/about.xsl
+index c9be75b..8b20d3a 100644
+--- a/xsl/about.xsl
++++ b/xsl/about.xsl
+@@ -1,11 +1,13 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+ 
+-	<xsl:include href="myvariables.xsl"/>
+ 	<xsl:include href="framework.xsl"/>
+ 	<xsl:include href="util.xsl"/>
+ 	<xsl:include href="factoid.xsl"/>
+ 
++	<xsl:variable name="urlbase"/>
++	<xsl:variable name="fullurlbase"/>
++
+ 	<xsl:template match="/">
+ 		<xsl:call-template name="framework">
+ 			<xsl:with-param name="title">About Us - Dictionary of Sydney</xsl:with-param>
+diff --git a/xsl/contact.xsl b/xsl/contact.xsl
+index 65afc32..bd165ac 100644
+--- a/xsl/contact.xsl
++++ b/xsl/contact.xsl
+@@ -1,11 +1,13 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+ 
+-	<xsl:include href="myvariables.xsl"/>
+ 	<xsl:include href="framework.xsl"/>
+ 	<xsl:include href="util.xsl"/>
+ 	<xsl:include href="factoid.xsl"/>
+ 
++	<xsl:variable name="urlbase"/>
++	<xsl:variable name="fullurlbase"/>
++
+ 	<xsl:template match="/">
+ 		<xsl:call-template name="framework">
+ 			<xsl:with-param name="title">Contact Us - Dictionary of Sydney</xsl:with-param>
+diff --git a/xsl/contribute.xsl b/xsl/contribute.xsl
+index 611d45a..031d6fb 100644
+--- a/xsl/contribute.xsl
++++ b/xsl/contribute.xsl
+@@ -1,11 +1,13 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+ 
+-	<xsl:include href="myvariables.xsl"/>
+ 	<xsl:include href="framework.xsl"/>
+ 	<xsl:include href="util.xsl"/>
+ 	<xsl:include href="factoid.xsl"/>
+ 
++	<xsl:variable name="urlbase"/>
++	<xsl:variable name="fullurlbase"/>
++
+ 	<xsl:template match="/">
+ 		<xsl:call-template name="framework">
+ 			<xsl:with-param name="title">Contribute - Dictionary of Sydney</xsl:with-param>
+diff --git a/xsl/copyright.xsl b/xsl/copyright.xsl
+index cc4c32a..d1d17f2 100644
+--- a/xsl/copyright.xsl
++++ b/xsl/copyright.xsl
+@@ -1,11 +1,13 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+ 
+-	<xsl:include href="myvariables.xsl"/>
+ 	<xsl:include href="framework.xsl"/>
+ 	<xsl:include href="util.xsl"/>
+ 	<xsl:include href="factoid.xsl"/>
+ 
++	<xsl:variable name="urlbase"/>
++	<xsl:variable name="fullurlbase"/>
++
+ 	<xsl:template match="/">
+ 		<xsl:call-template name="framework">
+ 			<xsl:with-param name="title">Copyright - Dictionary of Sydney</xsl:with-param>
+diff --git a/xsl/entity.xsl b/xsl/entity.xsl
+index f2e725c..3b03de7 100644
+--- a/xsl/entity.xsl
++++ b/xsl/entity.xsl
+@@ -70,8 +70,7 @@
+ 						timemap: [ {
+ 							type: "kml",
+ 							options: {
+-								url: "../kml/full/rename/<xsl:value-of select="id"/>"
+-								//url: "<xsl:value-of select="$urlbase"/>kml/full/<xsl:value-of select="id"/>.kml"
++								url: "<xsl:value-of select="$urlbase"/>kml/full/<xsl:value-of select="id"/>.kml"
+ 							}
+ 						} ]
+ 					};
+diff --git a/xsl/faq.xsl b/xsl/faq.xsl
+index aa007ab..c9548ea 100644
+--- a/xsl/faq.xsl
++++ b/xsl/faq.xsl
+@@ -1,11 +1,13 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+ 
+-	<xsl:include href="myvariables.xsl"/>
+ 	<xsl:include href="framework.xsl"/>
+ 	<xsl:include href="util.xsl"/>
+ 	<xsl:include href="factoid.xsl"/>
+ 
++	<xsl:variable name="urlbase"/>
++	<xsl:variable name="fullurlbase"/>
++
+ 	<xsl:template match="/">
+ 		<xsl:call-template name="framework">
+ 			<xsl:with-param name="title">Frequently Asked Questions - Dictionary of Sydney</xsl:with-param>
+diff --git a/xsl/framework.xsl b/xsl/framework.xsl
+index 8f17a3a..34bb724 100755
+--- a/xsl/framework.xsl
++++ b/xsl/framework.xsl
+@@ -19,11 +19,9 @@
+ 				<![endif]]]></xsl:comment>
+ 				<script type="text/javascript">
+ 					RelBrowser = {
+-						baseURL: "<xsl:value-of select="$urlbase"/>",
+-						pipelineBaseURL: "../"
++						baseURL: "<xsl:value-of select="$urlbase"/>"
+ 					};
+ 				</script>
+-				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;amp;key={$hapi-key}" type="text/javascript"/>
+ 				<script src="{$urlbase}jquery/jquery.js" type="text/javascript"/>
+ 				<script src="{$urlbase}js/cookies.js" type="text/javascript"/>
+ 				<script src="{$urlbase}js/fontsize.js" type="text/javascript"/>
+@@ -122,8 +120,8 @@
+ 							<img src="{$urlbase}images/img-logo.jpg" alt="Dictionary of Sydney" width="198" height="125" class="logo"/>
+ 						</a>
+ 						<div id="search-bar">
+-							<form method="post" action=".">
+-								<input type="text" name="search" id="search" size="20"/>
++							<form method="get" action="{$urlbase}search/search.cgi">
++								<input type="text" name="zoom_query" id="search" size="20"/>
+ 								<div id="search-submit"/>
+ 							</form>
+ 						</div>
+diff --git a/xsl/index.xsl b/xsl/index.xsl
+index 481dcf3..819c040 100644
+--- a/xsl/index.xsl
++++ b/xsl/index.xsl
+@@ -1,11 +1,13 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+ 
+-	<xsl:include href="myvariables.xsl"/>
+ 	<xsl:include href="framework.xsl"/>
+ 	<xsl:include href="util.xsl"/>
+ 	<xsl:include href="factoid.xsl"/>
+ 
++	<xsl:variable name="urlbase"/>
++	<xsl:variable name="fullurlbase"/>
++
+ 	<xsl:param name="target1"/>
+ 	<xsl:param name="target2"/>
+ 	<xsl:param name="target3"/>
+diff --git a/xsl/map.xsl b/xsl/map.xsl
+index 048a22f..2700018 100644
+--- a/xsl/map.xsl
++++ b/xsl/map.xsl
+@@ -39,10 +39,9 @@
+ 					<xsl:for-each select="detail[@id=564]/record">
+ 						<source>
+ 							<title><xsl:value-of select="detail[@id=160]"/></title>
+-							<!--url><xsl:call-template name="getFileURL">
++							<url><xsl:call-template name="getFileURL">
+ 									<xsl:with-param name="file" select="detail[@id=221]"/>
+-								</xsl:call-template></url-->
+-							<url>../kmlfile/<xsl:value-of select="id"/></url>
++								</xsl:call-template></url>
+ 						</source>
+ 					</xsl:for-each>
+ 					<!-- related entities that have a TimePlace factoid -->
+@@ -51,8 +50,7 @@
+ 					                                             [detail[@id=526]='TimePlace']]">
+ 						<source>
+ 							<title><xsl:value-of select="detail[@id=160]"/></title>
+-							<!--url><xsl:value-of select="$urlbase"/>kml/summary/<xsl:value-of select="id"/>.kml</url-->
+-							<url>../kml/summary/rename/<xsl:value-of select="id"/></url>
++							<url><xsl:value-of select="$urlbase"/>kml/summary/<xsl:value-of select="id"/>.kml</url>
+ 							<target>
+ 								<xsl:text>../</xsl:text>
+ 								<xsl:call-template name="getPath">
+@@ -86,7 +84,7 @@
+ 						{
+ 							title: "<xsl:value-of select="detail[@id=173]"/>",
+ 							type: "<xsl:value-of select="detail[@id=585]"/>",
+-							url: "<xsl:value-of select="detail[@id=339]"/>",
++							url: "<xsl:value-of select="$urlbase"/>tiles/<xsl:value-of select="id"/>/",
+ 							mime_type: "<xsl:value-of select="detail[@id=289]"/>",
+ 							min_zoom: "<xsl:value-of select="detail[@id=586]"/>",
+ 							max_zoom: "<xsl:value-of select="detail[@id=587]"/>",
+diff --git a/xsl/myvariables.xsl b/xsl/myvariables.xsl
+index 08927de..911047f 100755
+--- a/xsl/myvariables.xsl
++++ b/xsl/myvariables.xsl
+@@ -1,9 +1,5 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+-	<xsl:variable name="hbase">http://dos.heuristscholar.org/heurist/</xsl:variable>
+-	<xsl:variable name="urlbase">http://heuristscholar.org/relbrowser-kj/</xsl:variable>
+-	<xsl:variable name="fullurlbase">http://heuristscholar.org/relbrowser-kj/</xsl:variable>
+-	<xsl:variable name="hapi-key">1742ecefd4811cfde65b604f730363fe7a86bb45</xsl:variable>
+-	<xsl:variable name="instance">dos</xsl:variable>
+-	<xsl:variable name="instance_prefix">dos.</xsl:variable>
++	<xsl:variable name="urlbase">../</xsl:variable>
++	<xsl:variable name="fullurlbase">http://heuristscholar.org/dos-static-__DATE__/</xsl:variable>
+ </xsl:stylesheet>
+diff --git a/xsl/util.xsl b/xsl/util.xsl
+index 3680acf..d30ac0d 100644
+--- a/xsl/util.xsl
++++ b/xsl/util.xsl
+@@ -76,7 +76,6 @@
+ 		<xsl:param name="file"/>
+ 		<xsl:param name="size"/>
+ 		<!-- static, pre-generated files -->
+-		<!--
+ 		<xsl:variable name="dir">
+ 			<xsl:choose>
+ 				<xsl:when test="$size = 'thumbnail'">thumbnail</xsl:when>
+@@ -93,8 +92,8 @@
+ 		<xsl:value-of select="$dir"/>
+ 		<xsl:text>/</xsl:text>
+ 		<xsl:value-of select="$file/file/nonce"/>
+-		-->
+ 		<!-- live from Heurist -->
++		<!--
+ 		<xsl:choose>
+ 			<xsl:when test="$size = 'thumbnail'">
+ 				<xsl:value-of select="$file/file/thumbURL"/>
+@@ -120,6 +119,7 @@
+ 				<xsl:value-of select="$file/file/url"/>
+ 			</xsl:otherwise>
+ 		</xsl:choose>
++		-->
+ 	</xsl:template>
+ 
+ 

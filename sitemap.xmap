@@ -65,6 +65,10 @@
    <map:match pattern="item/*/transformed">
     <map:redirect-to uri="../{1}?cocoon-view=transformed"/>
    </map:match>
+   
+   <map:match pattern="item/*/tei">
+    <map:redirect-to uri="../{1}?cocoon-view=tei-only"/>
+   </map:match>
 
    <map:match pattern="item/*/wordml">
     <map:redirect-to uri="../{1}?cocoon-view=wordml"/>

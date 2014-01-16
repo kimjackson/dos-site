@@ -1,0 +1,71 @@
+<html>
+	<head>
+		<title>Dynamic flash player 14</title>
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<script type="text/javascript" src="js/swfobject.js"></script>
+	
+		<script type="text/javascript">
+		
+			var stageW = 424;
+			var stageH = 346;
+			
+			var flashvars = {};
+			var params = {};
+			
+			params.bgcolor = "#000000";
+			params.allowfullscreen = "false";
+			
+			// note if you use this line, there are issues in IE7 (Microsoft...)
+			//params.wmode = "transparent";
+			
+			//flashvars.stageW = stageW;
+			//flashvars.stageH = stageH;
+			
+			flashvars.imagePath = "assets/image_590x380.jpg";
+			//flashvars.videoPath = "video_590x380.flv";
+			
+			// you can also play h264 files, including .mov
+			// make sure you comment the line above
+			flashvars.videoPath = "assets/cerego.flv";			
+			flashvars.autoStart = "false";
+			flashvars.autoHide = "true";
+			flashvars.autoHideTime = "3";
+			flashvars.hideLogo = "true";
+			flashvars.volAudio = "100";
+			flashvars.disableMiddleButton = "false";
+			flashvars.playSounds = "true";
+			flashvars.soundBarColor = "0x0066FF";
+			flashvars.barColor = "0x0066FF";
+			flashvars.barShadowColor = "0x91BBFB";
+			flashvars.subbarColor = "0xffffff";
+			flashvars.extendVideo = "false";
+
+			
+			swfobject.embedSWF("video-player.swf", "myContent", stageW, stageH, "9.0.0", "js/expressInstall.swf", flashvars, params);
+			
+		</script>
+			
+	</head>
+
+
+	<body bgcolor="#efefef" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" scroll="yes">
+	
+		<table width="100%"  height="100%">
+		  <tr>
+			<td align="center">
+			
+				<div id="myContent">
+					<p>
+						<a href="http://www.adobe.com/go/getflashplayer">
+							<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player"/>
+						</a>
+					</p>	
+				</div>
+			
+			</td>
+		  </tr>
+		</table>
+	
+	</body>
+</html>

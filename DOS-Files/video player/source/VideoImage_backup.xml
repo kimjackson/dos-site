@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<videoPath set="use for image soon"/>
+	<imagePath set="videos/cerego.flv"/>
+	<autoStart set="false"/>
+	<autoHide set="true"/>
+	<volAudio set="60"/>
+	<MiddleButton set="false"/>
+	<playSounds set="true"/>	
+	
+</settings>
