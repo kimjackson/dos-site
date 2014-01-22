@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+<map:sitemap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://apache.org/cocoon/sitemap/1.0 http://cocoon.apache.org/schema/sitemap/cocoon-sitemap-1.0.xsd"
+ xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
- <map:views>
-  <map:view from-label="xmlexport" name="raw">
-   <map:serialize type="xml"/>
-  </map:view>
-  <map:view from-label="transformed" name="transformed">
-   <map:serialize type="xml"/>
-  </map:view>
-  <map:view from-label="wordml" name="wordml">
-   <map:serialize type="xml"/>
-  </map:view>
-  <map:view from-label="tei" name="tei">
-   <map:serialize type="xml"/>
-  </map:view>
-  <map:view from-label="tei-only" name="tei-only">
-   <map:transform src="xsl/tei_only.xsl"/>
-   <map:serialize type="xml"/>
-  </map:view>
-  <map:view from-label="html" name="html">
-   <map:serialize type="xml"/>
-  </map:view>
- </map:views>
+  <map:views>
+    <map:view name="h3hml" from-label="h3hml">
+      <map:serialize type="xml"/>
+    </map:view>
+    <map:view name="h2hml" from-label="h2hml">
+      <map:serialize type="xml"/>
+    </map:view>
+    <map:view name="transformed" from-label="transformed">
+      <map:serialize type="xml"/>
+    </map:view>
+    <map:view name="xinclude" from-label="xinclude">
+      <map:serialize type="xml"/>
+    </map:view>
+    <map:view name="wordmltotei" from-label="wordmltotei">
+      <map:transform src="xsl/tei_only.xsl"/>
+      <map:serialize type="xml"/>
+    </map:view>
+    <map:view name="tei" from-label="tei">
+      <map:serialize type="xml"/>
+    </map:view>
+    <map:view name="rawkml" from-label="rawkml">
+      <map:serialize type="xml"/>
+    </map:view>
+  </map:views>
 
 
  <map:resources>
@@ -54,7 +59,7 @@
    </map:match>
 
    <map:match pattern="xml*/*">
-    <map:generate src="http://dos.heuristscholar.org/heurist/php/hml.php?q=ids:{2}&amp;depth={1}"/>
+    <map:generate src="http://ec2-54-206-45-164.ap-southeast-2.compute.amazonaws.com/h3/export/xml/hml.php?q=ids:{2}&amp;depth={1}"/>
     <map:serialize type="xml"/>
    </map:match>
 
@@ -75,11 +80,12 @@
    </map:match>
 
    <map:match pattern="item/*">
-    <map:generate src="cocoon:/xml2/{1}" label="xmlexport"/>
+    <map:generate src="cocoon:/xml2/{1}" label="h3hml"/>
+    <map:transform src="xsl/h3-to-h2-record-and-detail-types.xsl" label="h2hml"/>
     <map:transform src="xsl/item_view.xsl" label="transformed"/>
-    <map:transform type="xinclude" label="wordml"/>
-    <map:transform src="xsl/wordml2TEI.xsl" label="tei"/>
-    <map:transform src="xsl/tei_to_html_basic.xsl" label="html"/>
+    <map:transform type="xinclude" label="xinclude"/>
+    <map:transform src="xsl/wordml2TEI.xsl" label="wordmltotei"/>
+    <map:transform src="xsl/tei_to_html_basic.xsl" label="tei"/>
     <map:transform src="xsl/entry_index.xsl"/>
     <map:serialize type="html"/>
    </map:match>
@@ -165,26 +171,6 @@
    <map:match pattern="browse">
     <map:generate src="empty.xml"/>
     <map:transform src="xsl/default_browse.xsl"/>
-    <map:serialize type="html"/>
-   </map:match>
-
-   <map:match pattern="index/*,*,*,*,*,*,*,*,*,*,*,*">
-    <map:aggregate element="data">
-     <map:part src="cocoon:/xml0/{2}"/>
-     <map:part src="cocoon:/xml0/{3}"/>
-     <map:part src="cocoon:/xml0/{5}"/>
-     <map:part src="cocoon:/xml0/{6}"/>
-     <map:part src="cocoon:/xml0/{8}"/>
-     <map:part src="cocoon:/xml0/{9}"/>
-     <map:part src="cocoon:/xml0/{11}"/>
-     <map:part src="cocoon:/xml0/{12}"/>
-    </map:aggregate>
-    <map:transform src="xsl/index.xsl">
-     <map:parameter name="target1" value="{1}"/>
-     <map:parameter name="target2" value="{4}"/>
-     <map:parameter name="target3" value="{7}"/>
-     <map:parameter name="target4" value="{10}"/>
-    </map:transform>
     <map:serialize type="html"/>
    </map:match>
 
