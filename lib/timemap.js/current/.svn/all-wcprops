@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 23
+/svn/!svn/ver/193/trunk
+END
+LICENSE.txt
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/78/trunk/LICENSE.txt
+END
+CHANGELOG.txt
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/191/trunk/CHANGELOG.txt
+END
+timemap.js
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/193/trunk/timemap.js
+END
+makedistro.py
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/193/trunk/makedistro.py
+END
+README.txt
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/190/trunk/README.txt
+END
+manipulation.js
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/193/trunk/manipulation.js
+END
+export.js
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/193/trunk/export.js
+END

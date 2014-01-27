@@ -1,1 +1,1 @@
-../timemap.js/current
+lib/timemap.js/current

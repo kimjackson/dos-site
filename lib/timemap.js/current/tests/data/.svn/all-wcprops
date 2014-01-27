@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/171/trunk/tests/data
+END
+data.rss
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/120/trunk/tests/data/data.rss
+END
+tile.png
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/120/trunk/tests/data/tile.png
+END
+data.js
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/169/trunk/tests/data/data.js
+END
+data-atom.xml
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/120/trunk/tests/data/data-atom.xml
+END
+data_string.js
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/169/trunk/tests/data/data_string.js
+END
+data.kml
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/169/trunk/tests/data/data.kml
+END
+data-mixed.xml
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/171/trunk/tests/data/data-mixed.xml
+END
