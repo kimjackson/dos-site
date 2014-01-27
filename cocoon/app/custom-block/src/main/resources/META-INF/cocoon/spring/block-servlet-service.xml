@@ -25,7 +25,7 @@
                            http://cocoon.apache.org/schema/servlet http://cocoon.apache.org/schema/servlet/cocoon-servlet-1.0.xsd">
 
   <bean name="org.apache.cocoon.gettingstarted.custom-block.service" class="org.apache.cocoon.sitemap.SitemapServlet">
-    <servlet:context mount-path="/dos/browser" context-path="blockcontext:/custom-block/"/>
+    <servlet:context mount-path="/" context-path="blockcontext:/custom-block/"/>
   </bean>
 
 </beans>
