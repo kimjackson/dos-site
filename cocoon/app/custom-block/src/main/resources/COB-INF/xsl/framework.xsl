@@ -24,7 +24,7 @@
 						pipelineBaseURL: "../"
 					};
 				</script>
-				<script src="http://hapi.heuristscholar.org/load?instance={$instance}&amp;amp;key={$hapi-key}" type="text/javascript"/>
+				<script src="/h3/hapi/hapiLoader.php" type="text/javascript"/>
 				<script src="{$urlbase}jquery/jquery.js" type="text/javascript"/>
 				<script src="{$urlbase}js/cookies.js" type="text/javascript"/>
 				<script src="{$urlbase}js/fontsize.js" type="text/javascript"/>
