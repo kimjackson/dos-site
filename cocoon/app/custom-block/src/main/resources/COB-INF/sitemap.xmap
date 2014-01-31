@@ -81,7 +81,7 @@
    </map:match>
 
    <map:match pattern="item/*">
-    <map:generate src="cocoon:/xml2/{1}"/>
+    <map:generate src="cocoon:/xml2/{1}" label="h2hml"/>
     <map:transform src="xsl/item_view.xsl" label="transformed"/>
     <map:transform type="xinclude" label="xinclude"/>
     <map:transform src="xsl/wordml2TEI.xsl" label="wordmltotei"/>
