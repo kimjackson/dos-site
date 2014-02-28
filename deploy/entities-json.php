@@ -1,8 +1,12 @@
 <?php
 
-require_once("/var/www/htdocs/heurist/php/modules/db.php");
+require_once('/var/www/h3/configIni.php');
+require_once('/var/www/h3/common/php/dbMySqlWrappers.php');
 
-mysql_connection_db_select("`heuristdb-dos`");
+define('READONLY_DBUSERNAME', $dbReadonlyUsername);
+define('READONLY_DBUSERPSWD', $dbReadonlyPassword);
+
+mysql_connection_select($dbPrefix . $defaultDBname, 'localhost');
 
 
 if ($argc < 2) {
@@ -17,136 +21,146 @@ $typePath = @$argv[2];
 $entities = array();
 $orderedEntities = array();
 
+$termIDs = array();
+$query = "select trm_ID, trm_Label from defTerms";
+$res = mysql_query($query);
+while ($row = mysql_fetch_row($res)) {
+	$termIDs[$row[1]] = $row[0];
+}
+
+
 if ($type == "Entry") {
-	$query = "select rec_id,
-	                 rec_title
-	            from records
-	           where rec_type = 98
-	             and rec_id != 2674
-	        order by if (rec_title like 'the %', substr(rec_title, 5), replace(rec_title, '\'', ''))";
+	$query = "select rec_ID,
+	                 rec_Title
+	            from Records
+	           where rec_RecTypeID = 13
+	             and rec_ID != 2674
+	        order by if (rec_Title like 'the %', substr(rec_Title, 5), replace(rec_Title, '\'', ''))";
 
 } else if ($type == "Map") {
-	$query = "select rec_id,
-	                 rec_title
-	            from records
-	           where rec_type = 103
-	        order by if (rec_title like 'the %', substr(rec_title, 5), replace(rec_title, '\'', ''))";
+	$query = "select rec_ID,
+	                 rec_Title
+	            from Records
+	           where rec_RecTypeID = 28
+	        order by if (rec_Title like 'the %', substr(rec_Title, 5), replace(rec_Title, '\'', ''))";
 
 }
 
 else if ($type == "Multimedia") {
 	$query = "SELECT
-                records.rec_id,
-                records.rec_title
-                from records
-                WHERE rec_type =  74
-                order by if (rec_title like 'the %', substr(rec_title, 5), replace(rec_title, '\'', '')) ";
+                Records.rec_ID,
+                Records.rec_Title
+                from Records
+                WHERE rec_RecTypeID =  5
+                order by if (rec_Title like 'the %', substr(rec_Title, 5), replace(rec_Title, '\'', '')) ";
 
 }
 else if ($type == "Term") {
-	$query = "select rec_id,
-	                 rec_title,
+	$query = "select rec_ID,
+	                 rec_Title,
 	                 null,
-	                 group_concat(rel_ptr_2.rd_val)
-	            from records
-	       left join rec_details rel_ptr_1
-	                          on rel_ptr_1.rd_val = rec_id
-	                         and rel_ptr_1.rd_type = 199
-	       left join rec_details rel_type
-	                          on rel_type.rd_rec_id = rel_ptr_1.rd_rec_id
-	                         and rel_type.rd_type = 200
-	                         and rel_type.rd_val in ('hasPrimarySubject', 'hasSubject')
-	       left join rec_details rel_ptr_2
-	                          on rel_ptr_2.rd_rec_id = rel_type.rd_rec_id
-	                         and rel_ptr_2.rd_type = 202
-	           where rec_type = 152
-	        group by rec_id
-	        order by rec_title";
+	                 group_concat(rel_ptr_2.dtl_Value)
+	            from Records
+	       left join recDetails rel_ptr_1
+	                          on rel_ptr_1.dtl_Value = rec_ID
+	                         and rel_ptr_1.dtl_DetailTypeID = 5
+	       left join recDetails rel_type
+	                          on rel_type.dtl_RecID = rel_ptr_1.dtl_RecID
+	                         and rel_type.dtl_DetailTypeID = 6
+	                         and rel_type.dtl_Value in ({$termIDs['hasPrimarySubject']}, {$termIDs['hasSubject']})
+	       left join recDetails rel_ptr_2
+	                          on rel_ptr_2.dtl_RecID = rel_type.dtl_RecID
+	                         and rel_ptr_2.dtl_DetailTypeID = 7
+	           where rec_RecTypeID = 29
+	        group by rec_ID
+	        order by rec_Title";
 
 } else if ($type == "Role") {
-	$query = "select rec_id,
-	                 rec_title,
-	                 rd_val
-	            from records,
-	                 rec_details
-	           where rec_type = 91
-	             and rd_rec_id = rec_id
-	             and rd_type = 591
-	             and rd_val = 'Occupation'
-	        order by if (rec_title like 'the %', substr(rec_title, 5), replace(rec_title, '\'', ''))";
+	$query = "select rec_ID,
+	                 rec_Title,
+	                 'Occupation'
+	            from Records,
+	                 recDetails
+	           where rec_RecTypeID = 27
+	             and dtl_RecID = rec_ID
+	             and dtl_DetailTypeID = 95
+	             and dtl_Value = {$termIDs['Occupation']}
+	        order by if (rec_Title like 'the %', substr(rec_Title, 5), replace(rec_Title, '\'', ''))";
 
 } else if ($type == "Person") {
-	$query = "select type.rd_rec_id,
-	                 title.rd_val,
+	$query = "select type.dtl_RecID,
+	                 title.dtl_Value,
 	                 null,
-	                 group_concat(rel_ptr_2.rd_val)
-	            from rec_details type
-	      inner join rec_details title
-	       left join rec_details rel_ptr_1
-	                          on rel_ptr_1.rd_val = type.rd_rec_id
-	                         and rel_ptr_1.rd_type = 199
-	       left join rec_details rel_type
-	                          on rel_type.rd_rec_id = rel_ptr_1.rd_rec_id
-	                         and rel_type.rd_type = 200
-	                         and rel_type.rd_val = 'isAbout'
-	       left join rec_details rel_ptr_2
-	                          on rel_ptr_2.rd_rec_id = rel_type.rd_rec_id
-	                         and rel_ptr_2.rd_type = 202
-	           where type.rd_type = 523
-	             and type.rd_val = '$type'
-	             and title.rd_rec_id = type.rd_rec_id
-	             and title.rd_type = 160
-	        group by type.rd_rec_id
-	        order by if (title.rd_val like 'the %', substr(title.rd_val, 5), replace(title.rd_val, '\'', ''))";
+	                 group_concat(rel_ptr_2.dtl_Value)
+	            from recDetails type
+	      inner join recDetails title
+	       left join recDetails rel_ptr_1
+	                          on rel_ptr_1.dtl_Value = type.dtl_RecID
+	                         and rel_ptr_1.dtl_DetailTypeID = 5
+	       left join recDetails rel_type
+	                          on rel_type.dtl_RecID = rel_ptr_1.dtl_RecID
+	                         and rel_type.dtl_DetailTypeID = 6
+	                         and rel_type.dtl_Value = {$termIDs['isAbout']}
+	       left join recDetails rel_ptr_2
+	                          on rel_ptr_2.dtl_RecID = rel_type.dtl_RecID
+	                         and rel_ptr_2.dtl_DetailTypeID = 7
+	           where type.dtl_DetailTypeID = 75
+	             and type.dtl_Value = {$termIDs[$type]}
+	             and title.dtl_RecID = type.dtl_RecID
+	             and title.dtl_DetailTypeID = 1
+	        group by type.dtl_RecID
+	        order by if (title.dtl_Value like 'the %', substr(title.dtl_Value, 5), replace(title.dtl_Value, '\'', ''))";
 
 } else if ($type == "Contributor") {
-	$query = "select rec_id,
-	                 rec_title,
-	                 rd_val
-	            from records,
-	                 rec_details
-	           where rec_type = 153
-	             and rd_rec_id = rec_id
-	             and rd_type = 568
-	        order by if (rec_title like 'the %', substr(rec_title, 5), replace(rec_title, '\'', ''))";
+	$query = "select rec_ID,
+	                 rec_Title,
+	                 trm_Label
+	            from Records,
+	                 recDetails,
+	                 defTerms
+	           where rec_RecTypeID = 24
+	             and dtl_RecID = rec_ID
+	             and dtl_DetailTypeID = 74
+	             and trm_ID = dtl_Value
+	        order by if (rec_Title like 'the %', substr(rec_Title, 5), replace(rec_Title, '\'', ''))";
 
 } else {
-	$query = "select type.rd_rec_id,
-	                 title.rd_val,
-	                 group_concat(distinct subtype.rd_rec_id),
-	                 group_concat(distinct rel_ptr_2.rd_val)
-	            from rec_details type
-	      inner join rec_details title
-	      inner join rec_details factoid_src_ptr
-	      inner join rec_details factoid_type
-	      inner join rec_details factoid_role_ptr
-	      inner join rec_details subtype
-	       left join rec_details rel_ptr_1
-	                          on rel_ptr_1.rd_val = type.rd_rec_id
-	                         and rel_ptr_1.rd_type = 199
-	       left join rec_details rel_type
-	                          on rel_type.rd_rec_id = rel_ptr_1.rd_rec_id
-	                         and rel_type.rd_type = 200
-	                         and rel_type.rd_val = 'isAbout'
-	       left join rec_details rel_ptr_2
-	                          on rel_ptr_2.rd_rec_id = rel_type.rd_rec_id
-	                         and rel_ptr_2.rd_type = 202
-	           where type.rd_type = 523
-	             and type.rd_val = '$type'
-	             and title.rd_rec_id = type.rd_rec_id
-	             and title.rd_type = 160
-	             and factoid_src_ptr.rd_val = title.rd_rec_id
-	             and factoid_src_ptr.rd_type = 528
-	             and factoid_type.rd_rec_id = factoid_src_ptr.rd_rec_id
-	             and factoid_type.rd_type = 526
-	             and factoid_type.rd_val = 'Type'
-	             and factoid_role_ptr.rd_rec_id = factoid_src_ptr.rd_rec_id
-	             and factoid_role_ptr.rd_type = 529
-	             and subtype.rd_rec_id = factoid_role_ptr.rd_val
-	             and subtype.rd_type = 160
-	             and subtype.rd_val != 'Generic'
-	        group by type.rd_rec_id
-	        order by if (title.rd_val like 'the %', substr(title.rd_val, 5), replace(title.rd_val, '\'', ''))";
+	$query = "select type.dtl_RecID,
+	                 title.dtl_Value,
+	                 group_concat(distinct subtype.dtl_RecID),
+	                 group_concat(distinct rel_ptr_2.dtl_Value)
+	            from recDetails type
+	      inner join recDetails title
+	      inner join recDetails factoid_src_ptr
+	      inner join recDetails factoid_type
+	      inner join recDetails factoid_role_ptr
+	      inner join recDetails subtype
+	       left join recDetails rel_ptr_1
+	                          on rel_ptr_1.dtl_Value = type.dtl_RecID
+	                         and rel_ptr_1.dtl_DetailTypeID = 5
+	       left join recDetails rel_type
+	                          on rel_type.dtl_RecID = rel_ptr_1.dtl_RecID
+	                         and rel_type.dtl_DetailTypeID = 6
+	                         and rel_type.dtl_Value = {$termIDs['isAbout']}
+	       left join recDetails rel_ptr_2
+	                          on rel_ptr_2.dtl_RecID = rel_type.dtl_RecID
+	                         and rel_ptr_2.dtl_DetailTypeID = 7
+	           where type.dtl_DetailTypeID = 75
+	             and type.dtl_Value = {$termIDs[$type]}
+	             and title.dtl_RecID = type.dtl_RecID
+	             and title.dtl_DetailTypeID = 1
+	             and factoid_src_ptr.dtl_Value = title.dtl_RecID
+	             and factoid_src_ptr.dtl_DetailTypeID = 87
+	             and factoid_type.dtl_RecID = factoid_src_ptr.dtl_RecID
+	             and factoid_type.dtl_DetailTypeID = 85
+	             and factoid_type.dtl_Value = {$termIDs['Type']}
+	             and factoid_role_ptr.dtl_RecID = factoid_src_ptr.dtl_RecID
+	             and factoid_role_ptr.dtl_DetailTypeID = 88
+	             and subtype.dtl_RecID = factoid_role_ptr.dtl_Value
+	             and subtype.dtl_DetailTypeID = 1
+	             and subtype.dtl_Value != {$termIDs['Generic']}
+	        group by type.dtl_RecID
+	        order by if (title.dtl_Value like 'the %', substr(title.dtl_Value, 5), replace(title.dtl_Value, '\'', ''))";
 }
 
 $res = mysql_query($query);
@@ -168,72 +182,75 @@ $subtypes = array();
 $orderedSubtypes = array();
 
 if ($type == "Entry") {
-	$query = "select distinct if (entity_type.rd_val is null, 'Thematic', entity_type.rd_val),
-	                 if (entity_type.rd_val is null, 'Thematic Entries',
+	$query = "select distinct if (entity_type_term.trm_Label is null, 'Thematic', entity_type_term.trm_Label),
+	                 if (entity_type_term.trm_Label is null, 'Thematic Entries',
 	                     concat(
 	                            'Entries about ',
-	                            if (entity_type.rd_val = 'Person', 'People', concat(entity_type.rd_val, 's'))
+	                            if (entity_type_term.trm_Label = 'Person', 'People', concat(entity_type_term.trm_Label, 's'))
 	                     )
 	                 ),
-	                 entry.rec_id
-	            from records entry
-	       left join rec_details rel_ptr_1
-	                          on rel_ptr_1.rd_val = entry.rec_id
-	                         and rel_ptr_1.rd_type = 202
-	       left join rec_details rel_type
-	                          on rel_type.rd_rec_id = rel_ptr_1.rd_rec_id
-	                         and rel_type.rd_type = 200
-	                         and rel_type.rd_val = 'isAbout'
-	       left join rec_details rel_ptr_2
-	                          on rel_ptr_2.rd_rec_id = rel_type.rd_rec_id
-	                         and rel_ptr_2.rd_type = 199
-	       left join rec_details entity_type
-	                          on entity_type.rd_rec_id = rel_ptr_2.rd_val
-	                         and entity_type.rd_type = 523
-	           where rec_type = 98
-	             and rec_id != 2674
-	        order by entity_type.rd_val,
-	                 if (rec_title like 'the %', substr(rec_title, 5), replace(rec_title, '\'', ''))";
+	                 entry.rec_ID
+	            from Records entry
+	       left join recDetails rel_ptr_1
+	                          on rel_ptr_1.dtl_Value = entry.rec_ID
+	                         and rel_ptr_1.dtl_DetailTypeID = 7
+	       left join recDetails rel_type
+	                          on rel_type.dtl_RecID = rel_ptr_1.dtl_RecID
+	                         and rel_type.dtl_DetailTypeID = 6
+	                         and rel_type.dtl_Value = (select trm_ID from defTerms where trm_Label = 'isAbout')
+	       left join recDetails rel_ptr_2
+	                          on rel_ptr_2.dtl_RecID = rel_type.dtl_RecID
+	                         and rel_ptr_2.dtl_DetailTypeID = 5
+	       left join recDetails entity_type
+	                          on entity_type.dtl_RecID = rel_ptr_2.dtl_Value
+	                         and entity_type.dtl_DetailTypeID = 75
+	       left join defTerms entity_type_term on trm_ID = entity_type.dtl_Value
+	           where rec_RecTypeID = 13
+	             and rec_ID != 2674
+	        order by entity_type_term.trm_Label,
+	                 if (rec_Title like 'the %', substr(rec_Title, 5), replace(rec_Title, '\'', ''))";
 } else if ($type == "Contributor") {
-	$query = "select rd_val, ".
-					"if (rd_val = 'author', 'Authors', ".
-					"if (rd_val = 'institution', 'Institutions and Collections', ".
-					"if (rd_val = 'public', 'Public', ".
-					"if (rd_val = 'supporter', 'Supporters', 'Other')))),
-	                 rec_id
-	            from records,
-	                 rec_details
-	           where rec_type = 153
-	             and rd_rec_id = rec_id
-	             and rd_type = 568
-	        order by rd_val, if (rec_title like 'the %', substr(rec_title, 5), replace(rec_title, '\'', ''))";
+	$query = "select trm_Label, ".
+					"if (trm_Label = 'author', 'Authors', ".
+					"if (trm_Label = 'institution', 'Institutions and Collections', ".
+					"if (trm_Label = 'public', 'Public', ".
+					"if (trm_Label = 'supporter', 'Supporters', 'Other')))),
+	                 rec_ID
+	            from Records,
+	                 recDetails,
+	                 defTerms
+	           where rec_RecTypeID = 24
+	             and dtl_RecID = rec_ID
+	             and dtl_DetailTypeID = 74
+	             and trm_ID = dtl_Value
+	        order by trm_Label, if (rec_Title like 'the %', substr(rec_Title, 5), replace(rec_Title, '\'', ''))";
 } else {
-	$query = "select rec_id,
-	                 title.rd_val,
-	                 factoid_src_ptr.rd_val
-	            from records,
-	                 rec_details type,
-	                 rec_details title,
-	                 rec_details factoid_role_ptr,
-	                 rec_details factoid_src_ptr,
-	                 rec_details entity_type,
-	                 rec_details entity_title
-	           where rec_type = 91
-	             and type.rd_rec_id = rec_id
-	             and type.rd_type = 591
-	             and type.rd_val = 'Type'
-	             and title.rd_rec_id = rec_id
-	             and title.rd_type = 160
-	             and factoid_role_ptr.rd_val = type.rd_rec_id
-	             and factoid_role_ptr.rd_type = 529
-	             and factoid_src_ptr.rd_rec_id = factoid_role_ptr.rd_rec_id
-	             and factoid_src_ptr.rd_type = 528
-	             and entity_type.rd_rec_id = factoid_src_ptr.rd_val
-	             and entity_type.rd_type = 523
-	             and entity_type.rd_val = '$type'
-	             and entity_title.rd_rec_id = factoid_src_ptr.rd_val
-	             and entity_title.rd_type = 160
-	        order by title.rd_val, if (entity_title.rd_val like 'the %', substr(entity_title.rd_val, 5), replace(entity_title.rd_val, '\'', ''))";
+	$query = "select rec_ID,
+	                 title.dtl_Value,
+	                 factoid_src_ptr.dtl_Value
+	            from Records,
+	                 recDetails type,
+	                 recDetails title,
+	                 recDetails factoid_role_ptr,
+	                 recDetails factoid_src_ptr,
+	                 recDetails entity_type,
+	                 recDetails entity_title
+	           where rec_RecTypeID = 27
+	             and type.dtl_RecID = rec_ID
+	             and type.dtl_DetailTypeID = 95
+	             and type.dtl_Value = 'Type'
+	             and title.dtl_RecID = rec_ID
+	             and title.dtl_DetailTypeID = 1
+	             and factoid_role_ptr.dtl_Value = type.dtl_RecID
+	             and factoid_role_ptr.dtl_DetailTypeID = 88
+	             and factoid_src_ptr.dtl_RecID = factoid_role_ptr.dtl_RecID
+	             and factoid_src_ptr.dtl_DetailTypeID = 87
+	             and entity_type.dtl_RecID = factoid_src_ptr.dtl_Value
+	             and entity_type.dtl_DetailTypeID = 75
+	             and entity_type.dtl_Value = '$type'
+	             and entity_title.dtl_RecID = factoid_src_ptr.dtl_Value
+	             and entity_title.dtl_DetailTypeID = 1
+	        order by title.dtl_Value, if (entity_title.dtl_Value like 'the %', substr(entity_title.dtl_Value, 5), replace(entity_title.dtl_Value, '\'', ''))";
 		// order by sub-type title then entity title
 }
 
@@ -254,17 +271,19 @@ if ($type == "Role") {
 if ($type == "Entry") {
 	$licenceTypes = array();
 	$orderedLicenceTypes = array();
-	$query = "select distinct if (licence.rd_val is null, 'other', licence.rd_val),
-	                 entry.rec_id
-	            from records entry
-	       left join rec_details licence
-	                          on licence.rd_rec_id = entry.rec_id
-	                         and licence.rd_type = 590
-	           where rec_type = 98
-	             and rec_id != 2674
-	        order by licence.rd_val is null,
-	                 licence.rd_val,
-	                 if (rec_title like 'the %', substr(rec_title, 5), replace(rec_title, '\'', ''))";
+	$query = "select distinct if (trm_Label is null, 'other', trm_Label),
+	                 entry.rec_ID
+	            from Records entry
+	       left join recDetails licence
+	                          on licence.dtl_RecID = entry.rec_ID
+	                         and licence.dtl_DetailTypeID = 94
+	       left join defTerms
+	                          on trm_ID = licence.dtl_Value
+	           where rec_RecTypeID = 13
+	             and rec_ID != 2674
+	        order by trm_Label is null,
+	                 trm_Label,
+	                 if (rec_Title like 'the %', substr(rec_Title, 5), replace(rec_Title, '\'', ''))";
 	$res = mysql_query($query);
 	while ($row = mysql_fetch_row($res)) {
 		if (! @$licenceTypes[$row[0]]) {
