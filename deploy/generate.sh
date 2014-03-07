@@ -9,68 +9,73 @@
 # make sure we go direct to the server!
 unset http_proxy
 
-PIPELINE=http://heuristscholar.org/cocoon/relbrowser-kj
+PIPELINE=http://localhost:8889/
 
 REPO=repo
 
 # create directories
 mkdir item preview popup browse citation search kml kml/full kml/summary $REPO/hml
-# mkdir files files/thumbnail files/small files/medium files/wide files/large files/full
-# Kim decided to leave files in the same directory and update from there. So we create a sym link to that directory and update things there
-ln -s ../dos-static-2009-10-22/files
+# sync files from prod web server
+rsync -av -e 'ssh -i /home/ubuntu/aws-dos.pem' ubuntu@172.31.3.188:/var/www/files .
 cp -prd $REPO/js $REPO/images $REPO/swf $REPO/*.css $REPO/index.html $REPO/config.xml $REPO/contact.php .
-cp -pd $REPO/jquery $REPO/timemap.js $REPO/timeline $REPO/recaptcha .
-ln -s ../dos-map-tiles tiles
+cp -prL $REPO/jquery $REPO/timemap.js $REPO/timeline .
+# TODO: just keep one map's tiles in this AMI for testing of map functionality?
+# ln -s ../dos-map-tiles tiles
 
 
 ####STEP 2 Generate supporting files NOTE run each command separately to verify correctness
 ############################################################################################
 # run all required queries
-echo "select distinct file_id, file_nonce from rec_details, files where file_id = rd_file_id;" | mysql -s -u readonly -pmitnick heuristdb-dos > file_ids.txt
-echo "select distinct file_nonce from rec_details, files where file_id = rd_file_id and file_mimetype like 'image%';" | mysql -s -u readonly -pmitnick heuristdb-dos > image_files.txt
+echo "select distinct ulf_ObfuscatedFileID, concat(ulf_FilePath, ulf_FileName) from recDetails, recUploadedFiles where ulf_ID = dtl_UploadedFileID;" | mysql -s -u roH3 -pro4all hdb_dos > file_names.txt
+echo "select distinct ulf_ObfuscatedFileID from recDetails, recUploadedFiles where ulf_ID = dtl_UploadedFileID and ulf_MimeExt in ('jpeg', 'jpg', 'png');" | mysql -s -u roH3 -pro4all hdb_dos > image_files.txt
 # 2674 is the Heuristos landing page
 # 2675 is a link to Heuristos
-ALL_ITEMS_QUERY="select rec_id
-                   from records
-              left join rec_details rt on rt.rd_rec_id = rec_id and rt.rd_type = 591
-              left join rec_details ilt on ilt.rd_rec_id = rec_id and ilt.rd_type = 618
-                  where rec_type in (153,151,103,74,91,152,98,168)
-                    and if (rec_type = 91, rt.rd_val in ('Occupation', 'Type'), 1)
-                    and if (rec_type = 168, ilt.rd_val = 'image', 1)
-                    and rec_id not in (2674,2675);"
-NOT_ENTIRES_QUERY="select rec_id
-                   from records
-              left join rec_details rt on rt.rd_rec_id = rec_id and rt.rd_type = 591
-              left join rec_details ilt on ilt.rd_rec_id = rec_id and ilt.rd_type = 618
-                  where rec_type in (153,151,103,74,91,152,168)
-                    and if (rec_type = 91, rt.rd_val in ('Occupation', 'Type'), 1)
-                    and if (rec_type = 168, ilt.rd_val = 'image', 1)
-                    and rec_id not in (2674,2675);"
-ALL_ENTRIES_QUERY="select rec_id
-                   from records
-                  where rec_type = 98
-                    and rec_id not in (2674,2675);"
-echo $NOT_ENTIRES_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos > not_entries.txt
-echo $ALL_ENTRIES_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos > all_entries.txt
-echo $ALL_ITEMS_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos > all_items.txt
+ALL_ITEMS_QUERY="select rec_ID
+                   from Records
+              left join recDetails rt on rt.dtl_RecID = rec_ID and rt.dtl_DetailTypeID = 95
+              left join recDetails ilt on ilt.dtl_RecID = rec_ID and ilt.dtl_DetailTypeID = 30
+              left join defTerms rt_term on rt_term.trm_ID = rt.dtl_Value
+              left join defTerms ilt_term on ilt_term.trm_ID = ilt.dtl_Value
+                  where rec_RecTypeID in (24,25,28,5,27,29,13,11)
+                    and if (rec_RecTypeID = 27, rt_term.trm_Label in ('Occupation', 'Type'), 1)
+                    and if (rec_RecTypeID = 11, ilt_term.trm_Label = 'image', 1)
+                    and rec_ID not in (2674,2675);"
+NOT_ENTRIES_QUERY="select rec_ID
+                   from Records
+              left join recDetails rt on rt.dtl_RecID = rec_ID and rt.dtl_DetailTypeID = 95
+              left join recDetails ilt on ilt.dtl_RecID = rec_ID and ilt.dtl_DetailTypeID = 30
+              left join defTerms rt_term on rt_term.trm_ID = rt.dtl_Value
+              left join defTerms ilt_term on ilt_term.trm_ID = ilt.dtl_Value
+                  where rec_RecTypeID in (24,25,28,5,27,29,11)
+                    and if (rec_RecTypeID = 27, rt_term.trm_Label in ('Occupation', 'Type'), 1)
+                    and if (rec_RecTypeID = 11, ilt_term.trm_Label = 'image', 1)
+                    and rec_ID not in (2674,2675);"
+ALL_ENTRIES_QUERY="select rec_ID
+                   from Records
+                  where rec_RecTypeID = 13
+                    and rec_ID not in (2674,2675);"
+echo $NOT_ENTRIES_QUERY | mysql -s -u roH3 -pro4all hdb_dos > not_entries.txt
+echo $ALL_ENTRIES_QUERY | mysql -s -u roH3 -pro4all hdb_dos > all_entries.txt
+echo $ALL_ITEMS_QUERY | mysql -s -u roH3 -pro4all hdb_dos > all_items.txt
 
 # popups and KML files
-echo "select rec_id from records left join rec_details on rd_rec_id = rec_id and rd_type = 618 where (rec_type = 74) or (rec_type = 168 and rd_val = 'image');" | mysql -s -u readonly -pmitnick heuristdb-dos > popups.txt
+echo "select rec_ID from Records left join recDetails on dtl_RecID = rec_ID and dtl_DetailTypeID = 30 left join defTerms on trm_ID = dtl_Value where (rec_RecTypeID = 5) or (rec_RecTypeID = 11 and trm_Label = 'image');" | mysql -s -u roH3 -pro4all hdb_dos > popups.txt
 
-KML_SUMMARY_QUERY="select distinct b.rd_val
-                     from rec_details a
-                left join rec_details b on a.rd_rec_id = b.rd_rec_id
-                    where a.rd_type = 526 and a.rd_val = 'TimePlace' and b.rd_type = 528;"
-echo $KML_SUMMARY_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos > kml_summary.txt
-
-
-KML_FULL_QUERY="select distinct b.rd_val
-                  from rec_details a
-             left join rec_details b on a.rd_rec_id = b.rd_rec_id
-                 where a.rd_type in (177,178,230) and b.rd_type = 528;"
+KML_SUMMARY_QUERY="select distinct b.dtl_Value
+                     from recDetails a
+                left join recDetails b on a.dtl_RecID = b.dtl_RecID
+                left join defTerms on trm_ID = a.dtl_Value
+                    where a.dtl_DetailTypeID = 85 and trm_Label = 'TimePlace' and b.dtl_DetailTypeID = 87;"
+echo $KML_SUMMARY_QUERY | mysql -s -u roH3 -pro4all hdb_dos > kml_summary.txt
 
 
-echo $KML_FULL_QUERY | mysql -s -u readonly -pmitnick heuristdb-dos > kml_full.txt
+KML_FULL_QUERY="select distinct b.dtl_Value
+                  from recDetails a
+             left join recDetails b on a.dtl_RecID = b.dtl_RecID
+                 where a.dtl_DetailTypeID in (10,11,28) and b.dtl_DetailTypeID = 87;"
+
+
+echo $KML_FULL_QUERY | mysql -s -u roH3 -pro4all hdb_dos > kml_full.txt
 
 # generate URL map
 php $REPO/deploy/urlmap.php check  # until errors are fixed
@@ -121,10 +126,10 @@ php $REPO/deploy/entities-json.php Contributor contributor > browse/contributors
 
 # copy files
 ##########################################################################################
-cat file_ids.txt | \
-while read id nonce; do
+cat file_names.txt | \
+while read nonce file; do
 	if [[ ! -e files/full/$nonce ]]; then
-		cp /var/www/htdocs/uploaded-heurist-files/dos/$id files/full/$nonce;
+		cp $file files/full/$nonce;
 	fi
 done
 
@@ -133,19 +138,19 @@ done
 cat image_files.txt | \
 while read nonce; do
 	if [[ ! -e files/thumbnail/$nonce ]]; then
-		wget -O files/thumbnail/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&w=148\&h=148;
+		wget -O files/thumbnail/$nonce http://localhost/h3/common/php/resizeImage.php?ulf_ID=$nonce\&w=148\&h=148;
 	fi
 	if [[ ! -e files/small/$nonce ]]; then
-		wget -O files/small/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&w=148;
+		wget -O files/small/$nonce http://localhost/h3/common/php/resizeImage.php?ulf_ID=$nonce\&w=148;
 	fi
 	if [[ ! -e files/medium/$nonce ]]; then
-		wget -O files/medium/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&h=180;
+		wget -O files/medium/$nonce http://localhost/h3/common/php/resizeImage.php?ulf_ID=$nonce\&h=180;
 	fi
 	if [[ ! -e files/wide/$nonce ]]; then
-		wget -O files/wide/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&maxw=800\&maxh=400;
+		wget -O files/wide/$nonce http://localhost/h3/common/php/resizeImage.php?ulf_ID=$nonce\&maxw=800\&maxh=400;
 	fi
 	if [[ ! -e files/large/$nonce ]]; then
-		wget -O files/large/$nonce http://dos.heuristscholar.org/heurist/php/resize_image.php?file_id=$nonce\&maxw=698;
+		wget -O files/large/$nonce http://localhost/h3/common/php/resizeImage.php?ulf_ID=$nonce\&maxw=698;
 	fi
 done
 
