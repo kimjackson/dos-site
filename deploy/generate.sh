@@ -128,7 +128,7 @@ php $REPO/deploy/entities-json.php Contributor contributor > browse/contributors
 ##########################################################################################
 cat file_names.txt | \
 while read nonce file; do
-	if [[ ! -e files/full/$nonce ]]; then
+	if [[ ! -s files/full/$nonce ]]; then
 		cp $file files/full/$nonce;
 	fi
 done
@@ -137,19 +137,19 @@ done
 ##########################################################################################
 cat image_files.txt | \
 while read nonce; do
-	if [[ ! -e files/thumbnail/$nonce ]]; then
+	if [[ ! -s files/thumbnail/$nonce ]]; then
 		wget -O files/thumbnail/$nonce http://localhost/h3/common/php/resizeImage.php?ulf_ID=$nonce\&w=148\&h=148;
 	fi
-	if [[ ! -e files/small/$nonce ]]; then
+	if [[ ! -s files/small/$nonce ]]; then
 		wget -O files/small/$nonce http://localhost/h3/common/php/resizeImage.php?ulf_ID=$nonce\&w=148;
 	fi
-	if [[ ! -e files/medium/$nonce ]]; then
+	if [[ ! -s files/medium/$nonce ]]; then
 		wget -O files/medium/$nonce http://localhost/h3/common/php/resizeImage.php?ulf_ID=$nonce\&h=180;
 	fi
-	if [[ ! -e files/wide/$nonce ]]; then
+	if [[ ! -s files/wide/$nonce ]]; then
 		wget -O files/wide/$nonce http://localhost/h3/common/php/resizeImage.php?ulf_ID=$nonce\&maxw=800\&maxh=400;
 	fi
-	if [[ ! -e files/large/$nonce ]]; then
+	if [[ ! -s files/large/$nonce ]]; then
 		wget -O files/large/$nonce http://localhost/h3/common/php/resizeImage.php?ulf_ID=$nonce\&maxw=698;
 	fi
 done
@@ -171,7 +171,7 @@ rm make_spider_links.sh
 cd item
 cat ../not_entries.txt | \
 while read id; do
-	if [[ -e ../$REPO/hml/$id.xml  &&  ! -e $id ]]; then
+	if [[ -s ../$REPO/hml/$id.xml  &&  ! -s $id ]]; then
 		echo $PIPELINE/item-urlmapped/$id;
 	fi
 done | \
@@ -179,7 +179,7 @@ wget --no-cache -w 1 -i -
 
 cat ../all_entries.txt | \
 while read id; do
-	if [[ -e ../$REPO/hml/$id.xml  &&  ! -e $id ]]; then
+	if [[ -s ../$REPO/hml/$id.xml  &&  ! -s $id ]]; then
 		echo $PIPELINE/item-entry-urlmapped/$id;
 	fi
 done | \
@@ -189,7 +189,7 @@ cd ..
 cd preview
 cat ../all_items.txt | \
 while read id; do
-	if [[ -e ../$REPO/hml/$id.xml  &&  ! -e $id ]]; then
+	if [[ -s ../$REPO/hml/$id.xml  &&  ! -s $id ]]; then
 		echo $PIPELINE/preview/$id;
 	fi
 done | \
@@ -201,7 +201,7 @@ cd ..
 cd citation
 cat ../all_entries.txt | \
 while read id; do
-	if [[ -e ../$REPO/hml/$id.xml  &&  ! -e $id ]]; then
+	if [[ -s ../$REPO/hml/$id.xml  &&  ! -s $id ]]; then
 		echo $PIPELINE/citation/$id;
 	fi
 done | \
@@ -215,7 +215,7 @@ grep -r 'preview-[0-9]' item | perl -pe 's/.*preview-(\d+(c\d+)?).*/\1/' | sort 
 cd preview
 cat ../preview_contexts.txt | while read id; do
 	base_id=`echo $id | sed 's/c.*//'`
-	if [[ -e ../$REPO/hml/$base_id.xml  &&  ! -e $id ]]; then
+	if [[ -s ../$REPO/hml/$base_id.xml  &&  ! -s $id ]]; then
 		echo $PIPELINE/preview/$id;
 	fi
 done | \
@@ -227,7 +227,7 @@ cd ..
 cd popup
 cat ../popups.txt | \
 while read id; do
-	if [[ -e ../$REPO/hml/$id.xml  &&  ! -e $id ]]; then
+	if [[ -s ../$REPO/hml/$id.xml  &&  ! -s $id ]]; then
 		echo $PIPELINE/popup-urlmapped/$id;
 	fi
 done | \
@@ -238,14 +238,14 @@ cd ..
 ##########################################################################################
 cat kml_summary.txt | \
 while read id; do
-	if [[ ! -e kml/summary/$id.kml ]]; then
+	if [[ ! -s kml/summary/$id.kml ]]; then
 		wget --no-cache -O kml/summary/$id.kml $PIPELINE/kml/summary/rename/$id;
 	fi
 done
 
 cat kml_full.txt | \
 while read id; do
-	if [[ ! -e kml/full/$id.kml ]]; then
+	if [[ ! -s kml/full/$id.kml ]]; then
 		wget --no-cache -O kml/full/$id.kml $PIPELINE/kml/full/rename/$id;
 	fi
 done
