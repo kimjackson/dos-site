@@ -129,7 +129,7 @@ php $REPO/deploy/entities-json.php Contributor contributor > browse/contributors
 cat file_names.txt | \
 while read nonce file; do
 	if [[ ! -s files/full/$nonce ]]; then
-		cp $file files/full/$nonce;
+		cp "$file" files/full/$nonce;
 	fi
 done
 
