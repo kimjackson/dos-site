@@ -17,7 +17,7 @@ REPO=repo
 mkdir item preview popup browse citation search kml kml/full kml/summary $REPO/hml
 # sync files from prod web server
 rsync -av -e 'ssh -i /home/ubuntu/aws-dos.pem' ubuntu@172.31.3.188:/var/www/files .
-cp -prd $REPO/js $REPO/images $REPO/swf $REPO/*.css $REPO/index.html $REPO/config.xml $REPO/contact.php .
+cp -prd $REPO/js $REPO/images $REPO/swf $REPO/*.css $REPO/index.html $REPO/config.xml .
 cp -prL $REPO/jquery $REPO/timemap.js $REPO/timeline .
 # TODO: just keep one map's tiles in this AMI for testing of map functionality?
 # ln -s ../dos-map-tiles tiles
@@ -297,7 +297,7 @@ chmod +x search/search.cgi
 
 #COPY the files up to the production server into a new directory
 #su as kjackson to run this command
-rsync -av artefact audio boxy-ie.css boxy.css browse index.html browse.html building citation config.xml contact.php contributor entry event image images item jquery js kml map natural_feature organisation person place popup preview recaptcha role search search.css structure style.css subject swf tiles timeline timemap.js video kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2013-02-15/
+rsync -av artefact audio boxy-ie.css boxy.css browse index.html browse.html building citation config.xml contributor entry event image images item jquery js kml map natural_feature organisation person place popup preview recaptcha role search search.css structure style.css subject swf tiles timeline timemap.js video kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/dos-2013-02-15/
 
 #sync the uploaded files
 rsync -av ../dos-static-2009-10-22/files/ kimj@dos-web-prd-1.ucc.usyd.edu.au:/var/www/files/
